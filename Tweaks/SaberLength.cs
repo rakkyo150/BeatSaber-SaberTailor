@@ -68,8 +68,8 @@ namespace SaberTailor.Tweaks
 
             try
             {
-                ModifySaber(handControllers.Find("LeftSaber")?.GetComponent<Saber>());
-                ModifySaber(handControllers.Find("RightSaber")?.GetComponent<Saber>());
+                //ModifySaber(handControllers.Find("LeftSaber")?.GetComponent<Saber>());
+                //ModifySaber(handControllers.Find("RightSaber")?.GetComponent<Saber>());
             }
             catch (NullReferenceException)
             {
