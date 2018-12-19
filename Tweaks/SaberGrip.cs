@@ -43,13 +43,21 @@ namespace SaberTailor.Tweaks
 
             try
             {
-                ModifySaber(handControllers.Find("LeftSaber")?.Find("Saber"), Preferences.GripLeftPosition, Preferences.GripLeftRotation);
-                ModifySaber(handControllers.Find("RightSaber")?.Find("Saber"), Preferences.GripRightPosition, Preferences.GripRightRotation);
+                //ModifySaber(handControllers.Find("LeftSaber"), Preferences.GripLeftPosition, Preferences.GripLeftRotation);
+                //ModifySaber(handControllers.Find("RightSaber"), Preferences.GripRightPosition, Preferences.GripRightRotation);
+
+                // ToDo: Move SaberTrails with saber, fix compatibility with CustomSabers (meshes are getting loaded at the original location)
+                ModifySaber2(handControllers.Find("LeftSaber"), Preferences.GripLeftPosition, Preferences.GripLeftRotation);
+                ModifySaber2(handControllers.Find("RightSaber"), Preferences.GripRightPosition, Preferences.GripRightRotation);
             }
             catch (NullReferenceException)
             {
                 this.Log("Couldn't modify sabers, likely that the game structure has changed.");
                 return;
+            }
+            catch (Exception e)
+            {
+                this.Log("{0} Exception caught.", e);
             }
 
             this.Log("Successfully modified saber grip!");
@@ -57,8 +65,82 @@ namespace SaberTailor.Tweaks
 
         void ModifySaber(Transform saber, Vector3 position, Quaternion rotation)
         {
-            saber.localPosition = position;
-            saber.localRotation = rotation;
+            var saberObject = saber.GetComponent<Saber>();
+            // get positions
+            var saberTop = ReflectionUtil.GetPrivateField<Transform>(saberObject, "_topPos");
+            var saberBottom = ReflectionUtil.GetPrivateField<Transform>(saberObject, "_bottomPos");
+            var saberHandle = ReflectionUtil.GetPrivateField<Transform>(saberObject, "_handlePos");
+
+            this.Log("=======================================================================================");
+            this.Log("Printing saber data before modification:");
+            this.Log("Printing saber locations: Top: " + saberTop.position.ToString("F4") + " - Bottom: " + saberBottom.position.ToString("F4") + " - Handle: " + saberHandle.position.ToString("F4"));
+            this.Log("Saber length over all: " + (saberTop.position - saberHandle.position).magnitude.ToString("F4"));
+            this.Log("Saber length bottom to top: " + (saberTop.position - saberBottom.position).magnitude.ToString("F4"));
+            this.Log("Saber length bottom to handle: " + (saberBottom.position - saberHandle.position).magnitude.ToString("F4"));
+            this.Log("Printing saber rotation: Top: " + saberTop.rotation.ToString("F4") + " - Bottom: " + saberBottom.rotation.ToString("F4") + " - Handle: " + saberHandle.rotation.ToString("F4"));
+            this.Log("=======================================================================================");
+
+            // apply rotation
+            saberTop.position = RotateAroundPivot(saberTop.position, saberHandle.position, rotation);
+            saberBottom.position = RotateAroundPivot(saberBottom.position, saberHandle.position, rotation);
+            saber.Find("Saber").localRotation = rotation;
+
+            // apply offset
+            saberTop.position += position;
+            saberBottom.position += position;
+            saberHandle.position += position;
+
+            this.Log("=======================================================================================");
+            this.Log("Printing saber data after modification:");
+            this.Log("Printing saber locations: Top: " + saberTop.position.ToString("F4") + " - Bottom: " + saberBottom.position.ToString("F4") + " - Handle: " + saberHandle.position.ToString("F4"));
+            this.Log("Saber length over all: " + (saberTop.position - saberHandle.position).magnitude.ToString("F4"));
+            this.Log("Saber length bottom to top: " + (saberTop.position - saberBottom.position).magnitude.ToString("F4"));
+            this.Log("Saber length bottom to handle: " + (saberBottom.position - saberHandle.position).magnitude.ToString("F4"));
+            this.Log("Printing saber rotation: Top: " + saberTop.rotation.ToString("F4") + " - Bottom: " + saberBottom.rotation.ToString("F4") + " - Handle: " + saberHandle.rotation.ToString("F4"));
+            this.Log("=======================================================================================");
+        }
+
+        void ModifySaber2(Transform saber, Vector3 position, Quaternion rotation)
+        {
+            // get positions
+            var saberTop = saber.Find("Top");
+            var saberBottom = saber.Find("Bottom");
+            var saberHandle = saber.Find("Saber");
+
+            this.Log("=======================================================================================");
+            this.Log("Printing saber data before modification:");
+            this.Log("Printing saber locations: Top: " + saberTop.position.ToString("F4") + " - Bottom: " + saberBottom.position.ToString("F4") + " - Handle: " + saberHandle.position.ToString("F4"));
+            this.Log("Saber length over all: " + (saberTop.position - saberHandle.position).magnitude.ToString("F4"));
+            this.Log("Saber length bottom to top: " + (saberTop.position - saberBottom.position).magnitude.ToString("F4"));
+            this.Log("Saber length bottom to handle: " + (saberBottom.position - saberHandle.position).magnitude.ToString("F4"));
+            this.Log("Printing saber rotation: Top: " + saberTop.rotation.ToString("F4") + " - Bottom: " + saberBottom.rotation.ToString("F4") + " - Handle: " + saberHandle.rotation.ToString("F4"));
+            this.Log("=======================================================================================");
+
+            // apply rotation
+            saberTop.position = RotateAroundPivot(saberTop.position, saberHandle.position, rotation);
+            saberBottom.position = RotateAroundPivot(saberBottom.position, saberHandle.position, rotation);
+            saberHandle.localRotation = rotation;
+
+            // apply offset
+            saberTop.position += position;
+            saberBottom.position += position;
+            saberHandle.position += position;
+
+            this.Log("=======================================================================================");
+            this.Log("Printing saber data after modification:");
+            this.Log("Printing saber locations: Top: " + saberTop.position.ToString("F4") + " - Bottom: " + saberBottom.position.ToString("F4") + " - Handle: " + saberHandle.position.ToString("F4"));
+            this.Log("Saber length over all: " + (saberTop.position - saberHandle.position).magnitude.ToString("F4"));
+            this.Log("Saber length bottom to top: " + (saberTop.position - saberBottom.position).magnitude.ToString("F4"));
+            this.Log("Saber length bottom to handle: " + (saberBottom.position - saberHandle.position).magnitude.ToString("F4"));
+            this.Log("Printing saber rotation: Top: " + saberTop.rotation.ToString("F4") + " - Bottom: " + saberBottom.rotation.ToString("F4") + " - Handle: " + saberHandle.rotation.ToString("F4"));
+            this.Log("=======================================================================================");
+        }
+
+        Vector3 RotateAroundPivot(Vector3 point, Vector3 pivot, Quaternion rotation)
+        {
+            Vector3 direction = point - pivot;
+            direction = rotation * direction;
+            return (direction + pivot);
         }
     }
 }
