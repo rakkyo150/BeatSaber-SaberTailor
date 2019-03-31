@@ -44,8 +44,8 @@ namespace SaberTailor.Tweaks
             try
             {
                 // ToDo: Fix compatibility with CustomSabers (meshes are getting loaded at the original location)
-                ModifySaber2(handControllers.Find("LeftSaber"), Preferences.GripLeftPosition, Preferences.GripLeftRotation);
-                ModifySaber2(handControllers.Find("RightSaber"), Preferences.GripRightPosition, Preferences.GripRightRotation);
+                ModifySaber(handControllers.Find("LeftSaber"), Preferences.GripLeftPosition, Preferences.GripLeftRotation);
+                ModifySaber(handControllers.Find("RightSaber"), Preferences.GripRightPosition, Preferences.GripRightRotation);
             }
             catch (NullReferenceException)
             {
@@ -60,7 +60,7 @@ namespace SaberTailor.Tweaks
             this.Log("Successfully modified saber grip!");
         }
 
-        void ModifySaber2(Transform saber, Vector3 position, Quaternion rotation)
+        void ModifySaber(Transform saber, Vector3 position, Quaternion rotation)
         {
             // get positions
             var saberTop = saber.Find("Top");
