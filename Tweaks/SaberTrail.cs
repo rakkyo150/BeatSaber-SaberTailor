@@ -44,6 +44,7 @@ namespace SaberTailor.Tweaks
 
             try
             {
+                // XWeaponTrail now in BasicSaberModelController / SaberModelContainer / ISaberModelController
                 ModifyTrail(handControllers.Find("LeftSaber")?.GetComponent<XWeaponTrail>());
                 ModifyTrail(handControllers.Find("RightSaber")?.GetComponent<XWeaponTrail>());
             }
