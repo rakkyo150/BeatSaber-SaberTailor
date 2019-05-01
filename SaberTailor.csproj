@@ -8,9 +8,10 @@
     <OutputType>Library</OutputType>
     <RootNamespace>SaberTailor</RootNamespace>
     <AssemblyName>SaberTailor</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -77,10 +78,6 @@
       <HintPath>C:\Spiele\Steam\steamapps\common\Beat Saber\Beat Saber_Data\Managed\UnityEngine.BaselibModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.CloudWebServicesModule">
-      <HintPath>C:\Spiele\Steam\steamapps\common\Beat Saber\Beat Saber_Data\Managed\UnityEngine.CloudWebServicesModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="UnityEngine.ClusterInputModule">
       <HintPath>C:\Spiele\Steam\steamapps\common\Beat Saber\Beat Saber_Data\Managed\UnityEngine.ClusterInputModule.dll</HintPath>
       <Private>False</Private>
@@ -98,10 +95,6 @@
     </Reference>
     <Reference Include="UnityEngine.DirectorModule">
       <HintPath>C:\Spiele\Steam\steamapps\common\Beat Saber\Beat Saber_Data\Managed\UnityEngine.DirectorModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.FacebookModule">
-      <HintPath>C:\Spiele\Steam\steamapps\common\Beat Saber\Beat Saber_Data\Managed\UnityEngine.FacebookModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.GameCenterModule">
@@ -134,10 +127,6 @@
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>C:\Spiele\Steam\steamapps\common\Beat Saber\Beat Saber_Data\Managed\UnityEngine.Networking.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.ParticlesLegacyModule">
-      <HintPath>C:\Spiele\Steam\steamapps\common\Beat Saber\Beat Saber_Data\Managed\UnityEngine.ParticlesLegacyModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.PerformanceReportingModule">
