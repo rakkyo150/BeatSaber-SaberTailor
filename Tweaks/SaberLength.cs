@@ -25,6 +25,10 @@ namespace SaberTailor.Tweaks
         {
             if (loadedScene.name != "GameCore") return;
 
+            // FIXME!!! Remove the next two lines when reimplementing SaberLength adjustments
+            this.Log("SaberLength adjustments not implemented for current version of Beat Saber");
+            return;
+
             if (IsPreventingScoreSubmission)
             {
                 // Check if practice mode is active
@@ -73,7 +77,8 @@ namespace SaberTailor.Tweaks
             }
             catch (NullReferenceException)
             {
-                this.Log("Couldn't modify sabers, likely that the game structure has changed.");
+                //this.Log("Couldn't modify sabers, likely that the game structure has changed.");
+                this.Log("SaberLength adjustments not implemented for current version of Beat Saber");
                 return;
             }
 

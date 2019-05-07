@@ -30,11 +30,14 @@ namespace SaberTailor.Tweaks
 
             this.Log("Tweaking GameCore...");
             Preferences.Load();
-            //ApplyGameCoreModifications(loadedScene.GetRootGameObjects().First());
-            //Apply Harmony Patches
+            
+            // Apply Harmony Patches
             this.Log("Loading harmony patches...");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
             this.Log("Loaded harmony patches...");
+
+            // Superseeded by harmony patch
+            //ApplyGameCoreModifications(loadedScene.GetRootGameObjects().First());
         }
 
         void SceneManagerOnSceneUnloaded(Scene unloadedScene)
@@ -65,7 +68,7 @@ namespace SaberTailor.Tweaks
                 //ModifySaber(handControllers.Find("RightSaber"), Preferences.GripRightPosition, Preferences.GripRightRotation);
                 //ModifySaberHitbox(handControllers.Find("LeftSaber")?.GetComponent<Saber>(), Preferences.GripLeftPosition, Preferences.GripLeftRotation);
                 //ModifySaberHitbox(handControllers.Find("RightSaber")?.GetComponent<Saber>(), Preferences.GripRightPosition, Preferences.GripRightRotation);
-                // This below works - but we testing harmony now
+                // This below works for v0.13.2 - but we testing harmony now
                 //ModifySaberModel(handControllers.Find("LeftSaber")?.GetComponent<SaberModelContainer>(), Preferences.GripLeftPosition, Preferences.GripLeftRotation);
                 //ModifySaberModel(handControllers.Find("RightSaber")?.GetComponent<SaberModelContainer>(), Preferences.GripRightPosition, Preferences.GripRightRotation);
             }
