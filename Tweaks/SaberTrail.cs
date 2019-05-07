@@ -31,22 +31,22 @@ namespace SaberTailor.Tweaks
 
         void ApplyGameCoreModifications(GameObject gameCore)
         {
-            var handControllers = gameCore.transform
-                .Find("Origin")
-                ?.Find("VRGameCore")
-                ?.Find("HandControllers");
+            var sceneContext = gameCore.transform.Find("SceneContext");
 
-            if (handControllers == null)
+            if (sceneContext == null)
             {
-                this.Log("Couldn't find HandControllers, bailing!");
+                this.Log("Couldn't find SceneContext, bailing!");
                 return;
             }
 
             try
             {
-                // XWeaponTrail now in BasicSaberModelController / SaberModelContainer / ISaberModelController
-                ModifyTrail(handControllers.Find("LeftSaber")?.GetComponent<XWeaponTrail>());
-                ModifyTrail(handControllers.Find("RightSaber")?.GetComponent<XWeaponTrail>());
+                // XWeaponTrail now in BasicSaberModelController as proteced _saberWeaponTrail - find it!
+                GameCoreInstaller gci = sceneContext.GetComponent<GameCoreInstaller>();
+                BasicSaberModelController bsmc = ReflectionUtil.GetPrivateField<BasicSaberModelController>(gci, "_basicSaberModelControllerPrefab");
+                SaberWeaponTrail saberTrail = ReflectionUtil.GetPrivateField<SaberWeaponTrail>(bsmc, "_saberWeaponTrail");
+
+                ModifyTrail(saberTrail);
             }
             catch (NullReferenceException)
             {
@@ -62,6 +62,7 @@ namespace SaberTailor.Tweaks
 
             if (Preferences.IsTrailEnabled)
             {
+                trail.enabled = true;
                 ReflectionUtil.SetPrivateField(trail, "_maxFrame", length);
                 ReflectionUtil.SetPrivateField(trail, "_granularity", length * 3);
             }
