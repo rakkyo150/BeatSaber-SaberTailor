@@ -2,6 +2,8 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Harmony;
+using System.Reflection;
 
 namespace SaberTailor.Tweaks
 {
@@ -9,6 +11,7 @@ namespace SaberTailor.Tweaks
     {
         public string Name => "SaberGrip";
         public bool IsPreventingScoreSubmission => false;
+        HarmonyInstance harmony = HarmonyInstance.Create("SaberTailorHarmonyInstance");
 
         public void Load()
         {
@@ -27,14 +30,20 @@ namespace SaberTailor.Tweaks
 
             this.Log("Tweaking GameCore...");
             Preferences.Load();
-            ApplyGameCoreModifications(loadedScene.GetRootGameObjects().First());
+            //ApplyGameCoreModifications(loadedScene.GetRootGameObjects().First());
+            //Apply Harmony Patches
+            this.Log("Loading harmony patches...");
+            harmony.PatchAll(Assembly.GetExecutingAssembly());
+            this.Log("Loaded harmony patches...");
         }
 
         void SceneManagerOnSceneUnloaded(Scene unloadedScene)
         {
             if (unloadedScene.name != "GameCore") return;
 
-            this.Log("Cleanup");
+            this.Log("Running Cleanup after unloading GameCore...");
+            this.Log("Unloading harmony patches...");
+            harmony.UnpatchAll("SaberTailorHarmonyInstance");
         }
 
         void ApplyGameCoreModifications(GameObject gameCore)
@@ -57,7 +66,7 @@ namespace SaberTailor.Tweaks
                 //ModifySaberHitbox(handControllers.Find("LeftSaber")?.GetComponent<Saber>(), Preferences.GripLeftPosition, Preferences.GripLeftRotation);
                 //ModifySaberHitbox(handControllers.Find("RightSaber")?.GetComponent<Saber>(), Preferences.GripRightPosition, Preferences.GripRightRotation);
                 // This below works - but we testing harmony now
-                //ModifySaberModel(handControllers.Find("LeftSaber")?.GetComponent<SaberModelContainer>(), Preferences.GripRightPosition, Preferences.GripRightRotation);
+                //ModifySaberModel(handControllers.Find("LeftSaber")?.GetComponent<SaberModelContainer>(), Preferences.GripLeftPosition, Preferences.GripLeftRotation);
                 //ModifySaberModel(handControllers.Find("RightSaber")?.GetComponent<SaberModelContainer>(), Preferences.GripRightPosition, Preferences.GripRightRotation);
             }
             catch (NullReferenceException)
