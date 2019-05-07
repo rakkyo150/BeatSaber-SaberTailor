@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SaberTailor.HarmonyPatches
 {
-	[HarmonyPatch(typeof(VRPlatformHelper))]
+    [HarmonyPatch(typeof(VRPlatformHelper))]
     [HarmonyPatch("AdjustPlatformSpecificControllerTransform")]
     [HarmonyPatch(new Type[] { typeof(Transform) })]
     class AdjustPlatformSpecificControllerTransformPatch
