@@ -9,8 +9,8 @@ namespace SaberTailor.Tweaks
     {
         public string Name => "SaberLength";
         public bool IsPreventingScoreSubmission => Math.Abs(Preferences.Length - 1.0f) > 0.01f;
-        private SoloFreePlayFlowCoordinator _soloFreePlayFlowCoordinator;
-        private PracticeViewController _practiceViewController;
+        //private SoloFreePlayFlowCoordinator _soloFreePlayFlowCoordinator;
+        //private PracticeViewController _practiceViewController;
 
         public void Load()
         {
@@ -29,6 +29,11 @@ namespace SaberTailor.Tweaks
             this.Log("SaberLength adjustments not implemented for current version of Beat Saber");
             return;
 
+            // FIXME!!! Use BS_Utils for disabling score submission instead of limiting this to modes without score submission
+            // FIXME!!! Also check to reimplement generic disabling of score submission in Plugin.cs (or otherwise) depending on tweak parameter, instead of here
+            // FIXME!!! Should probably implement an ingame menu as well for changing this on the fly without fiddling with config files
+            //          -> Actually, this should be done regardless
+            /*
             if (IsPreventingScoreSubmission)
             {
                 // Check if practice mode is active
@@ -55,14 +60,14 @@ namespace SaberTailor.Tweaks
             this.Log("Tweaking GameCore...");
             Preferences.Load();
             ApplyGameCoreModifications(loadedScene.GetRootGameObjects().First());
+            */
         }
 
         void ApplyGameCoreModifications(GameObject gameCore)
         {
             var handControllers = gameCore.transform
                 .Find("Origin")
-                ?.Find("VRGameCore")
-                ?.Find("HandControllers");
+                ?.Find("VRGameCore");
 
             if (handControllers == null)
             {
@@ -72,13 +77,14 @@ namespace SaberTailor.Tweaks
 
             try
             {
+                //FIXME!!! This will probably need a split into hitbox modification and base game model modification
+                //FIXME!!! Check compatibility with CustomSabers
                 //ModifySaber(handControllers.Find("LeftSaber")?.GetComponent<Saber>());
                 //ModifySaber(handControllers.Find("RightSaber")?.GetComponent<Saber>());
             }
             catch (NullReferenceException)
             {
-                //this.Log("Couldn't modify sabers, likely that the game structure has changed.");
-                this.Log("SaberLength adjustments not implemented for current version of Beat Saber");
+                this.Log("Couldn't modify sabers, likely that the game structure has changed.");
                 return;
             }
 
@@ -86,18 +92,8 @@ namespace SaberTailor.Tweaks
         }
         void ModifySaber(Saber saber)
         {
-            var length = Preferences.Length;
-            var saberBlade = saber.transform.Find("Saber");
-            var saberTop = ReflectionUtil.GetPrivateField<Transform>(saber, "_topPos");
-            var saberBottom = ReflectionUtil.GetPrivateField<Transform>(saber, "_bottomPos");
-
-            // In v0.12.0, blade and handle are not different Unity objects anymore
-            var originalLength = saberBlade.localScale.z;
-
-            saberBlade.localScale = new Vector3(saberBlade.localScale.x, saberBlade.localScale.y, saberBlade.localScale.z * length);
-
-            saberTop.localPosition = new Vector3(saberTop.localPosition.x, saberTop.localPosition.y, originalLength * length);
-
+            //FIXME!!! Actual Implementation
+            return;
         }
     }
 }

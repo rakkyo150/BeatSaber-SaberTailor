@@ -41,7 +41,7 @@ namespace SaberTailor.Tweaks
 
             try
             {
-                // XWeaponTrail now in BasicSaberModelController as proteced _saberWeaponTrail - find it!
+                // XWeaponTrail now in BasicSaberModelController as proteced _saberWeaponTrail, which is available through GameCoreInstaller
                 GameCoreInstaller gci = sceneContext.GetComponent<GameCoreInstaller>();
                 BasicSaberModelController bsmc = ReflectionUtil.GetPrivateField<BasicSaberModelController>(gci, "_basicSaberModelControllerPrefab");
                 SaberWeaponTrail saberTrail = ReflectionUtil.GetPrivateField<SaberWeaponTrail>(bsmc, "_saberWeaponTrail");

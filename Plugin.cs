@@ -12,7 +12,7 @@ namespace SaberTailor
     public class Plugin : IPlugin
     {
         public const string Name = "SaberTailor";
-        public const string Version = "1.3.0-Alpha+shadnix0";
+        public const string Version = "1.3.0-Beta";
 
         string IPlugin.Name => Name;
         string IPlugin.Version => Version;
