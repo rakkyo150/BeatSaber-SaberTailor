@@ -1,6 +1,6 @@
-# Beat Saber - Saber Tailor v1.1.0
+# Beat Saber - Saber Tailor v1.3.0-Beta
 
-Tweak almost everything about your sabers, including length, grip, and trail length!
+Tweak things about your sabers, including grip and trail length!
 
 Edit your settings in `\Beat Saber\UserData\modprefs.ini` - they're reloaded every time you start or restart a song, so use that for adjusting the grip values!
 
@@ -23,7 +23,7 @@ GripRightRotation=0,0,0
 
 All config is reloaded every time a song starts - so you can easily adjust things at runtime just by modifying the `modprefs.ini` file.
 
-### Length
+### Length (Currently not implemented)
 
 - **Setting**: `Length`
 - **Unit**: Metres
@@ -33,7 +33,7 @@ All config is reloaded every time a song starts - so you can easily adjust thing
 
 **Setting this to anything other than 1 will disable score submissions!**
 
-This setting is known to break many custom sabers, so use this at your own risk. A fix for this may be coming in the future!
+**This setting is currently not implemented for the current version of Beat Saber.**
 
 ### Trail Toggle
 
