@@ -11,7 +11,7 @@ namespace SaberTailor.Tweaks
     {
         public string Name => "SaberGrip";
         public bool IsPreventingScoreSubmission => false;
-        HarmonyInstance harmony = HarmonyInstance.Create("SaberTailorHarmonyInstance");
+        HarmonyInstance harmony = HarmonyInstance.Create("com.shadnix.BeatSaber.SaberTailor");
 
         public void Load()
         {
@@ -30,11 +30,19 @@ namespace SaberTailor.Tweaks
 
             this.Log("Tweaking GameCore...");
             Preferences.Load();
-            
+
             // Apply Harmony Patches
-            this.Log("Loading harmony patches...");
-            harmony.PatchAll(Assembly.GetExecutingAssembly());
-            this.Log("Loaded harmony patches...");
+            try
+            {
+                this.Log("Loading Harmony patches...");
+                harmony.PatchAll(Assembly.GetExecutingAssembly());
+                this.Log("Loaded Harmony patches. Successfully modified saber grip!");
+            }
+            catch (Exception e)
+            {
+                this.Log("Loading Harmony patches failed. Please check if you have Harmony installed.");
+                this.Log(e.ToString());
+            }
 
             // Superseeded by harmony patch
             //ApplyGameCoreModifications(loadedScene.GetRootGameObjects().First());
@@ -45,8 +53,8 @@ namespace SaberTailor.Tweaks
             if (unloadedScene.name != "GameCore") return;
 
             this.Log("Running Cleanup after unloading GameCore...");
-            this.Log("Unloading harmony patches...");
-            harmony.UnpatchAll("SaberTailorHarmonyInstance");
+            this.Log("Unloading Harmony patches...");
+            harmony.UnpatchAll("com.shadnix.BeatSaber.SaberTailor");
         }
 
         void ApplyGameCoreModifications(GameObject gameCore)
@@ -63,7 +71,7 @@ namespace SaberTailor.Tweaks
 
             try
             {
-                // Modification code used be called here
+                // Modification code used to be called here
             }
             catch (NullReferenceException)
             {
