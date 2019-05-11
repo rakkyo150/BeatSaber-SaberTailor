@@ -1,4 +1,4 @@
-# Beat Saber - Saber Tailor v1.3.0-Beta
+# Beat Saber - Saber Tailor v1.3.0
 
 Tweak things about your sabers, including grip position/angle and trail length!
 
@@ -33,7 +33,7 @@ All config is reloaded every time a song starts - so you can easily adjust thing
 
 **Setting this to anything other than 1 will disable score submissions!**
 
-**This setting is currently not implemented for the current version of Beat Saber.**
+** *This setting is currently not implemented for the current version of Beat Saber.* **
 
 ### Trail Toggle
 
