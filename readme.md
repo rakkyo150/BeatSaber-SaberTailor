@@ -33,7 +33,7 @@ All config is reloaded every time a song starts - so you can easily adjust thing
 
 **Setting this to anything other than 1 will disable score submissions!**
 
-** *This setting is currently not implemented for the current version of Beat Saber.* **
+***This setting is currently not implemented for the current version of Beat Saber.***
 
 ### Trail Toggle
 
@@ -76,8 +76,8 @@ Alters the position of the left/right saber, relative to the default location. Y
 
 Order of axis: `rx`, `ry`, `rz`
 
-- `+rx` tilts the saber down, EG: `20,0,0` titls the saber 20 degrees down.
+- `+rx` tilts the saber down, EG: `20,0,0` tilts the saber 20 degrees down.
 - `+ry` rotates the saber right, EG: `0,10,0` rotates the saber 10 degrees right.
-- `+rz` rolls the saber counter-clockwise, EG: `0,0,30` rotates the saber 30 centimetres counter-clockwise.
+- `+rz` rolls the saber counter-clockwise around its own axis, EG: `0,0,30` rotates the saber 30 degrees counter-clockwise. (This is only useful if you have custom sabers that are not cylindrical shaped and you want to correct for a different grip (e.g. Vive B-Grip)
 
 Alters the rotation of the sabers. The centre of rotation is where the saber's hitbox starts, which is just after the glowing line on the handle. This option *does not* disable score submission.
