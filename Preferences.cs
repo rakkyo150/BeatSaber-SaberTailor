@@ -18,6 +18,8 @@ namespace SaberTailor
         public static Vector3 GripLeftRotation { get; private set; }
         public static Vector3 GripRightRotation { get; private set; }
 
+        public static bool ModifyMenuHiltGrip { get; private set; }
+
         static Preferences()
         {
             Load();
@@ -50,6 +52,8 @@ namespace SaberTailor
                 z = Mathf.Clamp(GripRightPosition.z, -0.5f, 0.5f)
             };
             GripRightRotation = Quaternion.Euler(ParseVector3(ModPrefs.GetString(Plugin.Name, nameof(GripRightRotation), "0,0,0", true))).eulerAngles;
+
+            ModifyMenuHiltGrip = ModPrefs.GetBool(Plugin.Name, nameof(ModifyMenuHiltGrip), false, true);
         }
 
 
