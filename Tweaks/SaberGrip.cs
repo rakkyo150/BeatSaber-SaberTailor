@@ -2,8 +2,6 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Harmony;
-using System.Reflection;
 
 namespace SaberTailor.Tweaks
 {
@@ -11,50 +9,29 @@ namespace SaberTailor.Tweaks
     {
         public string Name => "SaberGrip";
         public bool IsPreventingScoreSubmission => false;
-        HarmonyInstance harmony = HarmonyInstance.Create("com.shadnix.BeatSaber.SaberTailor");
 
         public void Load()
         {
             SceneManager.sceneLoaded += SceneManagerOnSceneLoaded;
-            SceneManager.sceneUnloaded += SceneManagerOnSceneUnloaded;
         }
         public void Cleanup()
         {
             SceneManager.sceneLoaded -= SceneManagerOnSceneLoaded;
-            SceneManager.sceneUnloaded -= SceneManagerOnSceneUnloaded;
         }
 
         void SceneManagerOnSceneLoaded(Scene loadedScene, LoadSceneMode loadSceneMode)
         {
             if (loadedScene.name != "GameCore") return;
 
-            this.Log("Tweaking GameCore...");
+            // this.Log("Tweaking GameCore...");
             Preferences.Load();
 
-            // Apply Harmony Patches
-            try
-            {
-                this.Log("Loading Harmony patches...");
-                harmony.PatchAll(Assembly.GetExecutingAssembly());
-                this.Log("Loaded Harmony patches. Successfully modified saber grip!");
-            }
-            catch (Exception e)
-            {
-                this.Log("Loading Harmony patches failed. Please check if you have Harmony installed.");
-                this.Log(e.ToString());
-            }
+            // Apply Harmony patches
+            // -> removed, loading of Harmony patches moved to plugin.cs
+            // -> This file will get removed during the partial rewrite of this mod for BSIPA
 
             // Superseeded by harmony patch
             //ApplyGameCoreModifications(loadedScene.GetRootGameObjects().First());
-        }
-
-        void SceneManagerOnSceneUnloaded(Scene unloadedScene)
-        {
-            if (unloadedScene.name != "GameCore") return;
-
-            this.Log("Running Cleanup after unloading GameCore...");
-            this.Log("Unloading Harmony patches...");
-            harmony.UnpatchAll("com.shadnix.BeatSaber.SaberTailor");
         }
 
         void ApplyGameCoreModifications(GameObject gameCore)
