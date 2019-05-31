@@ -14,13 +14,13 @@ namespace SaberTailor.HarmonyPatches
             if (transform.gameObject.name == "LeftSaber")
             {
                 transform.Translate(Preferences.GripLeftPosition);
-                transform.Rotate(Preferences.GripLeftRotation.eulerAngles);
+                transform.Rotate(Preferences.GripLeftRotation);
                 return;
             }
             else if (transform.gameObject.name == "RightSaber")
             {
                 transform.Translate(Preferences.GripRightPosition);
-                transform.Rotate(Preferences.GripRightRotation.eulerAngles);
+                transform.Rotate(Preferences.GripRightRotation);
                 return;
             }
             return;

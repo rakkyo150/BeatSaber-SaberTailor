@@ -15,8 +15,8 @@ namespace SaberTailor
         public static Vector3 GripLeftPosition { get; private set; }
         public static Vector3 GripRightPosition { get; private set; }
 
-        public static Quaternion GripLeftRotation { get; private set; }
-        public static Quaternion GripRightRotation { get; private set; }
+        public static Vector3 GripLeftRotation { get; private set; }
+        public static Vector3 GripRightRotation { get; private set; }
 
         static Preferences()
         {
@@ -40,7 +40,7 @@ namespace SaberTailor
                 y = Mathf.Clamp(GripLeftPosition.y, -0.5f, 0.5f),
                 z = Mathf.Clamp(GripLeftPosition.z, -0.5f, 0.5f)
             };
-            GripLeftRotation = Quaternion.Euler(ParseVector3(ModPrefs.GetString(Plugin.Name, nameof(GripLeftRotation), "0,0,0", true)));
+            GripLeftRotation = Quaternion.Euler(ParseVector3(ModPrefs.GetString(Plugin.Name, nameof(GripLeftRotation), "0,0,0", true))).eulerAngles;
 
             GripRightPosition = ParseVector3(ModPrefs.GetString(Plugin.Name, nameof(GripRightPosition), "0,0,0", true)) / 100f;
             GripRightPosition = new Vector3
@@ -49,7 +49,7 @@ namespace SaberTailor
                 y = Mathf.Clamp(GripRightPosition.y, -0.5f, 0.5f),
                 z = Mathf.Clamp(GripRightPosition.z, -0.5f, 0.5f)
             };
-            GripRightRotation = Quaternion.Euler(ParseVector3(ModPrefs.GetString(Plugin.Name, nameof(GripRightRotation), "0,0,0", true)));
+            GripRightRotation = Quaternion.Euler(ParseVector3(ModPrefs.GetString(Plugin.Name, nameof(GripRightRotation), "0,0,0", true))).eulerAngles;
         }
 
 
