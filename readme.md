@@ -1,4 +1,4 @@
-# Beat Saber - Saber Tailor v1.3.0
+# Beat Saber - Saber Tailor v1.4.0
 
 Tweak things about your sabers, including grip position/angle and trail length!
 
@@ -81,3 +81,11 @@ Order of axis: `rx`, `ry`, `rz`
 - `+rz` rolls the saber counter-clockwise around its own axis, EG: `0,0,30` rotates the saber 30 degrees counter-clockwise. (This is only useful if you have custom sabers that are not cylindrical shaped and you want to correct for a different grip (e.g. Vive B-Grip)
 
 Alters the rotation of the sabers. The centre of rotation is where the saber's hitbox starts, which is just after the glowing line on the handle. This option *does not* disable score submission.
+
+### Menu hilt adjustments
+
+- **Setting**: `ModifyMenuHiltGrip`
+- **Values**: `1` | `0`
+- **Default**: `0`
+
+Alters the position and angle of the menu hilts the same way as the sabers, when set to `1`. This option *does not* disable score submission.
