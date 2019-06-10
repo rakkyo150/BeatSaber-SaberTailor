@@ -15,6 +15,7 @@ GripLeftPosition=0,0,0
 GripLeftRotation=0,0,0
 GripRightPosition=0,0,0
 GripRightRotation=0,0,0
+ModifyMenuHiltGrip=0
 ```
 
 *If the file / settings don't exist, run your game once after installing!*
