@@ -9,16 +9,21 @@ namespace SaberTailor
     {
         public static float Length { get; private set; }
 
-        public static bool IsTrailEnabled { get; private set; }
-        public static int TrailLength { get; private set; }
+        public static bool IsTrailEnabled;
+        public static int TrailLength;
 
-        public static Vector3 GripLeftPosition { get; private set; }
-        public static Vector3 GripRightPosition { get; private set; }
+        public static Vector3 GripLeftPosition;
+        public static Vector3 GripRightPosition;
 
         public static Vector3 GripLeftRotation { get; private set; }
         public static Vector3 GripRightRotation { get; private set; }
 
-        public static bool ModifyMenuHiltGrip { get; private set; }
+        // ..raw vars for representing player settings before Unity mangled it into something that works with the game 
+        // but also changed representation of these settings
+        public static Vector3 GripLeftRotationRaw;
+        public static Vector3 GripRightRotationRaw;
+
+        public static bool ModifyMenuHiltGrip;
 
         static Preferences()
         {
@@ -42,7 +47,7 @@ namespace SaberTailor
                 y = Mathf.Clamp(GripLeftPosition.y, -0.5f, 0.5f),
                 z = Mathf.Clamp(GripLeftPosition.z, -0.5f, 0.5f)
             };
-            GripLeftRotation = Quaternion.Euler(ParseVector3(ModPrefs.GetString(Plugin.Name, nameof(GripLeftRotation), "0,0,0", true))).eulerAngles;
+            GripLeftRotationRaw = ParseVector3(ModPrefs.GetString(Plugin.Name, nameof(GripLeftRotation), "0,0,0", true));
 
             GripRightPosition = ParseVector3(ModPrefs.GetString(Plugin.Name, nameof(GripRightPosition), "0,0,0", true)) / 100f;
             GripRightPosition = new Vector3
@@ -51,11 +56,34 @@ namespace SaberTailor
                 y = Mathf.Clamp(GripRightPosition.y, -0.5f, 0.5f),
                 z = Mathf.Clamp(GripRightPosition.z, -0.5f, 0.5f)
             };
-            GripRightRotation = Quaternion.Euler(ParseVector3(ModPrefs.GetString(Plugin.Name, nameof(GripRightRotation), "0,0,0", true))).eulerAngles;
+            GripRightRotationRaw = ParseVector3(ModPrefs.GetString(Plugin.Name, nameof(GripRightRotation), "0,0,0", true));
 
             ModifyMenuHiltGrip = ModPrefs.GetBool(Plugin.Name, nameof(ModifyMenuHiltGrip), false, true);
+
+            UpdateSaberRotation();
         }
 
+        public static void Save()
+        {
+            // Ignore length for now because it isn't implemented anyways
+
+            ModPrefs.SetBool(Plugin.Name, nameof(IsTrailEnabled), IsTrailEnabled);
+            ModPrefs.SetInt(Plugin.Name, nameof(TrailLength), TrailLength);
+
+            ModPrefs.SetString(Plugin.Name, nameof(GripLeftPosition), (GripLeftPosition.x * 100).ToString("D") + "," + (GripLeftPosition.y * 100).ToString("D") + "," + (GripLeftPosition.z * 100).ToString("D"));
+            ModPrefs.SetString(Plugin.Name, nameof(GripLeftRotation), GripLeftRotationRaw.ToString("D") + "," + GripLeftRotationRaw.y.ToString("D") + "," + GripLeftRotationRaw.z.ToString("D"));
+
+            ModPrefs.SetString(Plugin.Name, nameof(GripRightPosition), (GripRightPosition.x * 100).ToString("D") + "," + (GripRightPosition.y * 100).ToString("D") + "," + (GripRightPosition.z * 100).ToString("D"));
+            ModPrefs.SetString(Plugin.Name, nameof(GripRightRotation), GripRightRotationRaw.ToString("D") + "," + GripRightRotationRaw.y.ToString("D") + "," + GripRightRotationRaw.z.ToString("D"));
+
+            ModPrefs.SetBool(Plugin.Name, nameof(ModifyMenuHiltGrip), ModifyMenuHiltGrip);
+        }
+
+        public static void UpdateSaberRotation()
+        {
+            GripLeftRotation = Quaternion.Euler(GripLeftRotationRaw).eulerAngles;
+            GripRightRotation = Quaternion.Euler(GripRightRotationRaw).eulerAngles;
+        }
 
         static Vector3 ParseVector3(string originalString)
         {

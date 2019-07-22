@@ -46,6 +46,7 @@
     <Compile Include="Tweaks\SaberGrip.cs" />
     <Compile Include="Tweaks\SaberLength.cs" />
     <Compile Include="Tweaks\SaberTrail.cs" />
+    <Compile Include="UI\ModUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
@@ -54,6 +55,10 @@
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>C:\Spiele\Steam\steamapps\common\Beat Saber\Beat Saber_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="BeatSaberCustomUI">
+      <HintPath>C:\Spiele\Steam\steamapps\common\Beat Saber\Plugins\BeatSaberCustomUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IllusionPlugin">
