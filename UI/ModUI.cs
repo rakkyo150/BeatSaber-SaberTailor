@@ -62,17 +62,17 @@ namespace SaberTailor.UI
             rPoszCtrl.GetValue += delegate { return (int)(Preferences.GripRightPosition.z * 100); };
             rPoszCtrl.SetValue += delegate (int value) { Preferences.GripRightPosition.z = value / 100f; Preferences.Save(); };
 
-            IntViewController rRotxCtrl = leftSaberMenu.AddInt("Rot X (Up/Down)", "Tilts the saber up/down relative to the controller.", -360, 360, 5);
+            IntViewController rRotxCtrl = rightSaberMenu.AddInt("Rot X (Up/Down)", "Tilts the saber up/down relative to the controller.", -360, 360, 5);
             rRotxCtrl.GetValue += delegate { return (int)Preferences.GripRightRotationRaw.x; };
             rRotxCtrl.SetValue += delegate (int value) { Preferences.GripRightRotationRaw.x = value; Preferences.UpdateSaberRotation(); Preferences.Save(); };
 
-            IntViewController rRotyCtrl = leftSaberMenu.AddInt("Rot Y (Left/Right)", "Rotates the saber left/right relative to the controller.", -360, 360, 5);
-            rRotxCtrl.GetValue += delegate { return (int)Preferences.GripRightRotationRaw.y; };
-            rRotxCtrl.SetValue += delegate (int value) { Preferences.GripRightRotationRaw.y = value; Preferences.UpdateSaberRotation(); Preferences.Save(); };
+            IntViewController rRotyCtrl = rightSaberMenu.AddInt("Rot Y (Left/Right)", "Rotates the saber left/right relative to the controller.", -360, 360, 5);
+            rRotyCtrl.GetValue += delegate { return (int)Preferences.GripRightRotationRaw.y; };
+            rRotyCtrl.SetValue += delegate (int value) { Preferences.GripRightRotationRaw.y = value; Preferences.UpdateSaberRotation(); Preferences.Save(); };
 
-            IntViewController rRotzCtrl = leftSaberMenu.AddInt("Rot Z (Saber axis)", "Rotates the saber around its own axis.", -360, 360, 5);
-            rRotxCtrl.GetValue += delegate { return (int)Preferences.GripRightRotationRaw.z; };
-            rRotxCtrl.SetValue += delegate (int value) { Preferences.GripRightRotationRaw.z = value; Preferences.UpdateSaberRotation(); Preferences.Save(); };
+            IntViewController rRotzCtrl = rightSaberMenu.AddInt("Rot Z (Saber axis)", "Rotates the saber around its own axis.", -360, 360, 5);
+            rRotzCtrl.GetValue += delegate { return (int)Preferences.GripRightRotationRaw.z; };
+            rRotzCtrl.SetValue += delegate (int value) { Preferences.GripRightRotationRaw.z = value; Preferences.UpdateSaberRotation(); Preferences.Save(); };
 
 
             // Add options for trail adjustments

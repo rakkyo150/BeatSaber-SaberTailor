@@ -70,11 +70,11 @@ namespace SaberTailor
             ModPrefs.SetBool(Plugin.Name, nameof(IsTrailEnabled), IsTrailEnabled);
             ModPrefs.SetInt(Plugin.Name, nameof(TrailLength), TrailLength);
 
-            ModPrefs.SetString(Plugin.Name, nameof(GripLeftPosition), (GripLeftPosition.x * 100).ToString("D") + "," + (GripLeftPosition.y * 100).ToString("D") + "," + (GripLeftPosition.z * 100).ToString("D"));
-            ModPrefs.SetString(Plugin.Name, nameof(GripLeftRotation), GripLeftRotationRaw.ToString("D") + "," + GripLeftRotationRaw.y.ToString("D") + "," + GripLeftRotationRaw.z.ToString("D"));
+            ModPrefs.SetString(Plugin.Name, nameof(GripLeftPosition), (GripLeftPosition.x * 100).ToString("F0") + "," + (GripLeftPosition.y * 100).ToString("F0") + "," + (GripLeftPosition.z * 100).ToString("F0"));
+            ModPrefs.SetString(Plugin.Name, nameof(GripLeftRotation), GripLeftRotationRaw.x.ToString("F0") + "," + GripLeftRotationRaw.y.ToString("F0") + "," + GripLeftRotationRaw.z.ToString("F0"));
 
-            ModPrefs.SetString(Plugin.Name, nameof(GripRightPosition), (GripRightPosition.x * 100).ToString("D") + "," + (GripRightPosition.y * 100).ToString("D") + "," + (GripRightPosition.z * 100).ToString("D"));
-            ModPrefs.SetString(Plugin.Name, nameof(GripRightRotation), GripRightRotationRaw.ToString("D") + "," + GripRightRotationRaw.y.ToString("D") + "," + GripRightRotationRaw.z.ToString("D"));
+            ModPrefs.SetString(Plugin.Name, nameof(GripRightPosition), (GripRightPosition.x * 100).ToString("F0") + "," + (GripRightPosition.y * 100).ToString("F0") + "," + (GripRightPosition.z * 100).ToString("F0"));
+            ModPrefs.SetString(Plugin.Name, nameof(GripRightRotation), GripRightRotationRaw.x.ToString("F0") + "," + GripRightRotationRaw.y.ToString("F0") + "," + GripRightRotationRaw.z.ToString("F0"));
 
             ModPrefs.SetBool(Plugin.Name, nameof(ModifyMenuHiltGrip), ModifyMenuHiltGrip);
         }
