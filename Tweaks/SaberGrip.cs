@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using LogLevel = IPA.Logging.Logger.Level;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +14,7 @@ namespace SaberTailor.Tweaks
         {
             SceneManager.sceneLoaded += SceneManagerOnSceneLoaded;
         }
+
         public void Cleanup()
         {
             SceneManager.sceneLoaded -= SceneManagerOnSceneLoaded;
@@ -21,28 +22,31 @@ namespace SaberTailor.Tweaks
 
         void SceneManagerOnSceneLoaded(Scene loadedScene, LoadSceneMode loadSceneMode)
         {
-            if (loadedScene.name != "GameCore") return;
+            if (loadedScene.name != "GameCore")
+            {
+                return;
+            }
 
-            // this.Log("Tweaking GameCore...");
-            Preferences.Load();
+            this.Log("Tweaking GameCore...", LogLevel.Debug);
+            Configuration.UpdateSaberRotation();
 
             // Apply Harmony patches
             // -> removed, loading of Harmony patches moved to plugin.cs
             // -> This file will get removed during the partial rewrite of this mod for BSIPA
 
-            // Superseeded by harmony patch
+            // Superseded by harmony patch
             //ApplyGameCoreModifications(loadedScene.GetRootGameObjects().First());
         }
 
         void ApplyGameCoreModifications(GameObject gameCore)
         {
-            var handControllers = gameCore.transform
+            Transform handControllers = gameCore.transform
                 .Find("Origin")
                 ?.Find("VRGameCore");
 
             if (handControllers == null)
             {
-                this.Log("Couldn't find HandControllers, bailing!");
+                this.Log("Couldn't find HandControllers, bailing!", LogLevel.Debug);
                 return;
             }
 
@@ -52,12 +56,12 @@ namespace SaberTailor.Tweaks
             }
             catch (NullReferenceException)
             {
-                this.Log("Couldn't modify sabers, likely that the game structure has changed.");
+                this.Log("Couldn't modify sabers, likely that the game structure has changed.", LogLevel.Error);
                 return;
             }
             catch (Exception e)
             {
-                this.Log("{0} Exception caught.", e);
+                this.Log(e, "{0} Exception caught.", LogLevel.Error);
             }
 
             this.Log("Successfully modified saber grip!");

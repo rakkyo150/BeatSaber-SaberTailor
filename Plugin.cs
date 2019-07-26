@@ -1,26 +1,29 @@
-﻿using IllusionPlugin;
-using Harmony;
-using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using UnityEngine;
+using JetBrains.Annotations;
+using IPA;
+using IPA.Config;
+using IPA.Loader;
+using IPA.Utilities;
+using IPALogger = IPA.Logging.Logger;
+using LogLevel = IPA.Logging.Logger.Level;
+using Harmony;
 using UnityEngine.SceneManagement;
 
 namespace SaberTailor
 {
     [UsedImplicitly]
-    public class Plugin : IPlugin
+    public class Plugin : IBeatSaberPlugin
     {
-        public const string Name = "SaberTailor";
-        public const string Version = "1.5.0-beta1";
+        public static string PluginName => "SaberTailor";
+        public static string PluginVersion { get; private set; } = "0"; // Default. Actual version is retrieved from the manifest
 
-        string IPlugin.Name => Name;
-        string IPlugin.Version => Version;
+        internal static Ref<ConfigUtilities.PluginConfig> config;
+        internal static IConfigProvider configProvider;
 
-        internal static bool harmonyPatchesLoaded = false;
-        internal static HarmonyInstance harmonyInstance = HarmonyInstance.Create("com.shadnix.BeatSaber.SaberTailor");
+        private static bool harmonyPatchesLoaded = false;
+        internal static HarmonyInstance harmonyInstance;
 
         readonly List<Tweaks.ITweak> _tweaks = new List<Tweaks.ITweak>
         {
@@ -29,24 +32,53 @@ namespace SaberTailor
             new Tweaks.SaberTrail()
         };
 
+        public void Init(IPALogger logger, [Config.PreferAttribute("json")] IConfigProvider cfgProvider, PluginLoader.PluginMetadata metadata)
+        {
+            if (logger != null)
+            {
+                Logger.log = logger;
+                Logger.Log("Logger prepared", LogLevel.Debug);
+            }
+
+            configProvider = cfgProvider;
+            config = cfgProvider.MakeLink<ConfigUtilities.PluginConfig>((p, v) =>
+            {
+                if (v.Value == null || v.Value.RegenerateConfig || v.Value == null && v.Value.RegenerateConfig)
+                {
+                    p.Store(v.Value = new ConfigUtilities.PluginConfig() { RegenerateConfig = false });
+                }
+                config = v;
+            });
+            Logger.Log("Configuration loaded", LogLevel.Debug);
+
+            if (metadata != null)
+            {
+                PluginVersion = metadata.Version.ToString();
+            }
+        }
+
         public void OnApplicationStart()
         {
+            Configuration.Load();
+
             _tweaks.ForEach(tweak =>
             {
                 try
                 {
                     tweak.Load();
-                    Log("Loaded tweak: {0}", tweak.Name);
+                    Logger.Log($"Loaded tweak: {tweak.Name}", LogLevel.Debug);
                 }
                 catch (Exception ex)
                 {
-                    Log("Failed to load tweak: {0}. Exception: {1}", tweak.Name, ex);
+                    Logger.Log($"Failed to load tweak: {tweak.Name}", LogLevel.Error);
+                    Logger.Log(ex, LogLevel.Error);
                 }
             });
 
-            SceneManager.activeSceneChanged += SceneManagerOnActiveSceneChanged;
-            SceneManager.sceneLoaded += SceneManagerSceneLoaded;
+            ApplyHarmonyPatches();
+            Logger.Log($"{PluginName} v.{PluginVersion} has started", LogLevel.Notice);
         }
+
         public void OnApplicationQuit()
         {
             _tweaks.ForEach(tweak =>
@@ -54,45 +86,20 @@ namespace SaberTailor
                 try
                 {
                     tweak.Cleanup();
-                    Log("Unloaded tweak: {0}", tweak.Name);
+                    Logger.Log($"Unloaded tweak: {tweak.Name}", LogLevel.Debug);
                 }
                 catch (Exception ex)
                 {
-                    Log("Failed to unload tweak: {0}. Exception: {1}", tweak.Name, ex);
+                    Logger.Log($"Failed to unload tweak: {tweak.Name}", LogLevel.Error);
+                    Logger.Log(ex, LogLevel.Error);
                 }
             });
 
-            SceneManager.activeSceneChanged -= SceneManagerOnActiveSceneChanged;
-            SceneManager.sceneLoaded -= SceneManagerSceneLoaded;
+            Configuration.Save();
+            RemoveHarmonyPatches();
         }
 
-
-        void SceneManagerOnActiveSceneChanged(Scene previousScene, Scene currentScene)
-        {
-            Preferences.Load();
-
-            // Check if Harmony patches are already loaded
-            if (harmonyPatchesLoaded) { return; }
-
-            // Load Harmony patches if we are changing into main menu
-            if (currentScene.name == "HealthWarning")
-            {
-                try
-                {
-                    Log("Loading Harmony patches...");
-                    harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
-                    Log("Loaded Harmony patches. Successfully modified saber grip!");
-                }
-                catch (Exception e)
-                {
-                    Log("Loading Harmony patches failed. Please check if you have Harmony installed.");
-                    Log(e.ToString());
-                }
-                harmonyPatchesLoaded = true;
-            }
-        }
-
-        void SceneManagerSceneLoaded(Scene scene, LoadSceneMode mode)
+        public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
         {
             if (scene.name == "MenuCore")
             {
@@ -100,23 +107,51 @@ namespace SaberTailor
             }
         }
 
+        public void OnUpdate() { }
+        public void OnFixedUpdate() { }
+        public void OnSceneUnloaded(Scene scene) { }
+        public void OnActiveSceneChanged(Scene prevScene, Scene nextScene) { }
 
-        public static void Log(string format, params object[] args)
+        private void ApplyHarmonyPatches()
         {
-            Console.WriteLine($"[{Name}] " + format, args);
+            if (harmonyPatchesLoaded)
+            {
+                return;
+            }
+
+            if (harmonyInstance == null)
+            {
+                harmonyInstance = HarmonyInstance.Create("com.shadnix.BeatSaber.SaberTailor");
+            }
+
+            try
+            {
+                Logger.Log("Loading Harmony patches...", LogLevel.Debug);
+                harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
+                Logger.Log("Loaded Harmony patches. Successfully modified saber grip!", LogLevel.Debug);
+                harmonyPatchesLoaded = true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Loading Harmony patches failed. Please check if you have Harmony installed.", LogLevel.Error);
+                Logger.Log(ex, LogLevel.Error);
+            }
         }
-        public static void Log(string message)
+
+        private void RemoveHarmonyPatches()
         {
-            Log(message, new object[] { });
+            if (harmonyInstance != null && harmonyPatchesLoaded)
+            {
+                try
+                {
+                    harmonyInstance.UnpatchAll("com.shadnix.BeatSaber.SaberTailor");
+                    harmonyPatchesLoaded = false;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log(ex, LogLevel.Error);
+                }
+            }
         }
-
-        #region Unused IPlugin Members
-
-        void IPlugin.OnUpdate() { }
-        void IPlugin.OnFixedUpdate() { }
-        void IPlugin.OnLevelWasLoaded(int level) { }
-        void IPlugin.OnLevelWasInitialized(int level) { }
-
-        #endregion
     }
 }
