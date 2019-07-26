@@ -14,7 +14,7 @@ using UnityEngine.SceneManagement;
 namespace SaberTailor
 {
     [UsedImplicitly]
-    public class Plugin : IBeatSaberPlugin
+    public class Plugin : IBeatSaberPlugin, IDisablablePlugin
     {
         public static string PluginName => "SaberTailor";
         public static string PluginVersion { get; private set; } = "0"; // Default. Actual version is retrieved from the manifest
@@ -57,7 +57,25 @@ namespace SaberTailor
             }
         }
 
-        public void OnApplicationStart()
+        public void OnApplicationStart() => Load();
+        public void OnApplicationQuit() => Unload();
+        public void OnEnable() => Load();
+        public void OnDisable() => Unload();
+
+        public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
+        {
+            if (scene.name == "MenuCore")
+            {
+                UI.ModUI.CreateSettingsOptionsUI();
+            }
+        }
+
+        public void OnUpdate() { }
+        public void OnFixedUpdate() { }
+        public void OnSceneUnloaded(Scene scene) { }
+        public void OnActiveSceneChanged(Scene prevScene, Scene nextScene) { }
+
+        private void Load()
         {
             Configuration.Load();
 
@@ -79,7 +97,7 @@ namespace SaberTailor
             Logger.Log($"{PluginName} v.{PluginVersion} has started", LogLevel.Notice);
         }
 
-        public void OnApplicationQuit()
+        private void Unload()
         {
             _tweaks.ForEach(tweak =>
             {
@@ -95,22 +113,9 @@ namespace SaberTailor
                 }
             });
 
-            Configuration.Save();
             RemoveHarmonyPatches();
+            Configuration.Save();
         }
-
-        public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
-        {
-            if (scene.name == "MenuCore")
-            {
-                UI.ModUI.CreateSettingsOptionsUI();
-            }
-        }
-
-        public void OnUpdate() { }
-        public void OnFixedUpdate() { }
-        public void OnSceneUnloaded(Scene scene) { }
-        public void OnActiveSceneChanged(Scene prevScene, Scene nextScene) { }
 
         private void ApplyHarmonyPatches()
         {
