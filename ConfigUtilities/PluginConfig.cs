@@ -4,7 +4,8 @@
     {
         public bool RegenerateConfig = true;
 
-        public float Length = 1.0f;
+        public float SaberLength = 1.0f;
+        public float SaberGirth = 1.0f;
 
         public bool IsTrailEnabled = true;
         public int TrailLength = 20;

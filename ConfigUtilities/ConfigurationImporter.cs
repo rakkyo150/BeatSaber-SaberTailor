@@ -31,7 +31,7 @@ namespace SaberTailor.ConfigUtilities
             {
 #pragma warning disable CS0618 // ModPrefs is obsolete
                 Length = ModPrefs.GetFloat(Plugin.PluginName, nameof(Length), 1f, true);
-                Configuration.Length = Math.Max(0.01f, Math.Min(2f, Length));
+                Configuration.SaberLength = Math.Max(0.01f, Math.Min(2f, Length));
 
                 Configuration.IsTrailEnabled = ModPrefs.GetBool(Plugin.PluginName, nameof(IsTrailEnabled), true, true);
 

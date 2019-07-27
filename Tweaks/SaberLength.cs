@@ -9,7 +9,7 @@ namespace SaberTailor.Tweaks
     public class SaberLength : ITweak
     {
         public string Name => "SaberLength";
-        public bool IsPreventingScoreSubmission => Math.Abs(Configuration.Length - 1.0f) > 0.01f;
+        public bool IsPreventingScoreSubmission => Math.Abs(Configuration.SaberLength - 1.0f) > 0.01f || Math.Abs(Configuration.SaberGirth - 1.0f) > 0.01f;
 
         private static bool scoreDisabled = false;
 
@@ -37,12 +37,14 @@ namespace SaberTailor.Tweaks
             }
 
             // FIXME!!! Remove the next two lines when reimplementing SaberLength adjustments
-            this.Log("SaberLength adjustments not implemented for current version of Beat Saber", LogLevel.Warning);
-            return;
+            //this.Log("SaberLength adjustments not implemented for current version of Beat Saber", LogLevel.Warning);
+            //return;
+
+            this.Log("God save the Queen! We're doing it...", LogLevel.Warning);
 
             // FIXME!!! Should probably implement an in-game menu for changing this on the fly without fiddling with config files
             //          -> Actually, this should be done regardless
-            
+
             // Allow the user to run in any mode, but don't allow ScoreSubmission
             if (IsPreventingScoreSubmission && !scoreDisabled)
             {
@@ -74,10 +76,10 @@ namespace SaberTailor.Tweaks
 
             try
             {
-                //FIXME!!! This will probably need a split into hitbox modification and base game model modification
-                //FIXME!!! Check compatibility with CustomSabers
-                ModifySaber(handControllers.Find("LeftSaber")?.GetComponent<Saber>());
-                ModifySaber(handControllers.Find("RightSaber")?.GetComponent<Saber>());
+                //FIXME (Maybe?)!!! This will probably need a split into hitbox modification and base game model modification
+                //FIXME (Totally)!!! Check compatibility with CustomSabers
+                RescaleSabers(handControllers.Find("LeftSaber")?.GetComponent<Saber>(), Configuration.SaberLength, Configuration.SaberGirth);
+                RescaleSabers(handControllers.Find("RightSaber")?.GetComponent<Saber>(), Configuration.SaberLength, Configuration.SaberGirth);
             }
             catch (NullReferenceException)
             {
@@ -88,10 +90,14 @@ namespace SaberTailor.Tweaks
             this.Log("Successfully modified sabers!");
         }
 
-        void ModifySaber(Saber saber)
+        private void RescaleSabers(Saber saber, float lengthMultiplier, float widthMultiplier)
         {
-            //FIXME!!! Actual Implementation
-            return;
+            saber.transform.localScale = new Vector3
+            {
+                x = saber.transform.localScale.x * widthMultiplier,
+                y = saber.transform.localScale.y * widthMultiplier,
+                z = saber.transform.localScale.z * lengthMultiplier
+            };
         }
     }
 }

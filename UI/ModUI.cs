@@ -12,6 +12,7 @@ namespace SaberTailor.UI
             // setup sub menus
             SubMenu leftSaberMenu = settingsMenu.AddSubMenu("Left Saber Settings", "Adjust position and rotation of the left saber.", true);
             SubMenu rightSaberMenu = settingsMenu.AddSubMenu("Right Saber Settings", "Adjust position and rotation of the right saber.", true);
+            SubMenu saberScale = settingsMenu.AddSubMenu("Saber Scaling", "ScoreSubmission will be disabled if scales are not default!\nAdjust length and width of the sabers.", true);
             SubMenu trailMenu = settingsMenu.AddSubMenu("Trail Settings", "Adjust trail settings for default trails.", true);
 
             // add menu hilt option to main menu
@@ -153,6 +154,28 @@ namespace SaberTailor.UI
             {
                 Configuration.GripRightRotationRaw.z = value;
                 Configuration.UpdateSaberRotation();
+            };
+
+
+            // Add options for left saber size adjustments
+            IntViewController scaleLengthCtrl = saberScale.AddInt("Length (Default:100%)", "Scales the saber length.", 0, 500, 5);
+            scaleLengthCtrl.GetValue += delegate
+            {
+                return (int)(Configuration.SaberLength * 100);
+            };
+            scaleLengthCtrl.SetValue += delegate (int value)
+            {
+                Configuration.SaberLength = value / 100f;
+            };
+
+            IntViewController scaleGirthCtrl = saberScale.AddInt("Width (Default:100%)", "Scales the saber width.", 0, 500, 5);
+            scaleGirthCtrl.GetValue += delegate
+            {
+                return (int)(Configuration.SaberGirth * 100);
+            };
+            scaleGirthCtrl.SetValue += delegate (int value)
+            {
+                Configuration.SaberGirth = value / 100f;
             };
 
 

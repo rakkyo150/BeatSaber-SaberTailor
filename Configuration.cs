@@ -7,7 +7,9 @@ namespace SaberTailor
 {
     public static class Configuration
     {
-        public static float Length;
+        public static float SaberLength;
+        public static float SaberGirth;
+
         public static bool IsTrailEnabled;
         public static int TrailLength;
 
@@ -26,7 +28,9 @@ namespace SaberTailor
 
         public static void Save()
         {
-            Plugin.config.Value.Length = Length;
+            Plugin.config.Value.SaberLength = SaberLength;
+            Plugin.config.Value.SaberGirth = SaberGirth;
+
             Plugin.config.Value.IsTrailEnabled = IsTrailEnabled;
             Plugin.config.Value.TrailLength = TrailLength;
 
@@ -78,7 +82,9 @@ namespace SaberTailor
 
         private static void LoadConfig()
         {
-            Length = Math.Max(0.01f, Math.Min(2f, Plugin.config.Value.Length));
+            SaberLength = Math.Max(0.01f, Math.Min(5f, Plugin.config.Value.SaberLength));
+            SaberGirth = Math.Max(0.01f, Math.Min(5f, Plugin.config.Value.SaberGirth));
+
             IsTrailEnabled = Plugin.config.Value.IsTrailEnabled;
             TrailLength = Math.Max(5, Math.Min(100, Plugin.config.Value.TrailLength));
 
