@@ -1,8 +1,9 @@
-# Beat Saber - Saber Tailor v1.4.0
+# Beat Saber - Saber Tailor v1.5.0
 
-Tweak things about your sabers, including grip position/angle and trail length!
+Tweak things about your sabers, including grip position/angle and trail length! Original mod by Ruu.
 
-Edit your settings in `\Beat Saber\UserData\modprefs.ini` - they're reloaded every time you start or restart a song, so use that for adjusting the grip values!
+There are two ways to change your SaberTailor settings:
+Either use the ingame settings menu or edit your settings in `\Beat Saber\UserData\modprefs.ini` - they're reloaded every time you start or restart a song.
 
 The default values are below:
 

@@ -1,4 +1,5 @@
-﻿using CustomUI.Settings;
+﻿using System;
+using CustomUI.Settings;
 
 namespace SaberTailor.UI
 {
@@ -31,7 +32,7 @@ namespace SaberTailor.UI
             IntViewController lPosxCtrl = leftSaberMenu.AddInt("Pos X (Left/Right)", "Moves the saber left/right relative to the controller.", -50, 50, 1);
             lPosxCtrl.GetValue += delegate
             {
-                return (int)(Configuration.GripLeftPosition.x * 100);
+                return (int)Math.Round(Configuration.GripLeftPosition.x * 100);
             };
             lPosxCtrl.SetValue += delegate (int value)
             {
@@ -41,17 +42,17 @@ namespace SaberTailor.UI
             IntViewController lPosyCtrl = leftSaberMenu.AddInt("Pos Y (Down/Up)", "Moves the saber down/up relative to the controller.", -50, 50, 1);
             lPosyCtrl.GetValue += delegate
             {
-                return (int)(Configuration.GripLeftPosition.y * 100);
+                return (int)Math.Round(Configuration.GripLeftPosition.y * 100);
             };
             lPosyCtrl.SetValue += delegate (int value)
             {
                 Configuration.GripLeftPosition.y = value / 100f;
             };
 
-            IntViewController lPoszCtrl = leftSaberMenu.AddInt("Pos Z (Backwards/Forwards)", "Moves the saber backward/forward relative to the controller.", -50, 50, 1);
+            IntViewController lPoszCtrl = leftSaberMenu.AddInt("Pos Z (Backwards/Forwards)", "Moves the saber backwards/forwards relative to the controller.", -50, 50, 1);
             lPoszCtrl.GetValue += delegate
             {
-                return (int)(Configuration.GripLeftPosition.z * 100);
+                return (int)Math.Round(Configuration.GripLeftPosition.z * 100);
             };
             lPoszCtrl.SetValue += delegate (int value)
             {
@@ -96,7 +97,7 @@ namespace SaberTailor.UI
             IntViewController rPosxCtrl = rightSaberMenu.AddInt("Pos X (Left/Right)", "Moves the saber left/right relative to the controller.", -50, 50, 1);
             rPosxCtrl.GetValue += delegate
             {
-                return (int)(Configuration.GripRightPosition.x * 100);
+                return (int)Math.Round(Configuration.GripRightPosition.x * 100);
             };
             rPosxCtrl.SetValue += delegate (int value)
             {
@@ -106,17 +107,17 @@ namespace SaberTailor.UI
             IntViewController rPosyCtrl = rightSaberMenu.AddInt("Pos Y (Down/Up)", "Moves the saber down/up relative to the controller.", -50, 50, 1);
             rPosyCtrl.GetValue += delegate
             {
-                return (int)(Configuration.GripRightPosition.y * 100);
+                return (int)Math.Round(Configuration.GripRightPosition.y * 100);
             };
             rPosyCtrl.SetValue += delegate (int value)
             {
                 Configuration.GripRightPosition.y = value / 100f;
             };
 
-            IntViewController rPoszCtrl = rightSaberMenu.AddInt("Pos Z (Backwards/Forwards)", "Moves the saber backward/forward relative to the controller.", -50, 50, 1);
+            IntViewController rPoszCtrl = rightSaberMenu.AddInt("Pos Z (Backwards/Forwards)", "Moves the saber backwards/forwards relative to the controller.", -50, 50, 1);
             rPoszCtrl.GetValue += delegate
             {
-                return (int)(Configuration.GripRightPosition.z * 100);
+                return (int)Math.Round(Configuration.GripRightPosition.z * 100);
             };
             rPoszCtrl.SetValue += delegate (int value)
             {
@@ -190,7 +191,7 @@ namespace SaberTailor.UI
                 Configuration.IsTrailEnabled = value;
             };
 
-            IntViewController trailLengthCtrl = trailMenu.AddInt("Trail length", "Adjusts trail length", 5, 100, 5);
+            IntViewController trailLengthCtrl = trailMenu.AddInt("Trail length", "Adjusts trail length. Currently only works with sabers using default trail.", 5, 100, 5);
             trailLengthCtrl.GetValue += delegate
             {
                 return Configuration.TrailLength;

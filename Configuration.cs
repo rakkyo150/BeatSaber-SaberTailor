@@ -21,7 +21,7 @@ namespace SaberTailor
         public static bool ModifyMenuHiltGrip;
 
         // ..raw vars for representing player settings before Unity mangled it into something that works with the game 
-        // but also changed representation of these settings
+        // but also changes representation of these settings
         public static Vector3 GripLeftRotationRaw;
         public static Vector3 GripRightRotationRaw;
 
