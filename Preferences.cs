@@ -61,6 +61,7 @@ namespace SaberTailor
             ModifyMenuHiltGrip = ModPrefs.GetBool(Plugin.Name, nameof(ModifyMenuHiltGrip), false, true);
 
             UpdateSaberRotation();
+
         }
 
         public static void Save()
