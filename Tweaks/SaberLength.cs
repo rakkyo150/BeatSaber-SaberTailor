@@ -36,14 +36,7 @@ namespace SaberTailor.Tweaks
                 return;
             }
 
-            // FIXME!!! Remove the next two lines when reimplementing SaberLength adjustments
-            //this.Log("SaberLength adjustments not implemented for current version of Beat Saber", LogLevel.Warning);
-            //return;
-
             this.Log("God save the Queen! We're doing it...", LogLevel.Warning);
-
-            // FIXME!!! Should probably implement an in-game menu for changing this on the fly without fiddling with config files
-            //          -> Actually, this should be done regardless
 
             // Allow the user to run in any mode, but don't allow ScoreSubmission
             if (IsPreventingScoreSubmission && !scoreDisabled)
