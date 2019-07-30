@@ -36,8 +36,6 @@ namespace SaberTailor.Tweaks
                 return;
             }
 
-            this.Log("God save the Queen! We're doing it...", LogLevel.Warning);
-
             // Allow the user to run in any mode, but don't allow ScoreSubmission
             if (IsPreventingScoreSubmission && !scoreDisabled)
             {
