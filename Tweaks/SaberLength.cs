@@ -32,15 +32,11 @@ namespace SaberTailor.Tweaks
             // Allow the user to run in any mode, but don't allow ScoreSubmission
             if (IsPreventingScoreSubmission && !scoreDisabled)
             {
-                Logger.Log("Disabling scoresubmission...", LogLevel.Notice);
-
                 Utilities.ScoreUtility.DisableScoreSubmission(this.Name);
                 scoreDisabled = true;
             }
             else if (!IsPreventingScoreSubmission && scoreDisabled)
             {
-                Logger.Log("Enabling scoresubmission...", LogLevel.Notice);
-
                 Utilities.ScoreUtility.EnableScoreSubmission(this.Name);
                 scoreDisabled = false;
             }
