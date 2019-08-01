@@ -1,94 +1,148 @@
 ﻿using System;
-using System.Linq;
+using System.Collections;
 using LogLevel = IPA.Logging.Logger.Level;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace SaberTailor.Tweaks
 {
-    public class SaberLength : ITweak
+    public class SaberLength : MonoBehaviour
     {
         public string Name => "SaberLength";
         public bool IsPreventingScoreSubmission => Math.Abs(Configuration.SaberLength - 1.0f) > 0.01f || Math.Abs(Configuration.SaberGirth - 1.0f) > 0.01f;
 
         private static bool scoreDisabled = false;
+        private static SaberLength Instance;
 
-        public void Load()
+        private void Start()
         {
-            SceneManager.sceneLoaded += SceneManagerOnSceneLoaded;
-        }
-
-        public void Cleanup()
-        {
-            SceneManager.sceneLoaded -= SceneManagerOnSceneLoaded;
-
-            if (scoreDisabled)
+            if (Instance == null)
             {
-                Utilities.ScoreUtility.EnableScoreSubmission(this.Name);
-                scoreDisabled = false;
+                Instance = this;
+                Load();
             }
         }
 
-        public void SceneManagerOnSceneLoaded(Scene loadedScene, LoadSceneMode loadSceneMode)
+        private void OnDestroy()
         {
-            if (loadedScene.name != "GameCore")
-            {
-                return;
-            }
+            Instance = null;
+        }
 
+        private void Load()
+        {
             // Allow the user to run in any mode, but don't allow ScoreSubmission
             if (IsPreventingScoreSubmission && !scoreDisabled)
             {
+                Logger.Log("Disabling scoresubmission...", LogLevel.Notice);
+
                 Utilities.ScoreUtility.DisableScoreSubmission(this.Name);
                 scoreDisabled = true;
             }
             else if (!IsPreventingScoreSubmission && scoreDisabled)
             {
+                Logger.Log("Enabling scoresubmission...", LogLevel.Notice);
+
                 Utilities.ScoreUtility.EnableScoreSubmission(this.Name);
                 scoreDisabled = false;
             }
 
-            this.Log("Tweaking GameCore...", LogLevel.Debug);
             Configuration.UpdateSaberRotation();
-            ApplyGameCoreModifications(loadedScene.GetRootGameObjects().First());
+            StartCoroutine(ApplyGameCoreModifications());
         }
 
-        public void ApplyGameCoreModifications(GameObject gameCore)
+        public IEnumerator ApplyGameCoreModifications()
         {
-            Transform handControllers = gameCore.transform
-                .Find("Origin")
-                ?.Find("VRGameCore");
+            Saber defaultRightSaber = null;
+            Saber defaultLeftsaber = null;
+            GameObject LeftSaber = null;
+            GameObject RightSaber = null;
 
-            if (handControllers == null)
+            // Find and set the default sabers first
+            Saber[] sabers = Resources.FindObjectsOfTypeAll<Saber>();
+            Saber.SaberType[] typeForHands = new Saber.SaberType[]
             {
-                this.Log("Couldn't find HandControllers, bailing!", LogLevel.Debug);
-                return;
-            }
-
-            try
-            {
-                //FIXME (Maybe?)!!! This will probably need a split into hitbox modification and base game model modification
-                //FIXME (Totally)!!! Check compatibility with CustomSabers
-                RescaleSabers(handControllers.Find("LeftSaber")?.GetComponent<Saber>(), Configuration.SaberLength, Configuration.SaberGirth);
-                RescaleSabers(handControllers.Find("RightSaber")?.GetComponent<Saber>(), Configuration.SaberLength, Configuration.SaberGirth);
-            }
-            catch (NullReferenceException)
-            {
-                this.Log("Couldn't modify sabers, likely that the game structure has changed.", LogLevel.Error);
-                return;
-            }
-
-            this.Log("Successfully modified sabers!");
-        }
-
-        private void RescaleSabers(Saber saber, float lengthMultiplier, float widthMultiplier)
-        {
-            saber.transform.localScale = new Vector3
-            {
-                x = saber.transform.localScale.x * widthMultiplier,
-                y = saber.transform.localScale.y * widthMultiplier,
-                z = saber.transform.localScale.z * lengthMultiplier
+                Saber.SaberType.SaberB,
+                Saber.SaberType.SaberA
             };
+
+            foreach (Saber saber in sabers)
+            {
+                if (saber.saberType == typeForHands[0])
+                {
+                    defaultRightSaber = saber;
+                    LeftSaber = saber.gameObject;
+                }
+                else if (saber.saberType == typeForHands[1])
+                {
+                    defaultLeftsaber = saber;
+                    RightSaber = saber.gameObject;
+                }
+            }
+
+            if (Utilities.Utils.IsPluginEnabled("Custom Sabers"))
+            {
+                // Wait for half a second for CustomSaber to catch up
+                yield return new WaitForSecondsRealtime(0.5f);
+                GameObject customSaberClone = GameObject.Find("_CustomSaber(Clone)");
+
+                // If customSaberClone is null, CustomSaber is most likely not replacing the default sabers.
+                if (customSaberClone != null)
+                {
+                    if (defaultRightSaber != null)
+                    {
+                        RescaleSaberHitBox(defaultRightSaber, Configuration.SaberLength);
+                    }
+
+                    if (defaultLeftsaber != null)
+                    {
+                        RescaleSaberHitBox(defaultLeftsaber, Configuration.SaberLength);
+                    }
+
+                    LeftSaber = GameObject.Find("LeftSaber");
+                    RightSaber = GameObject.Find("RightSaber");
+                }
+                else
+                {
+                    Logger.Log("Either the Default Sabers are selected or CustomSaber were too slow!", LogLevel.Debug);
+                }
+            }
+
+            if (LeftSaber != null)
+            {
+                RescaleSaber(LeftSaber, Configuration.SaberLength, Configuration.SaberGirth);
+            }
+
+            if (RightSaber != null)
+            {
+                RescaleSaber(RightSaber, Configuration.SaberLength, Configuration.SaberGirth);
+            }
+
+            yield return null;
+        }
+
+        private void RescaleSaber(GameObject saber, float lengthMultiplier, float widthMultiplier)
+        {
+            saber.transform.localScale = RescaleVector3Transform(saber.transform.localScale, lengthMultiplier, widthMultiplier);
+        }
+
+        private void RescaleSaberHitBox(Saber saber, float lengthMultiplier)
+        {
+            Transform topPos = Utilities.ReflectionUtil.GetPrivateField<Transform>(saber, "_topPos");
+            Transform bottomPos = Utilities.ReflectionUtil.GetPrivateField<Transform>(saber, "_bottomPos");
+
+            topPos.localPosition = RescaleVector3Transform(topPos.localPosition, lengthMultiplier);
+            bottomPos.localPosition = RescaleVector3Transform(bottomPos.localPosition, lengthMultiplier);
+        }
+
+        private Vector3 RescaleVector3Transform(Vector3 baseVector, float lenght, float width = 1.0f)
+        {
+            Vector3 result = new Vector3()
+            {
+                x = baseVector.x * width,
+                y = baseVector.y * width,
+                z = baseVector.z * lenght
+            };
+
+            return result;
         }
     }
 }

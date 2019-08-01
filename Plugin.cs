@@ -9,6 +9,7 @@ using IPA.Utilities;
 using IPALogger = IPA.Logging.Logger;
 using LogLevel = IPA.Logging.Logger.Level;
 using Harmony;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace SaberTailor
@@ -27,7 +28,6 @@ namespace SaberTailor
 
         readonly List<Tweaks.ITweak> _tweaks = new List<Tweaks.ITweak>
         {
-            new Tweaks.SaberLength(),
             new Tweaks.SaberGrip(),
             new Tweaks.SaberTrail()
         };
@@ -70,10 +70,17 @@ namespace SaberTailor
             }
         }
 
+        public void OnActiveSceneChanged(Scene prevScene, Scene nextScene)
+        {
+            if (nextScene.name == "GameCore")
+            {
+                new GameObject(PluginName).AddComponent<Tweaks.SaberLength>();
+            }
+        }
+
         public void OnUpdate() { }
         public void OnFixedUpdate() { }
         public void OnSceneUnloaded(Scene scene) { }
-        public void OnActiveSceneChanged(Scene prevScene, Scene nextScene) { }
 
         private void Load()
         {
@@ -133,12 +140,10 @@ namespace SaberTailor
             {
                 Logger.Log("Loading Harmony patches...", LogLevel.Debug);
                 harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
-                Logger.Log("Loaded Harmony patches. Successfully modified saber grip!", LogLevel.Debug);
                 harmonyPatchesLoaded = true;
             }
             catch (Exception ex)
             {
-                Logger.Log("Loading Harmony patches failed. Please check if you have Harmony installed.", LogLevel.Error);
                 Logger.Log(ex, LogLevel.Error);
             }
         }
@@ -149,6 +154,7 @@ namespace SaberTailor
             {
                 try
                 {
+                    Logger.Log("Unloading Harmony patches...", LogLevel.Debug);
                     harmonyInstance.UnpatchAll("com.shadnix.BeatSaber.SaberTailor");
                     harmonyPatchesLoaded = false;
                 }

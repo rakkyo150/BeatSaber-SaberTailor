@@ -51,6 +51,7 @@
     <Compile Include="Tweaks\SaberTrail.cs" />
     <Compile Include="UI\ModUI.cs" />
     <Compile Include="Utilities\ScoreUtility.cs" />
+    <Compile Include="Utilities\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
