@@ -61,6 +61,7 @@ namespace SaberTailor.Tweaks
 
             this.Log("Successfully modified trails!");
         }
+
         void ModifyTrail(XWeaponTrail trail)
         {
             int length = Configuration.TrailLength;

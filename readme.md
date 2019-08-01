@@ -1,6 +1,6 @@
 # Beat Saber - Saber Tailor v1.6.0
 
-Tweak things about your sabers, including grip position/angle and trail length! Original mod by Ruu.
+Tweak things about your sabers, including grip position/angle, saber length and trail length! Original mod by Ruu.
 
 ## Settings
 
@@ -87,9 +87,9 @@ Adjusts the length of the trail on the saber. This option *does not* disable sco
 - **Default**: `"x": 0.0, "y": 0.0, "z": 0.0`
 - **Maximum**: `50` on any axis
 
-- `+x` moves the saber right, EG: `20,0,0` moves the saber 20 centimeters right.
-- `+y` moves the saber up, EG: `0,10,0` moves the saber 10 centimeters up.
-- `+z` moves the saber forward, EG: `0,0,30` moves the saber 30 centimeters forward.
+- `+x` moves the saber right, EG: `20` moves the saber 20 centimeters right.
+- `+y` moves the saber up, EG: `10` moves the saber 10 centimeters up.
+- `+z` moves the saber forward, EG: `30` moves the saber 30 centimeters forward.
 
 Alters the position of the left/right saber, relative to the default location. You cannot move the saber more than 50 centimeters away on any axis! This option *does not* disable score submission.
 
@@ -99,9 +99,9 @@ Alters the position of the left/right saber, relative to the default location. Y
 - **Unit**: Degrees (0 - 360)
 - **Default**: `"x": 0.0, "y": 0.0, "z": 0.0`
 
-- `+x` tilts the saber down, EG: `20,0,0` tilts the saber 20 degrees down.
-- `+y` rotates the saber right, EG: `0,10,0` rotates the saber 10 degrees right.
-- `+z` rolls the saber counter-clockwise around its own axis, EG: `0,0,30` rotates the saber 30 degrees counter-clockwise. (This is only useful if you have custom sabers that are not cylindrical shaped and you want to correct for a different grip (e.g. Vive B-Grip)
+- `+x` tilts the saber down, EG: `20` tilts the saber 20 degrees down.
+- `+y` rotates the saber right, EG: `10` rotates the saber 10 degrees right.
+- `+z` rolls the saber counter-clockwise around its own axis, EG: `30` rotates the saber 30 degrees counter-clockwise. (This is only useful if you have custom sabers that are not cylindrical shaped and you want to correct for a different grip (e.g. Vive B-Grip)
 
 Alters the rotation of the sabers. The center of rotation is where the saber's hit-box starts, which is just after the glowing line on the handle. This option *does not* disable score submission.
 
