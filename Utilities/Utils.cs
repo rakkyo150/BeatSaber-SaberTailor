@@ -12,10 +12,10 @@ namespace SaberTailor.Utilities
         {
             if (IsPluginPresent(PluginName))
             {
-                PluginLoader.PluginInfo CustomSaberInfo = PluginManager.GetPluginFromId(PluginName);
-                if (CustomSaberInfo?.Metadata != null)
+                PluginLoader.PluginInfo pluginInfo = PluginManager.GetPluginFromId(PluginName);
+                if (pluginInfo?.Metadata != null)
                 {
-                    return PluginManager.IsEnabled(CustomSaberInfo.Metadata);
+                    return PluginManager.IsEnabled(pluginInfo.Metadata);
                 }
             }
 

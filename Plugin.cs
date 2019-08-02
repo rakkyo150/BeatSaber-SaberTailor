@@ -121,6 +121,7 @@ namespace SaberTailor
             });
 
             RemoveHarmonyPatches();
+            Utilities.ScoreUtility.Cleanup();
             Configuration.Save();
         }
 
