@@ -48,16 +48,19 @@ namespace SaberTailor.Utilities
 
         internal static void Cleanup()
         {
-            if (ScoreIsBlocked)
+            lock (acquireLock)
             {
-                Logger.Log("Plugin is exiting, ScoreSubmission has been re-enabled.", LogLevel.Notice);
-                ScoreSubmission.RemoveProlongedDisable(Plugin.PluginName);
-                ScoreIsBlocked = false;
-            }
+                if (ScoreIsBlocked)
+                {
+                    Logger.Log("Plugin is exiting, ScoreSubmission has been re-enabled.", LogLevel.Notice);
+                    ScoreSubmission.RemoveProlongedDisable(Plugin.PluginName);
+                    ScoreIsBlocked = false;
+                }
 
-            if (ScoreBlockList.Count != 0)
-            {
-                ScoreBlockList.Clear();
+                if (ScoreBlockList.Count != 0)
+                {
+                    ScoreBlockList.Clear();
+                }
             }
         }
     }

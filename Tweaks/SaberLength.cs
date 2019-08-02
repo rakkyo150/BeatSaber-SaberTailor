@@ -10,42 +10,28 @@ namespace SaberTailor.Tweaks
         public string Name => "SaberLength";
         public bool IsPreventingScoreSubmission => Math.Abs(Configuration.SaberLength - 1.0f) > 0.01f || Math.Abs(Configuration.SaberGirth - 1.0f) > 0.01f;
 
-        private static bool scoreDisabled = false;
-        private static SaberLength Instance;
-
         private void Start()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-                Load();
-            }
-        }
-
-        private void OnDestroy()
-        {
-            Instance = null;
+            Load();
         }
 
         private void Load()
         {
             // Allow the user to run in any mode, but don't allow ScoreSubmission
-            if (IsPreventingScoreSubmission && !scoreDisabled)
+            if (IsPreventingScoreSubmission)
             {
                 Utilities.ScoreUtility.DisableScoreSubmission(this.Name);
-                scoreDisabled = true;
             }
-            else if (!IsPreventingScoreSubmission && scoreDisabled)
+            else
             {
                 Utilities.ScoreUtility.EnableScoreSubmission(this.Name);
-                scoreDisabled = false;
             }
 
             Configuration.UpdateSaberRotation();
             StartCoroutine(ApplyGameCoreModifications());
         }
 
-        public IEnumerator ApplyGameCoreModifications()
+        private IEnumerator ApplyGameCoreModifications()
         {
             Saber defaultRightSaber = null;
             Saber defaultLeftsaber = null;
