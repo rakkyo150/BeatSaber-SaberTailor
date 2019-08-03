@@ -1,4 +1,4 @@
-# Beat Saber - Saber Tailor v1.6.0
+# Beat Saber - Saber Tailor v2.0.0
 
 Tweak things about your sabers, including grip position/angle, saber length and trail length! Original mod by Ruu.
 
@@ -118,5 +118,20 @@ Alters the position and angle of the menu hilts the same way as the sabers, when
 **The way the configuration is stored has changed.**</br>
 The new configuration file is now `\Beat Saber\UserData\SaberTailor.json`
 
-The first time you run the game after version 1.6.0, SaberTailor will attempt to import the old settings.</br>
+The first time you run the game after version 2.0.0, SaberTailor will attempt to import the old settings.</br>
 If for whatever reason something should go wrong, you can still find the old settings in `\Beat Saber\UserData\modprefs.ini`.
+
+## Developers
+
+### Contributing to SaberTailor
+In order to build this project, please add a `SaberTailor.csproj.user` file in the project directory and specify where your game is located on your disk:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!-- Change this path if necessary. Make sure it ends with a backslash. -->
+    <GameDirPath>C:\Program Files\Steam\steamapps\common\Beat Saber\</GameDirPath>
+  </PropertyGroup>
+</Project>
+```
