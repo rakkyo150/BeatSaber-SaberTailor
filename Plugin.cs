@@ -67,7 +67,7 @@ namespace SaberTailor
         {
             if (nextScene.name == "GameCore")
             {
-                Configuration.UpdateSaberRotation();
+                Configuration.UpdateModVariables();
 
                 new GameObject(PluginName).AddComponent<Tweaks.SaberTrail>();
                 new GameObject(PluginName).AddComponent<Tweaks.SaberLength>();

@@ -79,8 +79,7 @@ namespace SaberTailor
             Logger.Log("Configuration has been set", LogLevel.Debug);
 
             // Update variables used by mod logic
-            UpdateSaberPosition();
-            UpdateSaberRotation();
+            UpdateModVariables();
         }
 
         public static void UpdateSaberPosition()
@@ -93,6 +92,12 @@ namespace SaberTailor
         {
             GripLeftRotation = Quaternion.Euler(FormattedVector3_To_Vector3(GripLeftRotationCfg)).eulerAngles;
             GripRightRotation = Quaternion.Euler(FormattedVector3_To_Vector3(GripRightRotationCfg)).eulerAngles;
+        }
+
+        public static void UpdateModVariables()
+        {
+            UpdateSaberPosition();
+            UpdateSaberRotation();
         }
 
         private static void LoadConfig()
