@@ -2,6 +2,7 @@
 using System.Collections;
 using LogLevel = IPA.Logging.Logger.Level;
 using UnityEngine;
+using Xft;
 
 namespace SaberTailor.Tweaks
 {
@@ -33,6 +34,7 @@ namespace SaberTailor.Tweaks
 
         private IEnumerator ApplyGameCoreModifications()
         {
+            bool usingCustomModels = false;
             Saber defaultRightSaber = null;
             Saber defaultLeftsaber = null;
             GameObject LeftSaber = null;
@@ -81,6 +83,7 @@ namespace SaberTailor.Tweaks
 
                     LeftSaber = GameObject.Find("LeftSaber");
                     RightSaber = GameObject.Find("RightSaber");
+                    usingCustomModels = true;
                 }
                 else
                 {
@@ -98,6 +101,16 @@ namespace SaberTailor.Tweaks
                 RescaleSaber(RightSaber, Configuration.SaberLength, Configuration.SaberGirth);
             }
 
+            BasicSaberModelController[] basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
+            foreach (BasicSaberModelController basicSaberModelController in basicSaberModelControllers)
+            {
+                SaberWeaponTrail saberWeaponTrail = Utilities.ReflectionUtil.GetPrivateField<SaberWeaponTrail>((object)basicSaberModelController, "_saberWeaponTrail");
+                if (!usingCustomModels || saberWeaponTrail.name != "BasicSaberModel")
+                {
+                    RescaleWeaponTrail(saberWeaponTrail, Configuration.SaberLength, usingCustomModels);
+                }
+            }
+
             yield return null;
         }
 
@@ -113,6 +126,19 @@ namespace SaberTailor.Tweaks
 
             topPos.localPosition = RescaleVector3Transform(topPos.localPosition, lengthMultiplier);
             bottomPos.localPosition = RescaleVector3Transform(bottomPos.localPosition, lengthMultiplier);
+        }
+
+        private void RescaleWeaponTrail(XWeaponTrail trail, float lengthMultiplier, bool usingCustomModels)
+        {
+            float trailWidth = Utilities.ReflectionUtil.GetPrivateField<float>(trail, "_trailWidth");
+            Utilities.ReflectionUtil.SetPrivateField(trail, "_trailWidth", trailWidth * lengthMultiplier);
+
+            // Fix the local z position for the default trail on custom sabers
+            if (usingCustomModels)
+            {
+                Transform pointEnd = Utilities.ReflectionUtil.GetPrivateField<Transform>(trail, "_pointEnd");
+                pointEnd.localPosition = RescaleVector3Transform(pointEnd.localPosition, pointEnd.localPosition.z * lengthMultiplier);
+            }
         }
 
         private Vector3 RescaleVector3Transform(Vector3 baseVector, float lenght, float width = 1.0f)
