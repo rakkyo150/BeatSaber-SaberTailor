@@ -20,10 +20,12 @@ namespace SaberTailor
 
         public static bool ModifyMenuHiltGrip;
 
-        // ..raw vars for representing player settings before Unity mangled it into something that works with the game 
-        // but also changes representation of these settings
-        public static Vector3 GripLeftRotationRaw;
-        public static Vector3 GripRightRotationRaw;
+        // ..raw vars for representing player settings before it gets mangled into something that works with the game,
+        // but changes representation of these settings in the process - also avoiding floating points
+        public static ConfigUtilities.StoreableIntVector3 GripLeftPositionRaw;
+        public static ConfigUtilities.StoreableIntVector3 GripRightPositionRaw;
+        public static ConfigUtilities.StoreableIntVector3 GripLeftRotationRaw;
+        public static ConfigUtilities.StoreableIntVector3 GripRightRotationRaw;
 
 
         public static void Save()
@@ -34,12 +36,13 @@ namespace SaberTailor
             Plugin.config.Value.IsTrailEnabled = IsTrailEnabled;
             Plugin.config.Value.TrailLength = TrailLength;
 
-            Plugin.config.Value.GripLeftPosition = Vector3_To_FormattedVector3(GripLeftPosition * 100f);
-            Plugin.config.Value.GripRightPosition = Vector3_To_FormattedVector3(GripRightPosition * 100f);
+            // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Raw values that are stored!
+            Plugin.config.Value.GripLeftPosition = GripLeftPositionRaw;
+            Plugin.config.Value.GripRightPosition = GripRightPositionRaw;
 
             // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Raw values that are stored!
-            Plugin.config.Value.GripLeftRotation = Vector3_To_FormattedVector3(GripLeftRotationRaw);
-            Plugin.config.Value.GripRightRotation = Vector3_To_FormattedVector3(GripRightRotationRaw);
+            Plugin.config.Value.GripLeftRotation = GripLeftRotationRaw;
+            Plugin.config.Value.GripRightRotation = GripRightRotationRaw;
 
             Plugin.config.Value.ModifyMenuHiltGrip = ModifyMenuHiltGrip;
 
@@ -49,7 +52,10 @@ namespace SaberTailor
 
         public static void Load()
         {
+            // Plan for this ModPrefs part is just to yeet it once BSIPA-Support for ModPrefs has been removed. Or replace by BSUtils INI implementation.
+            #pragma warning disable CS0618 // ModPrefs is obsolete
             if (ModPrefs.HasKey(Plugin.PluginName, "GripLeftPosition") && !ModPrefs.GetBool(Plugin.PluginName, "IsExportedToNewConfig", false))
+            #pragma warning restore CS0618 // ModPrefs is obsolete
             {
                 // Import SaberTailor's settings from the old configuration (ModPrefs)
                 try
@@ -71,13 +77,20 @@ namespace SaberTailor
             }
 
             Logger.Log("Configuration has been set", LogLevel.Debug);
+            UpdateSaberPosition();
             UpdateSaberRotation();
+        }
+
+        public static void UpdateSaberPosition()
+        {
+            GripLeftPosition = FormattedVector3_To_Vector3(GripLeftPositionRaw) / 1000f;
+            GripRightPosition = FormattedVector3_To_Vector3(GripRightPositionRaw) / 1000f;
         }
 
         public static void UpdateSaberRotation()
         {
-            GripLeftRotation = Quaternion.Euler(GripLeftRotationRaw).eulerAngles;
-            GripRightRotation = Quaternion.Euler(GripRightRotationRaw).eulerAngles;
+            GripLeftRotation = Quaternion.Euler(FormattedVector3_To_Vector3(GripLeftRotationRaw)).eulerAngles;
+            GripRightRotation = Quaternion.Euler(FormattedVector3_To_Vector3(GripRightRotationRaw)).eulerAngles;
         }
 
         private static void LoadConfig()
@@ -88,42 +101,33 @@ namespace SaberTailor
             IsTrailEnabled = Plugin.config.Value.IsTrailEnabled;
             TrailLength = Math.Max(5, Math.Min(100, Plugin.config.Value.TrailLength));
 
-            GripLeftPosition = FormattedVector3_To_Vector3(Plugin.config.Value.GripLeftPosition) / 100f;
-            GripLeftPosition = new Vector3
+            GripLeftPositionRaw = Plugin.config.Value.GripLeftPosition;
+            GripLeftPositionRaw = new ConfigUtilities.StoreableIntVector3()
             {
-                x = Mathf.Clamp(GripLeftPosition.x, -0.5f, 0.5f),
-                y = Mathf.Clamp(GripLeftPosition.y, -0.5f, 0.5f),
-                z = Mathf.Clamp(GripLeftPosition.z, -0.5f, 0.5f)
+                x = Mathf.Clamp(GripLeftPositionRaw.x, -500, 500),
+                y = Mathf.Clamp(GripLeftPositionRaw.y, -500, 500),
+                z = Mathf.Clamp(GripLeftPositionRaw.z, -500, 500)
             };
-            GripRightPosition = FormattedVector3_To_Vector3(Plugin.config.Value.GripRightPosition) / 100f;
-            GripRightPosition = new Vector3
+            //GripRightPosition = FormattedVector3_To_Vector3(Plugin.config.Value.GripRightPosition) / 100f;
+            GripRightPositionRaw = Plugin.config.Value.GripRightPosition;
+            GripRightPositionRaw = new ConfigUtilities.StoreableIntVector3()
             {
-                x = Mathf.Clamp(GripRightPosition.x, -0.5f, 0.5f),
-                y = Mathf.Clamp(GripRightPosition.y, -0.5f, 0.5f),
-                z = Mathf.Clamp(GripRightPosition.z, -0.5f, 0.5f)
+                x = Mathf.Clamp(GripRightPositionRaw.x, -500, 500),
+                y = Mathf.Clamp(GripRightPositionRaw.y, -500, 500),
+                z = Mathf.Clamp(GripRightPositionRaw.z, -500, 500)
             };
 
             // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Raw values that are stored!
-            GripLeftRotationRaw = FormattedVector3_To_Vector3(Plugin.config.Value.GripLeftRotation);
-            GripRightRotationRaw = FormattedVector3_To_Vector3(Plugin.config.Value.GripRightRotation);
+            GripLeftRotationRaw = Plugin.config.Value.GripLeftRotation;
+            GripRightRotationRaw = Plugin.config.Value.GripRightRotation;
 
             ModifyMenuHiltGrip = Plugin.config.Value.ModifyMenuHiltGrip;
         }
 
         /// <summary>
-        /// Converts the UnityEngine.Vector3 format to the PluginConfig.StoreableVector3 format for storage
+        /// Converts the PluginConfig.StoreableIntVector3 to a UnityEngine.Vector3 format
         /// </summary>
-        private static ConfigUtilities.StoreableVector3 Vector3_To_FormattedVector3(Vector3 vector3) => new ConfigUtilities.StoreableVector3()
-        {
-            x = vector3.x,
-            y = vector3.y,
-            z = vector3.z
-        };
-
-        /// <summary>
-        /// Converts the PluginConfig.StoreableVector3 to a UnityEngine.Vector3 format
-        /// </summary>
-        private static Vector3 FormattedVector3_To_Vector3(ConfigUtilities.StoreableVector3 vector3) => new Vector3()
+        private static Vector3 FormattedVector3_To_Vector3(ConfigUtilities.StoreableIntVector3 vector3) => new Vector3()
         {
             x = vector3.x,
             y = vector3.y,

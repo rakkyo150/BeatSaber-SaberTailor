@@ -8,22 +8,22 @@
         public float SaberGirth = 1.0f;
 
         public bool IsTrailEnabled = true;
-        public int TrailLength = 20;
+        public int TrailLength = 20;                                                    // Length in frames (iirc)
 
-        public StoreableVector3 GripLeftPosition = new StoreableVector3();
-        public StoreableVector3 GripRightPosition = new StoreableVector3();
+        public StoreableIntVector3 GripLeftPosition = new StoreableIntVector3();        // Position in mm
+        public StoreableIntVector3 GripRightPosition = new StoreableIntVector3();
 
-        public StoreableVector3 GripLeftRotation = new StoreableVector3();
-        public StoreableVector3 GripRightRotation = new StoreableVector3();
+        public StoreableIntVector3 GripLeftRotation = new StoreableIntVector3();        // Rotation in °
+        public StoreableIntVector3 GripRightRotation = new StoreableIntVector3();
 
         public bool ModifyMenuHiltGrip;
     }
 
     /// <summary>
-    /// Struct for serializing UnityEngine.Vector3
+    /// Struct for serializing and saving settings vector data
     /// </summary>
-    public struct StoreableVector3
+    public struct StoreableIntVector3
     {
-        public float x, y, z;
+        public int x, y, z;
     }
 }

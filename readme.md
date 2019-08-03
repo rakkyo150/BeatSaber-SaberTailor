@@ -17,24 +17,24 @@ The default values are below:
   "IsTrailEnabled": true,
   "TrailLength": 20,
   "GripLeftPosition": {
-    "x": 0.0,
-    "y": 0.0,
-    "z": 0.0
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "GripRightPosition": {
-    "x": 0.0,
-    "y": 0.0,
-    "z": 0.0
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "GripLeftRotation": {
-    "x": 0.0,
-    "y": 0.0,
-    "z": 0.0
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "GripRightRotation": {
-    "x": 0.0,
-    "y": 0.0,
-    "z": 0.0
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "ModifyMenuHiltGrip": false
 }
@@ -83,21 +83,21 @@ Adjusts the length of the trail on the saber. This option *does not* disable sco
 ### Grip Position (Left + Right)
 
 - **Setting**: `GripLeftPosition`, `GripRightPosition`
-- **Unit**: Centimeters
-- **Default**: `"x": 0.0, "y": 0.0, "z": 0.0`
-- **Maximum**: `50` on any axis
+- **Unit**: Millimeters
+- **Default**: `"x": 0, "y": 0, "z": 0`
+- **Maximum**: `500` on any axis
 
-- `+x` moves the saber right, EG: `20` moves the saber 20 centimeters right.
-- `+y` moves the saber up, EG: `10` moves the saber 10 centimeters up.
-- `+z` moves the saber forward, EG: `30` moves the saber 30 centimeters forward.
+- `+x` moves the saber right, EG: `200` moves the saber 20 centimeters right.
+- `+y` moves the saber up, EG: `100` moves the saber 10 centimeters up.
+- `+z` moves the saber forward, EG: `300` moves the saber 30 centimeters forward.
 
 Alters the position of the left/right saber, relative to the default location. You cannot move the saber more than 50 centimeters away on any axis! This option *does not* disable score submission.
 
 ### Grip Rotation (Left + Right)
 
 - **Setting**: `GripLeftRotation`, `GripRightRotation`
-- **Unit**: Degrees (0 - 360)
-- **Default**: `"x": 0.0, "y": 0.0, "z": 0.0`
+- **Unit**: Degrees (-360 - 360)
+- **Default**: `"x": 0, "y": 0, "z": 0`
 
 - `+x` tilts the saber down, EG: `20` tilts the saber 20 degrees down.
 - `+y` rotates the saber right, EG: `10` rotates the saber 10 degrees right.

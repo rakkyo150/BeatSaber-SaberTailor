@@ -29,6 +29,7 @@ namespace SaberTailor.ConfigUtilities
         {
             try
             {
+                // Plan for this ModPrefs part is just to yeet it once BSIPA-Support for ModPrefs has been removed. Or replace by BSUtils INI implementation.
 #pragma warning disable CS0618 // ModPrefs is obsolete
                 Length = ModPrefs.GetFloat(Plugin.PluginName, nameof(Length), 1f, true);
                 Configuration.SaberLength = Math.Max(0.01f, Math.Min(2f, Length));
@@ -38,23 +39,35 @@ namespace SaberTailor.ConfigUtilities
                 TrailLength = ModPrefs.GetInt(Plugin.PluginName, nameof(TrailLength), 20, true);
                 Configuration.TrailLength = Math.Max(5, Math.Min(100, TrailLength));
 
-                GripLeftPosition = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripLeftPosition), "0,0,0", true)) / 100f;
-                Configuration.GripLeftPosition = new Vector3
+                GripLeftPosition = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripLeftPosition), "0,0,0", true));
+                Configuration.GripLeftPositionRaw = new StoreableIntVector3()
                 {
-                    x = Mathf.Clamp(GripLeftPosition.x, -0.5f, 0.5f),
-                    y = Mathf.Clamp(GripLeftPosition.y, -0.5f, 0.5f),
-                    z = Mathf.Clamp(GripLeftPosition.z, -0.5f, 0.5f)
+                    x = (int)Math.Round(Mathf.Clamp(GripLeftPosition.x, -50f, 50f) * 10),
+                    y = (int)Math.Round(Mathf.Clamp(GripLeftPosition.y, -50f, 50f) * 10),
+                    z = (int)Math.Round(Mathf.Clamp(GripLeftPosition.z, -50f, 50f) * 10)
                 };
-                Configuration.GripLeftRotationRaw = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripLeftRotation), "0,0,0", true));
+                GripLeftRotation = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripLeftRotation), "0,0,0", true));
+                Configuration.GripLeftRotationRaw = new StoreableIntVector3()
+                {
+                    x = (int)Math.Round(GripLeftRotation.x),
+                    y = (int)Math.Round(GripLeftRotation.y),
+                    z = (int)Math.Round(GripLeftRotation.z)
+                };
 
-                GripRightPosition = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripRightPosition), "0,0,0", true)) / 100f;
-                Configuration.GripRightPosition = new Vector3
+                GripRightPosition = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripRightPosition), "0,0,0", true));
+                Configuration.GripRightPositionRaw = new StoreableIntVector3()
                 {
-                    x = Mathf.Clamp(GripRightPosition.x, -0.5f, 0.5f),
-                    y = Mathf.Clamp(GripRightPosition.y, -0.5f, 0.5f),
-                    z = Mathf.Clamp(GripRightPosition.z, -0.5f, 0.5f)
+                    x = (int)Math.Round(Mathf.Clamp(GripRightPosition.x, -50f, 50f) * 10),
+                    y = (int)Math.Round(Mathf.Clamp(GripRightPosition.y, -50f, 50f) * 10),
+                    z = (int)Math.Round(Mathf.Clamp(GripRightPosition.z, -50f, 50f) * 10)
                 };
-                Configuration.GripRightRotationRaw = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripRightRotation), "0,0,0", true));
+                GripRightRotation = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripRightRotation), "0,0,0", true));
+                Configuration.GripRightRotationRaw = new StoreableIntVector3()
+                {
+                    x = (int)Math.Round(GripRightRotation.x),
+                    y = (int)Math.Round(GripRightRotation.y),
+                    z = (int)Math.Round(GripRightRotation.z)
+                };
 
                 Configuration.ModifyMenuHiltGrip = ModPrefs.GetBool(Plugin.PluginName, nameof(ModifyMenuHiltGrip), false, true);
 #pragma warning restore CS0618 // ModPrefs is obsolete
@@ -71,6 +84,7 @@ namespace SaberTailor.ConfigUtilities
 
         private static void MarkAsExported()
         {
+            // Plan for this ModPrefs part is just to yeet it once BSIPA-Support for ModPrefs has been removed. Or replace by BSUtils INI implementation.
 #pragma warning disable CS0618 // ModPrefs is obsolete
             ModPrefs.SetBool(Plugin.PluginName, "IsExportedToNewConfig", true);
 #pragma warning restore CS0618 // ModPrefs is obsolete
