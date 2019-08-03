@@ -1,71 +1,43 @@
-﻿using System;
-using System.Linq;
+﻿using System.Collections;
 using LogLevel = IPA.Logging.Logger.Level;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Xft;
 
 namespace SaberTailor.Tweaks
 {
-    public class SaberTrail : ITweak
+    public class SaberTrail : MonoBehaviour, ITweak
     {
         public string Name => "SaberTrail";
         public bool IsPreventingScoreSubmission => false;
 
-        public void Load()
+        private void Awake()
         {
-            SceneManager.sceneLoaded += SceneManagerOnSceneLoaded;
+            Load();
         }
 
-        public void Cleanup()
+        private void Load()
         {
-            SceneManager.sceneLoaded -= SceneManagerOnSceneLoaded;
+            StartCoroutine(ApplyGameCoreModifications());
         }
 
-        void SceneManagerOnSceneLoaded(Scene loadedScene, LoadSceneMode loadSceneMode)
+        private IEnumerator ApplyGameCoreModifications()
         {
-            if (loadedScene.name != "GameCore")
+            BasicSaberModelController[] basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
+            foreach (BasicSaberModelController basicSaberModelController in basicSaberModelControllers)
             {
-                return;
+                SaberWeaponTrail saberTrail = Utilities.ReflectionUtil.GetPrivateField<SaberWeaponTrail>(basicSaberModelController, "_saberWeaponTrail");
+                if (saberTrail.name == "BasicSaberModel")
+                {
+                    ModifyTrail(saberTrail, Configuration.TrailLength);
+                    this.Log("Successfully modified trails!");
+                }
             }
 
-            this.Log("Tweaking GameCore...", LogLevel.Debug);
-            Configuration.UpdateSaberRotation();
-            ApplyGameCoreModifications(loadedScene.GetRootGameObjects().First());
+            yield return null;
         }
 
-        void ApplyGameCoreModifications(GameObject gameCore)
+        private void ModifyTrail(XWeaponTrail trail, int length)
         {
-            Transform sceneContext = gameCore.transform.Find("SceneContext");
-
-            if (sceneContext == null)
-            {
-                this.Log("Couldn't find SceneContext, bailing!", LogLevel.Debug);
-                return;
-            }
-
-            try
-            {
-                // XWeaponTrail now in BasicSaberModelController as proteced _saberWeaponTrail, which is available through GameCoreInstaller
-                GameCoreInstaller gci = sceneContext.GetComponent<GameCoreInstaller>();
-                BasicSaberModelController bsmc = Utilities.ReflectionUtil.GetPrivateField<BasicSaberModelController>(gci, "_basicSaberModelControllerPrefab");
-                SaberWeaponTrail saberTrail = Utilities.ReflectionUtil.GetPrivateField<SaberWeaponTrail>(bsmc, "_saberWeaponTrail");
-
-                ModifyTrail(saberTrail);
-            }
-            catch (NullReferenceException)
-            {
-                this.Log("Couldn't modify trails, likely that the game structure has changed.", LogLevel.Error);
-                return;
-            }
-
-            this.Log("Successfully modified trails!");
-        }
-
-        void ModifyTrail(XWeaponTrail trail)
-        {
-            int length = Configuration.TrailLength;
-
             if (Configuration.IsTrailEnabled)
             {
                 trail.enabled = true;

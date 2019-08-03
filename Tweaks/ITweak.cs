@@ -5,9 +5,6 @@
         string Name { get; }
 
         bool IsPreventingScoreSubmission { get; }
-
-        void Load();
-        void Cleanup();
     }
 
     public static class TweakExtensions

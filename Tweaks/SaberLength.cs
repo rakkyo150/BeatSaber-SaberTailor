@@ -6,7 +6,7 @@ using Xft;
 
 namespace SaberTailor.Tweaks
 {
-    public class SaberLength : MonoBehaviour
+    public class SaberLength : MonoBehaviour, ITweak
     {
         public string Name => "SaberLength";
         public bool IsPreventingScoreSubmission => Math.Abs(Configuration.SaberLength - 1.0f) > 0.01f || Math.Abs(Configuration.SaberGirth - 1.0f) > 0.01f;
@@ -28,15 +28,14 @@ namespace SaberTailor.Tweaks
                 Utilities.ScoreUtility.EnableScoreSubmission(this.Name);
             }
 
-            Configuration.UpdateSaberRotation();
             StartCoroutine(ApplyGameCoreModifications());
         }
 
         private IEnumerator ApplyGameCoreModifications()
         {
             bool usingCustomModels = false;
-            Saber defaultRightSaber = null;
             Saber defaultLeftsaber = null;
+            Saber defaultRightSaber = null;
             GameObject LeftSaber = null;
             GameObject RightSaber = null;
 
@@ -52,12 +51,12 @@ namespace SaberTailor.Tweaks
             {
                 if (saber.saberType == typeForHands[0])
                 {
-                    defaultRightSaber = saber;
+                    defaultLeftsaber = saber;
                     LeftSaber = saber.gameObject;
                 }
                 else if (saber.saberType == typeForHands[1])
                 {
-                    defaultLeftsaber = saber;
+                    defaultRightSaber = saber;
                     RightSaber = saber.gameObject;
                 }
             }
@@ -87,24 +86,26 @@ namespace SaberTailor.Tweaks
                 }
                 else
                 {
-                    Logger.Log("Either the Default Sabers are selected or CustomSaber were too slow!", LogLevel.Debug);
+                    this.Log("Either the Default Sabers are selected or CustomSaber were too slow!", LogLevel.Debug);
                 }
             }
 
             if (LeftSaber != null)
             {
                 RescaleSaber(LeftSaber, Configuration.SaberLength, Configuration.SaberGirth);
+                this.Log("Successfully modified left saber length!");
             }
 
             if (RightSaber != null)
             {
                 RescaleSaber(RightSaber, Configuration.SaberLength, Configuration.SaberGirth);
+                this.Log("Successfully modified right saber length!");
             }
 
             BasicSaberModelController[] basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
             foreach (BasicSaberModelController basicSaberModelController in basicSaberModelControllers)
             {
-                SaberWeaponTrail saberWeaponTrail = Utilities.ReflectionUtil.GetPrivateField<SaberWeaponTrail>((object)basicSaberModelController, "_saberWeaponTrail");
+                SaberWeaponTrail saberWeaponTrail = Utilities.ReflectionUtil.GetPrivateField<SaberWeaponTrail>(basicSaberModelController, "_saberWeaponTrail");
                 if (!usingCustomModels || saberWeaponTrail.name != "BasicSaberModel")
                 {
                     RescaleWeaponTrail(saberWeaponTrail, Configuration.SaberLength, usingCustomModels);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 using JetBrains.Annotations;
 using IPA;
@@ -25,12 +24,6 @@ namespace SaberTailor
 
         private static bool harmonyPatchesLoaded = false;
         internal static HarmonyInstance harmonyInstance;
-
-        readonly List<Tweaks.ITweak> _tweaks = new List<Tweaks.ITweak>
-        {
-            new Tweaks.SaberGrip(),
-            new Tweaks.SaberTrail()
-        };
 
         public void Init(IPALogger logger, [Config.PreferAttribute("json")] IConfigProvider cfgProvider, PluginLoader.PluginMetadata metadata)
         {
@@ -74,6 +67,9 @@ namespace SaberTailor
         {
             if (nextScene.name == "GameCore")
             {
+                Configuration.UpdateSaberRotation();
+
+                new GameObject(PluginName).AddComponent<Tweaks.SaberTrail>();
                 new GameObject(PluginName).AddComponent<Tweaks.SaberLength>();
             }
         }
@@ -85,41 +81,12 @@ namespace SaberTailor
         private void Load()
         {
             Configuration.Load();
-
-            _tweaks.ForEach(tweak =>
-            {
-                try
-                {
-                    tweak.Load();
-                    Logger.Log($"Loaded tweak: {tweak.Name}", LogLevel.Debug);
-                }
-                catch (Exception ex)
-                {
-                    Logger.Log($"Failed to load tweak: {tweak.Name}", LogLevel.Error);
-                    Logger.Log(ex, LogLevel.Error);
-                }
-            });
-
             ApplyHarmonyPatches();
             Logger.Log($"{PluginName} v.{PluginVersion} has started", LogLevel.Notice);
         }
 
         private void Unload()
         {
-            _tweaks.ForEach(tweak =>
-            {
-                try
-                {
-                    tweak.Cleanup();
-                    Logger.Log($"Unloaded tweak: {tweak.Name}", LogLevel.Debug);
-                }
-                catch (Exception ex)
-                {
-                    Logger.Log($"Failed to unload tweak: {tweak.Name}", LogLevel.Error);
-                    Logger.Log(ex, LogLevel.Error);
-                }
-            });
-
             RemoveHarmonyPatches();
             Utilities.ScoreUtility.Cleanup();
             Configuration.Save();
