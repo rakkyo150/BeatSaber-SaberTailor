@@ -33,7 +33,7 @@ namespace SaberTailor.ConfigUtilities
 #pragma warning disable CS0618 // ModPrefs is obsolete
                 Length = ModPrefs.GetFloat(Plugin.PluginName, nameof(Length), 1f, true);
                 Configuration.SaberLength = Math.Max(0.01f, Math.Min(2f, Length));
-
+ 
                 Configuration.IsTrailEnabled = ModPrefs.GetBool(Plugin.PluginName, nameof(IsTrailEnabled), true, true);
 
                 TrailLength = ModPrefs.GetInt(Plugin.PluginName, nameof(TrailLength), 20, true);
@@ -71,6 +71,9 @@ namespace SaberTailor.ConfigUtilities
 
                 Configuration.ModifyMenuHiltGrip = ModPrefs.GetBool(Plugin.PluginName, nameof(ModifyMenuHiltGrip), false, true);
 #pragma warning restore CS0618 // ModPrefs is obsolete
+
+                // set default values for new config variables not present in old config files
+                Configuration.SaberGirth = 1.0f;
 
                 // Save configuration in the new format
                 Configuration.Save();
