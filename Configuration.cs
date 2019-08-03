@@ -20,12 +20,12 @@ namespace SaberTailor
 
         public static bool ModifyMenuHiltGrip;
 
-        // ..raw vars for representing player settings before it gets mangled into something that works with the game,
+        // Config vars for representing player settings before it gets mangled into something that works with the game,
         // but changes representation of these settings in the process - also avoiding floating points
-        public static ConfigUtilities.StoreableIntVector3 GripLeftPositionRaw;
-        public static ConfigUtilities.StoreableIntVector3 GripRightPositionRaw;
-        public static ConfigUtilities.StoreableIntVector3 GripLeftRotationRaw;
-        public static ConfigUtilities.StoreableIntVector3 GripRightRotationRaw;
+        public static ConfigUtilities.StoreableIntVector3 GripLeftPositionCfg;
+        public static ConfigUtilities.StoreableIntVector3 GripRightPositionCfg;
+        public static ConfigUtilities.StoreableIntVector3 GripLeftRotationCfg;
+        public static ConfigUtilities.StoreableIntVector3 GripRightRotationCfg;
 
 
         public static void Save()
@@ -36,13 +36,13 @@ namespace SaberTailor
             Plugin.config.Value.IsTrailEnabled = IsTrailEnabled;
             Plugin.config.Value.TrailLength = TrailLength;
 
-            // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Raw values that are stored!
-            Plugin.config.Value.GripLeftPosition = GripLeftPositionRaw;
-            Plugin.config.Value.GripRightPosition = GripRightPositionRaw;
+            // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Cfg values that are stored!
+            Plugin.config.Value.GripLeftPosition = GripLeftPositionCfg;
+            Plugin.config.Value.GripRightPosition = GripRightPositionCfg;
 
-            // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Raw values that are stored!
-            Plugin.config.Value.GripLeftRotation = GripLeftRotationRaw;
-            Plugin.config.Value.GripRightRotation = GripRightRotationRaw;
+            // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are stored!
+            Plugin.config.Value.GripLeftRotation = GripLeftRotationCfg;
+            Plugin.config.Value.GripRightRotation = GripRightRotationCfg;
 
             Plugin.config.Value.ModifyMenuHiltGrip = ModifyMenuHiltGrip;
 
@@ -77,49 +77,66 @@ namespace SaberTailor
             }
 
             Logger.Log("Configuration has been set", LogLevel.Debug);
+
+            // Update variables used by mod logic
             UpdateSaberPosition();
             UpdateSaberRotation();
         }
 
         public static void UpdateSaberPosition()
         {
-            GripLeftPosition = FormattedVector3_To_Vector3(GripLeftPositionRaw) / 1000f;
-            GripRightPosition = FormattedVector3_To_Vector3(GripRightPositionRaw) / 1000f;
+            GripLeftPosition = FormattedVector3_To_Vector3(GripLeftPositionCfg) / 1000f;
+            GripRightPosition = FormattedVector3_To_Vector3(GripRightPositionCfg) / 1000f;
         }
 
         public static void UpdateSaberRotation()
         {
-            GripLeftRotation = Quaternion.Euler(FormattedVector3_To_Vector3(GripLeftRotationRaw)).eulerAngles;
-            GripRightRotation = Quaternion.Euler(FormattedVector3_To_Vector3(GripRightRotationRaw)).eulerAngles;
+            GripLeftRotation = Quaternion.Euler(FormattedVector3_To_Vector3(GripLeftRotationCfg)).eulerAngles;
+            GripRightRotation = Quaternion.Euler(FormattedVector3_To_Vector3(GripRightRotationCfg)).eulerAngles;
         }
 
         private static void LoadConfig()
         {
-            SaberLength = Math.Max(0.01f, Math.Min(5f, Plugin.config.Value.SaberLength));
-            SaberGirth = Math.Max(0.01f, Math.Min(5f, Plugin.config.Value.SaberGirth));
+            Plugin.configProvider.Load();
+            if (Plugin.config.Value.SaberLength < 0.01f || Plugin.config.Value.SaberLength > 5f)
+            {
+                SaberLength = 1.0f;
+            }
+            else
+            {
+                SaberLength = Plugin.config.Value.SaberLength;
+            }
+            if (Plugin.config.Value.SaberGirth < 0.01f || Plugin.config.Value.SaberGirth > 5f)
+            {
+                SaberGirth = 1.0f;
+            }
+            else
+            {
+                SaberGirth = Plugin.config.Value.SaberGirth;
+            }
 
             IsTrailEnabled = Plugin.config.Value.IsTrailEnabled;
             TrailLength = Math.Max(5, Math.Min(100, Plugin.config.Value.TrailLength));
 
-            GripLeftPositionRaw = Plugin.config.Value.GripLeftPosition;
-            GripLeftPositionRaw = new ConfigUtilities.StoreableIntVector3()
+            GripLeftPositionCfg = Plugin.config.Value.GripLeftPosition;
+            GripLeftPositionCfg = new ConfigUtilities.StoreableIntVector3()
             {
-                x = Mathf.Clamp(GripLeftPositionRaw.x, -500, 500),
-                y = Mathf.Clamp(GripLeftPositionRaw.y, -500, 500),
-                z = Mathf.Clamp(GripLeftPositionRaw.z, -500, 500)
+                x = Mathf.Clamp(GripLeftPositionCfg.x, -500, 500),
+                y = Mathf.Clamp(GripLeftPositionCfg.y, -500, 500),
+                z = Mathf.Clamp(GripLeftPositionCfg.z, -500, 500)
             };
             //GripRightPosition = FormattedVector3_To_Vector3(Plugin.config.Value.GripRightPosition) / 100f;
-            GripRightPositionRaw = Plugin.config.Value.GripRightPosition;
-            GripRightPositionRaw = new ConfigUtilities.StoreableIntVector3()
+            GripRightPositionCfg = Plugin.config.Value.GripRightPosition;
+            GripRightPositionCfg = new ConfigUtilities.StoreableIntVector3()
             {
-                x = Mathf.Clamp(GripRightPositionRaw.x, -500, 500),
-                y = Mathf.Clamp(GripRightPositionRaw.y, -500, 500),
-                z = Mathf.Clamp(GripRightPositionRaw.z, -500, 500)
+                x = Mathf.Clamp(GripRightPositionCfg.x, -500, 500),
+                y = Mathf.Clamp(GripRightPositionCfg.y, -500, 500),
+                z = Mathf.Clamp(GripRightPositionCfg.z, -500, 500)
             };
 
-            // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Raw values that are stored!
-            GripLeftRotationRaw = Plugin.config.Value.GripLeftRotation;
-            GripRightRotationRaw = Plugin.config.Value.GripRightRotation;
+            // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are stored!
+            GripLeftRotationCfg = Plugin.config.Value.GripLeftRotation;
+            GripRightRotationCfg = Plugin.config.Value.GripRightRotation;
 
             ModifyMenuHiltGrip = Plugin.config.Value.ModifyMenuHiltGrip;
         }

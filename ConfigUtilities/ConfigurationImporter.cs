@@ -40,14 +40,14 @@ namespace SaberTailor.ConfigUtilities
                 Configuration.TrailLength = Math.Max(5, Math.Min(100, TrailLength));
 
                 GripLeftPosition = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripLeftPosition), "0,0,0", true));
-                Configuration.GripLeftPositionRaw = new StoreableIntVector3()
+                Configuration.GripLeftPositionCfg = new StoreableIntVector3()
                 {
                     x = (int)Math.Round(Mathf.Clamp(GripLeftPosition.x, -50f, 50f) * 10),
                     y = (int)Math.Round(Mathf.Clamp(GripLeftPosition.y, -50f, 50f) * 10),
                     z = (int)Math.Round(Mathf.Clamp(GripLeftPosition.z, -50f, 50f) * 10)
                 };
                 GripLeftRotation = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripLeftRotation), "0,0,0", true));
-                Configuration.GripLeftRotationRaw = new StoreableIntVector3()
+                Configuration.GripLeftRotationCfg = new StoreableIntVector3()
                 {
                     x = (int)Math.Round(GripLeftRotation.x),
                     y = (int)Math.Round(GripLeftRotation.y),
@@ -55,14 +55,14 @@ namespace SaberTailor.ConfigUtilities
                 };
 
                 GripRightPosition = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripRightPosition), "0,0,0", true));
-                Configuration.GripRightPositionRaw = new StoreableIntVector3()
+                Configuration.GripRightPositionCfg = new StoreableIntVector3()
                 {
                     x = (int)Math.Round(Mathf.Clamp(GripRightPosition.x, -50f, 50f) * 10),
                     y = (int)Math.Round(Mathf.Clamp(GripRightPosition.y, -50f, 50f) * 10),
                     z = (int)Math.Round(Mathf.Clamp(GripRightPosition.z, -50f, 50f) * 10)
                 };
                 GripRightRotation = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripRightRotation), "0,0,0", true));
-                Configuration.GripRightRotationRaw = new StoreableIntVector3()
+                Configuration.GripRightRotationCfg = new StoreableIntVector3()
                 {
                     x = (int)Math.Round(GripRightRotation.x),
                     y = (int)Math.Round(GripRightRotation.y),
