@@ -31,9 +31,9 @@ namespace SaberTailor.ConfigUtilities
             {
                 // Plan for this ModPrefs part is just to yeet it once BSIPA-Support for ModPrefs has been removed. Or replace by BSUtils INI implementation.
 #pragma warning disable CS0618 // ModPrefs is obsolete
-                Length = ModPrefs.GetFloat(Plugin.PluginName, nameof(Length), 1f, true);
-                Configuration.SaberLength = Math.Max(0.01f, Math.Min(2f, Length));
- 
+                // Reset SaberLength to 1 to avoid confusion on first start considering this options hasn't worked in over half a year
+                Configuration.SaberLength = 1.0f;
+
                 Configuration.IsTrailEnabled = ModPrefs.GetBool(Plugin.PluginName, nameof(IsTrailEnabled), true, true);
 
                 TrailLength = ModPrefs.GetInt(Plugin.PluginName, nameof(TrailLength), 20, true);
