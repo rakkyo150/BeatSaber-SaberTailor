@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace SaberTailor
+namespace SaberTailor.Utilities
 {
     internal static class ReflectionUtil
     {
