@@ -12,6 +12,7 @@ The default values are below:
 ```json
 {
   "RegenerateConfig": false,
+  "ConfigVersion": 1,
   "SaberLength": 100,
   "SaberGirth": 100,
   "IsTrailEnabled": true,
