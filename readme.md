@@ -12,8 +12,8 @@ The default values are below:
 ```json
 {
   "RegenerateConfig": false,
-  "SaberLength": 1.0,
-  "SaberGirth": 1.0,
+  "SaberLength": 100,
+  "SaberGirth": 100,
   "IsTrailEnabled": true,
   "TrailLength": 20,
   "GripLeftPosition": {
@@ -46,9 +46,9 @@ The default values are below:
 
 - **Setting**: `SaberLength`
 - **Unit**: Percentage
-- **Default**: `1.0` (100%)
-- **Minimum**: `0.0` (0%)
-- **Maximum**: `5.0` (500%)
+- **Default**: `100` (100%)
+- **Minimum**: `5` (5%)
+- **Maximum**: `500` (500%)
 
 **Setting this to anything other than 1 will disable score submissions!**
 
@@ -56,9 +56,9 @@ The default values are below:
 
 - **Setting**: `SaberGirth`
 - **Unit**: Percentage
-- **Default**: `1.0` (100%)
-- **Minimum**: `0.0` (0%)
-- **Maximum**: `5.0` (500%)
+- **Default**: `100` (100%)
+- **Minimum**: `5` (5%)
+- **Maximum**: `500` (500%)
 
 **Setting this to anything other than 1 will disable score submissions!**
 

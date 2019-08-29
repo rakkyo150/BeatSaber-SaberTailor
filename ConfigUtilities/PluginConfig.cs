@@ -5,8 +5,8 @@
         public bool RegenerateConfig = true;
         public int ConfigVersion = 1;
 
-        public float SaberLength = 1.0f;
-        public float SaberGirth = 1.0f;
+        public int SaberLength = 100;
+        public int SaberGirth = 100;
 
         public bool IsTrailEnabled = true;
         public int TrailLength = 20;                                                    // Length in frames (iirc)

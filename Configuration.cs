@@ -24,6 +24,8 @@ namespace SaberTailor
 
         // Config vars for representing player settings before it gets mangled into something that works with the game,
         // but changes representation of these settings in the process - also avoiding floating points
+        public static int SaberLengthCfg;
+        public static int SaberGirthCfg;
         public static ConfigUtilities.StoreableIntVector3 GripLeftPositionCfg;
         public static ConfigUtilities.StoreableIntVector3 GripRightPositionCfg;
         public static ConfigUtilities.StoreableIntVector3 GripLeftRotationCfg;
@@ -34,8 +36,8 @@ namespace SaberTailor
         {
             Plugin.config.Value.ConfigVersion = ConfigVersion;
 
-            Plugin.config.Value.SaberLength = SaberLength;
-            Plugin.config.Value.SaberGirth = SaberGirth;
+            Plugin.config.Value.SaberLength = SaberLengthCfg;
+            Plugin.config.Value.SaberGirth = SaberGirthCfg;
 
             Plugin.config.Value.IsTrailEnabled = IsTrailEnabled;
             Plugin.config.Value.TrailLength = TrailLength;
@@ -86,6 +88,12 @@ namespace SaberTailor
             UpdateModVariables();
         }
 
+        public static void UpdateSaberLength()
+        {
+            SaberLength = SaberLengthCfg / 100f;
+            SaberGirth = SaberGirthCfg / 100f;
+        }
+
         public static void UpdateSaberPosition()
         {
             GripLeftPosition = FormattedVector3_To_Vector3(GripLeftPositionCfg) / 1000f;
@@ -100,6 +108,7 @@ namespace SaberTailor
 
         public static void UpdateModVariables()
         {
+            UpdateSaberLength();
             UpdateSaberPosition();
             UpdateSaberRotation();
         }
@@ -110,21 +119,21 @@ namespace SaberTailor
 
             ConfigVersion = Plugin.config.Value.ConfigVersion;
 
-            if (Plugin.config.Value.SaberLength < 0.01f || Plugin.config.Value.SaberLength > 5f)
+            if (Plugin.config.Value.SaberLength < 5 || Plugin.config.Value.SaberLength > 500)
             {
-                SaberLength = 1.0f;
+                SaberLengthCfg = 100;
             }
             else
             {
-                SaberLength = Plugin.config.Value.SaberLength;
+                SaberLengthCfg = Plugin.config.Value.SaberLength;
             }
-            if (Plugin.config.Value.SaberGirth < 0.01f || Plugin.config.Value.SaberGirth > 5f)
+            if (Plugin.config.Value.SaberGirth < 5 || Plugin.config.Value.SaberGirth > 500)
             {
-                SaberGirth = 1.0f;
+                SaberGirthCfg = 100;
             }
             else
             {
-                SaberGirth = Plugin.config.Value.SaberGirth;
+                SaberGirthCfg = Plugin.config.Value.SaberGirth;
             }
 
             IsTrailEnabled = Plugin.config.Value.IsTrailEnabled;

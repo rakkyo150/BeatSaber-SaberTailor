@@ -159,24 +159,24 @@ namespace SaberTailor.UI
 
 
             // Add options for saber size adjustments
-            IntViewController scaleLengthCtrl = saberScale.AddInt("Length (Default:100%)", "Scales the saber length.", 0, 500, 5);
+            IntViewController scaleLengthCtrl = saberScale.AddInt("Length (Default:100%)", "Scales the saber length.", 5, 500, 5);
             scaleLengthCtrl.GetValue += delegate
             {
-                return (int)Math.Round(Configuration.SaberLength * 100);
+                return Configuration.SaberLengthCfg;
             };
             scaleLengthCtrl.SetValue += delegate (int value)
             {
-                Configuration.SaberLength = value / 100f;
+                Configuration.SaberLengthCfg = value;
             };
 
-            IntViewController scaleGirthCtrl = saberScale.AddInt("Width (Default:100%)", "Scales the saber width.", 0, 500, 5);
+            IntViewController scaleGirthCtrl = saberScale.AddInt("Width (Default:100%)", "Scales the saber width.", 5, 500, 5);
             scaleGirthCtrl.GetValue += delegate
             {
-                return (int)Math.Round(Configuration.SaberGirth * 100);
+                return Configuration.SaberGirthCfg;
             };
             scaleGirthCtrl.SetValue += delegate (int value)
             {
-                Configuration.SaberGirth = value / 100f;
+                Configuration.SaberGirthCfg = value;
             };
 
 
