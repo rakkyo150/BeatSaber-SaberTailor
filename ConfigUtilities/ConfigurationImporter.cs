@@ -31,6 +31,7 @@ namespace SaberTailor.ConfigUtilities
             {
                 // Plan for this ModPrefs part is just to yeet it once BSIPA-Support for ModPrefs has been removed. Or replace by BSUtils INI implementation.
 #pragma warning disable CS0618 // ModPrefs is obsolete
+
                 // Reset SaberLength to 1 to avoid confusion on first start considering this options hasn't worked in over half a year
                 Configuration.SaberLength = 1.0f;
 
@@ -73,6 +74,7 @@ namespace SaberTailor.ConfigUtilities
 #pragma warning restore CS0618 // ModPrefs is obsolete
 
                 // set default values for new config variables not present in old config files
+                Configuration.ConfigVersion = 1;
                 Configuration.SaberGirth = 1.0f;
 
                 // Save configuration in the new format

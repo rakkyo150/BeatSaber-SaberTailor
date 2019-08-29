@@ -7,6 +7,8 @@ namespace SaberTailor
 {
     public static class Configuration
     {
+        public static int ConfigVersion;
+
         public static float SaberLength;
         public static float SaberGirth;
 
@@ -30,6 +32,8 @@ namespace SaberTailor
 
         public static void Save()
         {
+            Plugin.config.Value.ConfigVersion = ConfigVersion;
+
             Plugin.config.Value.SaberLength = SaberLength;
             Plugin.config.Value.SaberGirth = SaberGirth;
 
@@ -103,6 +107,9 @@ namespace SaberTailor
         private static void LoadConfig()
         {
             Plugin.configProvider.Load();
+
+            ConfigVersion = Plugin.config.Value.ConfigVersion;
+
             if (Plugin.config.Value.SaberLength < 0.01f || Plugin.config.Value.SaberLength > 5f)
             {
                 SaberLength = 1.0f;

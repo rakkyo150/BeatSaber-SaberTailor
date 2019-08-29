@@ -3,6 +3,7 @@
     public class PluginConfig
     {
         public bool RegenerateConfig = true;
+        public int ConfigVersion = 1;
 
         public float SaberLength = 1.0f;
         public float SaberGirth = 1.0f;
@@ -16,7 +17,7 @@
         public StoreableIntVector3 GripLeftRotation = new StoreableIntVector3();        // Rotation in °
         public StoreableIntVector3 GripRightRotation = new StoreableIntVector3();
 
-        public bool ModifyMenuHiltGrip;
+        public bool ModifyMenuHiltGrip = true;
     }
 
     /// <summary>
