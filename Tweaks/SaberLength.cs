@@ -22,13 +22,13 @@ namespace SaberTailor.Tweaks
             if (IsPreventingScoreSubmission)
             {
                 Utilities.ScoreUtility.DisableScoreSubmission(this.Name);
+                StartCoroutine(ApplyGameCoreModifications());
             }
             else
             {
                 Utilities.ScoreUtility.EnableScoreSubmission(this.Name);
+                // Skip GameCore modifications if score submission is enabled
             }
-
-            StartCoroutine(ApplyGameCoreModifications());
         }
 
         private IEnumerator ApplyGameCoreModifications()
