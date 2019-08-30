@@ -51,7 +51,7 @@ The default values are below:
 - **Minimum**: `5` (5%)
 - **Maximum**: `500` (500%)
 
-**Setting this to anything other than 1 will disable score submissions!**
+**Setting this to anything other than 100 will disable score submissions!**
 
 ### Saber Width
 
@@ -61,7 +61,7 @@ The default values are below:
 - **Minimum**: `5` (5%)
 - **Maximum**: `500` (500%)
 
-**Setting this to anything other than 1 will disable score submissions!**
+**Setting this to anything other than 100 will disable score submissions!**
 
 ### Trail Toggle
 
