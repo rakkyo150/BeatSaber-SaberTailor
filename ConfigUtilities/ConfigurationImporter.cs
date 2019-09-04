@@ -33,7 +33,7 @@ namespace SaberTailor.ConfigUtilities
 #pragma warning disable CS0618 // ModPrefs is obsolete
 
                 // Reset SaberLength to 100% to avoid confusion on first start considering this options hasn't worked in over half a year
-                Configuration.SaberLength = 100;
+                Configuration.SaberLengthCfg = 100;
 
                 Configuration.IsTrailEnabled = ModPrefs.GetBool(Plugin.PluginName, nameof(IsTrailEnabled), true, true);
 
@@ -75,7 +75,7 @@ namespace SaberTailor.ConfigUtilities
 
                 // set default values for new config variables not present in old config files
                 Configuration.ConfigVersion = 1;
-                Configuration.SaberGirth = 100;
+                Configuration.SaberGirthCfg = 100;
 
                 // Save configuration in the new format
                 Configuration.Save();

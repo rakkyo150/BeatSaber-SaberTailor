@@ -9,7 +9,7 @@
   "icon": "SaberTailor.Resources.icon.png",
   "id": "SaberTailor",
   "name": "SaberTailor",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "dependsOn": {
     "BSIPA": "^3.12.23",
     "CustomUI": "^1.6.0",
