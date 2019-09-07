@@ -13,7 +13,7 @@ namespace SaberTailor.UI
             // setup sub menus
             SubMenu leftSaberMenu = settingsMenu.AddSubMenu("Left Saber Settings", "Adjust position and rotation of the left saber.", true);
             SubMenu rightSaberMenu = settingsMenu.AddSubMenu("Right Saber Settings", "Adjust position and rotation of the right saber.", true);
-            SubMenu saberScale = settingsMenu.AddSubMenu("Saber Scaling", "ScoreSubmission will be disabled if scales are not default!\nAdjust length and width of the sabers.", true);
+            SubMenu saberScaleMenu = settingsMenu.AddSubMenu("Saber Scaling", "ScoreSubmission will be disabled if scales are not default!\nAdjust length and width of the sabers.", true);
             SubMenu trailMenu = settingsMenu.AddSubMenu("Trail Settings", "Adjust trail settings for default trails.", true);
 
             // add menu hilt option to main menu
@@ -159,7 +159,17 @@ namespace SaberTailor.UI
 
 
             // Add options for saber size adjustments
-            IntViewController scaleLengthCtrl = saberScale.AddInt("Length (Default:100%)", "Scales the saber length.", 5, 500, 5);
+            BoolViewController scaleModEnableCtrl = saberScaleMenu.AddBool("Enable saber scale modification", "Enable/Disable any scale modifications.");
+            scaleModEnableCtrl.GetValue += delegate
+            {
+                return Configuration.IsSaberScaleModEnabled;
+            };
+            scaleModEnableCtrl.SetValue += delegate (bool value)
+            {
+                Configuration.IsSaberScaleModEnabled = value;
+            };
+
+            IntViewController scaleLengthCtrl = saberScaleMenu.AddInt("Length (Default: 100%)", "Scales the saber length.", 5, 500, 5);
             scaleLengthCtrl.GetValue += delegate
             {
                 return Configuration.SaberLengthCfg;
@@ -169,7 +179,7 @@ namespace SaberTailor.UI
                 Configuration.SaberLengthCfg = value;
             };
 
-            IntViewController scaleGirthCtrl = saberScale.AddInt("Width (Default:100%)", "Scales the saber width.", 5, 500, 5);
+            IntViewController scaleGirthCtrl = saberScaleMenu.AddInt("Width (Default: 100%)", "Scales the saber width.", 5, 500, 5);
             scaleGirthCtrl.GetValue += delegate
             {
                 return Configuration.SaberGirthCfg;
@@ -181,6 +191,16 @@ namespace SaberTailor.UI
 
 
             // Add options for trail adjustments
+            BoolViewController trailModEnableCtrl = trailMenu.AddBool("Enable saber trail modification", "Enable/Disable any trail modifications.");
+            trailModEnableCtrl.GetValue += delegate
+            {
+                return Configuration.IsTrailModEnabled;
+            };
+            trailModEnableCtrl.SetValue += delegate (bool value)
+            {
+                Configuration.IsTrailModEnabled = value;
+            };
+
             BoolViewController trailEnableCtrl = trailMenu.AddBool("Enable saber trails", "Currently only works with sabers using default trail.");
             trailEnableCtrl.GetValue += delegate
             {

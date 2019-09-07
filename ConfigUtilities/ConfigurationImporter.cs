@@ -32,14 +32,28 @@ namespace SaberTailor.ConfigUtilities
                 // Plan for this ModPrefs part is just to yeet it once BSIPA-Support for ModPrefs has been removed. Or replace by BSUtils INI implementation.
 #pragma warning disable CS0618 // ModPrefs is obsolete
 
-                // Reset SaberLength to 100% to avoid confusion on first start considering this options hasn't worked in over half a year
+                // Reset SaberLength to 100% and disable scale modifications to avoid confusion on first start considering this options hasn't worked in over half a year
+                Configuration.IsSaberScaleModEnabled = false;
                 Configuration.SaberLengthCfg = 100;
 
-                Configuration.IsTrailEnabled = ModPrefs.GetBool(Plugin.PluginName, nameof(IsTrailEnabled), true, true);
+                // Import trail configuration
+                IsTrailEnabled = ModPrefs.GetBool(Plugin.PluginName, nameof(IsTrailEnabled), true, true);
+                Configuration.IsTrailEnabled = IsTrailEnabled;
 
                 TrailLength = ModPrefs.GetInt(Plugin.PluginName, nameof(TrailLength), 20, true);
                 Configuration.TrailLength = Math.Max(5, Math.Min(100, TrailLength));
 
+                // Check trail modification vars - if these are unchecked from default values, then just disable these
+                if (IsTrailEnabled == true && TrailLength == 20)
+                {
+                    Configuration.IsTrailModEnabled = false;
+                }
+                else
+                {
+                    Configuration.IsTrailModEnabled = true;
+                }
+
+                // Import grip position settings, convert old centimeter values to millimeter
                 GripLeftPosition = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripLeftPosition), "0,0,0", true));
                 Configuration.GripLeftPositionCfg = new StoreableIntVector3()
                 {
@@ -74,7 +88,7 @@ namespace SaberTailor.ConfigUtilities
 #pragma warning restore CS0618 // ModPrefs is obsolete
 
                 // set default values for new config variables not present in old config files
-                Configuration.ConfigVersion = 1;
+                Configuration.ConfigVersion = 2;
                 Configuration.SaberGirthCfg = 100;
 
                 // Save configuration in the new format

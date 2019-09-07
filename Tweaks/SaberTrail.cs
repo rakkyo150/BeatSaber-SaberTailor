@@ -17,6 +17,12 @@ namespace SaberTailor.Tweaks
 
         private void Load()
         {
+            if (Configuration.IsTrailModEnabled == false)
+            {
+                // Skip trail modifications if trail customizations are disabled
+                return;
+            }
+
             StartCoroutine(ApplyGameCoreModifications());
         }
 

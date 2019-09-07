@@ -9,9 +9,11 @@ namespace SaberTailor
     {
         public static int ConfigVersion;
 
+        public static bool IsSaberScaleModEnabled;
         public static float SaberLength;
         public static float SaberGirth;
 
+        public static bool IsTrailModEnabled;
         public static bool IsTrailEnabled;
         public static int TrailLength;
 
@@ -36,9 +38,11 @@ namespace SaberTailor
         {
             Plugin.config.Value.ConfigVersion = ConfigVersion;
 
+            Plugin.config.Value.IsSaberScaleModEnabled = IsSaberScaleModEnabled;
             Plugin.config.Value.SaberLength = SaberLengthCfg;
             Plugin.config.Value.SaberGirth = SaberGirthCfg;
 
+            Plugin.config.Value.IsTrailModEnabled = IsTrailModEnabled;
             Plugin.config.Value.IsTrailEnabled = IsTrailEnabled;
             Plugin.config.Value.TrailLength = TrailLength;
 
@@ -88,6 +92,25 @@ namespace SaberTailor
             UpdateModVariables();
         }
 
+        // Handle updates and additions to configuration
+        public static void UpdateConfig()
+        {
+            // v1 -> v2: Added enable/disable options for trail and scale modifications
+            if (ConfigVersion == 1)
+            {
+                // Disable trail modifications if settings are default
+                if (IsTrailEnabled && TrailLength == 20)
+                {
+                    IsTrailModEnabled = false;
+                }
+                else
+                {
+                    IsTrailModEnabled = true;
+                }
+                ConfigVersion = 2;
+            }
+        }
+
         public static void UpdateSaberLength()
         {
             SaberLength = SaberLengthCfg / 100f;
@@ -119,6 +142,7 @@ namespace SaberTailor
 
             ConfigVersion = Plugin.config.Value.ConfigVersion;
 
+            IsSaberScaleModEnabled = Plugin.config.Value.IsSaberScaleModEnabled;
             if (Plugin.config.Value.SaberLength < 5 || Plugin.config.Value.SaberLength > 500)
             {
                 SaberLengthCfg = 100;
@@ -136,9 +160,11 @@ namespace SaberTailor
                 SaberGirthCfg = Plugin.config.Value.SaberGirth;
             }
 
+            IsTrailModEnabled = Plugin.config.Value.IsTrailModEnabled;
             IsTrailEnabled = Plugin.config.Value.IsTrailEnabled;
             TrailLength = Math.Max(5, Math.Min(100, Plugin.config.Value.TrailLength));
 
+            // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Cfg values that are loaded!
             GripLeftPositionCfg = Plugin.config.Value.GripLeftPosition;
             GripLeftPositionCfg = new ConfigUtilities.StoreableIntVector3()
             {
@@ -146,7 +172,6 @@ namespace SaberTailor
                 y = Mathf.Clamp(GripLeftPositionCfg.y, -500, 500),
                 z = Mathf.Clamp(GripLeftPositionCfg.z, -500, 500)
             };
-            //GripRightPosition = FormattedVector3_To_Vector3(Plugin.config.Value.GripRightPosition) / 100f;
             GripRightPositionCfg = Plugin.config.Value.GripRightPosition;
             GripRightPositionCfg = new ConfigUtilities.StoreableIntVector3()
             {
@@ -155,7 +180,7 @@ namespace SaberTailor
                 z = Mathf.Clamp(GripRightPositionCfg.z, -500, 500)
             };
 
-            // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are stored!
+            // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are loaded!
             GripLeftRotationCfg = Plugin.config.Value.GripLeftRotation;
             GripRightRotationCfg = Plugin.config.Value.GripRightRotation;
 

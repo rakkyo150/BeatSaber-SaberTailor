@@ -18,6 +18,12 @@ namespace SaberTailor.Tweaks
 
         private void Load()
         {
+            if (Configuration.IsSaberScaleModEnabled == false)
+            {
+                Utilities.ScoreUtility.EnableScoreSubmission(this.Name);
+                return;
+            }
+
             // Allow the user to run in any mode, but don't allow ScoreSubmission
             if (IsPreventingScoreSubmission)
             {

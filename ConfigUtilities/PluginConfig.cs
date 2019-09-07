@@ -3,11 +3,13 @@
     public class PluginConfig
     {
         public bool RegenerateConfig = true;
-        public int ConfigVersion = 1;
+        public int ConfigVersion = 2;
 
+        public bool IsSaberScaleModEnabled = false;
         public int SaberLength = 100;
         public int SaberGirth = 100;
 
+        public bool IsTrailModEnabled = false;
         public bool IsTrailEnabled = true;
         public int TrailLength = 20;                                                    // Length in frames (iirc)
 

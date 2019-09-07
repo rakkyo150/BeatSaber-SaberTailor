@@ -81,6 +81,7 @@ namespace SaberTailor
         private void Load()
         {
             Configuration.Load();
+            Configuration.UpdateConfig();
             ApplyHarmonyPatches();
             Logger.Log($"{PluginName} v.{PluginVersion} has started", LogLevel.Notice);
         }
