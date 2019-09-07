@@ -29,7 +29,7 @@ namespace SaberTailor.UI
 
 
             // Add options for left saber adjustments
-            IntViewController lPosxCtrl = leftSaberMenu.AddInt("Pos X (Left/Right)", "Moves the saber left/right relative to the controller.", -50, 50, 1);
+            IntViewController lPosxCtrl = leftSaberMenu.AddInt("Pos X (Left/Right) in cm", "Moves the saber left/right relative to the controller.", -50, 50, 1);
             lPosxCtrl.GetValue += delegate
             {
                 return Configuration.GripLeftPositionCfg.x / 10;
@@ -39,7 +39,7 @@ namespace SaberTailor.UI
                 Configuration.GripLeftPositionCfg.x = value * 10;
             };
 
-            IntViewController lPosyCtrl = leftSaberMenu.AddInt("Pos Y (Down/Up)", "Moves the saber down/up relative to the controller.", -50, 50, 1);
+            IntViewController lPosyCtrl = leftSaberMenu.AddInt("Pos Y (Down/Up) in cm", "Moves the saber down/up relative to the controller.", -50, 50, 1);
             lPosyCtrl.GetValue += delegate
             {
                 return Configuration.GripLeftPositionCfg.y / 10;
@@ -49,7 +49,7 @@ namespace SaberTailor.UI
                 Configuration.GripLeftPositionCfg.y = value * 10;
             };
 
-            IntViewController lPoszCtrl = leftSaberMenu.AddInt("Pos Z (Backwards/Forwards)", "Moves the saber backwards/forwards relative to the controller.", -50, 50, 1);
+            IntViewController lPoszCtrl = leftSaberMenu.AddInt("Pos Z (Backwards/Forwards) in cm", "Moves the saber backwards/forwards relative to the controller.", -50, 50, 1);
             lPoszCtrl.GetValue += delegate
             {
                 return Configuration.GripLeftPositionCfg.z / 10;
@@ -59,7 +59,7 @@ namespace SaberTailor.UI
                 Configuration.GripLeftPositionCfg.z = value * 10;
             };
 
-            IntViewController lRotxCtrl = leftSaberMenu.AddInt("Rot X (Up/Down)", "Tilts the saber up/down relative to the controller.", -360, 360, 5);
+            IntViewController lRotxCtrl = leftSaberMenu.AddInt("Rot X (Up/Down) in degree", "Tilts the saber up/down relative to the controller.", -360, 360, 5);
             lRotxCtrl.GetValue += delegate
             {
                 return Configuration.GripLeftRotationCfg.x;
@@ -70,7 +70,7 @@ namespace SaberTailor.UI
                 Configuration.UpdateSaberRotation();
             };
 
-            IntViewController lRotyCtrl = leftSaberMenu.AddInt("Rot Y (Left/Right)", "Rotates the saber left/right relative to the controller.", -360, 360, 5);
+            IntViewController lRotyCtrl = leftSaberMenu.AddInt("Rot Y (Left/Right) in degree", "Rotates the saber left/right relative to the controller.", -360, 360, 5);
             lRotyCtrl.GetValue += delegate
             {
                 return Configuration.GripLeftRotationCfg.y;
@@ -81,7 +81,7 @@ namespace SaberTailor.UI
                 Configuration.UpdateSaberRotation();
             };
 
-            IntViewController lRotzCtrl = leftSaberMenu.AddInt("Rot Z (Saber axis)", "Rotates the saber around its own axis.", -360, 360, 5);
+            IntViewController lRotzCtrl = leftSaberMenu.AddInt("Rot Z (Saber axis) in degree", "Rotates the saber around its own axis.", -360, 360, 5);
             lRotzCtrl.GetValue += delegate
             {
                 return Configuration.GripLeftRotationCfg.z;
@@ -94,7 +94,7 @@ namespace SaberTailor.UI
 
 
             // Add options for right saber adjustments
-            IntViewController rPosxCtrl = rightSaberMenu.AddInt("Pos X (Left/Right)", "Moves the saber left/right relative to the controller.", -50, 50, 1);
+            IntViewController rPosxCtrl = rightSaberMenu.AddInt("Pos X (Left/Right) in cm", "Moves the saber left/right relative to the controller.", -50, 50, 1);
             rPosxCtrl.GetValue += delegate
             {
                 return Configuration.GripRightPositionCfg.x / 10;
@@ -104,7 +104,7 @@ namespace SaberTailor.UI
                 Configuration.GripRightPositionCfg.x = value * 10;
             };
 
-            IntViewController rPosyCtrl = rightSaberMenu.AddInt("Pos Y (Down/Up)", "Moves the saber down/up relative to the controller.", -50, 50, 1);
+            IntViewController rPosyCtrl = rightSaberMenu.AddInt("Pos Y (Down/Up) in cm", "Moves the saber down/up relative to the controller.", -50, 50, 1);
             rPosyCtrl.GetValue += delegate
             {
                 return Configuration.GripRightPositionCfg.y / 10;
@@ -114,7 +114,7 @@ namespace SaberTailor.UI
                 Configuration.GripRightPositionCfg.y = value * 10;
             };
 
-            IntViewController rPoszCtrl = rightSaberMenu.AddInt("Pos Z (Backwards/Forwards)", "Moves the saber backwards/forwards relative to the controller.", -50, 50, 1);
+            IntViewController rPoszCtrl = rightSaberMenu.AddInt("Pos Z (Backwards/Forwards) in cm", "Moves the saber backwards/forwards relative to the controller.", -50, 50, 1);
             rPoszCtrl.GetValue += delegate
             {
                 return Configuration.GripRightPositionCfg.z / 10;
@@ -124,7 +124,7 @@ namespace SaberTailor.UI
                 Configuration.GripRightPositionCfg.z = value * 10;
             };
 
-            IntViewController rRotxCtrl = rightSaberMenu.AddInt("Rot X (Up/Down)", "Tilts the saber up/down relative to the controller.", -360, 360, 5);
+            IntViewController rRotxCtrl = rightSaberMenu.AddInt("Rot X (Up/Down) in degree", "Tilts the saber up/down relative to the controller.", -360, 360, 5);
             rRotxCtrl.GetValue += delegate
             {
                 return Configuration.GripRightRotationCfg.x;
@@ -135,7 +135,7 @@ namespace SaberTailor.UI
                 Configuration.UpdateSaberRotation();
             };
 
-            IntViewController rRotyCtrl = rightSaberMenu.AddInt("Rot Y (Left/Right)", "Rotates the saber left/right relative to the controller.", -360, 360, 5);
+            IntViewController rRotyCtrl = rightSaberMenu.AddInt("Rot Y (Left/Right) in degree", "Rotates the saber left/right relative to the controller.", -360, 360, 5);
             rRotyCtrl.GetValue += delegate
             {
                 return Configuration.GripRightRotationCfg.y;
@@ -146,7 +146,7 @@ namespace SaberTailor.UI
                 Configuration.UpdateSaberRotation();
             };
 
-            IntViewController rRotzCtrl = rightSaberMenu.AddInt("Rot Z (Saber axis)", "Rotates the saber around its own axis.", -360, 360, 5);
+            IntViewController rRotzCtrl = rightSaberMenu.AddInt("Rot Z (Saber axis) in degree", "Rotates the saber around its own axis.", -360, 360, 5);
             rRotzCtrl.GetValue += delegate
             {
                 return Configuration.GripRightRotationCfg.z;
