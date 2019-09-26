@@ -1,4 +1,4 @@
-# Beat Saber - Saber Tailor v2.0.0
+# Beat Saber - Saber Tailor v2.1.0
 
 Tweak things about your sabers, including grip position/angle, saber length and trail length! Original mod by Ruu.
 
@@ -12,7 +12,7 @@ The default values are below:
 ```json
 {
   "RegenerateConfig": false,
-  "ConfigVersion": 1,
+  "ConfigVersion": 3,
   "IsSaberScaleModEnabled": false,
   "SaberScaleHitbox": false,
   "SaberLength": 100,
@@ -40,7 +40,10 @@ The default values are below:
     "y": 0,
     "z": 0
   },
-  "ModifyMenuHiltGrip": false
+  "ModifyMenuHiltGrip": false,
+  "Logging": {
+    "ShowCallSource": false
+  }
 }
 ```
 
@@ -52,7 +55,7 @@ The default values are below:
 - **Values**: `true` | `false`
 - **Default**: `false`
 
-Enables or disables saber scale modifications by SaberTailor. This option *does not* disable score submission.
+Enables or disables saber scale modifications by SaberTailor.
 
 ### SaberScaleHitbox
 
@@ -70,7 +73,7 @@ Enables or disables saber scale modifications by SaberTailor. This option *does 
 - **Minimum**: `5` (5%)
 - **Maximum**: `500` (500%)
 
-Adjust the length of the sabers. This option *does not* disable score submission
+Adjust the length of the sabers.
 
 ### Saber Width
 
@@ -80,7 +83,7 @@ Adjust the length of the sabers. This option *does not* disable score submission
 - **Minimum**: `5` (5%)
 - **Maximum**: `500` (500%)
 
-Adjust the width of the sabers. This option *does not* disable score submission
+Adjust the width of the sabers.
 
 ### Trail Mod Toggle
 
@@ -88,7 +91,7 @@ Adjust the width of the sabers. This option *does not* disable score submission
 - **Values**: `true` | `false`
 - **Default**: `false`
 
-Enables or disables trail modifications by SaberTailor. This option *does not* disable score submission.
+Enables or disables trail modifications by SaberTailor.
 
 ### Trail Toggle
 
@@ -96,7 +99,7 @@ Enables or disables trail modifications by SaberTailor. This option *does not* d
 - **Values**: `true` | `false`
 - **Default**: `true`
 
-Allows you to disable the saber trail entirely, when set to `0`. This option *does not* disable score submission.
+Allows you to disable the saber trail entirely, when set to `false`.
 
 ### Trail Length
 
@@ -106,7 +109,7 @@ Allows you to disable the saber trail entirely, when set to `0`. This option *do
 - **Minimum**: `5`
 - **Maximum**: `100`
 
-Adjusts the length of the trail on the saber. This option *does not* disable score submission.
+Adjusts the length of the trail on the saber.
 
 ### Grip Position (Left + Right)
 
@@ -119,7 +122,7 @@ Adjusts the length of the trail on the saber. This option *does not* disable sco
 - `+y` moves the saber up, EG: `100` moves the saber 10 centimeters up.
 - `+z` moves the saber forward, EG: `300` moves the saber 30 centimeters forward.
 
-Alters the position of the left/right saber, relative to the default location. You cannot move the saber more than 50 centimeters away on any axis! This option *does not* disable score submission.
+Alters the position of the left/right saber, relative to the default location. You cannot move the saber more than 50 centimeters away on any axis!
 
 ### Grip Rotation (Left + Right)
 
@@ -131,15 +134,23 @@ Alters the position of the left/right saber, relative to the default location. Y
 - `+y` rotates the saber right, EG: `10` rotates the saber 10 degrees right.
 - `+z` rolls the saber counter-clockwise around its own axis, EG: `30` rotates the saber 30 degrees counter-clockwise. (This is only useful if you have custom sabers that are not cylindrical shaped and you want to correct for a different grip (e.g. Vive B-Grip)
 
-Alters the rotation of the sabers. The center of rotation is where the saber's hit-box starts, which is just after the glowing line on the handle. This option *does not* disable score submission.
+Alters the rotation of the sabers. The center of rotation is where the saber's hit-box starts, which is just after the glowing line on the handle.
 
 ### Menu hilt adjustments
 
 - **Setting**: `ModifyMenuHiltGrip`
-- **Values**: `1` | `0`
-- **Default**: `0`
+- **Values**: `true` | `false`
+- **Default**: `false`
 
-Alters the position and angle of the menu hilts the same way as the sabers, when set to `1`. This option *does not* disable score submission.
+Alters the position and angle of the menu hilts the same way as the sabers, when set to `true`.
+
+### Logging options
+
+- **Setting**: `ShowCallSource`
+- **Values**: `true` | `false`
+- **Default**: `false`
+
+Show call source in the logs and terminal
 
 ### Note!
 
