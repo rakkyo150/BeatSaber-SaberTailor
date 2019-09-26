@@ -26,6 +26,9 @@ namespace SaberTailor
 
         public static bool ModifyMenuHiltGrip;
 
+        // Mainly just for developers. Change this manually in the config to enable/disable call source to logging
+        public static bool ShowCallSource;
+
         // Config vars for representing player settings before it gets mangled into something that works with the game,
         // but changes representation of these settings in the process - also avoiding floating points
         public static int SaberLengthCfg;
@@ -35,7 +38,6 @@ namespace SaberTailor
         public static StoreableIntVector3 GripLeftRotationCfg;
         public static StoreableIntVector3 GripRightRotationCfg;
 
-
         public static void Save()
         {
             Plugin.config.Value.ConfigVersion = ConfigVersion;
@@ -43,11 +45,11 @@ namespace SaberTailor
             Plugin.config.Value.IsSaberScaleModEnabled = IsSaberScaleModEnabled;
             Plugin.config.Value.SaberLength = SaberLengthCfg;
             Plugin.config.Value.SaberGirth = SaberGirthCfg;
+            Plugin.config.Value.SaberScaleHitbox = SaberScaleHitbox;
 
             Plugin.config.Value.IsTrailModEnabled = IsTrailModEnabled;
             Plugin.config.Value.IsTrailEnabled = IsTrailEnabled;
             Plugin.config.Value.TrailLength = TrailLength;
-            Plugin.config.Value.SaberScaleHitbox = SaberScaleHitbox;
 
             // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Cfg values that are stored!
             Plugin.config.Value.GripLeftPosition = GripLeftPositionCfg;
@@ -58,6 +60,8 @@ namespace SaberTailor
             Plugin.config.Value.GripRightRotation = GripRightRotationCfg;
 
             Plugin.config.Value.ModifyMenuHiltGrip = ModifyMenuHiltGrip;
+
+            Plugin.config.Value.Logging["ShowCallSource"] = ShowCallSource;
 
             // Store configuration to file
             Plugin.configProvider.Store(Plugin.config.Value);
@@ -73,23 +77,23 @@ namespace SaberTailor
                 // Import SaberTailor's settings from the old configuration (ModPrefs)
                 try
                 {
-                    ConfigurationImporter.ImportSettingsFromModPrefs();
+                    PluginConfig importedConfig = ConfigurationImporter.ImportSettingsFromModPrefs();
+                    Plugin.config = importedConfig;
+
+                    // Store configuration in the new format immediately
+                    Plugin.configProvider.Store(Plugin.config.Value);
+
                     Logger.Log("Configuration loaded from ModPrefs", LogLevel.Notice);
                 }
                 catch (Exception ex)
                 {
                     Logger.Log(ex);
                     Logger.Log("Failed to import ModPrefs configuration. Loading default BSIPA configuration instead.", LogLevel.Notice);
-
-                    LoadConfig();
                 }
-            }
-            else
-            {
-                LoadConfig();
             }
 
             UpdateConfig();
+            LoadConfig();
             Logger.Log("Configuration has been set", LogLevel.Debug);
 
             // Update variables used by mod logic
@@ -172,24 +176,27 @@ namespace SaberTailor
             GripRightRotationCfg = Plugin.config.Value.GripRightRotation;
 
             ModifyMenuHiltGrip = Plugin.config.Value.ModifyMenuHiltGrip;
+
+            if (Plugin.config.Value.Logging.TryGetValue("ShowCallSource", out object showCallSource) && showCallSource is bool loggerShowCallSource)
+            {
+                ShowCallSource = loggerShowCallSource;
+            }
         }
 
         // Handle updates and additions to configuration
         private static void UpdateConfig()
         {
-            // v1 -> v2: Added enable/disable options for trail and scale modifications
+            // v1 -> v{latest}: Added enable/disable options for trail and scale modifications
             if (ConfigVersion == 1)
             {
                 // Disable trail modifications if settings are default
-                if (IsTrailEnabled && TrailLength == 20)
-                {
-                    IsTrailModEnabled = false;
-                }
-                else
-                {
-                    IsTrailModEnabled = true;
-                }
-                ConfigVersion = 2;
+                IsTrailModEnabled = (!IsTrailEnabled || TrailLength != 20);
+            }
+
+            int latestVersion = new PluginConfig().ConfigVersion;
+            if (ConfigVersion != latestVersion)
+            {
+                ConfigVersion = latestVersion;
             }
         }
 

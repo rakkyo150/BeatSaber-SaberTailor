@@ -1,9 +1,11 @@
-﻿namespace SaberTailor.ConfigUtilities
+﻿using System.Collections.Generic;
+
+namespace SaberTailor.ConfigUtilities
 {
     public class PluginConfig
     {
         public bool RegenerateConfig = true;
-        public int ConfigVersion = 2;
+        public int ConfigVersion = 3;
 
         public bool IsSaberScaleModEnabled = false;
         public bool SaberScaleHitbox = false;
@@ -21,6 +23,11 @@
         public StoreableIntVector3 GripRightRotation = new StoreableIntVector3();
 
         public bool ModifyMenuHiltGrip = true;
+
+        public Dictionary<string, object> Logging = new Dictionary<string, object>()
+        {
+            { "ShowCallSource", false },
+        };
     }
 
     /// <summary>
