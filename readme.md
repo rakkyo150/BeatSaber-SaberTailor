@@ -13,8 +13,11 @@ The default values are below:
 {
   "RegenerateConfig": false,
   "ConfigVersion": 1,
+  "IsSaberScaleModEnabled": false,
+  "SaberScaleHitbox": false,
   "SaberLength": 100,
   "SaberGirth": 100,
+  "IsTrailModEnabled": false,
   "IsTrailEnabled": true,
   "TrailLength": 20,
   "GripLeftPosition": {
@@ -43,6 +46,22 @@ The default values are below:
 
 *If the file / settings don't exist, run your game once after installing!*
 
+### Saber Scale Mod Toggle
+
+- **Setting**: `IsSaberScaleModEnabled`
+- **Values**: `true` | `false`
+- **Default**: `false`
+
+Enables or disables saber scale modifications by SaberTailor. This option *does not* disable score submission.
+
+### SaberScaleHitbox
+
+- **Setting**: `Scale hit-box`
+- **Values**: `true` | `false`
+- **Default**: `false`
+
+**Enables scaling of the saber hit-box. Having this option set to true *will* disable score submission**
+
 ### Saber Length
 
 - **Setting**: `SaberLength`
@@ -51,7 +70,7 @@ The default values are below:
 - **Minimum**: `5` (5%)
 - **Maximum**: `500` (500%)
 
-**Setting this to anything other than 100 will disable score submissions!**
+Adjust the length of the sabers. This option *does not* disable score submission
 
 ### Saber Width
 
@@ -61,13 +80,21 @@ The default values are below:
 - **Minimum**: `5` (5%)
 - **Maximum**: `500` (500%)
 
-**Setting this to anything other than 100 will disable score submissions!**
+Adjust the width of the sabers. This option *does not* disable score submission
+
+### Trail Mod Toggle
+
+- **Setting**: `IsTrailModEnabled`
+- **Values**: `true` | `false`
+- **Default**: `false`
+
+Enables or disables trail modifications by SaberTailor. This option *does not* disable score submission.
 
 ### Trail Toggle
 
 - **Setting**: `IsTrailEnabled`
-- **Values**: `1` | `0`
-- **Default**: `1`
+- **Values**: `true` | `false`
+- **Default**: `true`
 
 Allows you to disable the saber trail entirely, when set to `0`. This option *does not* disable score submission.
 
