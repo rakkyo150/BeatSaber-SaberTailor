@@ -40,6 +40,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="ConfigUtilities\ConfigurationImporter.cs" />
     <Compile Include="HarmonyPatches\HarmonyPatches.cs" />
+    <Compile Include="HarmonyPatches\Patches\AdjustPlatformSpecificControllerTransformPatch.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="ConfigUtilities\PluginConfig.cs" />

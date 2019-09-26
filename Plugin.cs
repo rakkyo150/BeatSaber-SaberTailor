@@ -1,14 +1,12 @@
-﻿using Harmony;
-using IPA;
+﻿using IPA;
 using IPA.Config;
 using IPA.Loader;
 using IPA.Utilities;
 using SaberTailor.ConfigUtilities;
+using SaberTailor.HarmonyPatches;
 using SaberTailor.Tweaks;
 using SaberTailor.UI;
 using SaberTailor.Utilities;
-using System;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using IPALogger = IPA.Logging.Logger;
@@ -23,9 +21,6 @@ namespace SaberTailor
 
         internal static Ref<PluginConfig> config;
         internal static IConfigProvider configProvider;
-
-        private static bool harmonyPatchesLoaded = false;
-        internal static HarmonyInstance harmonyInstance;
 
         public void Init(IPALogger logger, [Config.Prefer("json")] IConfigProvider cfgProvider, PluginLoader.PluginMetadata metadata)
         {
@@ -78,56 +73,15 @@ namespace SaberTailor
         private void Load()
         {
             Configuration.Load();
-            ApplyHarmonyPatches();
+            Patches.ApplyHarmonyPatches();
             Logger.Log($"{PluginName} v.{PluginVersion} has started", LogLevel.Notice);
         }
 
         private void Unload()
         {
-            RemoveHarmonyPatches();
+            Patches.RemoveHarmonyPatches();
             ScoreUtility.Cleanup();
             Configuration.Save();
-        }
-
-        private void ApplyHarmonyPatches()
-        {
-            if (harmonyPatchesLoaded)
-            {
-                return;
-            }
-
-            if (harmonyInstance == null)
-            {
-                harmonyInstance = HarmonyInstance.Create("com.shadnix.BeatSaber.SaberTailor");
-            }
-
-            try
-            {
-                Logger.Log("Loading Harmony patches...", LogLevel.Debug);
-                harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
-                harmonyPatchesLoaded = true;
-            }
-            catch (Exception ex)
-            {
-                Logger.Log(ex, LogLevel.Error);
-            }
-        }
-
-        private void RemoveHarmonyPatches()
-        {
-            if (harmonyInstance != null && harmonyPatchesLoaded)
-            {
-                try
-                {
-                    Logger.Log("Unloading Harmony patches...", LogLevel.Debug);
-                    harmonyInstance.UnpatchAll("com.shadnix.BeatSaber.SaberTailor");
-                    harmonyPatchesLoaded = false;
-                }
-                catch (Exception ex)
-                {
-                    Logger.Log(ex, LogLevel.Error);
-                }
-            }
         }
     }
 }
