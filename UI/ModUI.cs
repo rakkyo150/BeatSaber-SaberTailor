@@ -1,9 +1,8 @@
-﻿using System;
-using CustomUI.Settings;
+﻿using CustomUI.Settings;
 
 namespace SaberTailor.UI
 {
-    class ModUI
+    internal class ModUI
     {
         public static void CreateSettingsOptionsUI()
         {

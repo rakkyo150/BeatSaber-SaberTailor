@@ -11,7 +11,7 @@
 
         public bool IsTrailModEnabled = false;
         public bool IsTrailEnabled = true;
-        public int TrailLength = 20;                                                    // Length in frames (iirc)
+        public int TrailLength = 20;                                                    // Length in frames
 
         public StoreableIntVector3 GripLeftPosition = new StoreableIntVector3();        // Position in mm
         public StoreableIntVector3 GripRightPosition = new StoreableIntVector3();

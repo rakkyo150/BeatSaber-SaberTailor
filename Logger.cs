@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Reflection;
 using System.Diagnostics;
+using System.Reflection;
 using IPALogger = IPA.Logging.Logger;
 using LogLevel = IPA.Logging.Logger.Level;
 

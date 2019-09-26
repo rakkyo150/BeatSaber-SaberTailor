@@ -1,6 +1,6 @@
-﻿using System;
+﻿using IPA.Config;
+using System;
 using System.Globalization;
-using IPA.Config;
 using UnityEngine;
 
 namespace SaberTailor.ConfigUtilities
@@ -87,7 +87,7 @@ namespace SaberTailor.ConfigUtilities
                 Configuration.ModifyMenuHiltGrip = ModPrefs.GetBool(Plugin.PluginName, nameof(ModifyMenuHiltGrip), false, true);
 #pragma warning restore CS0618 // ModPrefs is obsolete
 
-                // set default values for new config variables not present in old config files
+                // Set default values for new config variables not present in old config files
                 Configuration.ConfigVersion = 2;
                 Configuration.SaberGirthCfg = 100;
 

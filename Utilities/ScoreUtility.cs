@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
-using BS_Utils.Gameplay;
+﻿using BS_Utils.Gameplay;
+using System.Collections.Generic;
 using LogLevel = IPA.Logging.Logger.Level;
 
 namespace SaberTailor.Utilities
 {
-    internal static class ScoreUtility
+    public static class ScoreUtility
     {
         private static List<string> ScoreBlockList = new List<string>();
-        private static bool ScoreIsBlocked = false;
         private static object acquireLock = new object();
+
+        public static bool ScoreIsBlocked { get; private set; } = false;
 
         internal static void DisableScoreSubmission(string BlockedBy)
         {
@@ -46,6 +47,9 @@ namespace SaberTailor.Utilities
             }
         }
 
+        /// <summary>
+        /// Should only be called on exit!
+        /// </summary>
         internal static void Cleanup()
         {
             lock (acquireLock)

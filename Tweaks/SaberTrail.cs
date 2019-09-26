@@ -1,7 +1,8 @@
-﻿using System.Collections;
-using LogLevel = IPA.Logging.Logger.Level;
+﻿using BS_Utils.Utilities;
+using System.Collections;
 using UnityEngine;
 using Xft;
+using LogLevel = IPA.Logging.Logger.Level;
 
 namespace SaberTailor.Tweaks
 {
@@ -10,20 +11,17 @@ namespace SaberTailor.Tweaks
         public string Name => "SaberTrail";
         public bool IsPreventingScoreSubmission => false;
 
-        private void Awake()
-        {
-            Load();
-        }
+#pragma warning disable IDE0051 // Used by MonoBehaviour
+        private void Awake() => Load();
+#pragma warning restore IDE0051 // Used by MonoBehaviour
 
         private void Load()
         {
-            if (Configuration.IsTrailModEnabled == false)
+            if (Configuration.IsTrailModEnabled)
             {
-                // Skip trail modifications if trail customizations are disabled
-                return;
+                StartCoroutine(ApplyGameCoreModifications());
             }
 
-            StartCoroutine(ApplyGameCoreModifications());
         }
 
         private IEnumerator ApplyGameCoreModifications()
@@ -31,7 +29,7 @@ namespace SaberTailor.Tweaks
             BasicSaberModelController[] basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
             foreach (BasicSaberModelController basicSaberModelController in basicSaberModelControllers)
             {
-                SaberWeaponTrail saberTrail = Utilities.ReflectionUtil.GetPrivateField<SaberWeaponTrail>(basicSaberModelController, "_saberWeaponTrail");
+                SaberWeaponTrail saberTrail = ReflectionUtil.GetPrivateField<SaberWeaponTrail>(basicSaberModelController, "_saberWeaponTrail");
                 if (saberTrail.name == "BasicSaberModel")
                 {
                     ModifyTrail(saberTrail, Configuration.TrailLength);
@@ -47,8 +45,8 @@ namespace SaberTailor.Tweaks
             if (Configuration.IsTrailEnabled)
             {
                 trail.enabled = true;
-                Utilities.ReflectionUtil.SetPrivateField(trail, "_maxFrame", length);
-                Utilities.ReflectionUtil.SetPrivateField(trail, "_granularity", length * 3);
+                ReflectionUtil.SetPrivateField(trail, "_maxFrame", length);
+                ReflectionUtil.SetPrivateField(trail, "_granularity", length * 3);
             }
             else
             {

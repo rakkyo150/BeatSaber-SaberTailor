@@ -1,7 +1,8 @@
-﻿using System;
-using IPA.Config;
-using LogLevel = IPA.Logging.Logger.Level;
+﻿using IPA.Config;
+using SaberTailor.ConfigUtilities;
+using System;
 using UnityEngine;
+using LogLevel = IPA.Logging.Logger.Level;
 
 namespace SaberTailor
 {
@@ -28,10 +29,10 @@ namespace SaberTailor
         // but changes representation of these settings in the process - also avoiding floating points
         public static int SaberLengthCfg;
         public static int SaberGirthCfg;
-        public static ConfigUtilities.StoreableIntVector3 GripLeftPositionCfg;
-        public static ConfigUtilities.StoreableIntVector3 GripRightPositionCfg;
-        public static ConfigUtilities.StoreableIntVector3 GripLeftRotationCfg;
-        public static ConfigUtilities.StoreableIntVector3 GripRightRotationCfg;
+        public static StoreableIntVector3 GripLeftPositionCfg;
+        public static StoreableIntVector3 GripRightPositionCfg;
+        public static StoreableIntVector3 GripLeftRotationCfg;
+        public static StoreableIntVector3 GripRightRotationCfg;
 
 
         public static void Save()
@@ -63,14 +64,14 @@ namespace SaberTailor
         public static void Load()
         {
             // Plan for this ModPrefs part is just to yeet it once BSIPA-Support for ModPrefs has been removed. Or replace by BSUtils INI implementation.
-            #pragma warning disable CS0618 // ModPrefs is obsolete
+#pragma warning disable CS0618 // ModPrefs is obsolete
             if (ModPrefs.HasKey(Plugin.PluginName, "GripLeftPosition") && !ModPrefs.GetBool(Plugin.PluginName, "IsExportedToNewConfig", false))
-            #pragma warning restore CS0618 // ModPrefs is obsolete
+#pragma warning restore CS0618 // ModPrefs is obsolete
             {
                 // Import SaberTailor's settings from the old configuration (ModPrefs)
                 try
                 {
-                    ConfigUtilities.ConfigurationImporter.ImportSettingsFromModPrefs();
+                    ConfigurationImporter.ImportSettingsFromModPrefs();
                     Logger.Log("Configuration loaded from ModPrefs", LogLevel.Notice);
                 }
                 catch (Exception ex)
@@ -86,29 +87,18 @@ namespace SaberTailor
                 LoadConfig();
             }
 
+            UpdateConfig();
             Logger.Log("Configuration has been set", LogLevel.Debug);
 
             // Update variables used by mod logic
             UpdateModVariables();
         }
 
-        // Handle updates and additions to configuration
-        public static void UpdateConfig()
+        public static void UpdateModVariables()
         {
-            // v1 -> v2: Added enable/disable options for trail and scale modifications
-            if (ConfigVersion == 1)
-            {
-                // Disable trail modifications if settings are default
-                if (IsTrailEnabled && TrailLength == 20)
-                {
-                    IsTrailModEnabled = false;
-                }
-                else
-                {
-                    IsTrailModEnabled = true;
-                }
-                ConfigVersion = 2;
-            }
+            UpdateSaberLength();
+            UpdateSaberPosition();
+            UpdateSaberRotation();
         }
 
         public static void UpdateSaberLength()
@@ -129,13 +119,6 @@ namespace SaberTailor
             GripRightRotation = Quaternion.Euler(FormattedVector3_To_Vector3(GripRightRotationCfg)).eulerAngles;
         }
 
-        public static void UpdateModVariables()
-        {
-            UpdateSaberLength();
-            UpdateSaberPosition();
-            UpdateSaberRotation();
-        }
-
         private static void LoadConfig()
         {
             Plugin.configProvider.Load();
@@ -151,6 +134,7 @@ namespace SaberTailor
             {
                 SaberLengthCfg = Plugin.config.Value.SaberLength;
             }
+
             if (Plugin.config.Value.SaberGirth < 5 || Plugin.config.Value.SaberGirth > 500)
             {
                 SaberGirthCfg = 100;
@@ -166,14 +150,14 @@ namespace SaberTailor
 
             // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Cfg values that are loaded!
             GripLeftPositionCfg = Plugin.config.Value.GripLeftPosition;
-            GripLeftPositionCfg = new ConfigUtilities.StoreableIntVector3()
+            GripLeftPositionCfg = new StoreableIntVector3()
             {
                 x = Mathf.Clamp(GripLeftPositionCfg.x, -500, 500),
                 y = Mathf.Clamp(GripLeftPositionCfg.y, -500, 500),
                 z = Mathf.Clamp(GripLeftPositionCfg.z, -500, 500)
             };
             GripRightPositionCfg = Plugin.config.Value.GripRightPosition;
-            GripRightPositionCfg = new ConfigUtilities.StoreableIntVector3()
+            GripRightPositionCfg = new StoreableIntVector3()
             {
                 x = Mathf.Clamp(GripRightPositionCfg.x, -500, 500),
                 y = Mathf.Clamp(GripRightPositionCfg.y, -500, 500),
@@ -187,10 +171,29 @@ namespace SaberTailor
             ModifyMenuHiltGrip = Plugin.config.Value.ModifyMenuHiltGrip;
         }
 
+        // Handle updates and additions to configuration
+        private static void UpdateConfig()
+        {
+            // v1 -> v2: Added enable/disable options for trail and scale modifications
+            if (ConfigVersion == 1)
+            {
+                // Disable trail modifications if settings are default
+                if (IsTrailEnabled && TrailLength == 20)
+                {
+                    IsTrailModEnabled = false;
+                }
+                else
+                {
+                    IsTrailModEnabled = true;
+                }
+                ConfigVersion = 2;
+            }
+        }
+
         /// <summary>
         /// Converts the PluginConfig.StoreableIntVector3 to a UnityEngine.Vector3 format
         /// </summary>
-        private static Vector3 FormattedVector3_To_Vector3(ConfigUtilities.StoreableIntVector3 vector3) => new Vector3()
+        private static Vector3 FormattedVector3_To_Vector3(StoreableIntVector3 vector3) => new Vector3()
         {
             x = vector3.x,
             y = vector3.y,

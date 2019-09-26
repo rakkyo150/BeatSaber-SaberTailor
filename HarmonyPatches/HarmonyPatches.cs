@@ -7,9 +7,9 @@ namespace SaberTailor.HarmonyPatches
     [HarmonyPatch(typeof(VRPlatformHelper))]
     [HarmonyPatch("AdjustPlatformSpecificControllerTransform")]
     [HarmonyPatch(new Type[] { typeof(Transform) })]
-    class AdjustPlatformSpecificControllerTransformPatch
+    internal class AdjustPlatformSpecificControllerTransformPatch
     {
-        static void Prefix(Transform transform)
+        private static void Prefix(Transform transform)
         {
             // Always check for sabers first and modify and exit out immediately if found
             if (transform.gameObject.name == "LeftSaber")

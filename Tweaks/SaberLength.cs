@@ -1,8 +1,9 @@
-﻿using System;
+﻿using SaberTailor.Utilities;
+using System;
 using System.Collections;
-using LogLevel = IPA.Logging.Logger.Level;
 using UnityEngine;
 using Xft;
+using LogLevel = IPA.Logging.Logger.Level;
 
 namespace SaberTailor.Tweaks
 {
@@ -11,36 +12,35 @@ namespace SaberTailor.Tweaks
         public string Name => "SaberLength";
         public bool IsPreventingScoreSubmission => Math.Abs(Configuration.SaberLength - 1.0f) > 0.01f || Math.Abs(Configuration.SaberGirth - 1.0f) > 0.01f;
 
-        private void Start()
-        {
-            Load();
-        }
+#pragma warning disable IDE0051 // Used by MonoBehaviour
+        private void Start() => Load();
+#pragma warning restore IDE0051 // Used by MonoBehaviour
 
         private void Load()
         {
-            if (Configuration.IsSaberScaleModEnabled == false)
+            if (Configuration.IsSaberScaleModEnabled)
             {
-                Utilities.ScoreUtility.EnableScoreSubmission(this.Name);
-                return;
+                // Allow the user to run in any mode, but don't allow ScoreSubmission
+                if (IsPreventingScoreSubmission)
+                {
+                    ScoreUtility.DisableScoreSubmission(this.Name);
+                    StartCoroutine(ApplyGameCoreModifications());
+                }
+                else if (ScoreUtility.ScoreIsBlocked)
+                {
+                    ScoreUtility.EnableScoreSubmission(this.Name);
+                }
             }
-
-            // Allow the user to run in any mode, but don't allow ScoreSubmission
-            if (IsPreventingScoreSubmission)
+            else if (ScoreUtility.ScoreIsBlocked)
             {
-                Utilities.ScoreUtility.DisableScoreSubmission(this.Name);
-                StartCoroutine(ApplyGameCoreModifications());
-            }
-            else
-            {
-                Utilities.ScoreUtility.EnableScoreSubmission(this.Name);
-                // Skip GameCore modifications if score submission is enabled
+                ScoreUtility.EnableScoreSubmission(this.Name);
             }
         }
 
         private IEnumerator ApplyGameCoreModifications()
         {
             bool usingCustomModels = false;
-            Saber defaultLeftsaber = null;
+            Saber defaultLeftSaber = null;
             Saber defaultRightSaber = null;
             GameObject LeftSaber = null;
             GameObject RightSaber = null;
@@ -57,7 +57,7 @@ namespace SaberTailor.Tweaks
             {
                 if (saber.saberType == typeForHands[0])
                 {
-                    defaultLeftsaber = saber;
+                    defaultLeftSaber = saber;
                     LeftSaber = saber.gameObject;
                 }
                 else if (saber.saberType == typeForHands[1])
@@ -67,7 +67,7 @@ namespace SaberTailor.Tweaks
                 }
             }
 
-            if (Utilities.Utils.IsPluginEnabled("Custom Sabers"))
+            if (Utils.IsPluginEnabled("Custom Sabers"))
             {
                 // Wait for half a second for CustomSaber to catch up
                 yield return new WaitForSecondsRealtime(0.5f);
@@ -76,14 +76,14 @@ namespace SaberTailor.Tweaks
                 // If customSaberClone is null, CustomSaber is most likely not replacing the default sabers.
                 if (customSaberClone != null)
                 {
+                    if (defaultLeftSaber != null)
+                    {
+                        RescaleSaberHitBox(defaultLeftSaber, Configuration.SaberLength);
+                    }
+
                     if (defaultRightSaber != null)
                     {
                         RescaleSaberHitBox(defaultRightSaber, Configuration.SaberLength);
-                    }
-
-                    if (defaultLeftsaber != null)
-                    {
-                        RescaleSaberHitBox(defaultLeftsaber, Configuration.SaberLength);
                     }
 
                     LeftSaber = GameObject.Find("LeftSaber");
@@ -111,7 +111,7 @@ namespace SaberTailor.Tweaks
             BasicSaberModelController[] basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
             foreach (BasicSaberModelController basicSaberModelController in basicSaberModelControllers)
             {
-                SaberWeaponTrail saberWeaponTrail = Utilities.ReflectionUtil.GetPrivateField<SaberWeaponTrail>(basicSaberModelController, "_saberWeaponTrail");
+                SaberWeaponTrail saberWeaponTrail = ReflectionUtil.GetPrivateField<SaberWeaponTrail>(basicSaberModelController, "_saberWeaponTrail");
                 if (!usingCustomModels || saberWeaponTrail.name != "BasicSaberModel")
                 {
                     RescaleWeaponTrail(saberWeaponTrail, Configuration.SaberLength, usingCustomModels);
@@ -128,8 +128,8 @@ namespace SaberTailor.Tweaks
 
         private void RescaleSaberHitBox(Saber saber, float lengthMultiplier)
         {
-            Transform topPos = Utilities.ReflectionUtil.GetPrivateField<Transform>(saber, "_topPos");
-            Transform bottomPos = Utilities.ReflectionUtil.GetPrivateField<Transform>(saber, "_bottomPos");
+            Transform topPos = ReflectionUtil.GetPrivateField<Transform>(saber, "_topPos");
+            Transform bottomPos = ReflectionUtil.GetPrivateField<Transform>(saber, "_bottomPos");
 
             topPos.localPosition = RescaleVector3Transform(topPos.localPosition, lengthMultiplier);
             bottomPos.localPosition = RescaleVector3Transform(bottomPos.localPosition, lengthMultiplier);
@@ -137,13 +137,13 @@ namespace SaberTailor.Tweaks
 
         private void RescaleWeaponTrail(XWeaponTrail trail, float lengthMultiplier, bool usingCustomModels)
         {
-            float trailWidth = Utilities.ReflectionUtil.GetPrivateField<float>(trail, "_trailWidth");
-            Utilities.ReflectionUtil.SetPrivateField(trail, "_trailWidth", trailWidth * lengthMultiplier);
+            float trailWidth = ReflectionUtil.GetPrivateField<float>(trail, "_trailWidth");
+            ReflectionUtil.SetPrivateField(trail, "_trailWidth", trailWidth * lengthMultiplier);
 
             // Fix the local z position for the default trail on custom sabers
             if (usingCustomModels)
             {
-                Transform pointEnd = Utilities.ReflectionUtil.GetPrivateField<Transform>(trail, "_pointEnd");
+                Transform pointEnd = ReflectionUtil.GetPrivateField<Transform>(trail, "_pointEnd");
                 pointEnd.localPosition = RescaleVector3Transform(pointEnd.localPosition, pointEnd.localPosition.z * lengthMultiplier);
             }
         }
