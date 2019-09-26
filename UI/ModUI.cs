@@ -168,6 +168,16 @@ namespace SaberTailor.UI
                 Configuration.IsSaberScaleModEnabled = value;
             };
 
+            BoolViewController hitboxScaleCtrl = saberScaleMenu.AddBool("Scale hit-box", "Enable/Disable saber hit-box scaling\nScore Submission will be disabled as long as this option is enabled!");
+            hitboxScaleCtrl.GetValue += delegate
+            {
+                return Configuration.SaberScaleHitbox;
+            };
+            hitboxScaleCtrl.SetValue += delegate (bool value)
+            {
+                Configuration.SaberScaleHitbox = value;
+            };
+
             IntViewController scaleLengthCtrl = saberScaleMenu.AddInt("Length (Default: 100%)", "Scales the saber length.", 5, 500, 5);
             scaleLengthCtrl.GetValue += delegate
             {

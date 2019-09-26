@@ -13,6 +13,7 @@ namespace SaberTailor
         public static bool IsSaberScaleModEnabled;
         public static float SaberLength;
         public static float SaberGirth;
+        public static bool SaberScaleHitbox;
 
         public static bool IsTrailModEnabled;
         public static bool IsTrailEnabled;
@@ -46,6 +47,7 @@ namespace SaberTailor
             Plugin.config.Value.IsTrailModEnabled = IsTrailModEnabled;
             Plugin.config.Value.IsTrailEnabled = IsTrailEnabled;
             Plugin.config.Value.TrailLength = TrailLength;
+            Plugin.config.Value.SaberScaleHitbox = SaberScaleHitbox;
 
             // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Cfg values that are stored!
             Plugin.config.Value.GripLeftPosition = GripLeftPositionCfg;
@@ -63,7 +65,7 @@ namespace SaberTailor
 
         public static void Load()
         {
-            // Plan for this ModPrefs part is just to yeet it once BSIPA-Support for ModPrefs has been removed. Or replace by BSUtils INI implementation.
+            // Just YEET this once ModPrefs support is dropped!
 #pragma warning disable CS0618 // ModPrefs is obsolete
             if (ModPrefs.HasKey(Plugin.PluginName, "GripLeftPosition") && !ModPrefs.GetBool(Plugin.PluginName, "IsExportedToNewConfig", false))
 #pragma warning restore CS0618 // ModPrefs is obsolete
@@ -126,6 +128,7 @@ namespace SaberTailor
             ConfigVersion = Plugin.config.Value.ConfigVersion;
 
             IsSaberScaleModEnabled = Plugin.config.Value.IsSaberScaleModEnabled;
+            SaberScaleHitbox = Plugin.config.Value.SaberScaleHitbox;
             if (Plugin.config.Value.SaberLength < 5 || Plugin.config.Value.SaberLength > 500)
             {
                 SaberLengthCfg = 100;

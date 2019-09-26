@@ -6,7 +6,7 @@ using UnityEngine;
 namespace SaberTailor.ConfigUtilities
 {
     /// <summary>
-    /// Imports the old configuration from ModPrefs
+    /// Imports the old configuration from ModPrefs. Just YEET this once ModPrefs support is dropped!
     /// </summary>
     internal class ConfigurationImporter
     {
@@ -29,13 +29,7 @@ namespace SaberTailor.ConfigUtilities
         {
             try
             {
-                // Plan for this ModPrefs part is just to yeet it once BSIPA-Support for ModPrefs has been removed. Or replace by BSUtils INI implementation.
 #pragma warning disable CS0618 // ModPrefs is obsolete
-
-                // Reset SaberLength to 100% and disable scale modifications to avoid confusion on first start considering this options hasn't worked in over half a year
-                Configuration.IsSaberScaleModEnabled = false;
-                Configuration.SaberLengthCfg = 100;
-
                 // Import trail configuration
                 IsTrailEnabled = ModPrefs.GetBool(Plugin.PluginName, nameof(IsTrailEnabled), true, true);
                 Configuration.IsTrailEnabled = IsTrailEnabled;
@@ -89,6 +83,9 @@ namespace SaberTailor.ConfigUtilities
 
                 // Set default values for new config variables not present in old config files
                 Configuration.ConfigVersion = 2;
+                Configuration.IsSaberScaleModEnabled = false;
+                Configuration.SaberScaleHitbox = false;
+                Configuration.SaberLengthCfg = 100;
                 Configuration.SaberGirthCfg = 100;
 
                 // Save configuration in the new format
@@ -103,7 +100,6 @@ namespace SaberTailor.ConfigUtilities
 
         private static void MarkAsExported()
         {
-            // Plan for this ModPrefs part is just to yeet it once BSIPA-Support for ModPrefs has been removed. Or replace by BSUtils INI implementation.
 #pragma warning disable CS0618 // ModPrefs is obsolete
             ModPrefs.SetBool(Plugin.PluginName, "IsExportedToNewConfig", true);
 #pragma warning restore CS0618 // ModPrefs is obsolete

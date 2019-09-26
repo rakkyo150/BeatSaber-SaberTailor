@@ -6,6 +6,7 @@
         public int ConfigVersion = 2;
 
         public bool IsSaberScaleModEnabled = false;
+        public bool SaberScaleHitbox = false;
         public int SaberLength = 100;
         public int SaberGirth = 100;
 
