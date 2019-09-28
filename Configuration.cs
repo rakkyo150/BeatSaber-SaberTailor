@@ -92,8 +92,8 @@ namespace SaberTailor
                 }
             }
 
-            UpdateConfig();
             LoadConfig();
+            UpdateConfig();
             Logger.Log("Configuration has been set", LogLevel.Debug);
 
             // Update variables used by mod logic
@@ -186,16 +186,16 @@ namespace SaberTailor
         // Handle updates and additions to configuration
         private static void UpdateConfig()
         {
-            // v1 -> v{latest}: Added enable/disable options for trail and scale modifications
-            if (ConfigVersion == 1)
-            {
-                // Disable trail modifications if settings are default
-                IsTrailModEnabled = (!IsTrailEnabled || TrailLength != 20);
-            }
-
             int latestVersion = new PluginConfig().ConfigVersion;
             if (ConfigVersion != latestVersion)
             {
+                // v1 -> v{latest}: Added enable/disable options for trail and scale modifications
+                if (ConfigVersion == 1)
+                {
+                    // Disable trail modifications if settings are default
+                    IsTrailModEnabled = (!IsTrailEnabled || TrailLength != 20);
+                }
+
                 ConfigVersion = latestVersion;
             }
         }
