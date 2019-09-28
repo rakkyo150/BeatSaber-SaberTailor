@@ -1,4 +1,5 @@
 ﻿using Harmony;
+using SaberTailor.Settings;
 using System;
 using UnityEngine;
 
@@ -14,30 +15,30 @@ namespace SaberTailor.HarmonyPatches
             // Always check for sabers first and modify and exit out immediately if found
             if (transform.gameObject.name == "LeftSaber")
             {
-                transform.Translate(Configuration.GripLeftPosition);
-                transform.Rotate(Configuration.GripLeftRotation);
+                transform.Translate(Configuration.Grip.PosLeft);
+                transform.Rotate(Configuration.Grip.RotLeft);
                 return;
             }
             else if (transform.gameObject.name == "RightSaber")
             {
-                transform.Translate(Configuration.GripRightPosition);
-                transform.Rotate(Configuration.GripRightRotation);
+                transform.Translate(Configuration.Grip.PosRight);
+                transform.Rotate(Configuration.Grip.RotRight);
                 return;
             }
 
             // Check settings if modifications should also apply to menu hilts
-            if (Configuration.ModifyMenuHiltGrip != false)
+            if (Configuration.Grip.ModifyMenuHiltGrip != false)
             {
                 if (transform.gameObject.name == "ControllerLeft")
                 {
-                    transform.Translate(Configuration.GripLeftPosition);
-                    transform.Rotate(Configuration.GripLeftRotation);
+                    transform.Translate(Configuration.Grip.PosLeft);
+                    transform.Rotate(Configuration.Grip.RotLeft);
                     return;
                 }
                 else if (transform.gameObject.name == "ControllerRight")
                 {
-                    transform.Translate(Configuration.GripRightPosition);
-                    transform.Rotate(Configuration.GripRightRotation);
+                    transform.Translate(Configuration.Grip.PosRight);
+                    transform.Rotate(Configuration.Grip.RotRight);
                     return;
                 }
             }

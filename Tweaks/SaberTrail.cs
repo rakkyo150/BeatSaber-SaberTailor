@@ -1,4 +1,5 @@
 ﻿using BS_Utils.Utilities;
+using SaberTailor.Settings;
 using System.Collections;
 using UnityEngine;
 using Xft;
@@ -17,11 +18,10 @@ namespace SaberTailor.Tweaks
 
         private void Load()
         {
-            if (Configuration.IsTrailModEnabled)
+            if (Configuration.Trail.TweakEnabled)
             {
                 StartCoroutine(ApplyGameCoreModifications());
             }
-
         }
 
         private IEnumerator ApplyGameCoreModifications()
@@ -32,7 +32,7 @@ namespace SaberTailor.Tweaks
                 SaberWeaponTrail saberTrail = ReflectionUtil.GetPrivateField<SaberWeaponTrail>(basicSaberModelController, "_saberWeaponTrail");
                 if (saberTrail.name == "BasicSaberModel")
                 {
-                    ModifyTrail(saberTrail, Configuration.TrailLength);
+                    ModifyTrail(saberTrail, Configuration.Trail.Length);
                     this.Log("Successfully modified trails!");
                 }
             }
@@ -42,7 +42,7 @@ namespace SaberTailor.Tweaks
 
         private void ModifyTrail(XWeaponTrail trail, int length)
         {
-            if (Configuration.IsTrailEnabled)
+            if (Configuration.Trail.TrailEnabled)
             {
                 trail.enabled = true;
                 ReflectionUtil.SetPrivateField(trail, "_maxFrame", length);

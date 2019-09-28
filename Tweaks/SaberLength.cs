@@ -1,4 +1,5 @@
-﻿using SaberTailor.Utilities;
+﻿using SaberTailor.Settings;
+using SaberTailor.Utilities;
 using System.Collections;
 using UnityEngine;
 using Xft;
@@ -9,7 +10,7 @@ namespace SaberTailor.Tweaks
     public class SaberLength : MonoBehaviour, ITweak
     {
         public string Name => "SaberLength";
-        public bool IsPreventingScoreSubmission => Configuration.SaberScaleHitbox;
+        public bool IsPreventingScoreSubmission => Configuration.Scale.ScaleHitBox;
 
 #pragma warning disable IDE0051 // Used by MonoBehaviour
         private void Start() => Load();
@@ -17,7 +18,7 @@ namespace SaberTailor.Tweaks
 
         private void Load()
         {
-            if (Configuration.IsSaberScaleModEnabled)
+            if (Configuration.Scale.TweakEnabled)
             {
                 // Allow the user to run in any mode, but don't allow ScoreSubmission
                 if (IsPreventingScoreSubmission)
@@ -76,10 +77,10 @@ namespace SaberTailor.Tweaks
                 // If customSaberClone is null, CustomSaber is most likely not replacing the default sabers.
                 if (customSaberClone != null)
                 {
-                    if (Configuration.SaberScaleHitbox)
+                    if (Configuration.Scale.ScaleHitBox)
                     {
-                        RescaleSaberHitBox(defaultLeftSaber, Configuration.SaberLength);
-                        RescaleSaberHitBox(defaultRightSaber, Configuration.SaberLength);
+                        RescaleSaberHitBox(defaultLeftSaber, Configuration.Scale.Length);
+                        RescaleSaberHitBox(defaultRightSaber, Configuration.Scale.Length);
                     }
 
                     LeftSaber = GameObject.Find("LeftSaber");
@@ -88,25 +89,25 @@ namespace SaberTailor.Tweaks
                 }
                 else
                 {
-                    if (!Configuration.SaberScaleHitbox)
+                    if (!Configuration.Scale.ScaleHitBox)
                     {
                         // Default Sabers is selected, and SaberHitBox should not be scaled
-                        UndoRescaleSaberHitBox(defaultLeftSaber, Configuration.SaberLength);
-                        UndoRescaleSaberHitBox(defaultRightSaber, Configuration.SaberLength);
+                        UndoRescaleSaberHitBox(defaultLeftSaber, Configuration.Scale.Length);
+                        UndoRescaleSaberHitBox(defaultRightSaber, Configuration.Scale.Length);
                     }
 
                     this.Log("Either the Default Sabers are selected or CustomSaber were too slow!", LogLevel.Debug);
                 }
             }
-            else if (!Configuration.SaberScaleHitbox)
+            else if (!Configuration.Scale.ScaleHitBox)
             {
                 // CustomSaber is not enabled/present, and SaberHitBox should not be scaled
-                UndoRescaleSaberHitBox(defaultLeftSaber, Configuration.SaberLength);
-                UndoRescaleSaberHitBox(defaultRightSaber, Configuration.SaberLength);
+                UndoRescaleSaberHitBox(defaultLeftSaber, Configuration.Scale.Length);
+                UndoRescaleSaberHitBox(defaultRightSaber, Configuration.Scale.Length);
             }
 
-            RescaleSaber(LeftSaber, Configuration.SaberLength, Configuration.SaberGirth);
-            RescaleSaber(RightSaber, Configuration.SaberLength, Configuration.SaberGirth);
+            RescaleSaber(LeftSaber, Configuration.Scale.Length, Configuration.Scale.Girth);
+            RescaleSaber(RightSaber, Configuration.Scale.Length, Configuration.Scale.Girth);
 
             BasicSaberModelController[] basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
             foreach (BasicSaberModelController basicSaberModelController in basicSaberModelControllers)
@@ -114,7 +115,7 @@ namespace SaberTailor.Tweaks
                 SaberWeaponTrail saberWeaponTrail = ReflectionUtil.GetPrivateField<SaberWeaponTrail>(basicSaberModelController, "_saberWeaponTrail");
                 if (!usingCustomModels || saberWeaponTrail.name != "BasicSaberModel")
                 {
-                    RescaleWeaponTrail(saberWeaponTrail, Configuration.SaberLength, usingCustomModels);
+                    RescaleWeaponTrail(saberWeaponTrail, Configuration.Scale.Length, usingCustomModels);
                 }
             }
 

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace SaberTailor.ConfigUtilities
+namespace SaberTailor.Settings.Utilities
 {
     public class PluginConfig
     {
         public bool RegenerateConfig = true;
-        public int ConfigVersion = 3;
+        public int ConfigVersion = 0;                                                   // Default. Assigned by SaberTailor
 
         public bool IsSaberScaleModEnabled = false;
         public bool SaberScaleHitbox = false;

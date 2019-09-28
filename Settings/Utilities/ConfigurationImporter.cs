@@ -3,7 +3,7 @@ using System;
 using System.Globalization;
 using UnityEngine;
 
-namespace SaberTailor.ConfigUtilities
+namespace SaberTailor.Settings.Utilities
 {
     /// <summary>
     /// Imports the old configuration from ModPrefs. Just YEET this once ModPrefs support is dropped!

@@ -2,10 +2,11 @@
 using IPA.Config;
 using IPA.Loader;
 using IPA.Utilities;
-using SaberTailor.ConfigUtilities;
 using SaberTailor.HarmonyPatches;
+using SaberTailor.Settings;
+using SaberTailor.Settings.UI;
+using SaberTailor.Settings.Utilities;
 using SaberTailor.Tweaks;
-using SaberTailor.UI;
 using SaberTailor.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
