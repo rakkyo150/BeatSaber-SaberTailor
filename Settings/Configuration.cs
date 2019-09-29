@@ -53,7 +53,7 @@ namespace SaberTailor.Settings
             Plugin.config.Value.ModifyMenuHiltGrip = Grip.ModifyMenuHiltGrip;
             #endregion
 
-            // Store configuration to file
+            // Store configuration
             Plugin.configProvider.Store(Plugin.config.Value);
         }
 
@@ -68,10 +68,14 @@ namespace SaberTailor.Settings
                 try
                 {
                     PluginConfig importedConfig = ConfigurationImporter.ImportSettingsFromModPrefs();
+                    importedConfig.RegenerateConfig = false;
+                    importedConfig.ConfigVersion = ConfigVersion;
+
                     Plugin.config.Value = importedConfig;
 
                     // Store configuration in the new format immediately
                     Plugin.configProvider.Store(Plugin.config.Value);
+                    Plugin.configProvider.Save();
 
                     Logger.Log("Configuration loaded from ModPrefs", LogLevel.Notice);
                 }
@@ -152,7 +156,7 @@ namespace SaberTailor.Settings
             #region Saber trail
             Trail.TweakEnabled = Plugin.config.Value.IsTrailModEnabled;
             Trail.TrailEnabled = Plugin.config.Value.IsTrailEnabled;
-            Trail.Length = Math.Max(5, Math.Min(100, Plugin.config.Value.TrailLength));
+            Trail.Length = Mathf.Clamp(Plugin.config.Value.TrailLength, 5, 100);
             #endregion
 
             #region Saber grip
