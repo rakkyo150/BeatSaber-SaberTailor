@@ -35,7 +35,7 @@ namespace SaberTailor.Settings.UI
             };
             lPosxCtrl.SetValue += delegate (int value)
             {
-                Configuration.GripLeftPositionCfg.x = value * 10;
+                Configuration.GripCfg.PosLeft.x = value * 10;
                 Configuration.UpdateSaberPosition();
             };
 
@@ -46,7 +46,7 @@ namespace SaberTailor.Settings.UI
             };
             lPosyCtrl.SetValue += delegate (int value)
             {
-                Configuration.GripLeftPositionCfg.y = value * 10;
+                Configuration.GripCfg.PosLeft.y = value * 10;
                 Configuration.UpdateSaberPosition();
             };
 
@@ -57,7 +57,7 @@ namespace SaberTailor.Settings.UI
             };
             lPoszCtrl.SetValue += delegate (int value)
             {
-                Configuration.GripLeftPositionCfg.z = value * 10;
+                Configuration.GripCfg.PosLeft.z = value * 10;
                 Configuration.UpdateSaberPosition();
             };
 
@@ -103,7 +103,7 @@ namespace SaberTailor.Settings.UI
             };
             rPosxCtrl.SetValue += delegate (int value)
             {
-                Configuration.GripRightPositionCfg.x = value * 10;
+                Configuration.GripCfg.PosRight.x = value * 10;
                 Configuration.UpdateSaberPosition();
             };
 
@@ -114,7 +114,7 @@ namespace SaberTailor.Settings.UI
             };
             rPosyCtrl.SetValue += delegate (int value)
             {
-                Configuration.GripRightPositionCfg.y = value * 10;
+                Configuration.GripCfg.PosRight.y = value * 10;
                 Configuration.UpdateSaberPosition();
             };
 
@@ -125,7 +125,7 @@ namespace SaberTailor.Settings.UI
             };
             rPoszCtrl.SetValue += delegate (int value)
             {
-                Configuration.GripRightPositionCfg.z = value * 10;
+                Configuration.GripCfg.PosRight.z = value * 10;
                 Configuration.UpdateSaberPosition();
             };
 
