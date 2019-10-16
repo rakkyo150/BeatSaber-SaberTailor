@@ -1,17 +1,20 @@
-﻿namespace SaberTailor.ConfigUtilities
+﻿using System.Collections.Generic;
+
+namespace SaberTailor.Settings.Utilities
 {
     public class PluginConfig
     {
         public bool RegenerateConfig = true;
-        public int ConfigVersion = 2;
+        public int ConfigVersion = 0;                                                   // Default. Assigned by SaberTailor
 
         public bool IsSaberScaleModEnabled = false;
+        public bool SaberScaleHitbox = false;
         public int SaberLength = 100;
         public int SaberGirth = 100;
 
         public bool IsTrailModEnabled = false;
         public bool IsTrailEnabled = true;
-        public int TrailLength = 20;                                                    // Length in frames (iirc)
+        public int TrailLength = 20;                                                    // Length in frames
 
         public StoreableIntVector3 GripLeftPosition = new StoreableIntVector3();        // Position in mm
         public StoreableIntVector3 GripRightPosition = new StoreableIntVector3();
@@ -20,6 +23,11 @@
         public StoreableIntVector3 GripRightRotation = new StoreableIntVector3();
 
         public bool ModifyMenuHiltGrip = true;
+
+        public Dictionary<string, object> Logging = new Dictionary<string, object>()
+        {
+            { "ShowCallSource", false },
+        };
     }
 
     /// <summary>

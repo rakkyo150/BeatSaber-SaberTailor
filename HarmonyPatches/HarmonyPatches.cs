@@ -1,45 +1,38 @@
 ﻿using Harmony;
-using System;
-using UnityEngine;
+using System.Reflection;
 
 namespace SaberTailor.HarmonyPatches
 {
-    [HarmonyPatch(typeof(VRPlatformHelper))]
-    [HarmonyPatch("AdjustPlatformSpecificControllerTransform")]
-    [HarmonyPatch(new Type[] { typeof(Transform) })]
-    class AdjustPlatformSpecificControllerTransformPatch
+    /// <summary>
+    /// Apply and remove all of our Harmony patches through this class
+    /// </summary>
+    public static class Patches
     {
-        static void Prefix(Transform transform)
-        {
-            // Always check for sabers first and modify and exit out immediately if found
-            if (transform.gameObject.name == "LeftSaber")
-            {
-                transform.Translate(Configuration.GripLeftPosition);
-                transform.Rotate(Configuration.GripLeftRotation);
-                return;
-            }
-            else if (transform.gameObject.name == "RightSaber")
-            {
-                transform.Translate(Configuration.GripRightPosition);
-                transform.Rotate(Configuration.GripRightRotation);
-                return;
-            }
+        public static string InstanceId => "com.shadnix.beatsaber.sabertailor";
+        public static bool IsPatched { get; private set; }
 
-            // Check settings if modifications should also apply to menu hilts
-            if (Configuration.ModifyMenuHiltGrip != false)
+        private static HarmonyInstance Instance;
+
+        internal static void ApplyHarmonyPatches()
+        {
+            if (!IsPatched)
             {
-                if (transform.gameObject.name == "ControllerLeft")
+                if (Instance == null)
                 {
-                    transform.Translate(Configuration.GripLeftPosition);
-                    transform.Rotate(Configuration.GripLeftRotation);
-                    return;
+                    Instance = HarmonyInstance.Create(InstanceId);
                 }
-                else if (transform.gameObject.name == "ControllerRight")
-                {
-                    transform.Translate(Configuration.GripRightPosition);
-                    transform.Rotate(Configuration.GripRightRotation);
-                    return;
-                }
+
+                Instance.PatchAll(Assembly.GetExecutingAssembly());
+                IsPatched = true;
+            }
+        }
+
+        internal static void RemoveHarmonyPatches()
+        {
+            if (Instance != null && IsPatched)
+            {
+                Instance.UnpatchAll(InstanceId);
+                IsPatched = false;
             }
         }
     }

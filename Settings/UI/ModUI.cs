@@ -1,9 +1,8 @@
-﻿using System;
-using CustomUI.Settings;
+﻿using CustomUI.Settings;
 
-namespace SaberTailor.UI
+namespace SaberTailor.Settings.UI
 {
-    class ModUI
+    internal class ModUI
     {
         public static void CreateSettingsOptionsUI()
         {
@@ -20,11 +19,11 @@ namespace SaberTailor.UI
             BoolViewController menuHiltSettingsCtrl = settingsMenu.AddBool("Menu hilt adjustments", "Enable to reposition the menu hilts the same way as the sabers.");
             menuHiltSettingsCtrl.GetValue += delegate
             {
-                return Configuration.ModifyMenuHiltGrip;
+                return Configuration.Grip.ModifyMenuHiltGrip;
             };
             menuHiltSettingsCtrl.SetValue += delegate (bool value)
             {
-                Configuration.ModifyMenuHiltGrip = value;
+                Configuration.Grip.ModifyMenuHiltGrip = value;
             };
 
 
@@ -32,7 +31,7 @@ namespace SaberTailor.UI
             IntViewController lPosxCtrl = leftSaberMenu.AddInt("Pos X (Left/Right) in cm", "Moves the saber left/right relative to the controller.", -50, 50, 1);
             lPosxCtrl.GetValue += delegate
             {
-                return Configuration.GripLeftPositionCfg.x / 10;
+                return Configuration.GripCfg.PosLeft.x / 10;
             };
             lPosxCtrl.SetValue += delegate (int value)
             {
@@ -43,7 +42,7 @@ namespace SaberTailor.UI
             IntViewController lPosyCtrl = leftSaberMenu.AddInt("Pos Y (Down/Up) in cm", "Moves the saber down/up relative to the controller.", -50, 50, 1);
             lPosyCtrl.GetValue += delegate
             {
-                return Configuration.GripLeftPositionCfg.y / 10;
+                return Configuration.GripCfg.PosLeft.y / 10;
             };
             lPosyCtrl.SetValue += delegate (int value)
             {
@@ -54,7 +53,7 @@ namespace SaberTailor.UI
             IntViewController lPoszCtrl = leftSaberMenu.AddInt("Pos Z (Backwards/Forwards) in cm", "Moves the saber backwards/forwards relative to the controller.", -50, 50, 1);
             lPoszCtrl.GetValue += delegate
             {
-                return Configuration.GripLeftPositionCfg.z / 10;
+                return Configuration.GripCfg.PosLeft.z / 10;
             };
             lPoszCtrl.SetValue += delegate (int value)
             {
@@ -65,33 +64,33 @@ namespace SaberTailor.UI
             IntViewController lRotxCtrl = leftSaberMenu.AddInt("Rot X (Up/Down) in degree", "Tilts the saber up/down relative to the controller.", -360, 360, 5);
             lRotxCtrl.GetValue += delegate
             {
-                return Configuration.GripLeftRotationCfg.x;
+                return Configuration.GripCfg.RotLeft.x;
             };
             lRotxCtrl.SetValue += delegate (int value)
             {
-                Configuration.GripLeftRotationCfg.x = value;
+                Configuration.GripCfg.RotLeft.x = value;
                 Configuration.UpdateSaberRotation();
             };
 
             IntViewController lRotyCtrl = leftSaberMenu.AddInt("Rot Y (Left/Right) in degree", "Rotates the saber left/right relative to the controller.", -360, 360, 5);
             lRotyCtrl.GetValue += delegate
             {
-                return Configuration.GripLeftRotationCfg.y;
+                return Configuration.GripCfg.RotLeft.y;
             };
             lRotyCtrl.SetValue += delegate (int value)
             {
-                Configuration.GripLeftRotationCfg.y = value;
+                Configuration.GripCfg.RotLeft.y = value;
                 Configuration.UpdateSaberRotation();
             };
 
             IntViewController lRotzCtrl = leftSaberMenu.AddInt("Rot Z (Saber axis) in degree", "Rotates the saber around its own axis.", -360, 360, 5);
             lRotzCtrl.GetValue += delegate
             {
-                return Configuration.GripLeftRotationCfg.z;
+                return Configuration.GripCfg.RotLeft.z;
             };
             lRotzCtrl.SetValue += delegate (int value)
             {
-                Configuration.GripLeftRotationCfg.z = value;
+                Configuration.GripCfg.RotLeft.z = value;
                 Configuration.UpdateSaberRotation();
             };
 
@@ -100,7 +99,7 @@ namespace SaberTailor.UI
             IntViewController rPosxCtrl = rightSaberMenu.AddInt("Pos X (Left/Right) in cm", "Moves the saber left/right relative to the controller.", -50, 50, 1);
             rPosxCtrl.GetValue += delegate
             {
-                return Configuration.GripRightPositionCfg.x / 10;
+                return Configuration.GripCfg.PosRight.x / 10;
             };
             rPosxCtrl.SetValue += delegate (int value)
             {
@@ -111,7 +110,7 @@ namespace SaberTailor.UI
             IntViewController rPosyCtrl = rightSaberMenu.AddInt("Pos Y (Down/Up) in cm", "Moves the saber down/up relative to the controller.", -50, 50, 1);
             rPosyCtrl.GetValue += delegate
             {
-                return Configuration.GripRightPositionCfg.y / 10;
+                return Configuration.GripCfg.PosRight.y / 10;
             };
             rPosyCtrl.SetValue += delegate (int value)
             {
@@ -122,7 +121,7 @@ namespace SaberTailor.UI
             IntViewController rPoszCtrl = rightSaberMenu.AddInt("Pos Z (Backwards/Forwards) in cm", "Moves the saber backwards/forwards relative to the controller.", -50, 50, 1);
             rPoszCtrl.GetValue += delegate
             {
-                return Configuration.GripRightPositionCfg.z / 10;
+                return Configuration.GripCfg.PosRight.z / 10;
             };
             rPoszCtrl.SetValue += delegate (int value)
             {
@@ -133,33 +132,33 @@ namespace SaberTailor.UI
             IntViewController rRotxCtrl = rightSaberMenu.AddInt("Rot X (Up/Down) in degree", "Tilts the saber up/down relative to the controller.", -360, 360, 5);
             rRotxCtrl.GetValue += delegate
             {
-                return Configuration.GripRightRotationCfg.x;
+                return Configuration.GripCfg.RotRight.x;
             };
             rRotxCtrl.SetValue += delegate (int value)
             {
-                Configuration.GripRightRotationCfg.x = value;
+                Configuration.GripCfg.RotRight.x = value;
                 Configuration.UpdateSaberRotation();
             };
 
             IntViewController rRotyCtrl = rightSaberMenu.AddInt("Rot Y (Left/Right) in degree", "Rotates the saber left/right relative to the controller.", -360, 360, 5);
             rRotyCtrl.GetValue += delegate
             {
-                return Configuration.GripRightRotationCfg.y;
+                return Configuration.GripCfg.RotRight.y;
             };
             rRotyCtrl.SetValue += delegate (int value)
             {
-                Configuration.GripRightRotationCfg.y = value;
+                Configuration.GripCfg.RotRight.y = value;
                 Configuration.UpdateSaberRotation();
             };
 
             IntViewController rRotzCtrl = rightSaberMenu.AddInt("Rot Z (Saber axis) in degree", "Rotates the saber around its own axis.", -360, 360, 5);
             rRotzCtrl.GetValue += delegate
             {
-                return Configuration.GripRightRotationCfg.z;
+                return Configuration.GripCfg.RotRight.z;
             };
             rRotzCtrl.SetValue += delegate (int value)
             {
-                Configuration.GripRightRotationCfg.z = value;
+                Configuration.GripCfg.RotRight.z = value;
                 Configuration.UpdateSaberRotation();
             };
 
@@ -168,31 +167,41 @@ namespace SaberTailor.UI
             BoolViewController scaleModEnableCtrl = saberScaleMenu.AddBool("Enable saber scale modification", "Enable/Disable any scale modifications.");
             scaleModEnableCtrl.GetValue += delegate
             {
-                return Configuration.IsSaberScaleModEnabled;
+                return Configuration.Scale.TweakEnabled;
             };
             scaleModEnableCtrl.SetValue += delegate (bool value)
             {
-                Configuration.IsSaberScaleModEnabled = value;
+                Configuration.Scale.TweakEnabled = value;
+            };
+
+            BoolViewController hitboxScaleCtrl = saberScaleMenu.AddBool("Scale hit-box", "Enable/Disable saber hit-box scaling\nScore Submission will be disabled as long as this option is enabled!");
+            hitboxScaleCtrl.GetValue += delegate
+            {
+                return Configuration.Scale.ScaleHitBox;
+            };
+            hitboxScaleCtrl.SetValue += delegate (bool value)
+            {
+                Configuration.Scale.ScaleHitBox = value;
             };
 
             IntViewController scaleLengthCtrl = saberScaleMenu.AddInt("Length (Default: 100%)", "Scales the saber length.", 5, 500, 5);
             scaleLengthCtrl.GetValue += delegate
             {
-                return Configuration.SaberLengthCfg;
+                return Configuration.ScaleCfg.Length;
             };
             scaleLengthCtrl.SetValue += delegate (int value)
             {
-                Configuration.SaberLengthCfg = value;
+                Configuration.ScaleCfg.Length = value;
             };
 
             IntViewController scaleGirthCtrl = saberScaleMenu.AddInt("Width (Default: 100%)", "Scales the saber width.", 5, 500, 5);
             scaleGirthCtrl.GetValue += delegate
             {
-                return Configuration.SaberGirthCfg;
+                return Configuration.ScaleCfg.Girth;
             };
             scaleGirthCtrl.SetValue += delegate (int value)
             {
-                Configuration.SaberGirthCfg = value;
+                Configuration.ScaleCfg.Girth = value;
             };
 
 
@@ -200,31 +209,31 @@ namespace SaberTailor.UI
             BoolViewController trailModEnableCtrl = trailMenu.AddBool("Enable saber trail modification", "Enable/Disable any trail modifications.");
             trailModEnableCtrl.GetValue += delegate
             {
-                return Configuration.IsTrailModEnabled;
+                return Configuration.Trail.TweakEnabled;
             };
             trailModEnableCtrl.SetValue += delegate (bool value)
             {
-                Configuration.IsTrailModEnabled = value;
+                Configuration.Trail.TweakEnabled = value;
             };
 
             BoolViewController trailEnableCtrl = trailMenu.AddBool("Enable saber trails", "Currently only works with sabers using default trail.");
             trailEnableCtrl.GetValue += delegate
             {
-                return Configuration.IsTrailEnabled;
+                return Configuration.Trail.TrailEnabled;
             };
             trailEnableCtrl.SetValue += delegate (bool value)
             {
-                Configuration.IsTrailEnabled = value;
+                Configuration.Trail.TrailEnabled = value;
             };
 
             IntViewController trailLengthCtrl = trailMenu.AddInt("Trail length", "Adjusts trail length. Currently only works with sabers using default trail.", 5, 100, 5);
             trailLengthCtrl.GetValue += delegate
             {
-                return Configuration.TrailLength;
+                return Configuration.Trail.Length;
             };
             trailLengthCtrl.SetValue += delegate (int value)
             {
-                Configuration.TrailLength = value;
+                Configuration.Trail.Length = value;
             };
         }
     }
