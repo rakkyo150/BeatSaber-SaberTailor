@@ -18,24 +18,17 @@ namespace SaberTailor.Tweaks
 
         private void Load()
         {
-            if (Configuration.Scale.TweakEnabled)
+            // Allow the user to run in any mode, but don't allow ScoreSubmission
+            if (IsPreventingScoreSubmission)
             {
-                // Allow the user to run in any mode, but don't allow ScoreSubmission
-                if (IsPreventingScoreSubmission)
-                {
-                    ScoreUtility.DisableScoreSubmission(Name);
-                }
-                else if (ScoreUtility.ScoreIsBlocked)
-                {
-                    ScoreUtility.EnableScoreSubmission(Name);
-                }
-
-                StartCoroutine(ApplyGameCoreModifications());
+                ScoreUtility.DisableScoreSubmission(Name);
             }
             else if (ScoreUtility.ScoreIsBlocked)
             {
                 ScoreUtility.EnableScoreSubmission(Name);
             }
+
+            StartCoroutine(ApplyGameCoreModifications());
         }
 
         private IEnumerator ApplyGameCoreModifications()

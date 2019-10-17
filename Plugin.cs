@@ -62,8 +62,23 @@ namespace SaberTailor
             {
                 Configuration.UpdateModVariables();
 
-                new GameObject(PluginName).AddComponent<SaberTrail>();
-                new GameObject(PluginName).AddComponent<SaberLength>();
+                // Only create tweak game objects, if the corresponding tweaks are actually enabled
+                if (Configuration.Trail.TweakEnabled)
+                {
+                    new GameObject(PluginName).AddComponent<SaberTrail>();
+                }
+
+                if (Configuration.Scale.TweakEnabled)
+                {
+                    new GameObject(PluginName).AddComponent<SaberLength>();
+                }
+                else
+                {
+                    if (ScoreUtility.ScoreIsBlocked)
+                    {
+                        ScoreUtility.EnableScoreSubmission("SaberLength");                      // Kind of awkward to put it here in this way...
+                    }
+                }
             }
         }
 

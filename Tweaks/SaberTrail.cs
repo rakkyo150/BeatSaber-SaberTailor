@@ -18,10 +18,7 @@ namespace SaberTailor.Tweaks
 
         private void Load()
         {
-            if (Configuration.Trail.TweakEnabled)
-            {
-                StartCoroutine(ApplyGameCoreModifications());
-            }
+            StartCoroutine(ApplyGameCoreModifications());
         }
 
         private IEnumerator ApplyGameCoreModifications()
