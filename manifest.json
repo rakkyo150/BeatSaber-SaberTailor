@@ -5,11 +5,11 @@
     "#![SaberTailor.Resources.description.md]",
     "Customize stuff about your sabers"
   ],
-  "gameVersion": "1.3.0",
+  "gameVersion": "1.4.2",
   "icon": "SaberTailor.Resources.icon.png",
   "id": "SaberTailor",
   "name": "SaberTailor",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "dependsOn": {
     "BSIPA": "^3.12.23",
     "CustomUI": "^1.6.0",

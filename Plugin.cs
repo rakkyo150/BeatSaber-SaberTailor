@@ -60,6 +60,9 @@ namespace SaberTailor
         {
             if (nextScene.name == "GameCore")
             {
+                // FIXME: Reload settings on entering GameCore to restore old functionality to reload config for each song
+                // Needs saving to file on config apply in settings
+
                 Configuration.UpdateModVariables();
 
                 // Only create tweak game objects, if the corresponding tweaks are actually enabled
