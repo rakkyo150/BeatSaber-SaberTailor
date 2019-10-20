@@ -76,6 +76,9 @@ namespace SaberTailor.Settings.Utilities
                 // Check trail modification vars - if these are unchecked from default values, then just disable these
                 importedSettings.IsTrailModEnabled = (IsTrailEnabled != true || TrailLength != 20);
 
+                // Skip importing scale modification - that functionality was broken for almost a year and probably 
+                // would create overall more confusion when suddenly enabled again, instead of having to set it again
+
                 MarkAsExported();
             }
             catch (Exception ex)

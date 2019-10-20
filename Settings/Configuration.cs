@@ -9,7 +9,7 @@ namespace SaberTailor.Settings
 {
     public static class Configuration
     {
-        public static readonly int ConfigVersion = 3;   // Current configuration version
+        public static int ConfigVersion;                // Config version, to handle changes in config where existing configs shouldn't just get default config applied
         public static bool ShowCallSource;              // Set this to true in configuration to enable call source in logs and terminal
 
         public static SaberGripConfiguration Grip = new SaberGripConfiguration();
@@ -128,6 +128,7 @@ namespace SaberTailor.Settings
             {
                 ShowCallSource = loggerShowCallSource;
             }
+            ConfigVersion = Plugin.config.Value.ConfigVersion;
             #endregion
 
             #region Saber scale
@@ -187,18 +188,38 @@ namespace SaberTailor.Settings
         
         /// <summary>
         /// Handle updates and additions to configuration
+        /// Only needed if new settings shouldn't be set to default values in (some) existing config files
         /// </summary>
         private static void UpdateConfig()
         {
-            if (Plugin.config.Value.ConfigVersion != ConfigVersion)
+            // v1/v2 -> v3: Added enable/disable options for trail and scale modifications
+            // Updating v2 as well because of a beta build that is floating around with v2 already being used
+            if (ConfigVersion == 1 || ConfigVersion == 2)
             {
-                // v1 -> v{latest}: Added enable/disable options for trail and scale modifications
-                if (ConfigVersion == 1)
+                // Check trail modifications and disable tweak if settings are default
+                if (Trail.TrailEnabled && Trail.Length == 20)
                 {
-                    // Disable trail modifications if settings are default
-                    Trail.TweakEnabled = (!Trail.TrailEnabled || Trail.Length != 20);
+                    Trail.TweakEnabled = false;
                 }
+                else
+                {
+                    Trail.TweakEnabled = true;
+                }
+                // Check scale modifications and disable tweak if settings are default
+                if (ScaleCfg.Length == 100 && ScaleCfg.Girth == 100)
+                {
+                    Scale.TweakEnabled = false;
+                }
+                else
+                {
+                    // else enable tweak and hitbox scaling to preserve existing settings
+                    Scale.TweakEnabled = true;
+                    Scale.ScaleHitBox = true;
+                }
+                ConfigVersion = 3;
             }
+            // Add future updates here
+            Save();
         }
 
         /// <summary>

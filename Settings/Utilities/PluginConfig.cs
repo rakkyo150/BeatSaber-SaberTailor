@@ -5,7 +5,7 @@ namespace SaberTailor.Settings.Utilities
     public class PluginConfig
     {
         public bool RegenerateConfig = true;
-        public int ConfigVersion = 0;                                                   // Default. Assigned by SaberTailor
+        public int ConfigVersion = 3;
 
         public bool IsSaberScaleModEnabled = false;
         public bool SaberScaleHitbox = false;
