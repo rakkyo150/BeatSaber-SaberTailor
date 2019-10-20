@@ -50,7 +50,7 @@ namespace SaberTailor.Settings.UI
                 Configuration.UpdateSaberPosition();
             };
 
-            IntViewController lPoszCtrl = leftSaberMenu.AddInt("Pos Z (Backwards/Forwards) in cm", "Moves the saber backwards/forwards relative to the controller.", -50, 50, 1);
+            IntViewController lPoszCtrl = leftSaberMenu.AddInt("Pos Z (Bwd./Fwd.) in cm", "Moves the saber backwards/forwards relative to the controller.", -50, 50, 1);
             lPoszCtrl.GetValue += delegate
             {
                 return Configuration.GripCfg.PosLeft.z / 10;
@@ -118,7 +118,7 @@ namespace SaberTailor.Settings.UI
                 Configuration.UpdateSaberPosition();
             };
 
-            IntViewController rPoszCtrl = rightSaberMenu.AddInt("Pos Z (Backwards/Forwards) in cm", "Moves the saber backwards/forwards relative to the controller.", -50, 50, 1);
+            IntViewController rPoszCtrl = rightSaberMenu.AddInt("Pos Z (Bwd./Fwd.) in cm", "Moves the saber backwards/forwards relative to the controller.", -50, 50, 1);
             rPoszCtrl.GetValue += delegate
             {
                 return Configuration.GripCfg.PosRight.z / 10;
