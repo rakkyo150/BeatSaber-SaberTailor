@@ -1,4 +1,8 @@
 ﻿using CustomUI.Settings;
+using System;
+using System.Reflection;
+using UnityEngine;
+using LogLevel = IPA.Logging.Logger.Level;
 
 namespace SaberTailor.Settings.UI
 {
@@ -174,7 +178,7 @@ namespace SaberTailor.Settings.UI
                 Configuration.Scale.TweakEnabled = value;
             };
 
-            BoolViewController hitboxScaleCtrl = saberScaleMenu.AddBool("Scale hit-box", "Enable/Disable saber hit-box scaling\nScore Submission will be disabled as long as this option is enabled!");
+            BoolViewController hitboxScaleCtrl = saberScaleMenu.AddBool("Scale hit-box", "Enable/Disable saber hit-box scaling\n<color=\"red\">Score Submission will be disabled as long as this option is enabled!");
             hitboxScaleCtrl.GetValue += delegate
             {
                 return Configuration.Scale.ScaleHitBox;
@@ -183,6 +187,30 @@ namespace SaberTailor.Settings.UI
             {
                 Configuration.Scale.ScaleHitBox = value;
             };
+
+            BoolViewController hitboxScaleTxt = saberScaleMenu.AddBool("<color=\"red\">Enabling hit-box scaling will disable score submission.");
+            hitboxScaleTxt.GetValue += delegate { return false; };
+            hitboxScaleTxt.SetValue += delegate (bool value) { };
+            // Hack to convert bool segment to text only (based on hack in BSTweaks mod)
+            try
+            {
+                var hitboxScaleTxtButtonToDisable = hitboxScaleTxt.GetType().BaseType.BaseType.GetField("_decButton", BindingFlags.NonPublic | BindingFlags.Instance);
+                var hitboxScaleTxtDecButton = (MonoBehaviour)hitboxScaleTxtButtonToDisable.GetValue(hitboxScaleTxt);
+                hitboxScaleTxtButtonToDisable = hitboxScaleTxt.GetType().BaseType.BaseType.GetField("_incButton", BindingFlags.NonPublic | BindingFlags.Instance);
+                var hitboxScaleTxtIncButton = (MonoBehaviour)hitboxScaleTxtButtonToDisable.GetValue(hitboxScaleTxt);
+
+                hitboxScaleTxtDecButton.gameObject.SetActive(false);
+                hitboxScaleTxtIncButton.gameObject.SetActive(false);
+
+                var hitboxScaleTxtTextToDisable = hitboxScaleTxt.GetType().BaseType.BaseType.GetField("_text", BindingFlags.NonPublic | BindingFlags.Instance);
+                var hitboxScaleTxtUselessText = (MonoBehaviour)hitboxScaleTxtTextToDisable.GetValue(hitboxScaleTxt);
+
+                hitboxScaleTxtUselessText.gameObject.SetActive(false);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Error trying to disable first comment in settings menu:" + ex.ToString(), LogLevel.Error);
+            }
 
             IntViewController scaleLengthCtrl = saberScaleMenu.AddInt("Length (Default: 100%)", "Scales the saber length.", 5, 500, 5);
             scaleLengthCtrl.GetValue += delegate
