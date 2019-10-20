@@ -78,34 +78,14 @@ namespace SaberTailor.Tweaks
                 // If customSaberClone is null, CustomSaber is most likely not replacing the default sabers.
                 if (customSaberClone != null)
                 {
-                    // Scaling custom sabers will not change their hitbox, so a manual hitbox rescale is necessary, if the option is enabled
-                    if (Configuration.Scale.ScaleHitBox)
-                    {
-                        //RescaleSaberHitBox(defaultLeftSaber, Configuration.Scale.Length);
-                        //RescaleSaberHitBox(defaultRightSaber, Configuration.Scale.Length);
-                    }
-
                     LeftSaber = GameObject.Find("LeftSaber");
                     RightSaber = GameObject.Find("RightSaber");
                     usingCustomModels = true;
                 }
                 else
                 {
-                    if (!Configuration.Scale.ScaleHitBox)
-                    {
-                        // Default Sabers is selected, and SaberHitBox should not be scaled
-                        //UndoRescaleSaberHitBox(defaultLeftSaber, Configuration.Scale.Length);
-                        //UndoRescaleSaberHitBox(defaultRightSaber, Configuration.Scale.Length);
-                    }
-
                     this.Log("Either the Default Sabers are selected or CustomSaber were too slow!", LogLevel.Debug);
                 }
-            }
-            else if (!Configuration.Scale.ScaleHitBox)
-            {
-                // CustomSaber is not enabled/present, and SaberHitBox should not be scaled
-                //UndoRescaleSaberHitBox(defaultLeftSaber, Configuration.Scale.Length);
-                //UndoRescaleSaberHitBox(defaultRightSaber, Configuration.Scale.Length);
             }
 
             // Scaling default saber will affect its hitbox, so save the default hitbox positions first before scaling
