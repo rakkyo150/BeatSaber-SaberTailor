@@ -38,6 +38,14 @@ namespace SaberTailor.Tweaks
             Saber defaultRightSaber = null;
             GameObject LeftSaber = null;
             GameObject RightSaber = null;
+            Transform leftSaberTop;
+            Transform leftSaberBot;
+            Transform rightSaberTop;
+            Transform rightSaberBot;
+            Vector3 leftDefaultHitboxTopPos;
+            Vector3 leftDefaultHitboxBotPos;
+            Vector3 rightDefaultHitboxTopPos;
+            Vector3 rightDefaultHitboxBotPos;
 
             // Find and set the default sabers first
             Saber[] sabers = Resources.FindObjectsOfTypeAll<Saber>();
@@ -70,10 +78,11 @@ namespace SaberTailor.Tweaks
                 // If customSaberClone is null, CustomSaber is most likely not replacing the default sabers.
                 if (customSaberClone != null)
                 {
+                    // Scaling custom sabers will not change their hitbox, so a manual hitbox rescale is necessary, if the option is enabled
                     if (Configuration.Scale.ScaleHitBox)
                     {
-                        RescaleSaberHitBox(defaultLeftSaber, Configuration.Scale.Length);
-                        RescaleSaberHitBox(defaultRightSaber, Configuration.Scale.Length);
+                        //RescaleSaberHitBox(defaultLeftSaber, Configuration.Scale.Length);
+                        //RescaleSaberHitBox(defaultRightSaber, Configuration.Scale.Length);
                     }
 
                     LeftSaber = GameObject.Find("LeftSaber");
@@ -85,8 +94,8 @@ namespace SaberTailor.Tweaks
                     if (!Configuration.Scale.ScaleHitBox)
                     {
                         // Default Sabers is selected, and SaberHitBox should not be scaled
-                        UndoRescaleSaberHitBox(defaultLeftSaber, Configuration.Scale.Length);
-                        UndoRescaleSaberHitBox(defaultRightSaber, Configuration.Scale.Length);
+                        //UndoRescaleSaberHitBox(defaultLeftSaber, Configuration.Scale.Length);
+                        //UndoRescaleSaberHitBox(defaultRightSaber, Configuration.Scale.Length);
                     }
 
                     this.Log("Either the Default Sabers are selected or CustomSaber were too slow!", LogLevel.Debug);
@@ -95,12 +104,40 @@ namespace SaberTailor.Tweaks
             else if (!Configuration.Scale.ScaleHitBox)
             {
                 // CustomSaber is not enabled/present, and SaberHitBox should not be scaled
-                UndoRescaleSaberHitBox(defaultLeftSaber, Configuration.Scale.Length);
-                UndoRescaleSaberHitBox(defaultRightSaber, Configuration.Scale.Length);
+                //UndoRescaleSaberHitBox(defaultLeftSaber, Configuration.Scale.Length);
+                //UndoRescaleSaberHitBox(defaultRightSaber, Configuration.Scale.Length);
             }
 
+            // Scaling default saber will affect its hitbox, so save the default hitbox positions first before scaling
+            leftSaberTop = ReflectionUtil.GetPrivateField<Transform>(defaultLeftSaber, "_topPos");
+            leftSaberBot = ReflectionUtil.GetPrivateField<Transform>(defaultLeftSaber, "_bottomPos");
+            rightSaberTop = ReflectionUtil.GetPrivateField<Transform>(defaultRightSaber, "_topPos");
+            rightSaberBot = ReflectionUtil.GetPrivateField<Transform>(defaultRightSaber, "_bottomPos");
+
+            leftDefaultHitboxTopPos = new Vector3(leftSaberTop.position.x, leftSaberTop.position.y, leftSaberTop.position.z);
+            leftDefaultHitboxBotPos = new Vector3(leftSaberBot.position.x, leftSaberBot.position.y, leftSaberBot.position.z);
+            rightDefaultHitboxTopPos = new Vector3(rightSaberTop.position.x, rightSaberTop.position.y, rightSaberTop.position.z);
+            rightDefaultHitboxBotPos = new Vector3(rightSaberBot.position.x, rightSaberBot.position.y, rightSaberBot.position.z);
+
+            // Rescale visible sabers (either default or custom)
             RescaleSaber(LeftSaber, Configuration.Scale.Length, Configuration.Scale.Girth);
             RescaleSaber(RightSaber, Configuration.Scale.Length, Configuration.Scale.Girth);
+
+            // Scaling custom sabers will not change their hitbox, so a manual hitbox rescale is necessary, if the option is enabled
+            if (usingCustomModels && Configuration.Scale.ScaleHitBox)
+            {
+                RescaleSaberHitBox(defaultLeftSaber, Configuration.Scale.Length);
+                RescaleSaberHitBox(defaultRightSaber, Configuration.Scale.Length);
+            }
+
+            // Revert hitbox changes to default sabers, if hitbox scaling is disabled
+            if (!usingCustomModels && !Configuration.Scale.ScaleHitBox)
+            {
+                leftSaberTop.position = leftDefaultHitboxTopPos;
+                leftSaberBot.position = leftDefaultHitboxBotPos;
+                rightSaberTop.position = rightDefaultHitboxTopPos;
+                rightSaberBot.position = rightDefaultHitboxBotPos;
+            }
 
             BasicSaberModelController[] basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
             foreach (BasicSaberModelController basicSaberModelController in basicSaberModelControllers)
