@@ -192,7 +192,9 @@ namespace SaberTailor.Settings
         /// </summary>
         private static void UpdateConfig()
         {
-            int latestVersion = 3;
+            // Get latest version from default config values
+            int latestVersion = new PluginConfig().ConfigVersion;
+
             // Do nothing if config is already up to date
             if (ConfigVersion == latestVersion)
             {
