@@ -192,6 +192,13 @@ namespace SaberTailor.Settings
         /// </summary>
         private static void UpdateConfig()
         {
+            int latestVersion = 3;
+            // Do nothing if config is already up to date
+            if (ConfigVersion == latestVersion)
+            {
+                return;
+            }
+
             // v1/v2 -> v3: Added enable/disable options for trail and scale modifications
             // Updating v2 as well because of a beta build that is floating around with v2 already being used
             if (ConfigVersion == 1 || ConfigVersion == 2)
@@ -216,7 +223,7 @@ namespace SaberTailor.Settings
                     Scale.TweakEnabled = true;
                     Scale.ScaleHitBox = true;
                 }
-                ConfigVersion = 3;
+                ConfigVersion = latestVersion;
             }
             // Add future updates here
             Save();
