@@ -225,9 +225,12 @@ namespace SaberTailor.Settings
                     Scale.TweakEnabled = true;
                     Scale.ScaleHitBox = true;
                 }
-                ConfigVersion = latestVersion;
+                ConfigVersion = 3;
             }
             // Add future updates here
+
+            // Updater done - set to latest version and save
+            ConfigVersion = latestVersion;
             Save();
         }
 
