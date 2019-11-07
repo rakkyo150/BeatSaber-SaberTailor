@@ -78,7 +78,7 @@ namespace SaberTailor
                 {
                     if (ScoreUtility.ScoreIsBlocked)
                     {
-                        ScoreUtility.EnableScoreSubmission("SaberLength");                      // Kind of awkward to put it here in this way...
+                        ScoreUtility.EnableScoreSubmission(SaberLength.Name);
                     }
                 }
             }
