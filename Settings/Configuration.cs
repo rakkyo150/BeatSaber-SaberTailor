@@ -77,12 +77,12 @@ namespace SaberTailor.Settings
                     Plugin.configProvider.Store(Plugin.config.Value);
                     Plugin.configProvider.Save();
 
-                    Logger.Log("Configuration loaded from ModPrefs", LogLevel.Notice);
+                    Logger.Log("Configuration loaded from ModPrefs.", LogLevel.Info);
                 }
                 catch (Exception ex)
                 {
                     Logger.Log(ex);
-                    Logger.Log("Failed to import ModPrefs configuration. Loading default BSIPA configuration instead.", LogLevel.Notice);
+                    Logger.Log("Failed to import ModPrefs configuration. Loading default BSIPA configuration instead.", LogLevel.Info);
                 }
             }
 
