@@ -1,4 +1,4 @@
-# Beat Saber - Saber Tailor v2.1.1
+# Beat Saber - Saber Tailor v2.1.3
 
 Tweak things about your sabers, including grip position/angle, saber length and trail length! Original mod by Ruu.
 
