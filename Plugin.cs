@@ -43,7 +43,6 @@ namespace SaberTailor
             }
         }
 
-        public void OnApplicationStart() => Load();
         public void OnApplicationQuit() => Unload();
         public void OnEnable() => Load();
         public void OnDisable() => Unload();
@@ -79,12 +78,13 @@ namespace SaberTailor
                 {
                     if (ScoreUtility.ScoreIsBlocked)
                     {
-                        ScoreUtility.EnableScoreSubmission("SaberLength");                      // Kind of awkward to put it here in this way...
+                        ScoreUtility.EnableScoreSubmission(SaberLength.Name);
                     }
                 }
             }
         }
 
+        public void OnApplicationStart() { }
         public void OnUpdate() { }
         public void OnFixedUpdate() { }
         public void OnSceneUnloaded(Scene scene) { }
@@ -93,7 +93,7 @@ namespace SaberTailor
         {
             Configuration.Load();
             Patches.ApplyHarmonyPatches();
-            Logger.Log($"{PluginName} v.{PluginVersion} has started", LogLevel.Notice);
+            Logger.Log($"{PluginName} v.{PluginVersion} has started.", LogLevel.Info);
         }
 
         private void Unload()
