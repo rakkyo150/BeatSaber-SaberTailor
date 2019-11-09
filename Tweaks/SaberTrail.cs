@@ -3,12 +3,14 @@ using SaberTailor.Utilities;
 using System.Collections;
 using UnityEngine;
 using Xft;
+using LogLevel = IPA.Logging.Logger.Level;
 
 namespace SaberTailor.Tweaks
 {
-    public class SaberTrail : MonoBehaviour//, ITweak
+    public class SaberTrail : MonoBehaviour
     {
         public static string Name => "SaberTrail";
+        public static bool IsPreventingScoreSubmission => false;
 
 #pragma warning disable IDE0051 // Used by MonoBehaviour
         private void Awake() => Load();
@@ -28,7 +30,7 @@ namespace SaberTailor.Tweaks
                 if (saberTrail.name == "BasicSaberModel")
                 {
                     ModifyTrail(saberTrail, Configuration.Trail.Length);
-                    Logger.Log("Successfully modified trails!");
+                    Logger.Log("Successfully modified trails!", LogLevel.Info);
                 }
             }
 

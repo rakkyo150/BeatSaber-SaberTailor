@@ -10,6 +10,7 @@ namespace SaberTailor.Tweaks
     public class SaberLength : MonoBehaviour
     {
         public static string Name => "SaberLength";
+        public static bool IsPreventingScoreSubmission => Configuration.Scale.ScaleHitBox;
 
 #pragma warning disable IDE0051 // Used by MonoBehaviour
         private void Start() => Load();
@@ -18,7 +19,7 @@ namespace SaberTailor.Tweaks
         private void Load()
         {
             // Allow the user to run in any mode, but don't allow ScoreSubmission
-            if (Configuration.Scale.ScaleHitBox)
+            if (IsPreventingScoreSubmission)
             {
                 ScoreUtility.DisableScoreSubmission(Name);
             }
