@@ -13,13 +13,13 @@ namespace SaberTailor.HarmonyPatches
         private static void Prefix(Transform transform)
         {
             // Always check for sabers first and modify and exit out immediately if found
-            if (transform.gameObject.name == "LeftSaber")
+            if (transform.gameObject.name == "LeftSaber" || transform.gameObject.name.Contains("Saber A"))
             {
                 transform.Translate(Configuration.Grip.PosLeft);
                 transform.Rotate(Configuration.Grip.RotLeft);
                 return;
             }
-            else if (transform.gameObject.name == "RightSaber")
+            else if (transform.gameObject.name == "RightSaber" || transform.gameObject.name.Contains("Saber B"))
             {
                 transform.Translate(Configuration.Grip.PosRight);
                 transform.Rotate(Configuration.Grip.RotRight);
