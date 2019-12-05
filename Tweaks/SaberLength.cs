@@ -18,16 +18,6 @@ namespace SaberTailor.Tweaks
 
         private void Load()
         {
-            // Allow the user to run in any mode, but don't allow ScoreSubmission
-            if (IsPreventingScoreSubmission)
-            {
-                ScoreUtility.DisableScoreSubmission(Name);
-            }
-            else if (ScoreUtility.ScoreIsBlocked)
-            {
-                ScoreUtility.EnableScoreSubmission(Name);
-            }
-
             StartCoroutine(ApplyGameCoreModifications());
         }
 
@@ -82,7 +72,9 @@ namespace SaberTailor.Tweaks
 
             // Scaling default saber will affect its hitbox, so save the default hitbox positions first before scaling
             HitboxRevertWorkaround hitboxVariables = null;
-            bool restoreHitbox = !usingCustomModels && !Configuration.Scale.ScaleHitBox;
+            // Core version comes without disabling score submission, so disable hitbox scaling
+            //bool restoreHitbox = !usingCustomModels && !Configuration.Scale.ScaleHitBox;
+            bool restoreHitbox = !usingCustomModels;
             if (restoreHitbox)
             {
                 hitboxVariables = new HitboxRevertWorkaround(defaultLeftSaber, defaultRightSaber);
@@ -91,13 +83,6 @@ namespace SaberTailor.Tweaks
             // Rescale visible sabers (either default or custom)
             RescaleSaber(LeftSaber, Configuration.Scale.Length, Configuration.Scale.Girth);
             RescaleSaber(RightSaber, Configuration.Scale.Length, Configuration.Scale.Girth);
-
-            // Scaling custom sabers will not change their hitbox, so a manual hitbox rescale is necessary, if the option is enabled
-            if (usingCustomModels && Configuration.Scale.ScaleHitBox)
-            {
-                RescaleSaberHitBox(defaultLeftSaber, Configuration.Scale.Length);
-                RescaleSaberHitBox(defaultRightSaber, Configuration.Scale.Length);
-            }
 
             // Revert hitbox changes to default sabers, if hitbox scaling is disabled
             if (restoreHitbox)
@@ -123,18 +108,6 @@ namespace SaberTailor.Tweaks
             if (saber != null)
             {
                 saber.transform.localScale = Vector3Extensions.Rescale(saber.transform.localScale, widthMultiplier, widthMultiplier, lengthMultiplier);
-            }
-        }
-
-        private void RescaleSaberHitBox(Saber saber, float lengthMultiplier)
-        {
-            if (saber != null)
-            {
-                Transform topPos = ReflectionUtil.GetPrivateField<Transform>(saber, "_topPos");
-                Transform bottomPos = ReflectionUtil.GetPrivateField<Transform>(saber, "_bottomPos");
-
-                topPos.localPosition = Vector3Extensions.Rescale(topPos.localPosition, 1.0f, 1.0f, lengthMultiplier);
-                bottomPos.localPosition = Vector3Extensions.Rescale(bottomPos.localPosition, 1.0f, 1.0f, lengthMultiplier);
             }
         }
 

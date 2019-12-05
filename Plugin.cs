@@ -4,10 +4,8 @@ using IPA.Loader;
 using IPA.Utilities;
 using SaberTailor.HarmonyPatches;
 using SaberTailor.Settings;
-using SaberTailor.Settings.UI;
 using SaberTailor.Settings.Utilities;
 using SaberTailor.Tweaks;
-using SaberTailor.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using IPALogger = IPA.Logging.Logger;
@@ -49,10 +47,7 @@ namespace SaberTailor
 
         public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
         {
-            if (scene.name == "MenuCore")
-            {
-                ModUI.CreateSettingsOptionsUI();
-            }
+
         }
 
         public void OnActiveSceneChanged(Scene prevScene, Scene nextScene)
@@ -74,13 +69,6 @@ namespace SaberTailor
                 {
                     new GameObject(PluginName).AddComponent<SaberLength>();
                 }
-                else
-                {
-                    if (ScoreUtility.ScoreIsBlocked)
-                    {
-                        ScoreUtility.EnableScoreSubmission(SaberLength.Name);
-                    }
-                }
             }
         }
 
@@ -99,7 +87,6 @@ namespace SaberTailor
         private void Unload()
         {
             Patches.RemoveHarmonyPatches();
-            ScoreUtility.Cleanup();
             Configuration.Save();
         }
     }
