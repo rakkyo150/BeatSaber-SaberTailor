@@ -7,7 +7,7 @@ using LogLevel = IPA.Logging.Logger.Level;
 
 namespace SaberTailor.Settings
 {
-    public static class Configuration
+    public class Configuration
     {
         public static int ConfigVersion;                // Config version, to handle changes in config where existing configs shouldn't just get default config applied
         public static bool ShowCallSource;              // Set this to true in configuration to enable call source in logs and terminal
@@ -21,6 +21,10 @@ namespace SaberTailor.Settings
         public static SaberGripRawConfiguration GripCfg = new SaberGripRawConfiguration();
         public static SaberScaleRawConfiguration ScaleCfg = new SaberScaleRawConfiguration();
 
+        /// <summary>
+        /// Save Configuration
+        /// </summary>
+        /// <param name="saveToDisk">Save file to disk</param>
         public static void Save()
         {
             #region Internal settings
@@ -57,6 +61,9 @@ namespace SaberTailor.Settings
             Plugin.configProvider.Store(Plugin.config.Value);
         }
 
+        /// <summary>
+        /// Load Configuration
+        /// </summary>
         public static void Load()
         {
             // Just YEET this once ModPrefs support is dropped!
@@ -69,7 +76,6 @@ namespace SaberTailor.Settings
                 {
                     PluginConfig importedConfig = ConfigurationImporter.ImportSettingsFromModPrefs();
                     importedConfig.RegenerateConfig = false;
-                    importedConfig.ConfigVersion = ConfigVersion;
 
                     Plugin.config.Value = importedConfig;
 
@@ -94,6 +100,19 @@ namespace SaberTailor.Settings
             UpdateModVariables();
         }
 
+        /// <summary>
+        /// Reload configuration
+        /// </summary>
+        /// <param name="loadFromDisk">Load file from disk</param>
+        public static void Reload()
+        {
+            LoadConfig();
+            UpdateModVariables();
+        }
+
+        /// <summary>
+        /// Update Saber Length, Position and Rotation
+        /// </summary>
         public static void UpdateModVariables()
         {
             UpdateSaberLength();
@@ -101,18 +120,27 @@ namespace SaberTailor.Settings
             UpdateSaberRotation();
         }
 
+        /// <summary>
+        /// Update Saber Length
+        /// </summary>
         public static void UpdateSaberLength()
         {
             Scale.Length = ScaleCfg.Length / 100f;
             Scale.Girth = ScaleCfg.Girth / 100f;
         }
 
+        /// <summary>
+        /// Update Saber Position
+        /// </summary>
         public static void UpdateSaberPosition()
         {
             Grip.PosLeft = FormattedVector3_To_Vector3(GripCfg.PosLeft) / 1000f;
             Grip.PosRight = FormattedVector3_To_Vector3(GripCfg.PosRight) / 1000f;
         }
 
+        /// <summary>
+        /// Update Saber Rotation
+        /// </summary>
         public static void UpdateSaberRotation()
         {
             Grip.RotLeft = Quaternion.Euler(FormattedVector3_To_Vector3(GripCfg.RotLeft)).eulerAngles;
@@ -121,8 +149,6 @@ namespace SaberTailor.Settings
 
         private static void LoadConfig()
         {
-            Plugin.configProvider.Load();
-
             #region Internal settings
             if (Plugin.config.Value.Logging.TryGetValue("ShowCallSource", out object showCallSource) && showCallSource is bool loggerShowCallSource)
             {
@@ -185,9 +211,9 @@ namespace SaberTailor.Settings
             Grip.ModifyMenuHiltGrip = Plugin.config.Value.ModifyMenuHiltGrip;
             #endregion
         }
-        
+
         /// <summary>
-        /// Handle updates and additions to configuration
+        /// Handle updates and additions to configuration.
         /// Only needed if new settings shouldn't be set to default values in (some) existing config files
         /// </summary>
         private static void UpdateConfig()
@@ -214,6 +240,7 @@ namespace SaberTailor.Settings
                 {
                     Trail.TweakEnabled = true;
                 }
+
                 // Check scale modifications and disable tweak if settings are default
                 if (ScaleCfg.Length == 100 && ScaleCfg.Girth == 100)
                 {
@@ -225,9 +252,7 @@ namespace SaberTailor.Settings
                     Scale.TweakEnabled = true;
                     Scale.ScaleHitBox = true;
                 }
-                ConfigVersion = 3;
             }
-            // Add future updates here
 
             // Updater done - set to latest version and save
             ConfigVersion = latestVersion;

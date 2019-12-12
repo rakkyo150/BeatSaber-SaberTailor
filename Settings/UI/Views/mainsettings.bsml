@@ -1,0 +1,135 @@
+﻿<settings-container>
+  <horizontal>
+    <text text='SaberTailor Settings' font-size='5' />
+  </horizontal>
+
+  <!--Saber Grip-->
+  <bool-setting text='Menu hilt adjustments' value='menuhiltadjust-enabled' hover-hint='Enable to reposition the menu hilts the same way as the sabers.' />
+
+  <!--Saber Grip Left-->
+  <settings-submenu text='Left Saber Settings' hover-hint='Adjust position and rotation of the left saber.'>
+    <settings-container>
+      <increment-setting text='Pos X (Left/Right) in cm' value='saber-left-position-x'
+                         apply-on-change='true' on-change='update-saber-position'
+                         integer-only='true' min='-50' max='50' increment='1'
+                         hover-hint='Moves the saber left/right relative to the controller.' />
+
+      <increment-setting text='Pos Y (Down/Up) in cm' value='saber-left-position-y'
+                         apply-on-change='true' on-change='update-saber-position'
+                         integer-only='true' min='-50' max='50' increment='1'
+                         hover-hint='Moves the saber down/up relative to the controller.' />
+
+      <increment-setting text='Pos Z (Bwd./Fwd.) in cm' value='saber-left-position-z'
+                         apply-on-change='true' on-change='update-saber-position'
+                         integer-only='true' min='-50' max='50' increment='1'
+                         hover-hint='Moves the saber backwards/forwards relative to the controller.' />
+
+      <increment-setting text='Rot X (Up/Down) in degree' value='saber-left-rotation-x'
+                         apply-on-change='true' on-change='update-saber-rotation'
+                         integer-only='true' min='-360' max='360' increment='5'
+                         hover-hint='Tilts the saber up/down relative to the controller.' />
+
+      <increment-setting text='Rot Y (Left/Right) in degree' value='saber-left-rotation-y'
+                         apply-on-change='true' on-change='update-saber-rotation'
+                         integer-only='true' min='-360' max='360' increment='5'
+                         hover-hint='Rotates the saber left/right relative to the controller.' />
+
+      <increment-setting text='Rot Z (Saber axis) in degree' value='saber-left-rotation-z'
+                         apply-on-change='true' on-change='update-saber-rotation'
+                         integer-only='true' min='-360' max='360' increment='5'
+                         hover-hint='Rotates the saber around its own axis.' />
+
+      <horizontal>
+        <clickable-text text='Back' align='Left' click-event='back' />
+        <clickable-text text='Revert' align='Right' click-event='reset-saber-config' />
+      </horizontal>
+    </settings-container>
+  </settings-submenu>
+
+  <!--Saber Grip Right-->
+  <settings-submenu text='Right Saber Settings' hover-hint='Adjust position and rotation of the right saber.'>
+    <settings-container>
+      <increment-setting text='Pos X (Left/Right) in cm' value='saber-right-position-x'
+                      apply-on-change='true' on-change='update-saber-position'
+                      integer-only='true' min='-50' max='50' increment='1'
+                      hover-hint='Moves the saber left/right relative to the controller.' />
+
+      <increment-setting text='Pos Y (Down/Up) in cm' value='saber-right-position-y'
+                      apply-on-change='true' on-change='update-saber-position'
+                      integer-only='true' min='-50' max='50' increment='1'
+                      hover-hint='Moves the saber down/up relative to the controller.' />
+
+      <increment-setting text='Pos Z (Bwd./Fwd.) in cm' value='saber-right-position-z'
+                      apply-on-change='true' on-change='update-saber-position'
+                      integer-only='true' min='-50' max='50' increment='1'
+                      hover-hint='Moves the saber backwards/forwards relative to the controller.' />
+
+      <increment-setting text='Rot X (Up/Down) in degree' value='saber-right-rotation-x'
+                      apply-on-change='true' on-change='update-saber-rotation'
+                      integer-only='true' min='-360' max='360' increment='5'
+                      hover-hint='Tilts the saber up/down relative to the controller.' />
+
+      <increment-setting text='Rot Y (Left/Right) in degree' value='saber-right-rotation-y'
+                      apply-on-change='true' on-change='update-saber-rotation'
+                      integer-only='true' min='-360' max='360' increment='5'
+                      hover-hint='Rotates the saber left/right relative to the controller.' />
+
+      <increment-setting text='Rot Z (Saber axis) in degree' value='saber-right-rotation-z'
+                      apply-on-change='true' on-change='update-saber-rotation'
+                      integer-only='true' min='-360' max='360' increment='5'
+                      hover-hint='Rotates the saber around its own axis.' />
+
+      <horizontal>
+        <clickable-text text='Back' align='Left' click-event='back' />
+        <clickable-text text='Revert' align='Right' click-event='reset-saber-config' />
+      </horizontal>
+    </settings-container>
+  </settings-submenu>
+
+  <!--Saber Scale-->
+  <settings-submenu text='Saber Scaling' hover-hint='Adjust length and width of the sabers.'>
+    <settings-container>
+      <bool-setting text='Enable saber scale modification' value='saber-scale-tweak-enabled'
+                    hover-hint='Enable/Disable any scale modifications.' />
+
+      <increment-setting text='Length (Default: 100%)' value='saber-scale-length'
+                         integer-only='true' min='5' max='500' increment='5'
+                         hover-hint='Scales the saber length.' />
+
+      <increment-setting text='Width (Default: 100%)' value='saber-scale-girth'
+                         integer-only='true' min='5' max='500' increment='5'
+                         hover-hint='Scales the saber width.' />
+
+      <text text='' font-size='2' size-delta-y='4' />
+      <bool-setting text='Scale hitbox' value='saber-scale-hitbox-enabled'
+                    hover-hint='Enable/Disable saber hit-box scaling.' />
+      <text text='Having this option enabled will disable score submission.'
+            font-size='5' color='#f22' size-delta-y='8' />
+
+      <horizontal>
+        <clickable-text text='Back' align='Left' click-event='back' />
+        <clickable-text text='Revert' align='Right' click-event='reset-saber-config' />
+      </horizontal>
+    </settings-container>
+  </settings-submenu>
+
+  <!--Saber Trail-->
+  <settings-submenu text='Saber Trail' hover-hint='Adjust trail settings for default trails.'>
+    <settings-container>
+      <bool-setting text='Enable saber trail modification' value='saber-trail-tweak-enabled'
+                    hover-hint='Enable/Disable any trail modifications.' />
+
+      <bool-setting text='Enable saber trails' value='saber-trail-enabled'
+                    hover-hint='Currently only works with sabers using default trail.' />
+
+      <increment-setting text='Trail length' value='saber-trail-length'
+                         integer-only='true' min='5' max='100' increment='5'
+                         hover-hint='Adjusts trail length. Currently only works with sabers using default trail.' />
+
+      <horizontal>
+        <clickable-text text='Back' align='Left' click-event='back' />
+        <clickable-text text='Revert' align='Right' click-event='reset-saber-config' />
+      </horizontal>
+    </settings-container>
+  </settings-submenu>
+</settings-container>
