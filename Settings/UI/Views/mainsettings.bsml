@@ -50,34 +50,34 @@
   <settings-submenu text='Right Saber Settings' hover-hint='Adjust position and rotation of the right saber.'>
     <settings-container>
       <increment-setting text='Pos X (Left/Right) in cm' value='saber-right-position-x'
-                      apply-on-change='true' on-change='update-saber-position'
-                      integer-only='true' min='-50' max='50' increment='1'
-                      hover-hint='Moves the saber left/right relative to the controller.' />
+                         apply-on-change='true' on-change='update-saber-position'
+                         integer-only='true' min='-50' max='50' increment='1'
+                         hover-hint='Moves the saber left/right relative to the controller.' />
 
       <increment-setting text='Pos Y (Down/Up) in cm' value='saber-right-position-y'
-                      apply-on-change='true' on-change='update-saber-position'
-                      integer-only='true' min='-50' max='50' increment='1'
-                      hover-hint='Moves the saber down/up relative to the controller.' />
+                         apply-on-change='true' on-change='update-saber-position'
+                         integer-only='true' min='-50' max='50' increment='1'
+                         hover-hint='Moves the saber down/up relative to the controller.' />
 
       <increment-setting text='Pos Z (Bwd./Fwd.) in cm' value='saber-right-position-z'
-                      apply-on-change='true' on-change='update-saber-position'
-                      integer-only='true' min='-50' max='50' increment='1'
-                      hover-hint='Moves the saber backwards/forwards relative to the controller.' />
+                         apply-on-change='true' on-change='update-saber-position'
+                         integer-only='true' min='-50' max='50' increment='1'
+                         hover-hint='Moves the saber backwards/forwards relative to the controller.' />
 
       <increment-setting text='Rot X (Up/Down) in degree' value='saber-right-rotation-x'
-                      apply-on-change='true' on-change='update-saber-rotation'
-                      integer-only='true' min='-360' max='360' increment='5'
-                      hover-hint='Tilts the saber up/down relative to the controller.' />
+                         apply-on-change='true' on-change='update-saber-rotation'
+                         integer-only='true' min='-360' max='360' increment='5'
+                         hover-hint='Tilts the saber up/down relative to the controller.' />
 
       <increment-setting text='Rot Y (Left/Right) in degree' value='saber-right-rotation-y'
-                      apply-on-change='true' on-change='update-saber-rotation'
-                      integer-only='true' min='-360' max='360' increment='5'
-                      hover-hint='Rotates the saber left/right relative to the controller.' />
+                         apply-on-change='true' on-change='update-saber-rotation'
+                         integer-only='true' min='-360' max='360' increment='5'
+                         hover-hint='Rotates the saber left/right relative to the controller.' />
 
       <increment-setting text='Rot Z (Saber axis) in degree' value='saber-right-rotation-z'
-                      apply-on-change='true' on-change='update-saber-rotation'
-                      integer-only='true' min='-360' max='360' increment='5'
-                      hover-hint='Rotates the saber around its own axis.' />
+                         apply-on-change='true' on-change='update-saber-rotation'
+                         integer-only='true' min='-360' max='360' increment='5'
+                         hover-hint='Rotates the saber around its own axis.' />
 
       <horizontal>
         <clickable-text text='Back' align='Left' click-event='back' />
