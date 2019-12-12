@@ -24,7 +24,6 @@ namespace SaberTailor.Settings
         /// <summary>
         /// Save Configuration
         /// </summary>
-        /// <param name="saveToDisk">Save file to disk</param>
         public static void Save()
         {
             #region Internal settings
@@ -103,7 +102,6 @@ namespace SaberTailor.Settings
         /// <summary>
         /// Reload configuration
         /// </summary>
-        /// <param name="loadFromDisk">Load file from disk</param>
         public static void Reload()
         {
             LoadConfig();
