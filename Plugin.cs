@@ -1,4 +1,5 @@
-﻿using IPA;
+﻿using BeatSaberMarkupLanguage.Settings;
+using IPA;
 using IPA.Config;
 using IPA.Loader;
 using IPA.Utilities;
@@ -43,28 +44,14 @@ namespace SaberTailor
             }
         }
 
-        public void OnApplicationQuit() => Unload();
         public void OnEnable() => Load();
         public void OnDisable() => Unload();
-
-        public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
-        {
-            if (scene.name == "MenuCore")
-            {
-                ModUI.CreateSettingsOptionsUI();
-            }
-        }
+        public void OnApplicationQuit() => Unload();
 
         public void OnActiveSceneChanged(Scene prevScene, Scene nextScene)
         {
             if (nextScene.name == "GameCore")
             {
-                // FIXME: Reload settings on entering GameCore to restore old functionality to reload config for each song
-                // Needs saving to file on config apply in settings
-
-                Configuration.UpdateModVariables();
-
-                // Only create tweak game objects, if the corresponding tweaks are actually enabled
                 if (Configuration.Trail.TweakEnabled)
                 {
                     new GameObject(PluginName).AddComponent<SaberTrail>();
@@ -74,20 +61,22 @@ namespace SaberTailor
                 {
                     new GameObject(PluginName).AddComponent<SaberLength>();
                 }
-                else
+                else if (ScoreUtility.ScoreIsBlocked)
                 {
-                    if (ScoreUtility.ScoreIsBlocked)
-                    {
-                        ScoreUtility.EnableScoreSubmission(SaberLength.Name);
-                    }
+                    ScoreUtility.EnableScoreSubmission(SaberLength.Name);
                 }
+            }
+            else if (nextScene.name == "MenuViewControllers")
+            {
+                BSMLSettings.instance.AddSettingsMenu("SaberTailor", "SaberTailor.Settings.UI.Views.mainsettings.bsml", MainSettings.instance);
             }
         }
 
         public void OnApplicationStart() { }
+        public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode) { }
+        public void OnSceneUnloaded(Scene scene) { }
         public void OnUpdate() { }
         public void OnFixedUpdate() { }
-        public void OnSceneUnloaded(Scene scene) { }
 
         private void Load()
         {
