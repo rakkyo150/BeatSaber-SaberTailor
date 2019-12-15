@@ -24,22 +24,22 @@ namespace SaberTailor.Settings.UI
         [UIValue("saber-left-position-x")]
         public int GripLeftPositionX
         {
-            get => Configuration.GripCfg.PosLeft.x / 10;
-            set => Configuration.GripCfg.PosLeft.x = value * 10;
+            get => Configuration.GripCfg.PosLeft.x;
+            set => Configuration.GripCfg.PosLeft.x = value;
         }
 
         [UIValue("saber-left-position-y")]
         public int GripLeftPositionY
         {
-            get => Configuration.GripCfg.PosLeft.y / 10;
-            set => Configuration.GripCfg.PosLeft.y = value * 10;
+            get => Configuration.GripCfg.PosLeft.y;
+            set => Configuration.GripCfg.PosLeft.y = value;
         }
 
         [UIValue("saber-left-position-z")]
         public int GripLeftPositionZ
         {
-            get => Configuration.GripCfg.PosLeft.z / 10;
-            set => Configuration.GripCfg.PosLeft.z = value * 10;
+            get => Configuration.GripCfg.PosLeft.z;
+            set => Configuration.GripCfg.PosLeft.z = value;
         }
 
         [UIValue("saber-left-rotation-x")]
@@ -68,22 +68,22 @@ namespace SaberTailor.Settings.UI
         [UIValue("saber-right-position-x")]
         public int GripRightPositionX
         {
-            get => Configuration.GripCfg.PosRight.x / 10;
-            set => Configuration.GripCfg.PosRight.x = value * 10;
+            get => Configuration.GripCfg.PosRight.x;
+            set => Configuration.GripCfg.PosRight.x = value;
         }
 
         [UIValue("saber-right-position-y")]
         public int GripRightPositionY
         {
-            get => Configuration.GripCfg.PosRight.y / 10;
-            set => Configuration.GripCfg.PosRight.y = value * 10;
+            get => Configuration.GripCfg.PosRight.y;
+            set => Configuration.GripCfg.PosRight.y = value;
         }
 
         [UIValue("saber-right-position-z")]
         public int GripRightPositionZ
         {
-            get => Configuration.GripCfg.PosRight.z / 10;
-            set => Configuration.GripCfg.PosRight.z = value * 10;
+            get => Configuration.GripCfg.PosRight.z;
+            set => Configuration.GripCfg.PosRight.z = value;
         }
 
         [UIValue("saber-right-rotation-x")]
@@ -160,6 +160,24 @@ namespace SaberTailor.Settings.UI
             set => Configuration.Trail.Length = value;
         }
         #endregion
+
+        [UIAction("position-formatter")]
+        public string PositionString(int value)
+        {
+            return $"{value / 10} cm";
+        }
+
+        [UIAction("rotation-formatter")]
+        public string RotationString(int value)
+        {
+            return $"{value} deg";
+        }
+
+        [UIAction("multiplier-formatter")]
+        public string MultiplierString(int value)
+        {
+            return $"{value}%";
+        }
 
         [UIAction("update-saber-rotation")]
         public async void OnUpdateSaberRotation(float _)
