@@ -69,7 +69,7 @@ namespace SaberTailor.Settings.Utilities
                     z = (int)Math.Round(GripRightRotation.z)
                 };
 
-                ModifyMenuHiltGrip = ModPrefs.GetBool(Plugin.PluginName, nameof(ModifyMenuHiltGrip), false, true);
+                ModifyMenuHiltGrip = ModPrefs.GetBool(Plugin.PluginName, nameof(ModifyMenuHiltGrip), true, true);
                 importedSettings.ModifyMenuHiltGrip = ModifyMenuHiltGrip;
 #pragma warning restore CS0618 // ModPrefs is obsolete
 
