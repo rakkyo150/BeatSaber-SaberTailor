@@ -60,12 +60,12 @@ namespace SaberTailor.Settings
 
             #region Saber grip
             // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Cfg values that are stored!
-            config.Value.GripLeftPosition = GripCfg.PosLeft;
-            config.Value.GripRightPosition = GripCfg.PosRight;
+            config.Value.GripLeftPosition = new Int3(GripCfg.PosLeft);
+            config.Value.GripRightPosition = new Int3(GripCfg.PosRight);
 
             // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are stored!
-            config.Value.GripLeftRotation = GripCfg.RotLeft;
-            config.Value.GripRightRotation = GripCfg.RotRight;
+            config.Value.GripLeftRotation = new Int3(GripCfg.RotLeft);
+            config.Value.GripRightRotation = new Int3(GripCfg.RotRight);
 
             config.Value.ModifyMenuHiltGrip = Grip.ModifyMenuHiltGrip;
             #endregion
@@ -211,8 +211,8 @@ namespace SaberTailor.Settings
             };
 
             // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are loaded!
-            GripCfg.RotLeft = config.Value.GripLeftRotation;
-            GripCfg.RotRight = config.Value.GripRightRotation;
+            GripCfg.RotLeft = new Int3(config.Value.GripLeftRotation);
+            GripCfg.RotRight = new Int3(config.Value.GripRightRotation);
 
             Grip.ModifyMenuHiltGrip = config.Value.ModifyMenuHiltGrip;
             #endregion
