@@ -1,5 +1,4 @@
-﻿using BS_Utils;
-using IPA.Config;
+﻿using IPA.Config;
 using SaberTailor.Settings.Classes;
 using SaberTailor.Settings.Utilities;
 using System;
