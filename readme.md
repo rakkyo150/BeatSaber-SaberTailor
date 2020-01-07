@@ -51,7 +51,7 @@ The default values are below:
     "y": 0,
     "z": 0
   },
-  "ModifyMenuHiltGrip": false,
+  "ModifyMenuHiltGrip": true,
   "Logging": {
     "ShowCallSource": false
   }
@@ -151,7 +151,7 @@ Alters the rotation of the sabers. The center of rotation is where the saber's h
 
 - **Setting**: `ModifyMenuHiltGrip`
 - **Values**: `true` | `false`
-- **Default**: `false`
+- **Default**: `true`
 
 Alters the position and angle of the menu hilts the same way as the sabers, when set to `true`.
 
