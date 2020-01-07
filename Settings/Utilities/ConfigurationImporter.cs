@@ -1,4 +1,5 @@
-﻿using IPA.Config;
+﻿using BS_Utils;
+using IPA.Config;
 using System;
 using System.Globalization;
 using UnityEngine;
@@ -24,29 +25,28 @@ namespace SaberTailor.Settings.Utilities
         /// <summary>
         /// ONLY USED FOR A SPECIFIC PURPOSE IN "Configuration.cs". DO NOT USE ELSEWHERE!
         /// </summary>
-        internal static PluginConfig ImportSettingsFromModPrefs()
+        internal static PluginConfig ImportSettingsFromModPrefs(BS_Utils.Utilities.Config oldConfig)
         {
             PluginConfig importedSettings = new PluginConfig(); // Initialize a new default configuration
 
             try
             {
-#pragma warning disable CS0618 // ModPrefs is obsolete
                 // Import trail configuration
-                IsTrailEnabled = ModPrefs.GetBool(Plugin.PluginName, nameof(IsTrailEnabled), true, true);
+                IsTrailEnabled = oldConfig.GetBool(Plugin.PluginName, nameof(IsTrailEnabled), true, true);
                 importedSettings.IsTrailEnabled = IsTrailEnabled;
 
-                TrailLength = ModPrefs.GetInt(Plugin.PluginName, nameof(TrailLength), 20, true);
+                TrailLength = oldConfig.GetInt(Plugin.PluginName, nameof(TrailLength), 20, true);
                 importedSettings.TrailLength = Math.Max(5, Math.Min(100, TrailLength));
 
                 // Import grip position settings, convert old centimeter values to millimeter
-                GripLeftPosition = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripLeftPosition), "0,0,0", true));
+                GripLeftPosition = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripLeftPosition), "0,0,0", true));
                 importedSettings.GripLeftPosition = new StoreableIntVector3()
                 {
                     x = (int)Math.Round(Mathf.Clamp(GripLeftPosition.x, -50f, 50f) * 10),
                     y = (int)Math.Round(Mathf.Clamp(GripLeftPosition.y, -50f, 50f) * 10),
                     z = (int)Math.Round(Mathf.Clamp(GripLeftPosition.z, -50f, 50f) * 10)
                 };
-                GripLeftRotation = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripLeftRotation), "0,0,0", true));
+                GripLeftRotation = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripLeftRotation), "0,0,0", true));
                 importedSettings.GripLeftRotation = new StoreableIntVector3()
                 {
                     x = (int)Math.Round(GripLeftRotation.x),
@@ -54,14 +54,14 @@ namespace SaberTailor.Settings.Utilities
                     z = (int)Math.Round(GripLeftRotation.z)
                 };
 
-                GripRightPosition = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripRightPosition), "0,0,0", true));
+                GripRightPosition = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripRightPosition), "0,0,0", true));
                 importedSettings.GripRightPosition = new StoreableIntVector3()
                 {
                     x = (int)Math.Round(Mathf.Clamp(GripRightPosition.x, -50f, 50f) * 10),
                     y = (int)Math.Round(Mathf.Clamp(GripRightPosition.y, -50f, 50f) * 10),
                     z = (int)Math.Round(Mathf.Clamp(GripRightPosition.z, -50f, 50f) * 10)
                 };
-                GripRightRotation = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripRightRotation), "0,0,0", true));
+                GripRightRotation = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripRightRotation), "0,0,0", true));
                 importedSettings.GripRightRotation = new StoreableIntVector3()
                 {
                     x = (int)Math.Round(GripRightRotation.x),
@@ -69,9 +69,8 @@ namespace SaberTailor.Settings.Utilities
                     z = (int)Math.Round(GripRightRotation.z)
                 };
 
-                ModifyMenuHiltGrip = ModPrefs.GetBool(Plugin.PluginName, nameof(ModifyMenuHiltGrip), true, true);
+                ModifyMenuHiltGrip = oldConfig.GetBool(Plugin.PluginName, nameof(ModifyMenuHiltGrip), true, true);
                 importedSettings.ModifyMenuHiltGrip = ModifyMenuHiltGrip;
-#pragma warning restore CS0618 // ModPrefs is obsolete
 
                 // Check trail modification vars - if these are unchecked from default values, then just disable these
                 importedSettings.IsTrailModEnabled = (IsTrailEnabled != true || TrailLength != 20);
@@ -79,7 +78,7 @@ namespace SaberTailor.Settings.Utilities
                 // Skip importing scale modification - that functionality was broken for almost a year and probably 
                 // would create overall more confusion when suddenly enabled again, instead of having to set it again
 
-                MarkAsExported();
+                MarkAsExported(oldConfig);
             }
             catch (Exception ex)
             {
@@ -89,11 +88,9 @@ namespace SaberTailor.Settings.Utilities
             return importedSettings;
         }
 
-        private static void MarkAsExported()
+        private static void MarkAsExported(BS_Utils.Utilities.Config oldConfig)
         {
-#pragma warning disable CS0618 // ModPrefs is obsolete
-            ModPrefs.SetBool(Plugin.PluginName, "IsExportedToNewConfig", true);
-#pragma warning restore CS0618 // ModPrefs is obsolete
+            oldConfig.SetBool(Plugin.PluginName, "IsExportedToNewConfig", true);
         }
 
         private static Vector3 ParseVector3(string originalString)

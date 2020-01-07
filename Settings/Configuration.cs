@@ -1,4 +1,5 @@
-﻿using IPA.Config;
+﻿using BS_Utils;
+using IPA.Config;
 using SaberTailor.Settings.Classes;
 using SaberTailor.Settings.Utilities;
 using System;
@@ -65,15 +66,13 @@ namespace SaberTailor.Settings
         /// </summary>
         public static void Load()
         {
-            // Just YEET this once ModPrefs support is dropped!
-#pragma warning disable CS0618 // ModPrefs is obsolete
-            if (ModPrefs.HasKey(Plugin.PluginName, "GripLeftPosition") && !ModPrefs.GetBool(Plugin.PluginName, "IsExportedToNewConfig", false))
-#pragma warning restore CS0618 // ModPrefs is obsolete
+            BS_Utils.Utilities.Config oldConfig = new BS_Utils.Utilities.Config("modprefs");
+            if (oldConfig.HasKey(Plugin.PluginName, "GripLeftPosition") && !oldConfig.GetBool(Plugin.PluginName, "IsExportedToNewConfig", false))
             {
                 // Import SaberTailor's settings from the old configuration (ModPrefs)
                 try
                 {
-                    PluginConfig importedConfig = ConfigurationImporter.ImportSettingsFromModPrefs();
+                    PluginConfig importedConfig = ConfigurationImporter.ImportSettingsFromModPrefs(oldConfig);
                     importedConfig.RegenerateConfig = false;
 
                     Plugin.config.Value = importedConfig;
