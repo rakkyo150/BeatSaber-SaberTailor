@@ -1,6 +1,6 @@
 ﻿namespace SaberTailor.Settings.Classes
 {
-    public class SaberScaleRawConfiguration
+    public class ScaleRawConfig
     {
         public int Length;
 

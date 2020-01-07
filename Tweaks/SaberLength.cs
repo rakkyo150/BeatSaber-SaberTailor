@@ -1,9 +1,9 @@
 ﻿using SaberTailor.Settings;
 using SaberTailor.Utilities;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Xft;
-using LogLevel = IPA.Logging.Logger.Level;
 
 namespace SaberTailor.Tweaks
 {
@@ -40,21 +40,15 @@ namespace SaberTailor.Tweaks
             GameObject RightSaber = null;
 
             // Find and set the default sabers first
-            Saber[] sabers = Resources.FindObjectsOfTypeAll<Saber>();
-            Saber.SaberType[] typeForHands = new Saber.SaberType[]
-            {
-                Saber.SaberType.SaberB,
-                Saber.SaberType.SaberA
-            };
-
+            IEnumerable<Saber> sabers = Resources.FindObjectsOfTypeAll<Saber>();
             foreach (Saber saber in sabers)
             {
-                if (saber.saberType == typeForHands[0])
+                if (saber.saberType == Saber.SaberType.SaberB)
                 {
                     defaultLeftSaber = saber;
                     LeftSaber = saber.gameObject;
                 }
-                else if (saber.saberType == typeForHands[1])
+                else if (saber.saberType == Saber.SaberType.SaberA)
                 {
                     defaultRightSaber = saber;
                     RightSaber = saber.gameObject;
@@ -76,14 +70,13 @@ namespace SaberTailor.Tweaks
                 }
                 else
                 {
-                    Logger.Log("Either the Default Sabers are selected or CustomSaber were too slow!", LogLevel.Debug);
+                    Logger.log.Debug("Either the Default Sabers are selected or CustomSaber were too slow!");
                 }
             }
 
             // Scaling default saber will affect its hitbox, so save the default hitbox positions first before scaling
             HitboxRevertWorkaround hitboxVariables = null;
-            bool restoreHitbox = !usingCustomModels && !Configuration.Scale.ScaleHitBox;
-            if (restoreHitbox)
+            if (!usingCustomModels && !Configuration.Scale.ScaleHitBox)
             {
                 hitboxVariables = new HitboxRevertWorkaround(defaultLeftSaber, defaultRightSaber);
             }
@@ -100,12 +93,12 @@ namespace SaberTailor.Tweaks
             }
 
             // Revert hitbox changes to default sabers, if hitbox scaling is disabled
-            if (restoreHitbox)
+            if (hitboxVariables != null)
             {
                 hitboxVariables.RestoreHitbox();
             }
 
-            BasicSaberModelController[] basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
+            IEnumerable<BasicSaberModelController> basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
             foreach (BasicSaberModelController basicSaberModelController in basicSaberModelControllers)
             {
                 SaberWeaponTrail saberWeaponTrail = ReflectionUtil.GetPrivateField<SaberWeaponTrail>(basicSaberModelController, "_saberWeaponTrail");

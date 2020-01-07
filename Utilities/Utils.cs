@@ -3,7 +3,7 @@ using IPA.Old;
 
 namespace SaberTailor.Utilities
 {
-    public static class Utils
+    public class Utils
     {
         /// <summary>
         /// Check if a BSIPA plugin is enabled

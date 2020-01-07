@@ -39,11 +39,12 @@
     <Compile Include="Logger.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\Classes\SaberGripConfiguration.cs" />
-    <Compile Include="Settings\Classes\SaberGripRawConfiguration.cs" />
-    <Compile Include="Settings\Classes\SaberScaleConfiguration.cs" />
-    <Compile Include="Settings\Classes\SaberScaleRawConfiguration.cs" />
-    <Compile Include="Settings\Classes\SaberTrailConfiguration.cs" />
+    <Compile Include="Settings\Classes\GripConfig.cs" />
+    <Compile Include="Settings\Classes\GripRawConfig.cs" />
+    <Compile Include="Settings\Classes\Int3.cs" />
+    <Compile Include="Settings\Classes\ScaleConfig.cs" />
+    <Compile Include="Settings\Classes\ScaleRawConfig.cs" />
+    <Compile Include="Settings\Classes\TrailConfig.cs" />
     <Compile Include="Settings\Configuration.cs" />
     <Compile Include="Settings\UI\MainSettings.cs" />
     <Compile Include="Settings\Utilities\ConfigurationImporter.cs" />

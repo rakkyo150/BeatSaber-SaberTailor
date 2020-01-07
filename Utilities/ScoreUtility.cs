@@ -1,13 +1,12 @@
 ﻿using BS_Utils.Gameplay;
 using System.Collections.Generic;
-using LogLevel = IPA.Logging.Logger.Level;
 
 namespace SaberTailor.Utilities
 {
-    public static class ScoreUtility
+    public class ScoreUtility
     {
-        private static List<string> ScoreBlockList = new List<string>();
-        private static object acquireLock = new object();
+        private static readonly IList<string> scoreBlockList = new List<string>();
+        private static readonly object acquireLock = new object();
 
         public static bool ScoreIsBlocked { get; private set; } = false;
 
@@ -15,16 +14,16 @@ namespace SaberTailor.Utilities
         {
             lock (acquireLock)
             {
-                if (!ScoreBlockList.Contains(BlockedBy))
+                if (!scoreBlockList.Contains(BlockedBy))
                 {
-                    ScoreBlockList.Add(BlockedBy);
+                    scoreBlockList.Add(BlockedBy);
                 }
 
                 if (!ScoreIsBlocked)
                 {
-                    Logger.Log("ScoreSubmission has been disabled.", LogLevel.Info);
                     ScoreSubmission.ProlongedDisableSubmission(Plugin.PluginName);
                     ScoreIsBlocked = true;
+                    Logger.log.Info("ScoreSubmission has been disabled.");
                 }
             }
         }
@@ -33,16 +32,16 @@ namespace SaberTailor.Utilities
         {
             lock (acquireLock)
             {
-                if (ScoreBlockList.Contains(BlockedBy))
+                if (scoreBlockList.Contains(BlockedBy))
                 {
-                    ScoreBlockList.Remove(BlockedBy);
+                    scoreBlockList.Remove(BlockedBy);
                 }
 
-                if (ScoreIsBlocked && ScoreBlockList.Count == 0)
+                if (ScoreIsBlocked && scoreBlockList.Count == 0)
                 {
-                    Logger.Log("ScoreSubmission has been re-enabled.", LogLevel.Info);
                     ScoreSubmission.RemoveProlongedDisable(Plugin.PluginName);
                     ScoreIsBlocked = false;
+                    Logger.log.Info("ScoreSubmission has been re-enabled.");
                 }
             }
         }
@@ -56,14 +55,14 @@ namespace SaberTailor.Utilities
             {
                 if (ScoreIsBlocked)
                 {
-                    Logger.Log("Plugin is exiting, ScoreSubmission has been re-enabled.", LogLevel.Info);
+                    Logger.log.Info("Plugin is exiting, ScoreSubmission has been re-enabled.");
                     ScoreSubmission.RemoveProlongedDisable(Plugin.PluginName);
                     ScoreIsBlocked = false;
                 }
 
-                if (ScoreBlockList.Count != 0)
+                if (scoreBlockList.Count != 0)
                 {
-                    ScoreBlockList.Clear();
+                    scoreBlockList.Clear();
                 }
             }
         }

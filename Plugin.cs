@@ -2,17 +2,14 @@
 using IPA;
 using IPA.Config;
 using IPA.Loader;
-using IPA.Utilities;
 using SaberTailor.HarmonyPatches;
 using SaberTailor.Settings;
 using SaberTailor.Settings.UI;
-using SaberTailor.Settings.Utilities;
 using SaberTailor.Tweaks;
 using SaberTailor.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using IPALogger = IPA.Logging.Logger;
-using LogLevel = IPA.Logging.Logger.Level;
 
 namespace SaberTailor
 {
@@ -21,22 +18,10 @@ namespace SaberTailor
         public static string PluginName => "SaberTailor";
         public static SemVer.Version PluginVersion { get; private set; } = new SemVer.Version("0.0.0"); // Default
 
-        internal static Ref<PluginConfig> config;
-        internal static IConfigProvider configProvider;
-
         public void Init(IPALogger logger, [Config.Prefer("json")] IConfigProvider cfgProvider, PluginLoader.PluginMetadata metadata)
         {
             Logger.log = logger;
-
-            configProvider = cfgProvider;
-            config = cfgProvider.MakeLink<PluginConfig>((p, v) =>
-            {
-                if (v.Value == null || v.Value.RegenerateConfig || v.Value == null && v.Value.RegenerateConfig)
-                {
-                    p.Store(v.Value = new PluginConfig() { RegenerateConfig = false });
-                }
-                config = v;
-            });
+            Configuration.Init(cfgProvider);
 
             if (metadata?.Version != null)
             {
@@ -66,7 +51,7 @@ namespace SaberTailor
                     ScoreUtility.EnableScoreSubmission(SaberLength.Name);
                 }
             }
-            else if (nextScene.name == "MenuViewControllers")
+            else if (nextScene.name == "MenuViewControllers" && prevScene.name == "EmptyTransition")
             {
                 BSMLSettings.instance.AddSettingsMenu("SaberTailor", "SaberTailor.Settings.UI.Views.mainsettings.bsml", MainSettings.instance);
             }
@@ -82,7 +67,7 @@ namespace SaberTailor
         {
             Configuration.Load();
             Patches.ApplyHarmonyPatches();
-            Logger.Log($"{PluginName} v.{PluginVersion} has started.", LogLevel.Info);
+            Logger.log.Info($"{PluginName} v.{PluginVersion} has started.");
         }
 
         private void Unload()

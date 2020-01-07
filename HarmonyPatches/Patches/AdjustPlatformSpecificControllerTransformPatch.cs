@@ -1,6 +1,5 @@
 ﻿using Harmony;
 using SaberTailor.Settings;
-using System;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -8,10 +7,9 @@ namespace SaberTailor.HarmonyPatches
 {
     [HarmonyPatch(typeof(VRPlatformHelper))]
     [HarmonyPatch("AdjustPlatformSpecificControllerTransform")]
-    [HarmonyPatch(new Type[] { typeof(XRNode), typeof(Transform) })]
     internal class AdjustPlatformSpecificControllerTransformPatch
     {
-        private static void Prefix(XRNode node, Transform transform)
+        private static void Prefix(XRNode node, Transform transform, Vector3 addPosition, Vector3 addRotation)
         {
             // Always check for sabers first and modify and exit out immediately if found
             if (transform.gameObject.name == "LeftSaber" || transform.gameObject.name.Contains("Saber A"))

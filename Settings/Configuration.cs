@@ -1,70 +1,83 @@
-﻿using BS_Utils;
-using IPA.Config;
+﻿using IPA.Config;
+using IPA.Utilities;
 using SaberTailor.Settings.Classes;
 using SaberTailor.Settings.Utilities;
 using System;
 using UnityEngine;
-using LogLevel = IPA.Logging.Logger.Level;
 
 namespace SaberTailor.Settings
 {
     public class Configuration
     {
-        public static int ConfigVersion;                // Config version, to handle changes in config where existing configs shouldn't just get default config applied
-        public static bool ShowCallSource;              // Set this to true in configuration to enable call source in logs and terminal
+        private static Ref<PluginConfig> config;
+        private static IConfigProvider configProvider;
 
-        public static SaberGripConfiguration Grip = new SaberGripConfiguration();
-        public static SaberScaleConfiguration Scale = new SaberScaleConfiguration();
-        public static SaberTrailConfiguration Trail = new SaberTrailConfiguration();
+        public static int ConfigVersion { get; private set; }                // Config version, to handle changes in config where existing configs shouldn't just get default config applied
+
+        public static GripConfig Grip { get; internal set; } = new GripConfig();
+        public static ScaleConfig Scale { get; internal set; } = new ScaleConfig();
+        public static TrailConfig Trail { get; internal set; } = new TrailConfig();
 
         // Config vars for representing player settings before it gets mangled into something that works with the game,
         // but changes representation of these settings in the process - also avoiding floating points
-        public static SaberGripRawConfiguration GripCfg = new SaberGripRawConfiguration();
-        public static SaberScaleRawConfiguration ScaleCfg = new SaberScaleRawConfiguration();
+        public static GripRawConfig GripCfg { get; internal set; } = new GripRawConfig();
+        public static ScaleRawConfig ScaleCfg { get; internal set; } = new ScaleRawConfig();
+
+        internal static void Init(IConfigProvider cfgProvider)
+        {
+            configProvider = cfgProvider;
+            config = cfgProvider.MakeLink<PluginConfig>((p, v) =>
+            {
+                if (v.Value == null || v.Value.RegenerateConfig)
+                {
+                    p.Store(v.Value = new PluginConfig() { RegenerateConfig = false });
+                }
+                config = v;
+            });
+        }
 
         /// <summary>
         /// Save Configuration
         /// </summary>
-        public static void Save()
+        internal static void Save()
         {
             #region Internal settings
-            Plugin.config.Value.ConfigVersion = ConfigVersion;
-            Plugin.config.Value.Logging["ShowCallSource"] = ShowCallSource;
+            config.Value.ConfigVersion = ConfigVersion;
             #endregion
 
             #region Saber scale
-            Plugin.config.Value.IsSaberScaleModEnabled = Scale.TweakEnabled;
-            Plugin.config.Value.SaberScaleHitbox = Scale.ScaleHitBox;
-            Plugin.config.Value.SaberLength = ScaleCfg.Length;
-            Plugin.config.Value.SaberGirth = ScaleCfg.Girth;
+            config.Value.IsSaberScaleModEnabled = Scale.TweakEnabled;
+            config.Value.SaberScaleHitbox = Scale.ScaleHitBox;
+            config.Value.SaberLength = ScaleCfg.Length;
+            config.Value.SaberGirth = ScaleCfg.Girth;
             #endregion
 
             #region Saber trail
-            Plugin.config.Value.IsTrailModEnabled = Trail.TweakEnabled;
-            Plugin.config.Value.IsTrailEnabled = Trail.TrailEnabled;
-            Plugin.config.Value.TrailLength = Trail.Length;
+            config.Value.IsTrailModEnabled = Trail.TweakEnabled;
+            config.Value.IsTrailEnabled = Trail.TrailEnabled;
+            config.Value.TrailLength = Trail.Length;
             #endregion
 
             #region Saber grip
             // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Cfg values that are stored!
-            Plugin.config.Value.GripLeftPosition = GripCfg.PosLeft;
-            Plugin.config.Value.GripRightPosition = GripCfg.PosRight;
+            config.Value.GripLeftPosition = GripCfg.PosLeft;
+            config.Value.GripRightPosition = GripCfg.PosRight;
 
             // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are stored!
-            Plugin.config.Value.GripLeftRotation = GripCfg.RotLeft;
-            Plugin.config.Value.GripRightRotation = GripCfg.RotRight;
+            config.Value.GripLeftRotation = GripCfg.RotLeft;
+            config.Value.GripRightRotation = GripCfg.RotRight;
 
-            Plugin.config.Value.ModifyMenuHiltGrip = Grip.ModifyMenuHiltGrip;
+            config.Value.ModifyMenuHiltGrip = Grip.ModifyMenuHiltGrip;
             #endregion
 
             // Store configuration
-            Plugin.configProvider.Store(Plugin.config.Value);
+            configProvider.Store(config.Value);
         }
 
         /// <summary>
         /// Load Configuration
         /// </summary>
-        public static void Load()
+        internal static void Load()
         {
             BS_Utils.Utilities.Config oldConfig = new BS_Utils.Utilities.Config("modprefs");
             if (oldConfig.HasKey(Plugin.PluginName, "GripLeftPosition") && !oldConfig.GetBool(Plugin.PluginName, "IsExportedToNewConfig", false))
@@ -75,24 +88,24 @@ namespace SaberTailor.Settings
                     PluginConfig importedConfig = ConfigurationImporter.ImportSettingsFromModPrefs(oldConfig);
                     importedConfig.RegenerateConfig = false;
 
-                    Plugin.config.Value = importedConfig;
+                    config.Value = importedConfig;
 
                     // Store configuration in the new format immediately
-                    Plugin.configProvider.Store(Plugin.config.Value);
-                    Plugin.configProvider.Save();
+                    configProvider.Store(config.Value);
+                    configProvider.Save();
 
-                    Logger.Log("Configuration loaded from ModPrefs.", LogLevel.Info);
+                    Logger.log.Info("Configuration loaded from ModPrefs.");
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log(ex);
-                    Logger.Log("Failed to import ModPrefs configuration. Loading default BSIPA configuration instead.", LogLevel.Info);
+                    Logger.log.Warn("Failed to import ModPrefs configuration. Loading default BSIPA configuration instead.");
+                    Logger.log.Warn(ex);
                 }
             }
 
             LoadConfig();
             UpdateConfig();
-            Logger.Log("Configuration has been set", LogLevel.Debug);
+            Logger.log.Debug("Configuration has been set");
 
             // Update variables used by mod logic
             UpdateModVariables();
@@ -101,7 +114,7 @@ namespace SaberTailor.Settings
         /// <summary>
         /// Reload configuration
         /// </summary>
-        public static void Reload()
+        internal static void Reload()
         {
             LoadConfig();
             UpdateModVariables();
@@ -110,7 +123,7 @@ namespace SaberTailor.Settings
         /// <summary>
         /// Update Saber Length, Position and Rotation
         /// </summary>
-        public static void UpdateModVariables()
+        internal static void UpdateModVariables()
         {
             UpdateSaberLength();
             UpdateSaberPosition();
@@ -120,7 +133,7 @@ namespace SaberTailor.Settings
         /// <summary>
         /// Update Saber Length
         /// </summary>
-        public static void UpdateSaberLength()
+        internal static void UpdateSaberLength()
         {
             Scale.Length = ScaleCfg.Length / 100f;
             Scale.Girth = ScaleCfg.Girth / 100f;
@@ -129,72 +142,68 @@ namespace SaberTailor.Settings
         /// <summary>
         /// Update Saber Position
         /// </summary>
-        public static void UpdateSaberPosition()
+        internal static void UpdateSaberPosition()
         {
-            Grip.PosLeft = FormattedVector3_To_Vector3(GripCfg.PosLeft) / 1000f;
-            Grip.PosRight = FormattedVector3_To_Vector3(GripCfg.PosRight) / 1000f;
+            Grip.PosLeft = Int3.ToVector3(GripCfg.PosLeft) / 1000f;
+            Grip.PosRight = Int3.ToVector3(GripCfg.PosRight) / 1000f;
         }
 
         /// <summary>
         /// Update Saber Rotation
         /// </summary>
-        public static void UpdateSaberRotation()
+        internal static void UpdateSaberRotation()
         {
-            Grip.RotLeft = Quaternion.Euler(FormattedVector3_To_Vector3(GripCfg.RotLeft)).eulerAngles;
-            Grip.RotRight = Quaternion.Euler(FormattedVector3_To_Vector3(GripCfg.RotRight)).eulerAngles;
+            Grip.RotLeft = Quaternion.Euler(Int3.ToVector3(GripCfg.RotLeft)).eulerAngles;
+            Grip.RotRight = Quaternion.Euler(Int3.ToVector3(GripCfg.RotRight)).eulerAngles;
         }
 
         private static void LoadConfig()
         {
             #region Internal settings
-            if (Plugin.config.Value.Logging.TryGetValue("ShowCallSource", out object showCallSource) && showCallSource is bool loggerShowCallSource)
-            {
-                ShowCallSource = loggerShowCallSource;
-            }
-            ConfigVersion = Plugin.config.Value.ConfigVersion;
+            ConfigVersion = config.Value.ConfigVersion;
             #endregion
 
             #region Saber scale
-            Scale.TweakEnabled = Plugin.config.Value.IsSaberScaleModEnabled;
-            Scale.ScaleHitBox = Plugin.config.Value.SaberScaleHitbox;
+            Scale.TweakEnabled = config.Value.IsSaberScaleModEnabled;
+            Scale.ScaleHitBox = config.Value.SaberScaleHitbox;
 
-            if (Plugin.config.Value.SaberLength < 5 || Plugin.config.Value.SaberLength > 500)
+            if (config.Value.SaberLength < 5 || config.Value.SaberLength > 500)
             {
                 ScaleCfg.Length = 100;
             }
             else
             {
-                ScaleCfg.Length = Plugin.config.Value.SaberLength;
+                ScaleCfg.Length = config.Value.SaberLength;
             }
 
-            if (Plugin.config.Value.SaberGirth < 5 || Plugin.config.Value.SaberGirth > 500)
+            if (config.Value.SaberGirth < 5 || config.Value.SaberGirth > 500)
             {
                 ScaleCfg.Girth = 100;
             }
             else
             {
-                ScaleCfg.Girth = Plugin.config.Value.SaberGirth;
+                ScaleCfg.Girth = config.Value.SaberGirth;
             }
             #endregion
 
             #region Saber trail
-            Trail.TweakEnabled = Plugin.config.Value.IsTrailModEnabled;
-            Trail.TrailEnabled = Plugin.config.Value.IsTrailEnabled;
-            Trail.Length = Mathf.Clamp(Plugin.config.Value.TrailLength, 5, 100);
+            Trail.TweakEnabled = config.Value.IsTrailModEnabled;
+            Trail.TrailEnabled = config.Value.IsTrailEnabled;
+            Trail.Length = Mathf.Clamp(config.Value.TrailLength, 5, 100);
             #endregion
 
             #region Saber grip
             // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Cfg values that are loaded!
-            StoreableIntVector3 gripLeftPosition = Plugin.config.Value.GripLeftPosition;
-            GripCfg.PosLeft = new StoreableIntVector3()
+            Int3 gripLeftPosition = config.Value.GripLeftPosition;
+            GripCfg.PosLeft = new Int3()
             {
                 x = Mathf.Clamp(gripLeftPosition.x, -500, 500),
                 y = Mathf.Clamp(gripLeftPosition.y, -500, 500),
                 z = Mathf.Clamp(gripLeftPosition.z, -500, 500)
             };
 
-            StoreableIntVector3 gripRightPosition = Plugin.config.Value.GripRightPosition;
-            GripCfg.PosRight = new StoreableIntVector3()
+            Int3 gripRightPosition = config.Value.GripRightPosition;
+            GripCfg.PosRight = new Int3()
             {
                 x = Mathf.Clamp(gripRightPosition.x, -500, 500),
                 y = Mathf.Clamp(gripRightPosition.y, -500, 500),
@@ -202,10 +211,10 @@ namespace SaberTailor.Settings
             };
 
             // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are loaded!
-            GripCfg.RotLeft = Plugin.config.Value.GripLeftRotation;
-            GripCfg.RotRight = Plugin.config.Value.GripRightRotation;
+            GripCfg.RotLeft = config.Value.GripLeftRotation;
+            GripCfg.RotRight = config.Value.GripRightRotation;
 
-            Grip.ModifyMenuHiltGrip = Plugin.config.Value.ModifyMenuHiltGrip;
+            Grip.ModifyMenuHiltGrip = config.Value.ModifyMenuHiltGrip;
             #endregion
         }
 
@@ -255,15 +264,5 @@ namespace SaberTailor.Settings
             ConfigVersion = latestVersion;
             Save();
         }
-
-        /// <summary>
-        /// Converts the PluginConfig.StoreableIntVector3 to a UnityEngine.Vector3 format
-        /// </summary>
-        private static Vector3 FormattedVector3_To_Vector3(StoreableIntVector3 vector3) => new Vector3()
-        {
-            x = vector3.x,
-            y = vector3.y,
-            z = vector3.z
-        };
     }
 }

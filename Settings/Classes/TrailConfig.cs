@@ -1,6 +1,6 @@
 ﻿namespace SaberTailor.Settings.Classes
 {
-    public class SaberTrailConfiguration
+    public class TrailConfig
     {
         public bool TweakEnabled;
 

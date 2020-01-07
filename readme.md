@@ -1,4 +1,4 @@
-# Beat Saber - Saber Tailor v2.3.0
+# Beat Saber - Saber Tailor v2.4.0
 
 Tweak things about your sabers, including grip position/angle, saber length and trail length! Original mod by Ruu.
 
@@ -51,10 +51,7 @@ The default values are below:
     "y": 0,
     "z": 0
   },
-  "ModifyMenuHiltGrip": false,
-  "Logging": {
-    "ShowCallSource": false
-  }
+  "ModifyMenuHiltGrip": false
 }
 ```
 
@@ -154,14 +151,6 @@ Alters the rotation of the sabers. The center of rotation is where the saber's h
 - **Default**: `false`
 
 Alters the position and angle of the menu hilts the same way as the sabers, when set to `true`.
-
-### Logging options
-
-- **Setting**: `ShowCallSource`
-- **Values**: `true` | `false`
-- **Default**: `false`
-
-Show call source in the logs and terminal
 
 ## Developers
 
