@@ -1,4 +1,5 @@
-﻿using IPA.Config;
+﻿using BS_Utils.Utilities;
+using SaberTailor.Settings.Classes;
 using System;
 using System.Globalization;
 using UnityEngine;
@@ -24,7 +25,7 @@ namespace SaberTailor.Settings.Utilities
         /// <summary>
         /// ONLY USED FOR A SPECIFIC PURPOSE IN "Configuration.cs". DO NOT USE ELSEWHERE!
         /// </summary>
-        internal static PluginConfig ImportSettingsFromModPrefs(BS_Utils.Utilities.Config oldConfig)
+        internal static PluginConfig ImportSettingsFromModPrefs(Config oldConfig)
         {
             PluginConfig importedSettings = new PluginConfig(); // Initialize a new default configuration
 
@@ -39,14 +40,15 @@ namespace SaberTailor.Settings.Utilities
 
                 // Import grip position settings, convert old centimeter values to millimeter
                 GripLeftPosition = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripLeftPosition), "0,0,0", true));
-                importedSettings.GripLeftPosition = new StoreableIntVector3()
+                importedSettings.GripLeftPosition = new Int3()
                 {
                     x = (int)Math.Round(Mathf.Clamp(GripLeftPosition.x, -50f, 50f) * 10),
                     y = (int)Math.Round(Mathf.Clamp(GripLeftPosition.y, -50f, 50f) * 10),
                     z = (int)Math.Round(Mathf.Clamp(GripLeftPosition.z, -50f, 50f) * 10)
                 };
+
                 GripLeftRotation = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripLeftRotation), "0,0,0", true));
-                importedSettings.GripLeftRotation = new StoreableIntVector3()
+                importedSettings.GripLeftRotation = new Int3()
                 {
                     x = (int)Math.Round(GripLeftRotation.x),
                     y = (int)Math.Round(GripLeftRotation.y),
@@ -54,14 +56,15 @@ namespace SaberTailor.Settings.Utilities
                 };
 
                 GripRightPosition = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripRightPosition), "0,0,0", true));
-                importedSettings.GripRightPosition = new StoreableIntVector3()
+                importedSettings.GripRightPosition = new Int3()
                 {
                     x = (int)Math.Round(Mathf.Clamp(GripRightPosition.x, -50f, 50f) * 10),
                     y = (int)Math.Round(Mathf.Clamp(GripRightPosition.y, -50f, 50f) * 10),
                     z = (int)Math.Round(Mathf.Clamp(GripRightPosition.z, -50f, 50f) * 10)
                 };
+
                 GripRightRotation = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripRightRotation), "0,0,0", true));
-                importedSettings.GripRightRotation = new StoreableIntVector3()
+                importedSettings.GripRightRotation = new Int3()
                 {
                     x = (int)Math.Round(GripRightRotation.x),
                     y = (int)Math.Round(GripRightRotation.y),
@@ -74,9 +77,6 @@ namespace SaberTailor.Settings.Utilities
                 // Check trail modification vars - if these are unchecked from default values, then just disable these
                 importedSettings.IsTrailModEnabled = (IsTrailEnabled != true || TrailLength != 20);
 
-                // Skip importing scale modification - that functionality was broken for almost a year and probably 
-                // would create overall more confusion when suddenly enabled again, instead of having to set it again
-
                 MarkAsExported(oldConfig);
             }
             catch (Exception ex)
@@ -87,7 +87,7 @@ namespace SaberTailor.Settings.Utilities
             return importedSettings;
         }
 
-        private static void MarkAsExported(BS_Utils.Utilities.Config oldConfig)
+        private static void MarkAsExported(Config oldConfig)
         {
             oldConfig.SetBool(Plugin.PluginName, "IsExportedToNewConfig", true);
         }
@@ -97,11 +97,12 @@ namespace SaberTailor.Settings.Utilities
             string[] components = originalString.Trim().Split(',');
             Vector3 parsedVector = Vector3.zero;
 
-            if (components.Length != 3) return parsedVector;
-
-            TryParseInvariantFloat(components[0], out parsedVector.x);
-            TryParseInvariantFloat(components[1], out parsedVector.y);
-            TryParseInvariantFloat(components[2], out parsedVector.z);
+            if (components.Length == 3)
+            {
+                TryParseInvariantFloat(components[0], out parsedVector.x);
+                TryParseInvariantFloat(components[1], out parsedVector.y);
+                TryParseInvariantFloat(components[2], out parsedVector.z);
+            }
 
             return parsedVector;
         }

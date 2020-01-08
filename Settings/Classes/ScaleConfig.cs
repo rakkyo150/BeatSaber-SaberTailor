@@ -1,6 +1,6 @@
 ﻿namespace SaberTailor.Settings.Classes
 {
-    public class SaberScaleConfiguration
+    public class ScaleConfig
     {
         public bool TweakEnabled;
 

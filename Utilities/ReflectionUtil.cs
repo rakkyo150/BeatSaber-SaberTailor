@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace SaberTailor.Utilities
 {
-    public static class ReflectionUtil
+    public class ReflectionUtil
     {
         public static void SetPrivateField(object obj, string fieldName, object value)
         {

@@ -1,9 +1,9 @@
 ﻿using SaberTailor.Settings;
 using SaberTailor.Utilities;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Xft;
-using LogLevel = IPA.Logging.Logger.Level;
 
 namespace SaberTailor.Tweaks
 {
@@ -23,14 +23,14 @@ namespace SaberTailor.Tweaks
 
         private IEnumerator ApplyGameCoreModifications()
         {
-            BasicSaberModelController[] basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
+            IEnumerable<BasicSaberModelController> basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
             foreach (BasicSaberModelController basicSaberModelController in basicSaberModelControllers)
             {
                 SaberWeaponTrail saberTrail = ReflectionUtil.GetPrivateField<SaberWeaponTrail>(basicSaberModelController, "_saberWeaponTrail");
                 if (saberTrail.name == "BasicSaberModel")
                 {
                     ModifyTrail(saberTrail, Configuration.Trail.Length);
-                    Logger.Log("Successfully modified trails!", LogLevel.Info);
+                    Logger.log.Info("Successfully modified trails!");
                 }
             }
 

@@ -2,7 +2,7 @@
 
 namespace SaberTailor.Settings.Classes
 {
-    public class SaberGripConfiguration
+    public class GripConfig
     {
         public bool ModifyMenuHiltGrip;
 

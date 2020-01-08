@@ -1,6 +1,5 @@
 ﻿using Harmony;
 using SaberTailor.Settings;
-using System;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -8,7 +7,6 @@ namespace SaberTailor.HarmonyPatches
 {
     [HarmonyPatch(typeof(VRPlatformHelper))]
     [HarmonyPatch("AdjustPlatformSpecificControllerTransform")]
-    [HarmonyPatch(new Type[] { typeof(XRNode), typeof(Transform), typeof(Vector3), typeof(Vector3) })]
     internal class AdjustPlatformSpecificControllerTransformPatch
     {
         private static void Prefix(XRNode node, Transform transform, Vector3 addPosition, Vector3 addRotation)

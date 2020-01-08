@@ -1,15 +1,22 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Parser;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace SaberTailor.Settings.UI
 {
     public class MainSettings : PersistentSingleton<MainSettings>
     {
-        private bool isFakeCancelEvent = false;
-
         [UIParams]
         private BSMLParserParams parserParams;
+
+        #region Precision
+        [UIValue("saber-pos-increment-value")]
+        public int SaberPosIncrement { get; set; } = 10;
+
+        [UIValue("saber-rot-increment-value")]
+        public int SaberRotIncrement { get; set; } = 5;
+        #endregion
 
         #region Saber Grip MenuHilt
         [UIValue("menuhiltadjust-enabled")]
@@ -25,42 +32,72 @@ namespace SaberTailor.Settings.UI
         public int GripLeftPositionX
         {
             get => Configuration.GripCfg.PosLeft.x;
-            set => Configuration.GripCfg.PosLeft.x = value;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.PosLeft.x, SaberPosIncrement * 10, value);
+                Configuration.GripCfg.PosLeft.x = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                RefreshPositionSettings();
+            }
         }
 
         [UIValue("saber-left-position-y")]
         public int GripLeftPositionY
         {
             get => Configuration.GripCfg.PosLeft.y;
-            set => Configuration.GripCfg.PosLeft.y = value;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.PosLeft.y, SaberPosIncrement * 10, value);
+                Configuration.GripCfg.PosLeft.y = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                RefreshPositionSettings();
+            }
         }
 
         [UIValue("saber-left-position-z")]
         public int GripLeftPositionZ
         {
             get => Configuration.GripCfg.PosLeft.z;
-            set => Configuration.GripCfg.PosLeft.z = value;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.PosLeft.z, SaberPosIncrement * 10, value);
+                Configuration.GripCfg.PosLeft.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                RefreshPositionSettings();
+            }
         }
 
         [UIValue("saber-left-rotation-x")]
         public int GripLeftRotationX
         {
             get => Configuration.GripCfg.RotLeft.x;
-            set => Configuration.GripCfg.RotLeft.x = value;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.RotLeft.x, SaberRotIncrement, value);
+                Configuration.GripCfg.RotLeft.x = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
+                RefreshRotationSettings();
+            }
         }
 
         [UIValue("saber-left-rotation-y")]
         public int GripLeftRotationY
         {
             get => Configuration.GripCfg.RotLeft.y;
-            set => Configuration.GripCfg.RotLeft.y = value;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.RotLeft.y, SaberRotIncrement, value);
+                Configuration.GripCfg.RotLeft.y = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
+                RefreshRotationSettings();
+            }
         }
 
         [UIValue("saber-left-rotation-z")]
         public int GripLeftRotationZ
         {
             get => Configuration.GripCfg.RotLeft.z;
-            set => Configuration.GripCfg.RotLeft.z = value;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.RotLeft.z, SaberRotIncrement, value);
+                Configuration.GripCfg.RotLeft.z = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
+                RefreshRotationSettings();
+            }
         }
         #endregion
 
@@ -69,42 +106,72 @@ namespace SaberTailor.Settings.UI
         public int GripRightPositionX
         {
             get => Configuration.GripCfg.PosRight.x;
-            set => Configuration.GripCfg.PosRight.x = value;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.PosRight.x, SaberPosIncrement * 10, value);
+                Configuration.GripCfg.PosRight.x = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                RefreshPositionSettings();
+            }
         }
 
         [UIValue("saber-right-position-y")]
         public int GripRightPositionY
         {
             get => Configuration.GripCfg.PosRight.y;
-            set => Configuration.GripCfg.PosRight.y = value;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.PosRight.y, SaberPosIncrement * 10, value);
+                Configuration.GripCfg.PosRight.y = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                RefreshPositionSettings();
+            }
         }
 
         [UIValue("saber-right-position-z")]
         public int GripRightPositionZ
         {
             get => Configuration.GripCfg.PosRight.z;
-            set => Configuration.GripCfg.PosRight.z = value;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.PosRight.z, SaberPosIncrement * 10, value);
+                Configuration.GripCfg.PosRight.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                RefreshPositionSettings();
+            }
         }
 
         [UIValue("saber-right-rotation-x")]
         public int GripRightRotationX
         {
             get => Configuration.GripCfg.RotRight.x;
-            set => Configuration.GripCfg.RotRight.x = value;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.RotRight.x, SaberRotIncrement, value);
+                Configuration.GripCfg.RotRight.x = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
+                RefreshRotationSettings();
+            }
         }
 
         [UIValue("saber-right-rotation-y")]
         public int GripRightRotationY
         {
             get => Configuration.GripCfg.RotRight.y;
-            set => Configuration.GripCfg.RotRight.y = value;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.RotRight.y, SaberRotIncrement, value);
+                Configuration.GripCfg.RotRight.y = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
+                RefreshRotationSettings();
+            }
         }
 
         [UIValue("saber-right-rotation-z")]
         public int GripRightRotationZ
         {
             get => Configuration.GripCfg.RotRight.z;
-            set => Configuration.GripCfg.RotRight.z = value;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.RotRight.z, SaberRotIncrement, value);
+                Configuration.GripCfg.RotRight.z = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
+                RefreshRotationSettings();
+            }
         }
         #endregion
 
@@ -161,6 +228,21 @@ namespace SaberTailor.Settings.UI
         }
         #endregion
 
+        #region Limits
+        [UIValue("saber-pos-max")]
+        public int SaberPosMax => 500;
+
+        [UIValue("saber-pos-min")]
+        public int SaberPosMin => -500;
+
+        [UIValue("saber-rot-max")]
+        public int SaberRotMax => 360;
+
+        [UIValue("saber-rot-min")]
+        public int SaberRotMin => -360;
+        #endregion
+
+        #region Formatters
         [UIAction("position-formatter")]
         public string PositionString(int value)
         {
@@ -178,6 +260,7 @@ namespace SaberTailor.Settings.UI
         {
             return $"{value}%";
         }
+        #endregion
 
         [UIAction("update-saber-rotation")]
         public async void OnUpdateSaberRotation(float _)
@@ -195,28 +278,17 @@ namespace SaberTailor.Settings.UI
             Configuration.UpdateSaberPosition();
         }
 
-        [UIAction("#reset-saber-config")]
-        public void OnResetSaberConfig() => ReloadConfiguration();
-
         [UIAction("#apply")]
         public void OnApply() => StoreConfiguration();
 
         [UIAction("#ok")]
         public void OnOk() => StoreConfiguration();
 
+        [UIAction("#reset-saber-config")]
+        public void OnResetSaberConfig() => ReloadConfiguration();
+
         [UIAction("#cancel")]
-        public void OnCancel()
-        {
-            // Only reload on an actual CancelAction
-            if (!isFakeCancelEvent)
-            {
-                ReloadConfiguration();
-            }
-            else
-            {
-                isFakeCancelEvent = false;
-            }
-        }
+        public void OnCancel() => ReloadConfiguration();
 
         /// <summary>
         /// Save and update configuration
@@ -237,12 +309,51 @@ namespace SaberTailor.Settings.UI
         }
 
         /// <summary>
-        /// Reload configuration and refresh UI (Lazy workaround)
+        /// Refresh the entire UI
         /// </summary>
         private void RefreshModSettingsUI()
         {
-            isFakeCancelEvent = true;
-            parserParams.EmitEvent("cancel");
+            RefreshRotationSettings();
+            RefreshPositionSettings();
+            parserParams.EmitEvent("refresh-sabertailor-values");
+        }
+
+        /// <summary>
+        /// Refresh position settings UI
+        /// </summary>
+        private void RefreshPositionSettings()
+        {
+            parserParams.EmitEvent("refresh-sabertailor-position-values");
+        }
+
+        /// <summary>
+        /// Refresh rotation settings UI
+        /// </summary>
+        private void RefreshRotationSettings()
+        {
+            parserParams.EmitEvent("refresh-sabertailor-rotation-values");
+        }
+
+        /// <summary>
+        /// Returns a value incremented by the magic number
+        /// </summary>
+        /// <param name="currentValue">Current value</param>
+        /// <param name="incrementBy">Magic increment number</param>
+        /// <param name="value">Real increment number</param>
+        /// <returns></returns>
+        private int Increment(int currentValue, int incrementBy, int value)
+        {
+            int result = currentValue;
+            if (currentValue < value)
+            {
+                result += incrementBy;
+            }
+            else if (currentValue > value)
+            {
+                result -= incrementBy;
+            }
+
+            return result;
         }
     }
 }

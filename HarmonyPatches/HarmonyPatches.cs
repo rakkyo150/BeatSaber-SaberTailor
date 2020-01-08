@@ -6,32 +6,32 @@ namespace SaberTailor.HarmonyPatches
     /// <summary>
     /// Apply and remove all of our Harmony patches through this class
     /// </summary>
-    public static class Patches
+    public class Patches
     {
-        public static string InstanceId => "com.shadnix.beatsaber.sabertailor";
-        public static bool IsPatched { get; private set; }
+        private static HarmonyInstance instance;
 
-        private static HarmonyInstance Instance;
+        public static bool IsPatched { get; private set; }
+        public const string InstanceId = "com.shadnix.beatsaber.sabertailor";
 
         internal static void ApplyHarmonyPatches()
         {
             if (!IsPatched)
             {
-                if (Instance == null)
+                if (instance == null)
                 {
-                    Instance = HarmonyInstance.Create(InstanceId);
+                    instance = HarmonyInstance.Create(InstanceId);
                 }
 
-                Instance.PatchAll(Assembly.GetExecutingAssembly());
+                instance.PatchAll(Assembly.GetExecutingAssembly());
                 IsPatched = true;
             }
         }
 
         internal static void RemoveHarmonyPatches()
         {
-            if (Instance != null && IsPatched)
+            if (instance != null && IsPatched)
             {
-                Instance.UnpatchAll(InstanceId);
+                instance.UnpatchAll(InstanceId);
                 IsPatched = false;
             }
         }
