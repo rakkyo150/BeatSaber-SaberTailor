@@ -13,9 +13,9 @@
       <dropdown-list-setting text='Saber Position Inc. Unit' value='saber-pos-unit-value'
                              options='saber-pos-unit-options' apply-on-change='true'/>
       
-      <increment-setting text='Saber Position Increment' value='saber-pos-increment-value'
-                         apply-on-change='true' formatter='position-inc-formatter' get-event='refresh-sabertailor-position-values'
-                         integer-only='true' min='~saber-pos-inc-min' max='~saber-pos-inc-max' increment='1'/>
+      <increment-setting text='Saber Position Increment' value='saber-pos-increment-value' get-event='refresh-sabertailor-position-values'
+                         apply-on-change='true' formatter='position-inc-formatter'
+                         integer-only='true' min='1' max='20' increment='1'/>
 
       <increment-setting text='Saber Rotation Increment' value='saber-rot-increment-value'
                          apply-on-change='true' formatter='rotation-formatter'

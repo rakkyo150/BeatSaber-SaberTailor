@@ -13,7 +13,8 @@ namespace SaberTailor.Settings.UI
         private BSMLParserParams parserParams;
 
         #region Precision
-        public int SaberPosIncrement = 10;
+        public int SaberPosIncrement = 10;      // Always in mm
+        public int SaberPosIncValue = 1;
         public string SaberPosIncUnit = "cm";
 
         [UIValue("saber-pos-unit-options")]
@@ -29,33 +30,35 @@ namespace SaberTailor.Settings.UI
             set
             {
                 SaberPosIncUnit = value;
-                if (SaberPosIncUnit == "cm" && (SaberPosIncrement % 10) != 0)
+                if (SaberPosIncUnit == "cm")
                 {
-                    SaberPosIncrement = Mathf.Clamp((SaberPosIncrement / 10) * 10, 10, SaberPosIncMax);
+                    SaberPosIncrement = SaberPosIncValue * 10;
+                }
+                else
+                {
+                    SaberPosIncrement = SaberPosIncValue;
                 }
                 RefreshPositionSettings();
             }
         }
 
         [UIValue("saber-pos-increment-value")]
-        public int _SaberPosIncrement {
+        public int _SaberPosIncValue {
             get
             {
-                return SaberPosIncrement;
+                return SaberPosIncValue;
             }
             set
             {
-                int newVal = value;
+                SaberPosIncValue = value;
                 if (SaberPosIncUnit == "cm")
                 {
-                    newVal = Increment(SaberPosIncrement, 10, value);
-                    if ((newVal % 10) != 0)
-                    {
-                        newVal = (newVal / 10) * 10;
-                    }
-                    newVal = Mathf.Clamp(newVal, 10, SaberPosIncMax);
+                    SaberPosIncrement = value * 10;
                 }
-                SaberPosIncrement = newVal;
+                else
+                {
+                    SaberPosIncrement = value;
+                }
                 RefreshPositionSettings();
             }
         }
@@ -304,7 +307,7 @@ namespace SaberTailor.Settings.UI
             }
             else
             {
-                return $"{value / 10} cm";
+                return $"{value} cm";
             }
         }
 
