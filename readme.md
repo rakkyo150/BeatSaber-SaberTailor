@@ -52,6 +52,11 @@ The default values are below:
     "z": 0
   },
   "ModifyMenuHiltGrip": true,
+  "SaberPosIncrement": 10,
+  "SaberPosIncValue": 1,
+  "SaberRotIncrement": 5,
+  "SaberPosIncUnit": "cm",
+  "SaberPosDisplayUnit": "cm"
 }
 ```
 
