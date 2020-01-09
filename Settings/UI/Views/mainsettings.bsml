@@ -20,6 +20,9 @@
       <increment-setting text='Saber Rotation Increment' value='saber-rot-increment-value'
                          apply-on-change='true' formatter='rotation-formatter'
                          integer-only='true' min='1' max='20' increment='1'/>
+
+      <dropdown-list-setting text='Saber Pos. Display Unit' value='saber-pos-display-unit-value' get-event='refresh-sabertailor-position-values'
+                             options='saber-pos-display-unit-options' apply-on-change='true'/>
       
       <clickable-text text='Back' align='Left' click-event='back' />
     </settings-container>
