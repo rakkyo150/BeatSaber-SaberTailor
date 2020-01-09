@@ -3,6 +3,7 @@ using IPA.Utilities;
 using SaberTailor.Settings.Classes;
 using SaberTailor.Settings.Utilities;
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace SaberTailor.Settings
@@ -17,6 +18,8 @@ namespace SaberTailor.Settings
         public static GripConfig Grip { get; internal set; } = new GripConfig();
         public static ScaleConfig Scale { get; internal set; } = new ScaleConfig();
         public static TrailConfig Trail { get; internal set; } = new TrailConfig();
+
+        public static MenuConfig Menu { get; internal set; } = new MenuConfig();
 
         // Config vars for representing player settings before it gets mangled into something that works with the game,
         // but changes representation of these settings in the process - also avoiding floating points
@@ -68,6 +71,14 @@ namespace SaberTailor.Settings
             config.Value.GripRightRotation = new Int3(GripCfg.RotRight);
 
             config.Value.ModifyMenuHiltGrip = Grip.ModifyMenuHiltGrip;
+            #endregion
+
+            #region Menu settings
+            config.Value.SaberPosDisplayUnit = Menu.SaberPosDisplayUnit;
+            config.Value.SaberPosIncrement = Menu.SaberPosIncrement;
+            config.Value.SaberPosIncUnit = Menu.SaberPosIncUnit;
+            config.Value.SaberPosIncValue = Menu.SaberPosIncValue;
+            config.Value.SaberRotIncrement = Menu.SaberRotIncrement;
             #endregion
 
             // Store configuration
@@ -215,6 +226,14 @@ namespace SaberTailor.Settings
             GripCfg.RotRight = new Int3(config.Value.GripRightRotation);
 
             Grip.ModifyMenuHiltGrip = config.Value.ModifyMenuHiltGrip;
+            #endregion
+
+            #region Menu settings
+            Menu.SaberPosIncrement = Mathf.Clamp(config.Value.SaberPosIncrement, 1, 200);
+            Menu.SaberPosIncValue = Mathf.Clamp(config.Value.SaberPosIncValue, 1, 20);
+            Menu.SaberRotIncrement = Mathf.Clamp(config.Value.SaberRotIncrement, 1, 20);
+            Menu.SaberPosDisplayUnit = config.Value.SaberPosDisplayUnit;
+            Menu.SaberPosIncUnit = config.Value.SaberPosIncUnit;
             #endregion
         }
 

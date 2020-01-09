@@ -42,6 +42,7 @@
     <Compile Include="Settings\Classes\GripConfig.cs" />
     <Compile Include="Settings\Classes\GripRawConfig.cs" />
     <Compile Include="Settings\Classes\Int3.cs" />
+    <Compile Include="Settings\Classes\MenuConfig.cs" />
     <Compile Include="Settings\Classes\ScaleConfig.cs" />
     <Compile Include="Settings\Classes\ScaleRawConfig.cs" />
     <Compile Include="Settings\Classes\TrailConfig.cs" />

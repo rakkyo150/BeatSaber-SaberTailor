@@ -23,5 +23,11 @@ namespace SaberTailor.Settings.Utilities
         public Int3 GripRightRotation = new Int3();
 
         public bool ModifyMenuHiltGrip = true;
+
+        public int SaberPosIncrement = 10;
+        public int SaberPosIncValue = 1;
+        public int SaberRotIncrement = 5;
+        public string SaberPosIncUnit = "cm";
+        public string SaberPosDisplayUnit = "cm";
     }
 }

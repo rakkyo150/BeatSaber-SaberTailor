@@ -13,17 +13,11 @@ namespace SaberTailor.Settings.UI
         private BSMLParserParams parserParams;
 
         #region Precision
-        public int SaberPosIncrement = 10;      // Always in mm
-        public int SaberPosIncValue = 1;
-        public string SaberPosIncUnit = "cm";
-        public string SaberPosDisplayUnit = "cm";
-
         [UIValue("saber-pos-unit-options")]
         public List<object> SaberPosUnitValues = new List<object>()
         {
             "cm",
-            "mm",
-            "inches"
+            "mm"
         };
 
         [UIValue("saber-pos-display-unit-options")]
@@ -35,24 +29,28 @@ namespace SaberTailor.Settings.UI
         };
 
         [UIValue("saber-pos-unit-value")]
-        public string _SaberPosIncUnit {
-            get => SaberPosIncUnit;
+        public string SaberPosIncUnit {
+            get
+            {
+                if (SaberPosUnitValues.Contains(Configuration.Menu.SaberPosIncUnit))
+                {
+                    return Configuration.Menu.SaberPosIncUnit;
+                }
+                else
+                {
+                    return "cm";
+                }
+            }
             set
             {
-                SaberPosIncUnit = value;
-                switch (SaberPosIncUnit)
+                Configuration.Menu.SaberPosIncUnit = value;
+                switch (Configuration.Menu.SaberPosIncUnit)
                 {
                     case "cm":
-                        SaberPosIncrement = SaberPosIncValue * 10;
-                        SaberPosDisplayUnit = "cm";
-                        break;
-                    case "inches":
-                        SaberPosIncrement = (int)Math.Round(SaberPosIncValue * 3.175f);
-                        SaberPosDisplayUnit = "inches";
+                        Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 10;
                         break;
                     default:
-                        SaberPosIncrement = SaberPosIncValue;
-                        SaberPosDisplayUnit = "cm";
+                        Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue;
                         break;
                 }
                 RefreshPositionSettings();
@@ -60,24 +58,18 @@ namespace SaberTailor.Settings.UI
         }
 
         [UIValue("saber-pos-increment-value")]
-        public int _SaberPosIncValue {
-            get
-            {
-                return SaberPosIncValue;
-            }
+        public int SaberPosIncValue {
+            get => Configuration.Menu.SaberPosIncValue;
             set
             {
-                SaberPosIncValue = value;
-                switch (SaberPosIncUnit)
+                Configuration.Menu.SaberPosIncValue = value;
+                switch (Configuration.Menu.SaberPosIncUnit)
                 {
                     case "cm":
-                        SaberPosIncrement = SaberPosIncValue * 10;
-                        break;
-                    case "inches":
-                        SaberPosIncrement = (int)Math.Round(SaberPosIncValue * 3.175f);     // Modified in 1/8 inches steps, rounded to mm
+                        Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 10;
                         break;
                     default:
-                        SaberPosIncrement = SaberPosIncValue;
+                        Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue;
                         break;
                 }
                 RefreshPositionSettings();
@@ -85,15 +77,28 @@ namespace SaberTailor.Settings.UI
         }
 
         [UIValue("saber-rot-increment-value")]
-        public int SaberRotIncrement { get; set; } = 5;
+        public int SaberRotIncrement {
+            get => Configuration.Menu.SaberRotIncrement;
+            set => Configuration.Menu.SaberRotIncrement = value;
+        }
 
         [UIValue("saber-pos-display-unit-value")]
-        public string _SaberPosDisplayUnit
+        public string SaberPosDisplayUnit
         {
-            get => SaberPosDisplayUnit;
+            get
+            {
+                if (SaberPosDisplayUnitValues.Contains(Configuration.Menu.SaberPosDisplayUnit))
+                {
+                    return Configuration.Menu.SaberPosDisplayUnit;
+                }
+                else
+                {
+                    return "cm";
+                }
+            }
             set
             {
-                SaberPosDisplayUnit = value;
+                Configuration.Menu.SaberPosDisplayUnit = value;
                 RefreshPositionSettings();
             }
         }
@@ -115,7 +120,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.PosLeft.x;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.PosLeft.x, SaberPosIncrement, value, SaberPosIncUnit);
+                int newVal = Increment(Configuration.GripCfg.PosLeft.x, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.PosLeft.x = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
@@ -127,7 +132,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.PosLeft.y;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.PosLeft.y, SaberPosIncrement, value, SaberPosIncUnit);
+                int newVal = Increment(Configuration.GripCfg.PosLeft.y, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.PosLeft.y = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
@@ -139,7 +144,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.PosLeft.z;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.PosLeft.z, SaberPosIncrement, value, SaberPosIncUnit);
+                int newVal = Increment(Configuration.GripCfg.PosLeft.z, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.PosLeft.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
@@ -189,7 +194,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.PosRight.x;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.PosRight.x, SaberPosIncrement, value, SaberPosIncUnit);
+                int newVal = Increment(Configuration.GripCfg.PosRight.x, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.PosRight.x = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
@@ -201,7 +206,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.PosRight.y;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.PosRight.y, SaberPosIncrement, value, SaberPosIncUnit);
+                int newVal = Increment(Configuration.GripCfg.PosRight.y, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.PosRight.y = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
@@ -213,7 +218,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.PosRight.z;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.PosRight.z, SaberPosIncrement, value, SaberPosIncUnit);
+                int newVal = Increment(Configuration.GripCfg.PosRight.z, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.PosRight.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
@@ -333,7 +338,7 @@ namespace SaberTailor.Settings.UI
         [UIAction("position-inc-formatter")]
         public string PositionIncString(int value)
         {
-            switch (SaberPosIncUnit)
+            switch (Configuration.Menu.SaberPosIncUnit)
             {
                 case "cm":
                     return $"{value} cm";
@@ -347,7 +352,7 @@ namespace SaberTailor.Settings.UI
         [UIAction("position-formatter")]
         public string PositionString(int value)
         {
-            switch (SaberPosDisplayUnit)
+            switch (Configuration.Menu.SaberPosDisplayUnit)
             {
                 case "inches":
                     return String.Format("{0:0.000} inches", value / 25.4f);
@@ -450,9 +455,10 @@ namespace SaberTailor.Settings.UI
         /// <param name="incrementBy">Magic increment number</param>
         /// <param name="value">Real increment number</param>
         /// <returns></returns>
-        private int Increment(int currentValue, int incrementBy, int value, string unit="")
+        private int Increment(int currentValue, int incrementBy, int value)
         {
             int result = currentValue;
+
             if (currentValue < value)
             {
                 result += incrementBy;
@@ -461,24 +467,8 @@ namespace SaberTailor.Settings.UI
             {
                 result -= incrementBy;
             }
-            if (unit == "inches")
-            {
-                result = RoundToOneEightInch(result);
-            }
 
             return result;
-        }
-
-        /// <summary>
-        /// Rounds a mm value to the closest 1/8 inch
-        /// </summary>
-        /// <param name="value">mm value to be rounded</param>
-        /// <returns></returns>
-        private int RoundToOneEightInch(int value)
-        {
-            double result = value * 8 / 25.4d;
-            result = Math.Round((Math.Round(result) / 8) * 25.4);
-            return (int)result;
         }
     }
 }
