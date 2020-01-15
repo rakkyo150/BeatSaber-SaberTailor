@@ -9,8 +9,11 @@ namespace SaberTailor.HarmonyPatches
     [HarmonyPatch("AdjustPlatformSpecificControllerTransform")]
     internal class AdjustPlatformSpecificControllerTransformPatch
     {
-        private static void Prefix(XRNode node, Transform transform, Vector3 addPosition, Vector3 addRotation)
+        private static void Prefix(XRNode node, Transform transform, ref Vector3 addPosition, ref Vector3 addRotation)
         {
+            addPosition = Vector3.zero;
+            addRotation = Vector3.zero;
+
             // Always check for sabers first and modify and exit out immediately if found
             if (transform.gameObject.name == "LeftSaber" || transform.gameObject.name.Contains("Saber A"))
             {

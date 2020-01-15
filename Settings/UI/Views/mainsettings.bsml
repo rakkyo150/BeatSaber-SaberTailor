@@ -11,6 +11,9 @@
                     get-event="refresh-sabertailor-values"
                     hover-hint='Enable/Disable any grip modifications.' />
 
+      <text text='Enabling this will disable the base game adjustments.'
+            font-size='5' color='#fb484e' size-delta-y='8' />
+
       <!--Saber Grip Precision Settings-->
       <settings-submenu text='&#62; Settings Increment Precision...' hover-hint='Change the increment precision for other settings.'>
         <settings-container>
