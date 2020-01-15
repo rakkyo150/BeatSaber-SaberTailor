@@ -151,7 +151,7 @@
   <!--Saber Trail-->
   <settings-submenu text='&#62; Saber Trail...' hover-hint='Adjust trail settings for default trails.'>
     <settings-container>
-      <bool-setting text='Enable saber trail modification' value='saber-trail-tweak-enabled'
+      <bool-setting text='Enable saber trail modification' value='saber-trail-tweak-enabled' formatter='bool-formatter'
                     get-event="refresh-sabertailor-values"
                     hover-hint='Enable/Disable any trail modifications.' />
 
