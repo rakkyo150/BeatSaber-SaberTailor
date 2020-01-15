@@ -139,7 +139,7 @@
                     get-event="refresh-sabertailor-values"
                     hover-hint='Enable/Disable saber hit-box scaling.' />
       <text text='Having this option enabled will disable score submission.'
-            font-size='5' color='#f22' size-delta-y='8' />
+            font-size='5' color='#fb484e' size-delta-y='8' />
 
       <horizontal>
         <clickable-text text='&#60; Back' align='Left' click-event='back' />
