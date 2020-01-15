@@ -427,6 +427,18 @@ namespace SaberTailor.Settings.UI
         [UIAction("#reset-saber-config")]
         public void OnResetSaberConfig() => ReloadConfiguration();
 
+        [UIAction("#reset-saber-config-grip-left")]
+        public void OnResetSaberConfigGripLeft() => ReloadConfiguration(Configuration.CfgSection.GripLeft);
+
+        [UIAction("#reset-saber-config-grip-right")]
+        public void OnResetSaberConfigGripRight() => ReloadConfiguration(Configuration.CfgSection.GripRight);
+
+        [UIAction("#reset-saber-config-scale")]
+        public void OnResetSaberConfigScale() => ReloadConfiguration(Configuration.CfgSection.Scale);
+
+        [UIAction("#reset-saber-config-trail")]
+        public void OnResetSaberConfigTrail() => ReloadConfiguration(Configuration.CfgSection.Trail);
+
         [UIAction("#cancel")]
         public void OnCancel() => ReloadConfiguration();
 
@@ -442,9 +454,9 @@ namespace SaberTailor.Settings.UI
         /// <summary>
         /// Reload configuration and refresh UI
         /// </summary>
-        private void ReloadConfiguration()
+        private void ReloadConfiguration(Configuration.CfgSection cfgSection = Configuration.CfgSection.All)
         {
-            Configuration.Reload();
+            Configuration.Reload(cfgSection);
             RefreshModSettingsUI();
         }
 

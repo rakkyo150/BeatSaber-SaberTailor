@@ -63,7 +63,7 @@
 
           <horizontal>
             <clickable-text text='&#60; Back' align='Left' click-event='back' />
-            <clickable-text text='Revert' align='Right' click-event='reset-saber-config' />
+            <clickable-text text='Revert' align='Right' click-event='reset-saber-config-grip-left' />
           </horizontal>
         </settings-container>
       </settings-submenu>
@@ -103,7 +103,7 @@
 
           <horizontal>
             <clickable-text text='Back' align='Left' click-event='back' />
-            <clickable-text text='Revert' align='Right' click-event='reset-saber-config' />
+            <clickable-text text='Revert' align='Right' click-event='reset-saber-config-grip-right' />
           </horizontal>
         </settings-container>
       </settings-submenu>
@@ -143,7 +143,7 @@
 
       <horizontal>
         <clickable-text text='&#60; Back' align='Left' click-event='back' />
-        <clickable-text text='Revert' align='Right' click-event='reset-saber-config' />
+        <clickable-text text='Revert' align='Right' click-event='reset-saber-config-scale' />
       </horizontal>
     </settings-container>
   </settings-submenu>
@@ -166,7 +166,7 @@
 
       <horizontal>
         <clickable-text text='&#60; Back' align='Left' click-event='back' />
-        <clickable-text text='Revert' align='Right' click-event='reset-saber-config' />
+        <clickable-text text='Revert' align='Right' click-event='reset-saber-config-trail' />
       </horizontal>
     </settings-container>
   </settings-submenu>
