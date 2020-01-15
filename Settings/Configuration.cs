@@ -26,6 +26,8 @@ namespace SaberTailor.Settings
         public static GripRawConfig GripCfg { get; internal set; } = new GripRawConfig();
         public static ScaleRawConfig ScaleCfg { get; internal set; } = new ScaleRawConfig();
 
+        internal enum CfgSection { All, Grip, GripLeft, GripRight, Scale, Trail, Menu };
+
         internal static void Init(IConfigProvider cfgProvider)
         {
             configProvider = cfgProvider;
@@ -125,9 +127,9 @@ namespace SaberTailor.Settings
         /// <summary>
         /// Reload configuration
         /// </summary>
-        internal static void Reload()
+        internal static void Reload(CfgSection cfgSection = CfgSection.All)
         {
-            LoadConfig();
+            LoadConfig(cfgSection);
             UpdateModVariables();
         }
 
@@ -168,72 +170,89 @@ namespace SaberTailor.Settings
             Grip.RotRight = Quaternion.Euler(Int3.ToVector3(GripCfg.RotRight)).eulerAngles;
         }
 
-        private static void LoadConfig()
+        private static void LoadConfig(CfgSection cfgSection = CfgSection.All)
         {
             #region Internal settings
             ConfigVersion = config.Value.ConfigVersion;
             #endregion
 
             #region Saber scale
-            Scale.TweakEnabled = config.Value.IsSaberScaleModEnabled;
-            Scale.ScaleHitBox = config.Value.SaberScaleHitbox;
+            if (cfgSection == CfgSection.All || cfgSection == CfgSection.Scale)
+            {
+                Scale.TweakEnabled = config.Value.IsSaberScaleModEnabled;
+                Scale.ScaleHitBox = config.Value.SaberScaleHitbox;
 
-            if (config.Value.SaberLength < 5 || config.Value.SaberLength > 500)
-            {
-                ScaleCfg.Length = 100;
-            }
-            else
-            {
-                ScaleCfg.Length = config.Value.SaberLength;
-            }
+                if (config.Value.SaberLength < 5 || config.Value.SaberLength > 500)
+                {
+                    ScaleCfg.Length = 100;
+                }
+                else
+                {
+                    ScaleCfg.Length = config.Value.SaberLength;
+                }
 
-            if (config.Value.SaberGirth < 5 || config.Value.SaberGirth > 500)
-            {
-                ScaleCfg.Girth = 100;
-            }
-            else
-            {
-                ScaleCfg.Girth = config.Value.SaberGirth;
+                if (config.Value.SaberGirth < 5 || config.Value.SaberGirth > 500)
+                {
+                    ScaleCfg.Girth = 100;
+                }
+                else
+                {
+                    ScaleCfg.Girth = config.Value.SaberGirth;
+                }
             }
             #endregion
 
             #region Saber trail
-            Trail.TweakEnabled = config.Value.IsTrailModEnabled;
-            Trail.TrailEnabled = config.Value.IsTrailEnabled;
-            Trail.Length = Mathf.Clamp(config.Value.TrailLength, 5, 100);
+            if (cfgSection == CfgSection.All || cfgSection == CfgSection.Scale)
+            {
+                Trail.TweakEnabled = config.Value.IsTrailModEnabled;
+                Trail.TrailEnabled = config.Value.IsTrailEnabled;
+                Trail.Length = Mathf.Clamp(config.Value.TrailLength, 5, 100);
+            }
             #endregion
 
             #region Saber grip
             // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Cfg values that are loaded!
-            Int3 gripLeftPosition = config.Value.GripLeftPosition;
-            GripCfg.PosLeft = new Int3()
-            {
-                x = Mathf.Clamp(gripLeftPosition.x, -500, 500),
-                y = Mathf.Clamp(gripLeftPosition.y, -500, 500),
-                z = Mathf.Clamp(gripLeftPosition.z, -500, 500)
-            };
-
-            Int3 gripRightPosition = config.Value.GripRightPosition;
-            GripCfg.PosRight = new Int3()
-            {
-                x = Mathf.Clamp(gripRightPosition.x, -500, 500),
-                y = Mathf.Clamp(gripRightPosition.y, -500, 500),
-                z = Mathf.Clamp(gripRightPosition.z, -500, 500)
-            };
-
             // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are loaded!
-            GripCfg.RotLeft = new Int3(config.Value.GripLeftRotation);
-            GripCfg.RotRight = new Int3(config.Value.GripRightRotation);
+            if (cfgSection == CfgSection.All || cfgSection == CfgSection.Grip || cfgSection == CfgSection.GripLeft)
+            {
+                Int3 gripLeftPosition = config.Value.GripLeftPosition;
+                GripCfg.PosLeft = new Int3()
+                {
+                    x = Mathf.Clamp(gripLeftPosition.x, -500, 500),
+                    y = Mathf.Clamp(gripLeftPosition.y, -500, 500),
+                    z = Mathf.Clamp(gripLeftPosition.z, -500, 500)
+                };
+                GripCfg.RotLeft = new Int3(config.Value.GripLeftRotation);
+            }
+            
+            if (cfgSection == CfgSection.All || cfgSection == CfgSection.Grip || cfgSection == CfgSection.GripRight)
+            {
+                Int3 gripRightPosition = config.Value.GripRightPosition;
+                GripCfg.PosRight = new Int3()
+                {
+                    x = Mathf.Clamp(gripRightPosition.x, -500, 500),
+                    y = Mathf.Clamp(gripRightPosition.y, -500, 500),
+                    z = Mathf.Clamp(gripRightPosition.z, -500, 500)
+                };
+                GripCfg.RotRight = new Int3(config.Value.GripRightRotation);
+            }
 
-            Grip.ModifyMenuHiltGrip = config.Value.ModifyMenuHiltGrip;
+            if (cfgSection == CfgSection.All || cfgSection == CfgSection.Grip)
+            {
+                Grip.ModifyMenuHiltGrip = config.Value.ModifyMenuHiltGrip;
+            }
             #endregion
 
             #region Menu settings
-            Menu.SaberPosIncrement = Mathf.Clamp(config.Value.SaberPosIncrement, 1, 200);
-            Menu.SaberPosIncValue = Mathf.Clamp(config.Value.SaberPosIncValue, 1, 20);
-            Menu.SaberRotIncrement = Mathf.Clamp(config.Value.SaberRotIncrement, 1, 20);
-            Menu.SaberPosDisplayUnit = config.Value.SaberPosDisplayUnit;
-            Menu.SaberPosIncUnit = config.Value.SaberPosIncUnit;
+            if (cfgSection == CfgSection.All || cfgSection == CfgSection.Menu)
+            {
+                Menu.SaberPosIncrement = Mathf.Clamp(config.Value.SaberPosIncrement, 1, 200);
+                Menu.SaberPosIncValue = Mathf.Clamp(config.Value.SaberPosIncValue, 1, 20);
+                Menu.SaberRotIncrement = Mathf.Clamp(config.Value.SaberRotIncrement, 1, 20);
+                Menu.SaberPosDisplayUnit = config.Value.SaberPosDisplayUnit;
+                Menu.SaberPosIncUnit = config.Value.SaberPosIncUnit;
+            }
             #endregion
         }
 
