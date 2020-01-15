@@ -109,8 +109,8 @@
       </settings-submenu>
 
       <!--Saber Grip Menu-->
-      <bool-setting text='Menu hilt adjustments' value='menuhiltadjust-enabled'
-                  get-event="refresh-sabertailor-values"
+      <bool-setting text='Menu hilt adjustments' value='menuhiltadjust-enabled' formatter='bool-formatter'
+                  get-event='refresh-sabertailor-values'
                   hover-hint='Enable to reposition the menu hilts the same way as the sabers.' />
 
       <clickable-text text='&#60; Back' align='Left' click-event='back' />
@@ -120,7 +120,7 @@
   <!--Saber Scale-->
   <settings-submenu text='&#62; Saber Scaling...' hover-hint='Adjust length and width of the sabers.'>
     <settings-container>
-      <bool-setting text='Enable saber scale modification' value='saber-scale-tweak-enabled'
+      <bool-setting text='Enable saber scale modification' value='saber-scale-tweak-enabled' formatter='bool-formatter'
                     get-event="refresh-sabertailor-values"
                     hover-hint='Enable/Disable any scale modifications.' />
 
@@ -135,7 +135,7 @@
                          formatter='multiplier-formatter' hover-hint='Scales the saber width.' />
 
       <text text='' font-size='2' size-delta-y='4' />
-      <bool-setting text='Scale hitbox' value='saber-scale-hitbox-enabled'
+      <bool-setting text='Scale hitbox' value='saber-scale-hitbox-enabled' formatter='bool-offcolor-formatter'
                     get-event="refresh-sabertailor-values"
                     hover-hint='Enable/Disable saber hit-box scaling.' />
       <text text='Having this option enabled will disable score submission.'
@@ -155,7 +155,7 @@
                     get-event="refresh-sabertailor-values"
                     hover-hint='Enable/Disable any trail modifications.' />
 
-      <bool-setting text='Enable saber trails' value='saber-trail-enabled'
+      <bool-setting text='Enable saber trails' value='saber-trail-enabled' formatter='bool-formatter'
                     get-event="refresh-sabertailor-values"
                     hover-hint='Currently only works with sabers using default trail.' />
 

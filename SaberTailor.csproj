@@ -87,6 +87,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>$(GameDirPath)Beat Saber_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>$(GameDirPath)Beat Saber_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
@@ -104,7 +108,9 @@
     <EmbeddedResource Include="manifest.json" />
     <EmbeddedResource Include="Resources\description.md" />
     <EmbeddedResource Include="Resources\icon.png" />
-    <EmbeddedResource Include="Settings\UI\Views\mainsettings.bsml" />
+    <EmbeddedResource Include="Settings\UI\Views\mainsettings.bsml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -374,6 +374,32 @@ namespace SaberTailor.Settings.UI
         {
             return $"{value}%";
         }
+
+        [UIAction("bool-formatter")]
+        public string BoolString(bool value)
+        {
+            if (value)
+            {
+                return "<color=#57d657>On</color>";
+            }
+            else
+            {
+                return "<color=#fb484e>Off</color>";
+            }
+        }
+
+        [UIAction("bool-offcolor-formatter")]
+        public string BoolOffColorString(bool value)
+        {
+            if (value)
+            {
+                return "<color=#fb484e>On</color>";
+            }
+            else
+            {
+                return "<color=#57d657>Off</color>";
+            }
+        }
         #endregion
 
         [UIAction("update-saber-rotation")]
