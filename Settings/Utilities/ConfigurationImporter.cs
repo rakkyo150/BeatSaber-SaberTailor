@@ -74,8 +74,8 @@ namespace SaberTailor.Settings.Utilities
                 ModifyMenuHiltGrip = oldConfig.GetBool(Plugin.PluginName, nameof(ModifyMenuHiltGrip), true, true);
                 importedSettings.ModifyMenuHiltGrip = ModifyMenuHiltGrip;
 
-                // Check trail modification vars - if these are unchecked from default values, then just disable these
-                importedSettings.IsTrailModEnabled = (IsTrailEnabled != true || TrailLength != 20);
+                // Mark imported config as config version 1 so it will run through all steps of the config updater
+                importedSettings.ConfigVersion = 1;
 
                 MarkAsExported(oldConfig);
             }

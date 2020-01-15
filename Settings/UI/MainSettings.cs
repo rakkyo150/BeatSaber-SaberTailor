@@ -1,5 +1,6 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Parser;
+using SaberTailor.HarmonyPatches;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -100,6 +101,26 @@ namespace SaberTailor.Settings.UI
             {
                 Configuration.Menu.SaberPosDisplayUnit = value;
                 RefreshPositionSettings();
+            }
+        }
+        #endregion
+
+        #region Saber Grip
+        [UIValue("saber-grip-tweak-enabled")]
+        public bool GripTweakEnabled
+        {
+            get => Configuration.Grip.IsGripModEnabled;
+            set
+            {
+                if (value)
+                {
+                    Patches.ApplyHarmonyPatches();
+                }
+                else
+                {
+                    Patches.RemoveHarmonyPatches();
+                }
+                Configuration.Grip.IsGripModEnabled = value;
             }
         }
         #endregion

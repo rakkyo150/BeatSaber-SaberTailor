@@ -5,7 +5,7 @@ namespace SaberTailor.Settings.Utilities
     public class PluginConfig
     {
         public bool RegenerateConfig = true;
-        public int ConfigVersion = 3;
+        public int ConfigVersion = 4;
 
         public bool IsSaberScaleModEnabled = false;
         public bool SaberScaleHitbox = false;
@@ -15,6 +15,8 @@ namespace SaberTailor.Settings.Utilities
         public bool IsTrailModEnabled = false;
         public bool IsTrailEnabled = true;
         public int TrailLength = 20;                    // Length in frames
+
+        public bool IsGripModEnabled = false;
 
         public Int3 GripLeftPosition = new Int3();      // Position in mm
         public Int3 GripRightPosition = new Int3();

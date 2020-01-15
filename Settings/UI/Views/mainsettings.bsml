@@ -7,6 +7,10 @@
   <settings-submenu text='&#62; Saber Grip Position/Rotation...' hover-hint='Adjust position and rotation of the sabers.'>
     <settings-container>
 
+      <bool-setting text='Enable saber grip modification' value='saber-grip-tweak-enabled' formatter='bool-formatter'
+                    get-event="refresh-sabertailor-values"
+                    hover-hint='Enable/Disable any grip modifications.' />
+
       <!--Saber Grip Precision Settings-->
       <settings-submenu text='&#62; Settings Increment Precision...' hover-hint='Change the increment precision for other settings.'>
         <settings-container>

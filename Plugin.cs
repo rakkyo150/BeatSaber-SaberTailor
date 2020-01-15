@@ -66,7 +66,10 @@ namespace SaberTailor
         private void Load()
         {
             Configuration.Load();
-            Patches.ApplyHarmonyPatches();
+            if (Configuration.Grip.IsGripModEnabled)
+            {
+                Patches.ApplyHarmonyPatches();
+            }
             Logger.log.Info($"{PluginName} v.{PluginVersion} has started.");
         }
 

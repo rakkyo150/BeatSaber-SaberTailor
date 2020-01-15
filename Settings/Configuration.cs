@@ -72,6 +72,7 @@ namespace SaberTailor.Settings
             config.Value.GripLeftRotation = new Int3(GripCfg.RotLeft);
             config.Value.GripRightRotation = new Int3(GripCfg.RotRight);
 
+            config.Value.IsGripModEnabled = Grip.IsGripModEnabled;
             config.Value.ModifyMenuHiltGrip = Grip.ModifyMenuHiltGrip;
             #endregion
 
@@ -240,6 +241,7 @@ namespace SaberTailor.Settings
 
             if (cfgSection == CfgSection.All || cfgSection == CfgSection.Grip)
             {
+                Grip.IsGripModEnabled = config.Value.IsGripModEnabled;
                 Grip.ModifyMenuHiltGrip = config.Value.ModifyMenuHiltGrip;
             }
             #endregion
@@ -295,6 +297,24 @@ namespace SaberTailor.Settings
                     // else enable tweak and hitbox scaling to preserve existing settings
                     Scale.TweakEnabled = true;
                     Scale.ScaleHitBox = true;
+                }
+                ConfigVersion = 3;
+            }
+            if (ConfigVersion == 3)
+            {
+                // v3 -> v4: Added enable/disable option for saber grip, disabled by default, will override base game option
+                // For existing configurations: Enable, if non-default settings are present
+                bool gripAdjPresent = false;
+                if (   GripCfg.PosLeft.x != 0 || GripCfg.PosLeft.y != 0 || GripCfg.PosLeft.z != 0 
+                    || GripCfg.RotLeft.x != 0 || GripCfg.RotLeft.y != 0 || GripCfg.RotLeft.z != 0
+                    || GripCfg.PosRight.x != 0 || GripCfg.PosRight.y != 0 || GripCfg.PosRight.z != 0
+                    || GripCfg.RotRight.x != 0 || GripCfg.RotRight.y != 0 || GripCfg.RotRight.z != 0)
+                {
+                    gripAdjPresent = true;
+                }
+                if (gripAdjPresent)
+                {
+                    Grip.IsGripModEnabled = true;
                 }
             }
 

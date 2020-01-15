@@ -4,6 +4,7 @@ namespace SaberTailor.Settings.Classes
 {
     public class GripConfig
     {
+        public bool IsGripModEnabled;
         public bool ModifyMenuHiltGrip;
 
         public Vector3 PosLeft;
