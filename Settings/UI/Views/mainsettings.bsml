@@ -4,11 +4,11 @@
   </horizontal>
 
   <!--Saber Grip-->
-  <settings-submenu text='Saber Position/Rotation' hover-hint='Adjust position and rotation of the sabers.'>
+  <settings-submenu text='&#62; Saber Grip Position/Rotation...' hover-hint='Adjust position and rotation of the sabers.'>
     <settings-container>
 
       <!--Saber Grip Precision Settings-->
-      <settings-submenu text='Settings Increment Precision' hover-hint='Change the increment precision for other settings.'>
+      <settings-submenu text='&#62; Settings Increment Precision...' hover-hint='Change the increment precision for other settings.'>
         <settings-container>
           <dropdown-list-setting text='Saber Position Inc. Unit' value='saber-pos-unit-value'
                                  options='saber-pos-unit-options' apply-on-change='true'/>
@@ -24,12 +24,12 @@
           <dropdown-list-setting text='Saber Pos. Display Unit' value='saber-pos-display-unit-value' get-event='refresh-sabertailor-position-values'
                                  options='saber-pos-display-unit-options' apply-on-change='true'/>
 
-          <clickable-text text='Back' align='Left' click-event='back' />
+          <clickable-text text='&#60; Back' align='Left' click-event='back' />
         </settings-container>
       </settings-submenu>
 
       <!--Saber Grip Left-->
-      <settings-submenu text='Left Saber Settings' hover-hint='Adjust position and rotation of the left saber.'>
+      <settings-submenu text='&#62; Left Saber Settings...' hover-hint='Adjust position and rotation of the left saber.'>
         <settings-container>
           <increment-setting text='Pos X (Left/Right)' value='saber-left-position-x'
                              apply-on-change='true' on-change='update-saber-position' get-event="refresh-sabertailor-position-values"
@@ -62,14 +62,14 @@
                              formatter='rotation-formatter' hover-hint='Rotates the saber around its own axis.' />
 
           <horizontal>
-            <clickable-text text='Back' align='Left' click-event='back' />
+            <clickable-text text='&#60; Back' align='Left' click-event='back' />
             <clickable-text text='Revert' align='Right' click-event='reset-saber-config' />
           </horizontal>
         </settings-container>
       </settings-submenu>
 
       <!--Saber Grip Right-->
-      <settings-submenu text='Right Saber Settings' hover-hint='Adjust position and rotation of the right saber.'>
+      <settings-submenu text='&#62; Right Saber Settings...' hover-hint='Adjust position and rotation of the right saber.'>
         <settings-container>
           <increment-setting text='Pos X (Left/Right)' value='saber-right-position-x'
                              apply-on-change='true' on-change='update-saber-position' get-event="refresh-sabertailor-position-values"
@@ -113,12 +113,12 @@
                   get-event="refresh-sabertailor-values"
                   hover-hint='Enable to reposition the menu hilts the same way as the sabers.' />
 
-      <clickable-text text='Back' align='Left' click-event='back' />
+      <clickable-text text='&#60; Back' align='Left' click-event='back' />
     </settings-container>
   </settings-submenu>
 
   <!--Saber Scale-->
-  <settings-submenu text='Saber Scaling' hover-hint='Adjust length and width of the sabers.'>
+  <settings-submenu text='&#62; Saber Scaling...' hover-hint='Adjust length and width of the sabers.'>
     <settings-container>
       <bool-setting text='Enable saber scale modification' value='saber-scale-tweak-enabled'
                     get-event="refresh-sabertailor-values"
@@ -142,14 +142,14 @@
             font-size='5' color='#f22' size-delta-y='8' />
 
       <horizontal>
-        <clickable-text text='Back' align='Left' click-event='back' />
+        <clickable-text text='&#60; Back' align='Left' click-event='back' />
         <clickable-text text='Revert' align='Right' click-event='reset-saber-config' />
       </horizontal>
     </settings-container>
   </settings-submenu>
 
   <!--Saber Trail-->
-  <settings-submenu text='Saber Trail' hover-hint='Adjust trail settings for default trails.'>
+  <settings-submenu text='&#62; Saber Trail...' hover-hint='Adjust trail settings for default trails.'>
     <settings-container>
       <bool-setting text='Enable saber trail modification' value='saber-trail-tweak-enabled'
                     get-event="refresh-sabertailor-values"
@@ -165,7 +165,7 @@
                          hover-hint='Adjusts trail length. Currently only works with sabers using default trail.' />
 
       <horizontal>
-        <clickable-text text='Back' align='Left' click-event='back' />
+        <clickable-text text='&#60; Back' align='Left' click-event='back' />
         <clickable-text text='Revert' align='Right' click-event='reset-saber-config' />
       </horizontal>
     </settings-container>
