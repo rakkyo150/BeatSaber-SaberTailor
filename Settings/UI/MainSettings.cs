@@ -1,9 +1,11 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Parser;
 using SaberTailor.HarmonyPatches;
+using SaberTailor.Settings.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 namespace SaberTailor.Settings.UI
@@ -335,6 +337,11 @@ namespace SaberTailor.Settings.UI
         }
         #endregion
 
+        #region Transfer Grip
+        [UIComponent("transfer-txt")]
+        private TextMeshProUGUI TransferText;
+        #endregion
+
         #region Limits
         [UIValue("saber-pos-inc-max")]
         public int SaberPosIncMax => 200;
@@ -463,6 +470,9 @@ namespace SaberTailor.Settings.UI
         [UIAction("#cancel")]
         public void OnCancel() => ReloadConfiguration();
 
+        [UIAction("#saber-grip-export")]
+        public void OnGripExport() => ExportGripToGameSettings();
+
         /// <summary>
         /// Save and update configuration
         /// </summary>
@@ -505,6 +515,13 @@ namespace SaberTailor.Settings.UI
         private void RefreshRotationSettings()
         {
             parserParams.EmitEvent("refresh-sabertailor-rotation-values");
+        }
+
+        private void ExportGripToGameSettings()
+        {
+            bool isExportable = GameSettingsTransfer.CheckGripCompatibility(out string statusMsg);
+
+            TransferText.text = statusMsg;
         }
 
         /// <summary>
