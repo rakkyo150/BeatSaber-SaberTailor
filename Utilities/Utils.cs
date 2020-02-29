@@ -12,15 +12,15 @@ namespace SaberTailor.Utilities
         {
             if (IsPluginPresent(PluginName))
             {
-                PluginLoader.PluginInfo pluginInfo = PluginManager.GetPlugin(PluginName);
-                if (pluginInfo?.Metadata == null)
+                PluginMetadata metadata = PluginManager.GetPlugin(PluginName);
+                if (metadata == null)
                 {
-                    pluginInfo = PluginManager.GetPluginFromId(PluginName);
+                    metadata = PluginManager.GetPluginFromId(PluginName);
                 }
 
-                if (pluginInfo?.Metadata != null)
+                if (metadata != null)
                 {
-                    return PluginManager.IsEnabled(pluginInfo.Metadata);
+                    return PluginManager.IsEnabled(metadata);
                 }
             }
 
@@ -41,9 +41,9 @@ namespace SaberTailor.Utilities
 
 #pragma warning disable CS0618 // IPA is obsolete
             // Check in old IPA
-            foreach (IPlugin p in PluginManager.Plugins)
+            foreach (IPlugin plugin in PluginManager.Plugins)
             {
-                if (p.Name == PluginName)
+                if (plugin.Name == PluginName)
                 {
                     return true;
                 }

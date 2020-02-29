@@ -1,4 +1,5 @@
-﻿using SaberTailor.Settings;
+﻿using IPA.Utilities;
+using SaberTailor.Settings;
 using SaberTailor.Utilities;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,19 +44,19 @@ namespace SaberTailor.Tweaks
             IEnumerable<Saber> sabers = Resources.FindObjectsOfTypeAll<Saber>();
             foreach (Saber saber in sabers)
             {
-                if (saber.saberType == Saber.SaberType.SaberB)
+                if (saber.saberType == SaberType.SaberB)
                 {
                     defaultLeftSaber = saber;
                     LeftSaber = saber.gameObject;
                 }
-                else if (saber.saberType == Saber.SaberType.SaberA)
+                else if (saber.saberType == SaberType.SaberA)
                 {
                     defaultRightSaber = saber;
                     RightSaber = saber.gameObject;
                 }
             }
 
-            if (Utils.IsPluginEnabled("Custom Sabers"))
+            if (Utilities.Utils.IsPluginEnabled("Custom Sabers"))
             {
                 // Wait a moment for CustomSaber to catch up
                 yield return new WaitForSeconds(0.1f);
@@ -101,7 +102,7 @@ namespace SaberTailor.Tweaks
             IEnumerable<BasicSaberModelController> basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
             foreach (BasicSaberModelController basicSaberModelController in basicSaberModelControllers)
             {
-                SaberWeaponTrail saberWeaponTrail = ReflectionUtil.GetPrivateField<SaberWeaponTrail>(basicSaberModelController, "_saberWeaponTrail");
+                SaberWeaponTrail saberWeaponTrail = basicSaberModelController.GetField<SaberWeaponTrail, BasicSaberModelController>("_saberWeaponTrail");
                 if (!usingCustomModels || saberWeaponTrail.name != "BasicSaberModel")
                 {
                     RescaleWeaponTrail(saberWeaponTrail, Configuration.Scale.Length, usingCustomModels);
@@ -123,8 +124,8 @@ namespace SaberTailor.Tweaks
         {
             if (saber != null)
             {
-                Transform topPos = ReflectionUtil.GetPrivateField<Transform>(saber, "_topPos");
-                Transform bottomPos = ReflectionUtil.GetPrivateField<Transform>(saber, "_bottomPos");
+                Transform topPos = saber.GetField<Transform, Saber>("_topPos");
+                Transform bottomPos = saber.GetField<Transform, Saber>("_bottomPos");
 
                 topPos.localPosition = Vector3Extensions.Rescale(topPos.localPosition, 1.0f, 1.0f, lengthMultiplier);
                 bottomPos.localPosition = Vector3Extensions.Rescale(bottomPos.localPosition, 1.0f, 1.0f, lengthMultiplier);
@@ -133,13 +134,13 @@ namespace SaberTailor.Tweaks
 
         private void RescaleWeaponTrail(XWeaponTrail trail, float lengthMultiplier, bool usingCustomModels)
         {
-            float trailWidth = ReflectionUtil.GetPrivateField<float>(trail, "_trailWidth");
-            ReflectionUtil.SetPrivateField(trail, "_trailWidth", trailWidth * lengthMultiplier);
+            float trailWidth = trail.GetField<float, XWeaponTrail>("_trailWidth");
+            trail.SetField("_trailWidth", trailWidth * lengthMultiplier);
 
             // Fix the local z position for the default trail on custom sabers
             if (usingCustomModels)
             {
-                Transform pointEnd = ReflectionUtil.GetPrivateField<Transform>(trail, "_pointEnd");
+                Transform pointEnd = trail.GetField<Transform, XWeaponTrail>("_pointEnd");
                 pointEnd.localPosition = Vector3Extensions.Rescale(pointEnd.localPosition, 1.0f, 1.0f, pointEnd.localPosition.z * lengthMultiplier);
             }
         }
@@ -184,8 +185,8 @@ namespace SaberTailor.Tweaks
 
             private void SetHitboxDefaultPosition(Saber saber, out Transform saberTop, out Transform saberBot)
             {
-                saberTop = ReflectionUtil.GetPrivateField<Transform>(saber, "_topPos");
-                saberBot = ReflectionUtil.GetPrivateField<Transform>(saber, "_bottomPos");
+                saberTop = saber.GetField<Transform, Saber>("_topPos");
+                saberBot = saber.GetField<Transform, Saber>("_bottomPos");
             }
         }
     }

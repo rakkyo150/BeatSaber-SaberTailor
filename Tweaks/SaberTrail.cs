@@ -1,5 +1,5 @@
-﻿using SaberTailor.Settings;
-using SaberTailor.Utilities;
+﻿using IPA.Utilities;
+using SaberTailor.Settings;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,7 +26,7 @@ namespace SaberTailor.Tweaks
             IEnumerable<BasicSaberModelController> basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
             foreach (BasicSaberModelController basicSaberModelController in basicSaberModelControllers)
             {
-                SaberWeaponTrail saberTrail = ReflectionUtil.GetPrivateField<SaberWeaponTrail>(basicSaberModelController, "_saberWeaponTrail");
+                SaberWeaponTrail saberTrail = basicSaberModelController.GetField<SaberWeaponTrail, BasicSaberModelController>("_saberWeaponTrail");
                 if (saberTrail.name == "BasicSaberModel")
                 {
                     ModifyTrail(saberTrail, Configuration.Trail.Length);
@@ -42,8 +42,8 @@ namespace SaberTailor.Tweaks
             if (Configuration.Trail.TrailEnabled)
             {
                 trail.enabled = true;
-                ReflectionUtil.SetPrivateField(trail, "_maxFrame", length);
-                ReflectionUtil.SetPrivateField(trail, "_granularity", length * 3);
+                trail.SetField("_maxFrame", length);
+                trail.SetField("_granularity", length * 3);
             }
             else
             {

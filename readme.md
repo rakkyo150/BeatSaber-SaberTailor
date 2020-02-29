@@ -22,8 +22,7 @@ The default values are below:
 
 ```json
 {
-  "RegenerateConfig": false,
-  "ConfigVersion": 3,
+  "ConfigVersion": 4,
   "IsSaberScaleModEnabled": false,
   "SaberScaleHitbox": false,
   "SaberLength": 100,
