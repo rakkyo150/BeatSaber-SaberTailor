@@ -35,8 +35,6 @@ namespace SaberTailor
         public void OnEnable() => Load();
         [OnDisable]
         public void OnDisable() => Unload();
-        [OnExit]
-        public void OnApplicationQuit() => Unload();
 
         public void OnActiveSceneChanged(Scene prevScene, Scene nextScene)
         {
