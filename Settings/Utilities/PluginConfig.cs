@@ -4,7 +4,8 @@ namespace SaberTailor.Settings.Utilities
 {
     public class PluginConfig
     {
-        public bool RegenerateConfig = true;
+        public static PluginConfig Instance;
+
         public int ConfigVersion = 4;
 
         public bool IsSaberScaleModEnabled = false;
@@ -31,5 +32,10 @@ namespace SaberTailor.Settings.Utilities
         public int SaberRotIncrement = 5;
         public string SaberPosIncUnit = "cm";
         public string SaberPosDisplayUnit = "cm";
+
+        /// <summary>
+        /// Call this to save to disk
+        /// </summary>
+        public virtual void Changed() { }
     }
 }

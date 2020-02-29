@@ -117,8 +117,8 @@
 
       <!--Saber Grip Menu-->
       <bool-setting text='Menu hilt adjustments' value='menuhiltadjust-enabled' formatter='bool-formatter'
-                  get-event='refresh-sabertailor-values'
-                  hover-hint='Enable to reposition the menu hilts the same way as the sabers.' />
+                    get-event='refresh-sabertailor-values'
+                    hover-hint='Enable to reposition the menu hilts the same way as the sabers.' />
 
       <clickable-text text='&#60; Back' align='Left' click-event='back' />
     </settings-container>

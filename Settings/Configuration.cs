@@ -1,18 +1,16 @@
 ﻿using IPA.Config;
-using IPA.Utilities;
+using IPA.Config.Stores;
 using SaberTailor.Settings.Classes;
 using SaberTailor.Settings.Utilities;
 using System;
-using System.Linq;
 using UnityEngine;
 
 namespace SaberTailor.Settings
 {
+    internal enum ConfigSection { All, Grip, GripLeft, GripRight, Scale, Trail, Menu };
+
     public class Configuration
     {
-        private static Ref<PluginConfig> config;
-        private static IConfigProvider configProvider;
-
         public static int ConfigVersion { get; private set; }                // Config version, to handle changes in config where existing configs shouldn't just get default config applied
 
         public static GripConfig Grip { get; internal set; } = new GripConfig();
@@ -26,19 +24,9 @@ namespace SaberTailor.Settings
         public static GripRawConfig GripCfg { get; internal set; } = new GripRawConfig();
         public static ScaleRawConfig ScaleCfg { get; internal set; } = new ScaleRawConfig();
 
-        internal enum CfgSection { All, Grip, GripLeft, GripRight, Scale, Trail, Menu };
-
-        internal static void Init(IConfigProvider cfgProvider)
+        internal static void Init(Config config)
         {
-            configProvider = cfgProvider;
-            config = cfgProvider.MakeLink<PluginConfig>((p, v) =>
-            {
-                if (v.Value == null || v.Value.RegenerateConfig)
-                {
-                    p.Store(v.Value = new PluginConfig() { RegenerateConfig = false });
-                }
-                config = v;
-            });
+            PluginConfig.Instance = config.Generated<PluginConfig>();
         }
 
         /// <summary>
@@ -47,45 +35,42 @@ namespace SaberTailor.Settings
         internal static void Save()
         {
             #region Internal settings
-            config.Value.ConfigVersion = ConfigVersion;
+            PluginConfig.Instance.ConfigVersion = ConfigVersion;
             #endregion
 
             #region Saber scale
-            config.Value.IsSaberScaleModEnabled = Scale.TweakEnabled;
-            config.Value.SaberScaleHitbox = Scale.ScaleHitBox;
-            config.Value.SaberLength = ScaleCfg.Length;
-            config.Value.SaberGirth = ScaleCfg.Girth;
+            PluginConfig.Instance.IsSaberScaleModEnabled = Scale.TweakEnabled;
+            PluginConfig.Instance.SaberScaleHitbox = Scale.ScaleHitBox;
+            PluginConfig.Instance.SaberLength = ScaleCfg.Length;
+            PluginConfig.Instance.SaberGirth = ScaleCfg.Girth;
             #endregion
 
             #region Saber trail
-            config.Value.IsTrailModEnabled = Trail.TweakEnabled;
-            config.Value.IsTrailEnabled = Trail.TrailEnabled;
-            config.Value.TrailLength = Trail.Length;
+            PluginConfig.Instance.IsTrailModEnabled = Trail.TweakEnabled;
+            PluginConfig.Instance.IsTrailEnabled = Trail.TrailEnabled;
+            PluginConfig.Instance.TrailLength = Trail.Length;
             #endregion
 
             #region Saber grip
             // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Cfg values that are stored!
-            config.Value.GripLeftPosition = new Int3(GripCfg.PosLeft);
-            config.Value.GripRightPosition = new Int3(GripCfg.PosRight);
+            PluginConfig.Instance.GripLeftPosition = new Int3(GripCfg.PosLeft);
+            PluginConfig.Instance.GripRightPosition = new Int3(GripCfg.PosRight);
 
             // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are stored!
-            config.Value.GripLeftRotation = new Int3(GripCfg.RotLeft);
-            config.Value.GripRightRotation = new Int3(GripCfg.RotRight);
+            PluginConfig.Instance.GripLeftRotation = new Int3(GripCfg.RotLeft);
+            PluginConfig.Instance.GripRightRotation = new Int3(GripCfg.RotRight);
 
-            config.Value.IsGripModEnabled = Grip.IsGripModEnabled;
-            config.Value.ModifyMenuHiltGrip = Grip.ModifyMenuHiltGrip;
+            PluginConfig.Instance.IsGripModEnabled = Grip.IsGripModEnabled;
+            PluginConfig.Instance.ModifyMenuHiltGrip = Grip.ModifyMenuHiltGrip;
             #endregion
 
             #region Menu settings
-            config.Value.SaberPosDisplayUnit = Menu.SaberPosDisplayUnit;
-            config.Value.SaberPosIncrement = Menu.SaberPosIncrement;
-            config.Value.SaberPosIncUnit = Menu.SaberPosIncUnit;
-            config.Value.SaberPosIncValue = Menu.SaberPosIncValue;
-            config.Value.SaberRotIncrement = Menu.SaberRotIncrement;
+            PluginConfig.Instance.SaberPosDisplayUnit = Menu.SaberPosDisplayUnit.ToString();
+            PluginConfig.Instance.SaberPosIncrement = Menu.SaberPosIncrement;
+            PluginConfig.Instance.SaberPosIncUnit = Menu.SaberPosIncUnit.ToString();
+            PluginConfig.Instance.SaberPosIncValue = Menu.SaberPosIncValue;
+            PluginConfig.Instance.SaberRotIncrement = Menu.SaberRotIncrement;
             #endregion
-
-            // Store configuration
-            configProvider.Store(config.Value);
         }
 
         /// <summary>
@@ -100,14 +85,10 @@ namespace SaberTailor.Settings
                 try
                 {
                     PluginConfig importedConfig = ConfigurationImporter.ImportSettingsFromModPrefs(oldConfig);
-                    importedConfig.RegenerateConfig = false;
-
-                    config.Value = importedConfig;
+                    PluginConfig.Instance = importedConfig;
 
                     // Store configuration in the new format immediately
-                    configProvider.Store(config.Value);
-                    configProvider.Save();
-
+                    PluginConfig.Instance.Changed();
                     Logger.log.Info("Configuration loaded from ModPrefs.");
                 }
                 catch (Exception ex)
@@ -128,7 +109,7 @@ namespace SaberTailor.Settings
         /// <summary>
         /// Reload configuration
         /// </summary>
-        internal static void Reload(CfgSection cfgSection = CfgSection.All)
+        internal static void Reload(ConfigSection cfgSection = ConfigSection.All)
         {
             LoadConfig(cfgSection);
             UpdateModVariables();
@@ -171,89 +152,99 @@ namespace SaberTailor.Settings
             Grip.RotRight = Quaternion.Euler(Int3.ToVector3(GripCfg.RotRight)).eulerAngles;
         }
 
-        private static void LoadConfig(CfgSection cfgSection = CfgSection.All)
+        private static void LoadConfig(ConfigSection cfgSection = ConfigSection.All)
         {
             #region Internal settings
-            ConfigVersion = config.Value.ConfigVersion;
+            ConfigVersion = PluginConfig.Instance.ConfigVersion;
             #endregion
 
             #region Saber scale
-            if (cfgSection == CfgSection.All || cfgSection == CfgSection.Scale)
+            if (cfgSection == ConfigSection.All || cfgSection == ConfigSection.Scale)
             {
-                Scale.TweakEnabled = config.Value.IsSaberScaleModEnabled;
-                Scale.ScaleHitBox = config.Value.SaberScaleHitbox;
+                Scale.TweakEnabled = PluginConfig.Instance.IsSaberScaleModEnabled;
+                Scale.ScaleHitBox = PluginConfig.Instance.SaberScaleHitbox;
 
-                if (config.Value.SaberLength < 5 || config.Value.SaberLength > 500)
+                if (PluginConfig.Instance.SaberLength < 5 || PluginConfig.Instance.SaberLength > 500)
                 {
                     ScaleCfg.Length = 100;
                 }
                 else
                 {
-                    ScaleCfg.Length = config.Value.SaberLength;
+                    ScaleCfg.Length = PluginConfig.Instance.SaberLength;
                 }
 
-                if (config.Value.SaberGirth < 5 || config.Value.SaberGirth > 500)
+                if (PluginConfig.Instance.SaberGirth < 5 || PluginConfig.Instance.SaberGirth > 500)
                 {
                     ScaleCfg.Girth = 100;
                 }
                 else
                 {
-                    ScaleCfg.Girth = config.Value.SaberGirth;
+                    ScaleCfg.Girth = PluginConfig.Instance.SaberGirth;
                 }
             }
             #endregion
 
             #region Saber trail
-            if (cfgSection == CfgSection.All || cfgSection == CfgSection.Scale)
+            if (cfgSection == ConfigSection.All || cfgSection == ConfigSection.Scale)
             {
-                Trail.TweakEnabled = config.Value.IsTrailModEnabled;
-                Trail.TrailEnabled = config.Value.IsTrailEnabled;
-                Trail.Length = Mathf.Clamp(config.Value.TrailLength, 5, 100);
+                Trail.TweakEnabled = PluginConfig.Instance.IsTrailModEnabled;
+                Trail.TrailEnabled = PluginConfig.Instance.IsTrailEnabled;
+                Trail.Length = Mathf.Clamp(PluginConfig.Instance.TrailLength, 5, 100);
             }
             #endregion
 
             #region Saber grip
             // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Cfg values that are loaded!
             // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are loaded!
-            if (cfgSection == CfgSection.All || cfgSection == CfgSection.Grip || cfgSection == CfgSection.GripLeft)
+            if (cfgSection == ConfigSection.All || cfgSection == ConfigSection.Grip || cfgSection == ConfigSection.GripLeft)
             {
-                Int3 gripLeftPosition = config.Value.GripLeftPosition;
+                Int3 gripLeftPosition = PluginConfig.Instance.GripLeftPosition ?? Int3.zero;
                 GripCfg.PosLeft = new Int3()
                 {
                     x = Mathf.Clamp(gripLeftPosition.x, -500, 500),
                     y = Mathf.Clamp(gripLeftPosition.y, -500, 500),
                     z = Mathf.Clamp(gripLeftPosition.z, -500, 500)
                 };
-                GripCfg.RotLeft = new Int3(config.Value.GripLeftRotation);
+
+                Int3 gripLeftRotation = PluginConfig.Instance.GripLeftRotation ?? Int3.zero;
+                GripCfg.RotLeft = new Int3(gripLeftRotation);
             }
-            
-            if (cfgSection == CfgSection.All || cfgSection == CfgSection.Grip || cfgSection == CfgSection.GripRight)
+
+            if (cfgSection == ConfigSection.All || cfgSection == ConfigSection.Grip || cfgSection == ConfigSection.GripRight)
             {
-                Int3 gripRightPosition = config.Value.GripRightPosition;
+                Int3 gripRightPosition = PluginConfig.Instance.GripRightPosition ?? Int3.zero;
                 GripCfg.PosRight = new Int3()
                 {
                     x = Mathf.Clamp(gripRightPosition.x, -500, 500),
                     y = Mathf.Clamp(gripRightPosition.y, -500, 500),
                     z = Mathf.Clamp(gripRightPosition.z, -500, 500)
                 };
-                GripCfg.RotRight = new Int3(config.Value.GripRightRotation);
+
+                Int3 gripRightRotation = PluginConfig.Instance.GripRightRotation ?? Int3.zero;
+                GripCfg.RotRight = new Int3(gripRightRotation);
             }
 
-            if (cfgSection == CfgSection.All || cfgSection == CfgSection.Grip)
+            if (cfgSection == ConfigSection.All || cfgSection == ConfigSection.Grip)
             {
-                Grip.IsGripModEnabled = config.Value.IsGripModEnabled;
-                Grip.ModifyMenuHiltGrip = config.Value.ModifyMenuHiltGrip;
+                Grip.IsGripModEnabled = PluginConfig.Instance.IsGripModEnabled;
+                Grip.ModifyMenuHiltGrip = PluginConfig.Instance.ModifyMenuHiltGrip;
             }
             #endregion
 
             #region Menu settings
-            if (cfgSection == CfgSection.All || cfgSection == CfgSection.Menu)
+            if (cfgSection == ConfigSection.All || cfgSection == ConfigSection.Menu)
             {
-                Menu.SaberPosIncrement = Mathf.Clamp(config.Value.SaberPosIncrement, 1, 200);
-                Menu.SaberPosIncValue = Mathf.Clamp(config.Value.SaberPosIncValue, 1, 20);
-                Menu.SaberRotIncrement = Mathf.Clamp(config.Value.SaberRotIncrement, 1, 20);
-                Menu.SaberPosDisplayUnit = config.Value.SaberPosDisplayUnit;
-                Menu.SaberPosIncUnit = config.Value.SaberPosIncUnit;
+                Menu.SaberPosIncrement = Mathf.Clamp(PluginConfig.Instance.SaberPosIncrement, 1, 200);
+                Menu.SaberPosIncValue = Mathf.Clamp(PluginConfig.Instance.SaberPosIncValue, 1, 20);
+                Menu.SaberRotIncrement = Mathf.Clamp(PluginConfig.Instance.SaberRotIncrement, 1, 20);
+
+                Menu.SaberPosDisplayUnit = Enum.TryParse(PluginConfig.Instance.SaberPosDisplayUnit, out PositionDisplayUnit displayUnit)
+                    ? displayUnit
+                    : PositionDisplayUnit.cm;
+
+                Menu.SaberPosIncUnit = Enum.TryParse(PluginConfig.Instance.SaberPosIncUnit, out PositionUnit positionUnit)
+                    ? positionUnit
+                    : PositionUnit.cm;
             }
             #endregion
         }
@@ -300,22 +291,19 @@ namespace SaberTailor.Settings
                 }
                 ConfigVersion = 3;
             }
+
             if (ConfigVersion == 3)
             {
                 // v3 -> v4: Added enable/disable option for saber grip, disabled by default, will override base game option
                 // For existing configurations: Enable, if non-default settings are present
                 bool gripAdjPresent = false;
-                if (   GripCfg.PosLeft.x != 0 || GripCfg.PosLeft.y != 0 || GripCfg.PosLeft.z != 0 
-                    || GripCfg.RotLeft.x != 0 || GripCfg.RotLeft.y != 0 || GripCfg.RotLeft.z != 0
-                    || GripCfg.PosRight.x != 0 || GripCfg.PosRight.y != 0 || GripCfg.PosRight.z != 0
-                    || GripCfg.RotRight.x != 0 || GripCfg.RotRight.y != 0 || GripCfg.RotRight.z != 0)
+                if (GripCfg.PosLeft != Int3.zero || GripCfg.RotLeft != Int3.zero
+                    || GripCfg.PosRight != Int3.zero || GripCfg.RotRight != Int3.zero)
                 {
                     gripAdjPresent = true;
                 }
-                if (gripAdjPresent)
-                {
-                    Grip.IsGripModEnabled = true;
-                }
+
+                Grip.IsGripModEnabled = gripAdjPresent;
             }
 
             // Updater done - set to latest version and save

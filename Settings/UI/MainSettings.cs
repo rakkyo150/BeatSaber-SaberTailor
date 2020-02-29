@@ -1,9 +1,11 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Parser;
 using SaberTailor.HarmonyPatches;
+using SaberTailor.Settings.Classes;
 using SaberTailor.Settings.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -17,70 +19,38 @@ namespace SaberTailor.Settings.UI
 
         #region Precision
         [UIValue("saber-pos-unit-options")]
-        public List<object> SaberPosUnitValues = new List<object>()
-        {
-            "cm",
-            "mm"
-        };
+        public List<object> SaberPosUnitValues = Enum.GetNames(typeof(PositionUnit)).ToList<object>();
 
         [UIValue("saber-pos-display-unit-options")]
-        public List<object> SaberPosDisplayUnitValues = new List<object>()
-        {
-            "cm",
-            "inches",
-            "miles"
-        };
+        public List<object> SaberPosDisplayUnitValues = Enum.GetNames(typeof(PositionDisplayUnit)).ToList<object>();
 
         [UIValue("saber-pos-unit-value")]
-        public string SaberPosIncUnit {
-            get
-            {
-                if (SaberPosUnitValues.Contains(Configuration.Menu.SaberPosIncUnit))
-                {
-                    return Configuration.Menu.SaberPosIncUnit;
-                }
-                else
-                {
-                    return "cm";
-                }
-            }
+        public string SaberPosIncUnit
+        {
+            get => Configuration.Menu.SaberPosIncUnit.ToString();
             set
             {
-                Configuration.Menu.SaberPosIncUnit = value;
-                switch (Configuration.Menu.SaberPosIncUnit)
-                {
-                    case "cm":
-                        Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 10;
-                        break;
-                    default:
-                        Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue;
-                        break;
-                }
+                Configuration.Menu.SaberPosIncUnit = Enum.TryParse(value, out PositionUnit positionUnit) ? positionUnit : PositionUnit.cm;
+                UpdateSaberPosIncrement(Configuration.Menu.SaberPosIncUnit);
                 RefreshPositionSettings();
             }
         }
 
         [UIValue("saber-pos-increment-value")]
-        public int SaberPosIncValue {
+        public int SaberPosIncValue
+        {
             get => Configuration.Menu.SaberPosIncValue;
             set
             {
                 Configuration.Menu.SaberPosIncValue = value;
-                switch (Configuration.Menu.SaberPosIncUnit)
-                {
-                    case "cm":
-                        Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 10;
-                        break;
-                    default:
-                        Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue;
-                        break;
-                }
+                UpdateSaberPosIncrement(Configuration.Menu.SaberPosIncUnit);
                 RefreshPositionSettings();
             }
         }
 
         [UIValue("saber-rot-increment-value")]
-        public int SaberRotIncrement {
+        public int SaberRotIncrement
+        {
             get => Configuration.Menu.SaberRotIncrement;
             set => Configuration.Menu.SaberRotIncrement = value;
         }
@@ -88,20 +58,10 @@ namespace SaberTailor.Settings.UI
         [UIValue("saber-pos-display-unit-value")]
         public string SaberPosDisplayUnit
         {
-            get
-            {
-                if (SaberPosDisplayUnitValues.Contains(Configuration.Menu.SaberPosDisplayUnit))
-                {
-                    return Configuration.Menu.SaberPosDisplayUnit;
-                }
-                else
-                {
-                    return "cm";
-                }
-            }
+            get => Configuration.Menu.SaberPosDisplayUnit.ToString();
             set
             {
-                Configuration.Menu.SaberPosDisplayUnit = value;
+                Configuration.Menu.SaberPosDisplayUnit = Enum.TryParse(value, out PositionDisplayUnit unit) ? unit : PositionDisplayUnit.cm;
                 RefreshPositionSettings();
             }
         }
@@ -116,11 +76,11 @@ namespace SaberTailor.Settings.UI
             {
                 if (value)
                 {
-                    Patches.ApplyHarmonyPatches();
+                    SaberTailorPatches.ApplyHarmonyPatches();
                 }
                 else
                 {
-                    Patches.RemoveHarmonyPatches();
+                    SaberTailorPatches.RemoveHarmonyPatches();
                 }
                 Configuration.Grip.IsGripModEnabled = value;
             }
@@ -368,10 +328,10 @@ namespace SaberTailor.Settings.UI
         {
             switch (Configuration.Menu.SaberPosIncUnit)
             {
-                case "cm":
+                case PositionUnit.cm:
                     return $"{value} cm";
-                case "inches":
-                    return String.Format("{0}/8 inches", value);
+                //case PositionUnit.inches:
+                //    return string.Format("{0}/8 inches", value);
                 default:
                     return $"{value} mm";
             }
@@ -382,12 +342,14 @@ namespace SaberTailor.Settings.UI
         {
             switch (Configuration.Menu.SaberPosDisplayUnit)
             {
-                case "inches":
-                    return String.Format("{0:0.000} inches", value / 25.4f);
-                case "miles":
-                    return String.Format("{0:0.000000} miles", value / 1609344f);
+                case PositionDisplayUnit.inches:
+                    return string.Format("{0:0.000} inches", value / 25.4f);
+                case PositionDisplayUnit.nauticalmiles:
+                    return string.Format("{0:0.000000} nmi", value / 1852000f);
+                case PositionDisplayUnit.miles:
+                    return string.Format("{0:0.000000} miles", value / 1609344f);
                 default:
-                    return String.Format("{0:0.0} cm", value / 10f);
+                    return string.Format("{0:0.0} cm", value / 10f);
             }
         }
 
@@ -456,16 +418,16 @@ namespace SaberTailor.Settings.UI
         public void OnResetSaberConfig() => ReloadConfiguration();
 
         [UIAction("#reset-saber-config-grip-left")]
-        public void OnResetSaberConfigGripLeft() => ReloadConfiguration(Configuration.CfgSection.GripLeft);
+        public void OnResetSaberConfigGripLeft() => ReloadConfiguration(ConfigSection.GripLeft);
 
         [UIAction("#reset-saber-config-grip-right")]
-        public void OnResetSaberConfigGripRight() => ReloadConfiguration(Configuration.CfgSection.GripRight);
+        public void OnResetSaberConfigGripRight() => ReloadConfiguration(ConfigSection.GripRight);
 
         [UIAction("#reset-saber-config-scale")]
-        public void OnResetSaberConfigScale() => ReloadConfiguration(Configuration.CfgSection.Scale);
+        public void OnResetSaberConfigScale() => ReloadConfiguration(ConfigSection.Scale);
 
         [UIAction("#reset-saber-config-trail")]
-        public void OnResetSaberConfigTrail() => ReloadConfiguration(Configuration.CfgSection.Trail);
+        public void OnResetSaberConfigTrail() => ReloadConfiguration(ConfigSection.Trail);
 
         [UIAction("#cancel")]
         public void OnCancel() => ReloadConfiguration();
@@ -485,7 +447,7 @@ namespace SaberTailor.Settings.UI
         /// <summary>
         /// Reload configuration and refresh UI
         /// </summary>
-        private void ReloadConfiguration(Configuration.CfgSection cfgSection = Configuration.CfgSection.All)
+        private void ReloadConfiguration(ConfigSection cfgSection = ConfigSection.All)
         {
             Configuration.Reload(cfgSection);
             RefreshModSettingsUI();
@@ -522,6 +484,22 @@ namespace SaberTailor.Settings.UI
             bool isExportable = GameSettingsTransfer.CheckGripCompatibility(out string statusMsg);
 
             TransferText.text = statusMsg;
+        }
+
+        private void UpdateSaberPosIncrement(PositionUnit unit)
+        {
+            switch (unit)
+            {
+                case PositionUnit.cm:
+                    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 10;
+                    break;
+                //case PositionUnit.inches:
+                //    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue / 25.4f;
+                //    break;
+                default:
+                    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue;
+                    break;
+            }
         }
 
         /// <summary>

@@ -8,6 +8,8 @@ namespace SaberTailor.Settings.Classes
         public int y;
         public int z;
 
+        public static Int3 zero => new Int3(0, 0, 0);
+
         public Int3() { }
 
         public Int3(Int3 int3) : this(int3.x, int3.y, int3.z) { }
@@ -28,5 +30,22 @@ namespace SaberTailor.Settings.Classes
             y = int3.y,
             z = int3.z
         };
+
+        public override bool Equals(object obj) => base.Equals(obj);
+        public override int GetHashCode() => base.GetHashCode();
+
+        public static bool operator ==(Int3 left, Int3 right)
+        {
+            return left.x == right.x
+                && left.y == right.y
+                && left.z == right.z;
+        }
+
+        public static bool operator !=(Int3 left, Int3 right)
+        {
+            return left.x != right.x
+                || left.y != right.y
+                || left.z != right.z;
+        }
     }
 }

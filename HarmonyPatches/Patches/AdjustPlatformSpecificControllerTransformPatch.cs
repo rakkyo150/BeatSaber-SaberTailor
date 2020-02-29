@@ -1,7 +1,6 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using SaberTailor.Settings;
 using UnityEngine;
-using UnityEngine.XR;
 
 namespace SaberTailor.HarmonyPatches
 {
@@ -9,7 +8,7 @@ namespace SaberTailor.HarmonyPatches
     [HarmonyPatch("AdjustPlatformSpecificControllerTransform")]
     internal class AdjustPlatformSpecificControllerTransformPatch
     {
-        private static void Prefix(XRNode node, Transform transform, ref Vector3 addPosition, ref Vector3 addRotation)
+        private static void Prefix(Transform transform, ref Vector3 addPosition, ref Vector3 addRotation)
         {
             addPosition = Vector3.zero;
             addRotation = Vector3.zero;

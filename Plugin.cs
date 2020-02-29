@@ -13,15 +13,17 @@ using IPALogger = IPA.Logging.Logger;
 
 namespace SaberTailor
 {
-    public class Plugin : IBeatSaberPlugin, IDisablablePlugin
+    [Plugin(RuntimeOptions.DynamicInit)]
+    public class Plugin
     {
         public static string PluginName => "SaberTailor";
         public static SemVer.Version PluginVersion { get; private set; } = new SemVer.Version("0.0.0"); // Default
 
-        public void Init(IPALogger logger, [Config.Prefer("json")] IConfigProvider cfgProvider, PluginLoader.PluginMetadata metadata)
+        [Init]
+        public void Init(IPALogger logger, Config config, PluginMetadata metadata)
         {
             Logger.log = logger;
-            Configuration.Init(cfgProvider);
+            Configuration.Init(config);
 
             if (metadata?.Version != null)
             {
@@ -29,9 +31,10 @@ namespace SaberTailor
             }
         }
 
+        [OnEnable]
         public void OnEnable() => Load();
+        [OnDisable]
         public void OnDisable() => Unload();
-        public void OnApplicationQuit() => Unload();
 
         public void OnActiveSceneChanged(Scene prevScene, Scene nextScene)
         {
@@ -57,27 +60,36 @@ namespace SaberTailor
             }
         }
 
-        public void OnApplicationStart() { }
-        public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode) { }
-        public void OnSceneUnloaded(Scene scene) { }
-        public void OnUpdate() { }
-        public void OnFixedUpdate() { }
-
         private void Load()
         {
             Configuration.Load();
+            AddEvents();
+
             if (Configuration.Grip.IsGripModEnabled)
             {
-                Patches.ApplyHarmonyPatches();
+                SaberTailorPatches.ApplyHarmonyPatches();
             }
+
             Logger.log.Info($"{PluginName} v.{PluginVersion} has started.");
         }
 
         private void Unload()
         {
-            Patches.RemoveHarmonyPatches();
+            SaberTailorPatches.RemoveHarmonyPatches();
             ScoreUtility.Cleanup();
             Configuration.Save();
+            RemoveEvents();
+        }
+
+        private void AddEvents()
+        {
+            RemoveEvents();
+            SceneManager.activeSceneChanged += OnActiveSceneChanged;
+        }
+
+        private void RemoveEvents()
+        {
+            SceneManager.activeSceneChanged -= OnActiveSceneChanged;
         }
     }
 }

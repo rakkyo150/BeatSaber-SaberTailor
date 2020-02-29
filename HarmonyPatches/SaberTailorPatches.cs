@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using System.Reflection;
 
 namespace SaberTailor.HarmonyPatches
@@ -6,9 +6,9 @@ namespace SaberTailor.HarmonyPatches
     /// <summary>
     /// Apply and remove all of our Harmony patches through this class
     /// </summary>
-    public class Patches
+    public class SaberTailorPatches
     {
-        private static HarmonyInstance instance;
+        private static Harmony instance;
 
         public static bool IsPatched { get; private set; }
         public const string InstanceId = "com.shadnix.beatsaber.sabertailor";
@@ -19,7 +19,7 @@ namespace SaberTailor.HarmonyPatches
             {
                 if (instance == null)
                 {
-                    instance = HarmonyInstance.Create(InstanceId);
+                    instance = new Harmony(InstanceId);
                 }
 
                 instance.PatchAll(Assembly.GetExecutingAssembly());
