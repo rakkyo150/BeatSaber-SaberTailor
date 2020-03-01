@@ -435,6 +435,9 @@ namespace SaberTailor.Settings.UI
         [UIAction("#saber-grip-export")]
         public void OnGripExport() => ExportGripToGameSettings();
 
+        [UIAction("#saber-grip-import")]
+        public void OnGripImport() => ImportGripFromGameSettings();
+
         /// <summary>
         /// Save and update configuration
         /// </summary>
@@ -479,11 +482,32 @@ namespace SaberTailor.Settings.UI
             parserParams.EmitEvent("refresh-sabertailor-rotation-values");
         }
 
+        private void ImportGripFromGameSettings()
+        {
+            bool importSuccessful = GameSettingsTransfer.ImportFromGame();
+            if (importSuccessful)
+            {
+                TransferText.text = "Import successul. Please remember to enable saber grip adjustments in SaberTailor for enabling SaberTailor.";
+            }
+            else
+            {
+                TransferText.text = "<color=#fb484e>Unable to import from base game: Unknown error.</color>";
+            }
+        }
+
         private void ExportGripToGameSettings()
         {
-            bool isExportable = GameSettingsTransfer.CheckGripCompatibility(out string statusMsg);
+            bool isExportable = GameSettingsTransfer.CheckGripCompatibility(out string compMsg);
 
-            TransferText.text = statusMsg;
+            if (isExportable)
+            {
+                GameSettingsTransfer.ExportToGame(out string statusMsg);
+                TransferText.text = statusMsg;
+            }
+            else
+            {
+                TransferText.text = compMsg;
+            }
         }
 
         private void UpdateSaberPosIncrement(PositionUnit unit)

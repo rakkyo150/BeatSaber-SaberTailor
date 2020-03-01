@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace SaberTailor.Settings.Utilities
 {
+    // Status: This option will need more work, because the settings in game are applied differently than what SaberTailor does
+    //         So, unfortunatly, values won't fit 1:1 in this scenario
     internal class GameSettingsTransfer
     {
         internal static bool ImportFromGame()
@@ -95,8 +97,8 @@ namespace SaberTailor.Settings.Utilities
                         NormalizeAngle(Configuration.GripCfg.RotRight.y),
                         NormalizeAngle(Configuration.GripCfg.RotRight.z));
 
-                    //mainSettings.Save();
-                    //mainSettings.Load(true);
+                    mainSettings.Save();
+                    mainSettings.Load(true);
 
                     statusMsg = "Export successful.";
                 }

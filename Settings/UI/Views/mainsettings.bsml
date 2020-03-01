@@ -178,6 +178,7 @@
     </settings-container>
   </settings-submenu>
 
+  <!--Grip Export/Import-->
   <settings-submenu text='&#62; Transfer grip to/from game settings...' hover-hint='Export/Import grip adjustments to/from base game options.'>
     <settings-container>
       <horizontal>
@@ -191,7 +192,7 @@
         <button text='Import from game' align='Left' click-event='saber-grip-import' />
       </horizontal>
       <horizontal pref-width='90' pref-height='30'>
-        <text id='transfer-txt' text='FIXME'></text>
+        <text id='transfer-txt' text=' '></text>
       </horizontal>
     </settings-container>
   </settings-submenu>
