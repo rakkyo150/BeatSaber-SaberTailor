@@ -102,7 +102,7 @@ namespace SaberTailor.Tweaks
             IEnumerable<BasicSaberModelController> basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
             foreach (BasicSaberModelController basicSaberModelController in basicSaberModelControllers)
             {
-                SaberWeaponTrail saberWeaponTrail = basicSaberModelController.GetField<SaberWeaponTrail, BasicSaberModelController>("_saberWeaponTrail");
+                XWeaponTrail saberWeaponTrail = basicSaberModelController.GetField<XWeaponTrail, BasicSaberModelController>("_saberWeaponTrail");
                 if (!usingCustomModels || saberWeaponTrail.name != "BasicSaberModel")
                 {
                     RescaleWeaponTrail(saberWeaponTrail, Configuration.Scale.Length, usingCustomModels);
