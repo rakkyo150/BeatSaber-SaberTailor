@@ -49,6 +49,7 @@
     <Compile Include="Settings\Configuration.cs" />
     <Compile Include="Settings\UI\MainSettings.cs" />
     <Compile Include="Settings\Utilities\ConfigurationImporter.cs" />
+    <Compile Include="Settings\Utilities\FileHandler.cs" />
     <Compile Include="Settings\Utilities\GameSettingsTransfer.cs" />
     <Compile Include="Settings\Utilities\PluginConfig.cs" />
     <Compile Include="Tweaks\SaberLength.cs" />
@@ -80,6 +81,10 @@
     </Reference>
     <Reference Include="Main">
       <HintPath>$(GameDirPath)Beat Saber_Data\Managed\Main.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(GameDirPath)Libs\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SemVer">

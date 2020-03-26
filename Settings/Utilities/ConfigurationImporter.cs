@@ -122,5 +122,6 @@ namespace SaberTailor.Settings.Utilities
                 out result
             );
         }
+
     }
 }

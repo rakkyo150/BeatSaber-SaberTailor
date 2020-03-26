@@ -20,10 +20,10 @@ namespace SaberTailor
         public static SemVer.Version PluginVersion { get; private set; } = new SemVer.Version("0.0.0"); // Default
 
         [Init]
-        public void Init(IPALogger logger, Config config, PluginMetadata metadata)
+        public void Init(IPALogger logger, PluginMetadata metadata)
         {
             Logger.log = logger;
-            Configuration.Init(config);
+            Configuration.Init();
 
             if (metadata?.Version != null)
             {

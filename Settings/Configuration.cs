@@ -24,9 +24,9 @@ namespace SaberTailor.Settings
         public static GripRawConfig GripCfg { get; internal set; } = new GripRawConfig();
         public static ScaleRawConfig ScaleCfg { get; internal set; } = new ScaleRawConfig();
 
-        internal static void Init(Config config)
+        internal static void Init()
         {
-            PluginConfig.Instance = config.Generated<PluginConfig>();
+            PluginConfig.Instance = FileHandler.LoadConfig();
         }
 
         /// <summary>
@@ -71,6 +71,8 @@ namespace SaberTailor.Settings
             PluginConfig.Instance.SaberPosIncValue = Menu.SaberPosIncValue;
             PluginConfig.Instance.SaberRotIncrement = Menu.SaberRotIncrement;
             #endregion
+
+            FileHandler.SaveConfig(PluginConfig.Instance);
         }
 
         /// <summary>
