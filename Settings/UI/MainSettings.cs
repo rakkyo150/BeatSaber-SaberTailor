@@ -497,7 +497,8 @@ namespace SaberTailor.Settings.UI
 
         private void ExportGripToGameSettings()
         {
-            bool isExportable = GameSettingsTransfer.CheckGripCompatibility(out string compMsg);
+            // FIXME!
+            bool isExportable = GameSettingsTransfer.CheckGripCompatibility(Vector3.zero, Vector3.zero, out string compMsg);
 
             if (isExportable)
             {
