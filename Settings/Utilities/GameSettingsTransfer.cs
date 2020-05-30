@@ -43,35 +43,40 @@ namespace SaberTailor.Settings.Utilities
                 return false;
             }
 
-            Vector3SO ctrlPos = mainSettings.controllerPosition;
-            Vector3SO ctrlRot = mainSettings.controllerRotation;
+            Vector3SO gameCtrlPosSO = mainSettings.controllerPosition;
+            Vector3SO gameCtrlRotSO = mainSettings.controllerRotation;
+
+            Vector3 gameCtrlPos = new Vector3(gameCtrlPosSO.value.x, gameCtrlPosSO.value.y, gameCtrlPosSO.value.z);
+            Vector3 gameCtrlRot = new Vector3(gameCtrlRotSO.value.x, gameCtrlRotSO.value.y, gameCtrlRotSO.value.z);
+
+            ConvertGametoSTVector(gameCtrlPos, gameCtrlRot, out Vector3 ctrlPos, out Vector3 ctrlRot);
 
             Configuration.GripCfg.PosLeft = new Int3()
             {
-                x = -(int)ctrlPos.value.x * 1000,
-                y = (int)ctrlPos.value.y * 1000,
-                z = (int)ctrlPos.value.z * 1000
+                x = -(int)ctrlPos.x * 1000,
+                y = (int)ctrlPos.y * 1000,
+                z = (int)ctrlPos.z * 1000
             };
 
             Configuration.GripCfg.RotLeft = new Int3()
             {
-                x = (int)ctrlRot.value.x,
-                y = -(int)ctrlRot.value.y,
-                z = (int)ctrlRot.value.z
+                x = (int)ctrlRot.x,
+                y = -(int)ctrlRot.y,
+                z = (int)ctrlRot.z
             };
 
             Configuration.GripCfg.PosRight = new Int3()
             {
-                x = -(int)ctrlPos.value.x * 1000,
-                y = (int)ctrlPos.value.y * 1000,
-                z = (int)ctrlPos.value.z * 1000
+                x = -(int)ctrlPos.x * 1000,
+                y = (int)ctrlPos.y * 1000,
+                z = (int)ctrlPos.z * 1000
             };
 
             Configuration.GripCfg.RotRight = new Int3()
             {
-                x = (int)ctrlRot.value.x,
-                y = -(int)ctrlRot.value.y,
-                z = (int)ctrlRot.value.z
+                x = (int)ctrlRot.x,
+                y = -(int)ctrlRot.y,
+                z = (int)ctrlRot.z
             };
 
             return true;
@@ -93,6 +98,13 @@ namespace SaberTailor.Settings.Utilities
                 Configuration.GripCfg.RotRight.z);
 
             ConvertSTtoGameVector(stPos, stRot, out Vector3 exportPos, out Vector3 exportRot);
+
+            // FIXME: Delete this later
+            Logger.log.Debug("==============================================================================");
+            Logger.log.Debug("Menu Debug: Resulting vectors for export to game settings:");
+            Logger.log.Debug("Position: x=" + exportPos.x + " y=" + exportPos.y + " z=" + exportPos.z);
+            Logger.log.Debug("Rotation: x=" + exportRot.x + " y=" + exportRot.y + " z=" + exportRot.z);
+            Logger.log.Debug("==============================================================================");
 
             exportable = CheckGripCompatibility(exportPos, exportRot, out statusMsg);
 
@@ -127,6 +139,7 @@ namespace SaberTailor.Settings.Utilities
                     Logger.log.Error("Error trying to export SaberTailor grip config to base game settings.");
                     Logger.log.Error(ex.ToString());
                     statusMsg = "<color=#fb484e>Unable to export to base game: Unknown error.</color>";
+                    exportable = false;
                 }
             }
             return exportable;

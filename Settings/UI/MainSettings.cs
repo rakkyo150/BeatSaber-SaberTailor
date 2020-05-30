@@ -497,18 +497,8 @@ namespace SaberTailor.Settings.UI
 
         private void ExportGripToGameSettings()
         {
-            // FIXME!
-            bool isExportable = GameSettingsTransfer.CheckGripCompatibility(Vector3.zero, Vector3.zero, out string compMsg);
-
-            if (isExportable)
-            {
-                GameSettingsTransfer.ExportToGame(out string statusMsg);
-                TransferText.text = statusMsg;
-            }
-            else
-            {
-                TransferText.text = compMsg;
-            }
+            GameSettingsTransfer.ExportToGame(out string statusMsg);
+            TransferText.text = statusMsg;
         }
 
         private void UpdateSaberPosIncrement(PositionUnit unit)
