@@ -234,15 +234,32 @@ namespace SaberTailor.Settings.Utilities
         {
             GetVRPlatformHelperVector(out Vector3 vrPlatformPos, out Vector3 vrPlatformRot);
 
+            // Calculate target position using game translation/rotation
             GameObject gameAdjustObject = new GameObject();
             Transform gameAdjustTransform = gameAdjustObject.transform;
             gameAdjustTransform.Rotate(inRot + vrPlatformRot);
             gameAdjustTransform.Translate(inPos + vrPlatformPos);
+
+            // From that target point, calculate data for saber tailor adjustments
             gameAdjustTransform.Translate(-vrPlatformPos);
             gameAdjustTransform.Rotate(-vrPlatformRot);
 
             outPos = gameAdjustTransform.position.Clone();
             outRot = gameAdjustTransform.rotation.eulerAngles.Clone();
+            /**
+            // Round the resulting values to the nearest precision (test)
+            outPos = new Vector3(
+                (float)Math.Round(gameAdjustTransform.position.x, 3, MidpointRounding.AwayFromZero), 
+                (float)Math.Round(gameAdjustTransform.position.y, 3, MidpointRounding.AwayFromZero),
+                (float)Math.Round(gameAdjustTransform.position.z, 3, MidpointRounding.AwayFromZero)
+                );
+
+            outRot = new Vector3(
+                (float)Math.Round(gameAdjustTransform.rotation.eulerAngles.x, 3, MidpointRounding.AwayFromZero),
+                (float)Math.Round(gameAdjustTransform.rotation.eulerAngles.y, 3, MidpointRounding.AwayFromZero),
+                (float)Math.Round(gameAdjustTransform.rotation.eulerAngles.z, 3, MidpointRounding.AwayFromZero)
+                );
+            **/
 
             UnityEngine.Object.Destroy(gameAdjustObject);
         }
@@ -251,6 +268,7 @@ namespace SaberTailor.Settings.Utilities
         {
             GetVRPlatformHelperVector(out Vector3 vrPlatformPos, out Vector3 vrPlatformRot);
 
+            // Calculate target position using saber tailor translation/rotation
             GameObject stAdjustObject = new GameObject();
             Transform stAdjustTransform = stAdjustObject.transform;
             stAdjustTransform.Translate(inPos);
@@ -258,14 +276,24 @@ namespace SaberTailor.Settings.Utilities
             stAdjustTransform.Rotate(vrPlatformRot);
             stAdjustTransform.Translate(vrPlatformPos);
 
-            outPos = stAdjustTransform.position - vrPlatformPos;
+            // From that target point, calculate data for base game adjustments
+            outPos = stAdjustTransform.InverseTransformVector(stAdjustTransform.position) - vrPlatformPos;
             outRot = stAdjustTransform.rotation.eulerAngles - vrPlatformRot;
 
             UnityEngine.Object.Destroy(stAdjustObject);
         }
 
+        // Internal test method for debugging
         internal static void CompareAdjustmentSettings()
         {
+            GetVRPlatformHelperVector(out Vector3 vrPlatformPos, out Vector3 vrPlatformRot);
+
+            Logger.log.Debug("==============================================================================");
+            Logger.log.Debug("VR Platform modifiers:");
+            Logger.log.Debug("Position: x=" + vrPlatformPos.x + " y=" + vrPlatformPos.y + " z=" + vrPlatformPos.z);
+            Logger.log.Debug("Rotation: x=" + vrPlatformRot.x + " y=" + vrPlatformRot.y + " z=" + vrPlatformRot.z);
+            Logger.log.Debug("==============================================================================");
+
             Vector3 posTest = new Vector3(0.3f, 0.3f, 0.3f);
             Vector3 rotTest = Quaternion.Euler(new Vector3(50f, 50f, 50f)).eulerAngles;
 
@@ -274,31 +302,30 @@ namespace SaberTailor.Settings.Utilities
 
             GameObject stAdjustObject = new GameObject();
             Transform stAdjustTransform = stAdjustObject.transform;
+            stAdjustTransform.position = Vector3.zero;
+            stAdjustTransform.rotation = Quaternion.Euler(Vector3.zero);
 
             stAdjustTransform.Translate(posTest);
             stAdjustTransform.Rotate(rotTest);
-            stAdjustTransform.Rotate(addRotViveIndex);
-            stAdjustTransform.Translate(addPosViveIndex);
+            stAdjustTransform.Rotate(vrPlatformRot);
+            stAdjustTransform.Translate(vrPlatformPos);
 
             Logger.log.Debug("==============================================================================");
             Logger.log.Debug("SaberTailor Adjustments Result:");
             Logger.log.Debug("Position: x=" + stAdjustTransform.position.x + " y=" + stAdjustTransform.position.y + " z=" + stAdjustTransform.position.z);
             Logger.log.Debug("Rotation: x=" + stAdjustTransform.rotation.eulerAngles.x + " y=" + stAdjustTransform.rotation.eulerAngles.y + " z=" + stAdjustTransform.rotation.eulerAngles.z);
 
-            stAdjustTransform.Translate(-addPosViveIndex);
-            stAdjustTransform.Rotate(-addRotViveIndex);
-
-            Logger.log.Debug("==============================================================================");
-            Logger.log.Debug("SaberTailor Adjustments after Removing platform helper - Result:");
-            Logger.log.Debug("Position: x=" + stAdjustTransform.position.x + " y=" + stAdjustTransform.position.y + " z=" + stAdjustTransform.position.z);
-            Logger.log.Debug("Rotation: x=" + stAdjustTransform.rotation.eulerAngles.x + " y=" + stAdjustTransform.rotation.eulerAngles.y + " z=" + stAdjustTransform.rotation.eulerAngles.z);
-
+            stAdjustTransform.Translate(-vrPlatformPos);
+            stAdjustTransform.Rotate(-vrPlatformRot);
 
             GameObject stToGameObject = new GameObject();
             Transform stToGameTransform = stToGameObject.transform;
-            ConvertSTtoGameVector(new Vector3(0.3f, 0.3f, 0.3f), new Vector3(50f, 50f, 50f), out Vector3 toGamePos, out Vector3 toGameRot);
-            Vector3 stToGameAdjustPos = addPosViveIndex.Clone();
-            Vector3 stToGameAdjustRot = addRotViveIndex.Clone();
+            stToGameTransform.position = Vector3.zero;
+            stToGameTransform.rotation = Quaternion.Euler(Vector3.zero);
+
+            ConvertSTtoGameVector(posTest, rotTest, out Vector3 toGamePos, out Vector3 toGameRot);
+            Vector3 stToGameAdjustPos = vrPlatformPos.Clone();
+            Vector3 stToGameAdjustRot = vrPlatformRot.Clone();
 
             stToGameAdjustPos += toGamePos;
             stToGameAdjustRot += toGameRot;
@@ -315,9 +342,11 @@ namespace SaberTailor.Settings.Utilities
 
             GameObject gameAdjustObject = new GameObject();
             Transform gameAdjustTransform = gameAdjustObject.transform;
+            gameAdjustTransform.position = Vector3.zero;
+            gameAdjustTransform.rotation = Quaternion.Euler(Vector3.zero);
 
-            Vector3 gameAdjustPos = addPosViveIndex.Clone();
-            Vector3 gameAdjustRot = addRotViveIndex.Clone();
+            Vector3 gameAdjustPos = vrPlatformPos.Clone();
+            Vector3 gameAdjustRot = vrPlatformRot.Clone();
 
             gameAdjustPos += posTest;
             gameAdjustRot += rotTest2;
@@ -333,11 +362,14 @@ namespace SaberTailor.Settings.Utilities
 
             GameObject gameToSTObject = new GameObject();
             Transform gameToSTTransform = gameToSTObject.transform;
-            ConvertGametoSTVector(new Vector3(0.3f, 0.3f, 0.3f), new Vector3(50f, 50f, 50f), out Vector3 toSTPos, out Vector3 toSTRot);
+            gameToSTTransform.position = Vector3.zero;
+            gameToSTTransform.rotation = Quaternion.Euler(Vector3.zero);
+
+            ConvertGametoSTVector(posTest, rotTest, out Vector3 toSTPos, out Vector3 toSTRot);
             gameToSTTransform.Translate(toSTPos);
             gameToSTTransform.Rotate(toSTRot);
-            gameToSTTransform.Rotate(addRotViveIndex);
-            gameToSTTransform.Translate(addPosViveIndex);
+            gameToSTTransform.Rotate(vrPlatformRot);
+            gameToSTTransform.Translate(vrPlatformPos);
 
             Logger.log.Debug("==============================================================================");
             Logger.log.Debug("Game Adjustments to SaberTailor Result:");
@@ -345,24 +377,10 @@ namespace SaberTailor.Settings.Utilities
             Logger.log.Debug("Rotation: x=" + gameToSTTransform.rotation.eulerAngles.x + " y=" + gameToSTTransform.rotation.eulerAngles.y + " z=" + gameToSTTransform.rotation.eulerAngles.z);
             Logger.log.Debug("==============================================================================");
 
-
-            GameObject baseAdjustObject = new GameObject();
-            Transform baseAdjustTransform = baseAdjustObject.transform;
-
-            baseAdjustTransform.Rotate(addRotViveIndex);
-            baseAdjustTransform.Translate(addPosViveIndex);
-
-            Logger.log.Debug("==============================================================================");
-            Logger.log.Debug("Base Game Adjustments Result without custom adjustments:");
-            Logger.log.Debug("Position: x=" + baseAdjustTransform.position.x + " y=" + baseAdjustTransform.position.y + " z=" + baseAdjustTransform.position.z);
-            Logger.log.Debug("Rotation: x=" + baseAdjustTransform.rotation.eulerAngles.x + " y=" + baseAdjustTransform.rotation.eulerAngles.y + " z=" + baseAdjustTransform.rotation.eulerAngles.z);
-
-
             UnityEngine.Object.Destroy(stAdjustObject);
             UnityEngine.Object.Destroy(stToGameObject);
             UnityEngine.Object.Destroy(gameAdjustObject);
             UnityEngine.Object.Destroy(gameToSTObject);
-            UnityEngine.Object.Destroy(baseAdjustObject);
         }
 
         private static string AddErrorStatus(string status, string addStatus, ref bool firstMsg)
