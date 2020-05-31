@@ -54,7 +54,6 @@
     <Compile Include="Settings\Utilities\PluginConfig.cs" />
     <Compile Include="Tweaks\SaberLength.cs" />
     <Compile Include="Tweaks\SaberTrail.cs" />
-    <Compile Include="Utilities\ScoreUtility.cs" />
     <Compile Include="Utilities\Utils.cs" />
     <Compile Include="Utilities\Vector3Extensions.cs" />
   </ItemGroup>

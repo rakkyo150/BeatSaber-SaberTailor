@@ -1,4 +1,5 @@
-﻿using IPA.Utilities;
+﻿using BS_Utils.Gameplay;
+using IPA.Utilities;
 using SaberTailor.Settings;
 using SaberTailor.Utilities;
 using System.Collections;
@@ -22,11 +23,8 @@ namespace SaberTailor.Tweaks
             // Allow the user to run in any mode, but don't allow ScoreSubmission
             if (IsPreventingScoreSubmission)
             {
-                ScoreUtility.DisableScoreSubmission(Name);
-            }
-            else if (ScoreUtility.ScoreIsBlocked)
-            {
-                ScoreUtility.EnableScoreSubmission(Name);
+                ScoreSubmission.DisableSubmission(Plugin.PluginName);
+                Logger.log.Info("ScoreSubmission has been disabled.");
             }
 
             StartCoroutine(ApplyGameCoreModifications());

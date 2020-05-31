@@ -6,7 +6,6 @@ using SaberTailor.HarmonyPatches;
 using SaberTailor.Settings;
 using SaberTailor.Settings.UI;
 using SaberTailor.Tweaks;
-using SaberTailor.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using IPALogger = IPA.Logging.Logger;
@@ -49,10 +48,6 @@ namespace SaberTailor
                 {
                     new GameObject(PluginName).AddComponent<SaberLength>();
                 }
-                else if (ScoreUtility.ScoreIsBlocked)
-                {
-                    ScoreUtility.EnableScoreSubmission(SaberLength.Name);
-                }
             }
             else if (nextScene.name == "MenuViewControllers" && prevScene.name == "EmptyTransition")
             {
@@ -79,7 +74,6 @@ namespace SaberTailor
         private void Unload()
         {
             SaberTailorPatches.RemoveHarmonyPatches();
-            ScoreUtility.Cleanup();
             Configuration.Save();
             RemoveEvents();
         }
