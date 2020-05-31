@@ -52,9 +52,6 @@ namespace SaberTailor
             else if (nextScene.name == "MenuViewControllers" && prevScene.name == "EmptyTransition")
             {
                 BSMLSettings.instance.AddSettingsMenu("SaberTailor", "SaberTailor.Settings.UI.Views.mainsettings.bsml", MainSettings.instance);
-
-                // Testing stuff - remove this!
-                SaberTailor.Settings.Utilities.GameSettingsTransfer.CompareAdjustmentSettings();
             }
         }
 
