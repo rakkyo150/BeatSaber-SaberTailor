@@ -53,30 +53,30 @@ namespace SaberTailor.Settings.Utilities
 
             Configuration.GripCfg.PosLeft = new Int3()
             {
-                x = -(int)ctrlPos.x * 1000,
-                y = (int)ctrlPos.y * 1000,
-                z = (int)ctrlPos.z * 1000
+                x = -(int)Math.Round(ctrlPos.x * 1000, MidpointRounding.AwayFromZero),
+                y = (int)Math.Round(ctrlPos.y * 1000, MidpointRounding.AwayFromZero),
+                z = (int)Math.Round(ctrlPos.z * 1000, MidpointRounding.AwayFromZero)
             };
 
             Configuration.GripCfg.RotLeft = new Int3()
             {
-                x = (int)ctrlRot.x,
-                y = -(int)ctrlRot.y,
-                z = (int)ctrlRot.z
+                x = (int)Math.Round(ctrlRot.x, MidpointRounding.AwayFromZero),
+                y = -(int)Math.Round(ctrlRot.y, MidpointRounding.AwayFromZero),
+                z = (int)Math.Round(ctrlRot.z, MidpointRounding.AwayFromZero)
             };
 
             Configuration.GripCfg.PosRight = new Int3()
             {
-                x = -(int)ctrlPos.x * 1000,
-                y = (int)ctrlPos.y * 1000,
-                z = (int)ctrlPos.z * 1000
+                x = (int)Math.Round(ctrlPos.x * 1000, MidpointRounding.AwayFromZero),
+                y = (int)Math.Round(ctrlPos.y * 1000, MidpointRounding.AwayFromZero),
+                z = (int)Math.Round(ctrlPos.z * 1000, MidpointRounding.AwayFromZero)
             };
 
             Configuration.GripCfg.RotRight = new Int3()
             {
-                x = (int)ctrlRot.x,
-                y = -(int)ctrlRot.y,
-                z = (int)ctrlRot.z
+                x = (int)Math.Round(ctrlRot.x, MidpointRounding.AwayFromZero),
+                y = (int)Math.Round(ctrlRot.y, MidpointRounding.AwayFromZero),
+                z = (int)Math.Round(ctrlRot.z, MidpointRounding.AwayFromZero)
             };
 
             return true;
