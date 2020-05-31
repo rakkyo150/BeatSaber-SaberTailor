@@ -8,6 +8,7 @@ using UnityEngine;
 namespace SaberTailor.Settings
 {
     internal enum ConfigSection { All, Grip, GripLeft, GripRight, Scale, Trail, Menu };
+    internal enum GripConfigSide { Left, Right };
 
     public class Configuration
     {
@@ -152,6 +153,44 @@ namespace SaberTailor.Settings
         {
             Grip.RotLeft = Quaternion.Euler(Int3.ToVector3(GripCfg.RotLeft)).eulerAngles;
             Grip.RotRight = Quaternion.Euler(Int3.ToVector3(GripCfg.RotRight)).eulerAngles;
+        }
+
+        /// <summary>
+        /// Mirrors a grip config from one side to another
+        /// </summary>
+        /// <param name="toTarget"></param>
+        internal static void MirrorGripToSide(GripConfigSide targetSide)
+        {
+            if (targetSide == GripConfigSide.Left)
+            {
+                GripCfg.PosLeft = new Int3()
+                {
+                    x = -GripCfg.PosRight.x,
+                    y = GripCfg.PosRight.y,
+                    z = GripCfg.PosRight.z
+                };
+                GripCfg.RotLeft = new Int3()
+                {
+                    x = GripCfg.RotRight.x,
+                    y = -GripCfg.RotRight.y,
+                    z = GripCfg.RotRight.z
+                };
+            }
+            else
+            {
+                GripCfg.PosRight = new Int3()
+                {
+                    x = -GripCfg.PosLeft.x,
+                    y = GripCfg.PosLeft.y,
+                    z = GripCfg.PosLeft.z
+                };
+                GripCfg.RotRight = new Int3()
+                {
+                    x = GripCfg.RotLeft.x,
+                    y = -GripCfg.RotLeft.y,
+                    z = GripCfg.RotLeft.z
+                };
+            }
         }
 
         private static void LoadConfig(ConfigSection cfgSection = ConfigSection.All)

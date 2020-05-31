@@ -414,6 +414,12 @@ namespace SaberTailor.Settings.UI
         [UIAction("#ok")]
         public void OnOk() => StoreConfiguration();
 
+        [UIAction("#mirror-grip-left-to-right")]
+        public void OnMirrorGripLeftToRight() => MirrorGripToSide(GripConfigSide.Right);
+
+        [UIAction("#mirror-grip-right-to-left")]
+        public void OnMirrorGripRightToLeft() => MirrorGripToSide(GripConfigSide.Left);
+
         [UIAction("#reset-saber-config")]
         public void OnResetSaberConfig() => ReloadConfiguration();
 
@@ -445,6 +451,18 @@ namespace SaberTailor.Settings.UI
         {
             Configuration.Save();
             Configuration.UpdateModVariables();
+        }
+
+        /// <summary>
+        /// Mirror a grip from one side to another
+        /// </summary>
+        /// <param name="targetSide"></param>
+        private void MirrorGripToSide(GripConfigSide targetSide)
+        {
+            Configuration.MirrorGripToSide(targetSide);
+            RefreshModSettingsUI();
+            Configuration.UpdateSaberPosition();
+            Configuration.UpdateSaberRotation();
         }
 
         /// <summary>

@@ -70,6 +70,7 @@
 
           <horizontal>
             <clickable-text text='&#60; Back' align='Left' click-event='back' />
+            <clickable-text text='Mirror to Right' align='Midline' click-event='mirror-grip-left-to-right' />
             <clickable-text text='Revert' align='Right' click-event='reset-saber-config-grip-left' />
           </horizontal>
         </settings-container>
@@ -110,6 +111,7 @@
 
           <horizontal>
             <clickable-text text='&#60; Back' align='Left' click-event='back' />
+            <clickable-text text='Mirror to Left' align='Midline' click-event='mirror-grip-right-to-left' />
             <clickable-text text='Revert' align='Right' click-event='reset-saber-config-grip-right' />
           </horizontal>
         </settings-container>
