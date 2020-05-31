@@ -73,9 +73,9 @@ namespace SaberTailor.Tweaks
                 }
             }
 
-            // Scaling default saber will affect its hitbox, so save the default hitbox positions first before scaling
+            // Scaling sabers will affect its hitbox, so save the default hitbox positions first before scaling
             HitboxRevertWorkaround hitboxVariables = null;
-            if (!usingCustomModels && !Configuration.Scale.ScaleHitBox)
+            if (!Configuration.Scale.ScaleHitBox)
             {
                 hitboxVariables = new HitboxRevertWorkaround(defaultLeftSaber, defaultRightSaber);
             }
@@ -84,14 +84,7 @@ namespace SaberTailor.Tweaks
             RescaleSaber(LeftSaber, Configuration.Scale.Length, Configuration.Scale.Girth);
             RescaleSaber(RightSaber, Configuration.Scale.Length, Configuration.Scale.Girth);
 
-            // Scaling custom sabers will not change their hitbox, so a manual hitbox rescale is necessary, if the option is enabled
-            if (usingCustomModels && Configuration.Scale.ScaleHitBox)
-            {
-                RescaleSaberHitBox(defaultLeftSaber, Configuration.Scale.Length);
-                RescaleSaberHitBox(defaultRightSaber, Configuration.Scale.Length);
-            }
-
-            // Revert hitbox changes to default sabers, if hitbox scaling is disabled
+            // Revert hitbox changes to sabers, if hitbox scaling is disabled
             if (hitboxVariables != null)
             {
                 hitboxVariables.RestoreHitbox();
