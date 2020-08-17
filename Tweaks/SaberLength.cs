@@ -153,12 +153,12 @@ namespace SaberTailor.Tweaks
 
             public HitboxRevertWorkaround(Saber defaultLeftSaber, Saber defaultRightSaber)
             {
-                // Scaling default saber will affect its hitbox, so save the default hitbox positions first before scaling
-                SetHitboxDefaultPosition(defaultLeftSaber, out leftSaberTop, out leftSaberBot);
+                // Scaling sabers will affect their hitboxes, so save the default hitbox positions first before scaling
+                GetHitboxDefaultTransforms(defaultLeftSaber, out leftSaberTop, out leftSaberBot);
                 leftDefaultHitboxTopPos = leftSaberTop.position.Clone();
                 leftDefaultHitboxBotPos = leftSaberBot.position.Clone();
 
-                SetHitboxDefaultPosition(defaultRightSaber, out rightSaberTop, out rightSaberBot);
+                GetHitboxDefaultTransforms(defaultRightSaber, out rightSaberTop, out rightSaberBot);
                 rightDefaultHitboxTopPos = rightSaberTop.position.Clone();
                 rightDefaultHitboxBotPos = rightSaberBot.position.Clone();
             }
@@ -174,7 +174,7 @@ namespace SaberTailor.Tweaks
                 rightSaberBot.position = rightDefaultHitboxBotPos;
             }
 
-            private void SetHitboxDefaultPosition(Saber saber, out Transform saberTop, out Transform saberBot)
+            private void GetHitboxDefaultTransforms(Saber saber, out Transform saberTop, out Transform saberBot)
             {
                 saberTop = saber.GetField<Transform, Saber>("_topPos");
                 saberBot = saber.GetField<Transform, Saber>("_bottomPos");
