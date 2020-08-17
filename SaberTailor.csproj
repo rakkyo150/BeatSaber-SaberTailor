@@ -47,12 +47,10 @@
     <Compile Include="Settings\Classes\ScaleRawConfig.cs" />
     <Compile Include="Settings\Classes\TrailConfig.cs" />
     <Compile Include="Settings\Configuration.cs" />
-    <Compile Include="Settings\UI\MainSettings.cs" />
     <Compile Include="Settings\Utilities\ConfigurationImporter.cs" />
     <Compile Include="Settings\Utilities\FileHandler.cs" />
     <Compile Include="Settings\Utilities\GameSettingsTransfer.cs" />
     <Compile Include="Settings\Utilities\PluginConfig.cs" />
-    <Compile Include="Tweaks\SaberLength.cs" />
     <Compile Include="Tweaks\SaberTrail.cs" />
     <Compile Include="Utilities\Utils.cs" />
     <Compile Include="Utilities\Vector3Extensions.cs" />
@@ -104,9 +102,6 @@
     <EmbeddedResource Include="manifest.json" />
     <EmbeddedResource Include="Resources\description.md" />
     <EmbeddedResource Include="Resources\icon.png" />
-    <EmbeddedResource Include="Settings\UI\Views\mainsettings.bsml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

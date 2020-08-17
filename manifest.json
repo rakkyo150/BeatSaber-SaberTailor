@@ -9,7 +9,7 @@
   "icon": "SaberTailor.Resources.icon.png",
   "id": "SaberTailor",
   "name": "SaberTailor",
-  "version": "2.7.999",
+  "version": "2.7.99",
   "dependsOn": {
   },
   "features": [],
