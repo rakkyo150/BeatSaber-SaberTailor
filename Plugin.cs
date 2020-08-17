@@ -1,10 +1,8 @@
-﻿using BeatSaberMarkupLanguage.Settings;
-using IPA;
+﻿using IPA;
 using IPA.Config;
 using IPA.Loader;
 using SaberTailor.HarmonyPatches;
 using SaberTailor.Settings;
-using SaberTailor.Settings.UI;
 using SaberTailor.Tweaks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -44,14 +42,10 @@ namespace SaberTailor
                     new GameObject(PluginName).AddComponent<SaberTrail>();
                 }
 
-                if (Configuration.Scale.TweakEnabled)
-                {
-                    new GameObject(PluginName).AddComponent<SaberLength>();
-                }
             }
             else if (nextScene.name == "MenuViewControllers" && prevScene.name == "EmptyTransition")
             {
-                BSMLSettings.instance.AddSettingsMenu("SaberTailor", "SaberTailor.Settings.UI.Views.mainsettings.bsml", MainSettings.instance);
+                // BSMLSettings.instance.AddSettingsMenu("SaberTailor", "SaberTailor.Settings.UI.Views.mainsettings.bsml", MainSettings.instance);
             }
         }
 
@@ -65,7 +59,7 @@ namespace SaberTailor
                 SaberTailorPatches.ApplyHarmonyPatches();
             }
 
-            Logger.log.Info($"{PluginName} v.{PluginVersion} has started.");
+            Logger.log.Info($"{PluginName}-Lite v.{PluginVersion} has started.");
         }
 
         private void Unload()
