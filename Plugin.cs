@@ -3,7 +3,6 @@ using IPA.Config;
 using IPA.Loader;
 using SaberTailor.HarmonyPatches;
 using SaberTailor.Settings;
-using SaberTailor.Tweaks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using IPALogger = IPA.Logging.Logger;
@@ -37,10 +36,6 @@ namespace SaberTailor
         {
             if (nextScene.name == "GameCore")
             {
-                if (Configuration.Trail.TweakEnabled)
-                {
-                    new GameObject(PluginName).AddComponent<SaberTrail>();
-                }
 
             }
             else if (nextScene.name == "MenuViewControllers" && prevScene.name == "EmptyTransition")

@@ -51,7 +51,6 @@
     <Compile Include="Settings\Utilities\FileHandler.cs" />
     <Compile Include="Settings\Utilities\GameSettingsTransfer.cs" />
     <Compile Include="Settings\Utilities\PluginConfig.cs" />
-    <Compile Include="Tweaks\SaberTrail.cs" />
     <Compile Include="Utilities\Utils.cs" />
     <Compile Include="Utilities\Vector3Extensions.cs" />
   </ItemGroup>
@@ -102,6 +101,9 @@
     <EmbeddedResource Include="manifest.json" />
     <EmbeddedResource Include="Resources\description.md" />
     <EmbeddedResource Include="Resources\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tweaks\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

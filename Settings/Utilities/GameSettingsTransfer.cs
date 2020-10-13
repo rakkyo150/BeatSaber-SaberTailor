@@ -429,7 +429,9 @@ namespace SaberTailor.Settings.Utilities
             position = Vector3.zero;
             rotation = Vector3.zero;
 
-            VRPlatformHelper vrPlatformHelper = Resources.FindObjectsOfTypeAll<VRPlatformHelper>().FirstOrDefault();
+
+            VRController vrController = Resources.FindObjectsOfTypeAll<VRController>().FirstOrDefault();
+            IVRPlatformHelper vrPlatformHelper = vrController.GetField<IVRPlatformHelper, VRController>("_vrPlatformHelper");
             if (vrPlatformHelper == null)
             {
                 Logger.log.Warn("Unable to get a reference to VRPlatformHelper for determining currently used VR platform.");
@@ -437,14 +439,14 @@ namespace SaberTailor.Settings.Utilities
             }
             else
             {
-                if (vrPlatformHelper.vrPlatformSDK == VRPlatformHelper.VRPlatformSDK.Oculus)
+                if (vrPlatformHelper.vrPlatformSDK == VRPlatformSDK.Oculus)
                 {
                     position = addPosOculus.Clone();
                     rotation = addRotOculus.Clone();
                 }
-                else if (vrPlatformHelper.vrPlatformSDK == VRPlatformHelper.VRPlatformSDK.OpenVR)
+                else if (vrPlatformHelper.vrPlatformSDK == VRPlatformSDK.OpenVR)
                 {
-                    if (vrPlatformHelper.GetField<OpenVRHelper, VRPlatformHelper>("_openVRHeper").vrControllerManufacturerName == OpenVRHelper.VRControllerManufacturerName.Valve)
+                    if (vrPlatformHelper.GetField<OpenVRHelper.VRControllerManufacturerName, IVRPlatformHelper>("vrControllerManufacturerName") == OpenVRHelper.VRControllerManufacturerName.Valve)
                     {
                         position = addPosViveIndex.Clone();
                         rotation = addRotViveIndex.Clone();
