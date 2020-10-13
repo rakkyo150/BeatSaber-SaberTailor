@@ -3,11 +3,10 @@ using SaberTailor.Settings;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Xft;
 
 namespace SaberTailor.Tweaks
 {
-    public class SaberTrail : MonoBehaviour
+    public class SaberTrailTweak : MonoBehaviour
     {
         public static string Name => "SaberTrail";
         public static bool IsPreventingScoreSubmission => false;

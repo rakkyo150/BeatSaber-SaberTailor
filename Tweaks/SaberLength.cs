@@ -5,7 +5,6 @@ using SaberTailor.Utilities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Xft;
 
 namespace SaberTailor.Tweaks
 {
@@ -90,13 +89,13 @@ namespace SaberTailor.Tweaks
                 hitboxVariables.RestoreHitbox();
             }
 
-            IEnumerable<BasicSaberModelController> basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
-            foreach (BasicSaberModelController basicSaberModelController in basicSaberModelControllers)
+            IEnumerable<SaberModelController> saberModelControllers = Resources.FindObjectsOfTypeAll<SaberModelController>();
+            foreach (SaberModelController saberModelController in saberModelControllers)
             {
-                XWeaponTrail saberWeaponTrail = basicSaberModelController.GetField<XWeaponTrail, BasicSaberModelController>("_saberWeaponTrail");
-                if (!usingCustomModels || saberWeaponTrail.name != "BasicSaberModel")
+                SaberTrail saberTrail = saberModelController.GetField<SaberTrail, SaberModelController>("_saberTrail");
+                if (!usingCustomModels || saberTrail.name != "BasicSaberModel")
                 {
-                    RescaleWeaponTrail(saberWeaponTrail, Configuration.Scale.Length, usingCustomModels);
+                    RescaleWeaponTrail(saberTrail, Configuration.Scale.Length, usingCustomModels);
                 }
             }
 
@@ -123,15 +122,17 @@ namespace SaberTailor.Tweaks
             }
         }
 
-        private void RescaleWeaponTrail(XWeaponTrail trail, float lengthMultiplier, bool usingCustomModels)
+        private void RescaleWeaponTrail(SaberTrail trail, float lengthMultiplier, bool usingCustomModels)
         {
-            float trailWidth = trail.GetField<float, XWeaponTrail>("_trailWidth");
-            trail.SetField("_trailWidth", trailWidth * lengthMultiplier);
+            SaberTrailRenderer trailRenderer = trail.GetField<SaberTrailRenderer, SaberTrail>("_trailRenderer");
+
+            float trailWidth = trailRenderer.GetField<float, SaberTrailRenderer>("_trailWidth");
+            trailRenderer.SetField("_trailWidth", trailWidth * lengthMultiplier);
 
             // Fix the local z position for the default trail on custom sabers
             if (usingCustomModels)
             {
-                Transform pointEnd = trail.GetField<Transform, XWeaponTrail>("_pointEnd");
+                Transform pointEnd = trail.GetField<Transform, SaberTrail>("_pointEnd");
                 pointEnd.localPosition = Vector3Extensions.Rescale(pointEnd.localPosition, 1.0f, 1.0f, pointEnd.localPosition.z * lengthMultiplier);
             }
         }
