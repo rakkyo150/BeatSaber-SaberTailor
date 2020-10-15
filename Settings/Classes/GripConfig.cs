@@ -6,6 +6,7 @@ namespace SaberTailor.Settings.Classes
     {
         public bool IsGripModEnabled;
         public bool ModifyMenuHiltGrip;
+        public bool UseBaseGameAdjustmentMode;
 
         public Vector3 PosLeft;
         public Vector3 PosRight;

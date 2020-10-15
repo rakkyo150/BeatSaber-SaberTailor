@@ -63,6 +63,7 @@ namespace SaberTailor.Settings
 
             PluginConfig.Instance.IsGripModEnabled = Grip.IsGripModEnabled;
             PluginConfig.Instance.ModifyMenuHiltGrip = Grip.ModifyMenuHiltGrip;
+            PluginConfig.Instance.UseBaseGameAdjustmentMode = Grip.UseBaseGameAdjustmentMode;
             #endregion
 
             #region Menu settings
@@ -269,6 +270,7 @@ namespace SaberTailor.Settings
             {
                 Grip.IsGripModEnabled = PluginConfig.Instance.IsGripModEnabled;
                 Grip.ModifyMenuHiltGrip = PluginConfig.Instance.ModifyMenuHiltGrip;
+                Grip.UseBaseGameAdjustmentMode = PluginConfig.Instance.UseBaseGameAdjustmentMode;
             }
             #endregion
 
@@ -345,6 +347,22 @@ namespace SaberTailor.Settings
                 }
 
                 Grip.IsGripModEnabled = gripAdjPresent;
+                ConfigVersion = 4;
+            }
+
+            if (ConfigVersion == 4)
+            {
+                // v4 -> v5: Added toggle to change adjustment mode (switch between SaberTailor or base game adjustment mode)
+                // For existing configuration: Enable, if non-default settings are present
+                bool gripAdjPresent = false;
+                if (GripCfg.PosLeft != Int3.zero || GripCfg.RotLeft != Int3.zero
+                    || GripCfg.PosRight != Int3.zero || GripCfg.RotRight != Int3.zero)
+                {
+                    gripAdjPresent = true;
+                }
+
+                Grip.UseBaseGameAdjustmentMode = !gripAdjPresent;
+                ConfigVersion = 5;
             }
 
             // Updater done - set to latest version and save

@@ -11,29 +11,13 @@
                     get-event="refresh-sabertailor-values"
                     hover-hint='Enable/Disable any grip modifications.' />
 
-      <text text='Enabling this will disable the base game adjustments.'
-            font-size='5' color='#fb484e' size-delta-y='8' />
+      <text text='Enabling grip adjustments will disable the base game adjustments.'
+            font-size='4' color='#fb484e' size-delta-y='8' />
 
-      <!--Saber Grip Precision Settings-->
-      <settings-submenu text='&#62; Settings Increment Precision...' hover-hint='Change the increment precision for other settings.'>
-        <settings-container>
-          <dropdown-list-setting text='Saber Position Inc. Unit' value='saber-pos-unit-value'
-                                 options='saber-pos-unit-options' apply-on-change='true'/>
-
-          <increment-setting text='Saber Position Increment' value='saber-pos-increment-value' get-event='refresh-sabertailor-position-values'
-                             apply-on-change='true' formatter='position-inc-formatter'
-                             integer-only='true' min='1' max='20' increment='1'/>
-
-          <increment-setting text='Saber Rotation Increment' value='saber-rot-increment-value'
-                             apply-on-change='true' formatter='rotation-formatter'
-                             integer-only='true' min='1' max='20' increment='1'/>
-
-          <dropdown-list-setting text='Saber Pos. Display Unit' value='saber-pos-display-unit-value' get-event='refresh-sabertailor-position-values'
-                                 options='saber-pos-display-unit-options' apply-on-change='true'/>
-
-          <clickable-text text='&#60; Back' align='Left' click-event='back' />
-        </settings-container>
-      </settings-submenu>
+      <!--Saber Grip Menu-->
+      <bool-setting text='Grip Adjustment Mode' value='basegameadjustmentmode-enabled' formatter='adjustmentmode-formatter'
+                    get-event='refresh-sabertailor-values'
+                    hover-hint='Switch between SaberTailor or base game adjustment mode.' />
 
       <!--Saber Grip Left-->
       <settings-submenu text='&#62; Left Saber Settings...' hover-hint='Adjust position and rotation of the left saber.'>
@@ -117,11 +101,31 @@
         </settings-container>
       </settings-submenu>
 
-      <!--Saber Grip Menu-->
-      <bool-setting text='Menu hilt adjustments' value='menuhiltadjust-enabled' formatter='bool-formatter'
+      <!--Saber Grip Precision Settings-->
+      <settings-submenu text='&#62; Precision and other settings...' hover-hint='Change the increment precision for other settings.'>
+        <settings-container>
+          <dropdown-list-setting text='Saber Position Inc. Unit' value='saber-pos-unit-value'
+                                 options='saber-pos-unit-options' apply-on-change='true'/>
+
+          <increment-setting text='Saber Position Increment' value='saber-pos-increment-value' get-event='refresh-sabertailor-position-values'
+                             apply-on-change='true' formatter='position-inc-formatter'
+                             integer-only='true' min='1' max='20' increment='1'/>
+
+          <increment-setting text='Saber Rotation Increment' value='saber-rot-increment-value'
+                             apply-on-change='true' formatter='rotation-formatter'
+                             integer-only='true' min='1' max='20' increment='1'/>
+
+          <dropdown-list-setting text='Saber Pos. Display Unit' value='saber-pos-display-unit-value' get-event='refresh-sabertailor-position-values'
+                                 options='saber-pos-display-unit-options' apply-on-change='true'/>
+
+          <bool-setting text='Menu hilt adjustments' value='menuhiltadjust-enabled' formatter='bool-formatter'
                     get-event='refresh-sabertailor-values'
                     hover-hint='Enable to reposition the menu hilts the same way as the sabers.' />
 
+          <clickable-text text='&#60; Back' align='Left' click-event='back' />
+        </settings-container>
+      </settings-submenu>
+      
       <clickable-text text='&#60; Back' align='Left' click-event='back' />
     </settings-container>
   </settings-submenu>

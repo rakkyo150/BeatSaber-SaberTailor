@@ -6,7 +6,7 @@ namespace SaberTailor.Settings.Utilities
     {
         public static PluginConfig Instance;
 
-        public int ConfigVersion = 4;
+        public int ConfigVersion = 5;
 
         public bool IsSaberScaleModEnabled = false;
         public bool SaberScaleHitbox = false;
@@ -26,6 +26,7 @@ namespace SaberTailor.Settings.Utilities
         public Int3 GripRightRotation = new Int3();
 
         public bool ModifyMenuHiltGrip = true;
+        public bool UseBaseGameAdjustmentMode = true;
 
         public int SaberPosIncrement = 10;
         public int SaberPosIncValue = 1;

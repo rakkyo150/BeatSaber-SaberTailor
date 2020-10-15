@@ -45,14 +45,30 @@ namespace SaberTailor.HarmonyPatches
             // Always check for sabers first and modify and exit out immediately if found
             if (transform.gameObject.name == "LeftSaber" || transform.gameObject.name.Contains("Saber A"))
             {
-                transform.Translate(Configuration.Grip.PosLeft);
-                transform.Rotate(Configuration.Grip.RotLeft);
+                if (Configuration.Grip.UseBaseGameAdjustmentMode)
+                {
+                    position = Configuration.Grip.PosLeft;
+                    rotation = Configuration.Grip.RotLeft;
+                }
+                else
+                {
+                    transform.Translate(Configuration.Grip.PosLeft);
+                    transform.Rotate(Configuration.Grip.RotLeft);
+                }
                 return;
             }
             else if (transform.gameObject.name == "RightSaber" || transform.gameObject.name.Contains("Saber B"))
             {
-                transform.Translate(Configuration.Grip.PosRight);
-                transform.Rotate(Configuration.Grip.RotRight);
+                if (Configuration.Grip.UseBaseGameAdjustmentMode)
+                {
+                    position = Configuration.Grip.PosRight;
+                    rotation = Configuration.Grip.RotRight;
+                }
+                else
+                {
+                    transform.Translate(Configuration.Grip.PosRight);
+                    transform.Rotate(Configuration.Grip.RotRight);
+                }
                 return;
             }
 
@@ -61,14 +77,30 @@ namespace SaberTailor.HarmonyPatches
             {
                 if (transform.gameObject.name == "ControllerLeft")
                 {
-                    transform.Translate(Configuration.Grip.PosLeft);
-                    transform.Rotate(Configuration.Grip.RotLeft);
+                    if (Configuration.Grip.UseBaseGameAdjustmentMode)
+                    {
+                        position = Configuration.Grip.PosLeft;
+                        rotation = Configuration.Grip.RotLeft;
+                    }
+                    else
+                    {
+                        transform.Translate(Configuration.Grip.PosLeft);
+                        transform.Rotate(Configuration.Grip.RotLeft);
+                    }
                     return;
                 }
                 else if (transform.gameObject.name == "ControllerRight")
                 {
-                    transform.Translate(Configuration.Grip.PosRight);
-                    transform.Rotate(Configuration.Grip.RotRight);
+                    if (Configuration.Grip.UseBaseGameAdjustmentMode)
+                    {
+                        position = Configuration.Grip.PosRight;
+                        rotation = Configuration.Grip.RotRight;
+                    }
+                    else
+                    {
+                        transform.Translate(Configuration.Grip.PosRight);
+                        transform.Rotate(Configuration.Grip.RotRight);
+                    }
                     return;
                 }
             }

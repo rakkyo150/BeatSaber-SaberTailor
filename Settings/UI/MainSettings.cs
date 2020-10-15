@@ -96,6 +96,15 @@ namespace SaberTailor.Settings.UI
         }
         #endregion
 
+        #region Saber Adjustment Mode
+        [UIValue("basegameadjustmentmode-enabled")]
+        public bool UseBaseGameAdjustmentMode
+        {
+            get => Configuration.Grip.UseBaseGameAdjustmentMode;
+            set => Configuration.Grip.UseBaseGameAdjustmentMode = value;
+        }
+        #endregion
+
         #region Saber Grip Left
         [UIValue("saber-left-position-x")]
         public int GripLeftPositionX
@@ -388,6 +397,19 @@ namespace SaberTailor.Settings.UI
             else
             {
                 return "<color=#57d657>Off</color>";
+            }
+        }
+
+        [UIAction("adjustmentmode-formatter")]
+        public string AdjustmentModeString(bool value)
+        {
+            if (value)
+            {
+                return "Base Game";
+            }
+            else
+            {
+                return "SaberTailor";
             }
         }
         #endregion
