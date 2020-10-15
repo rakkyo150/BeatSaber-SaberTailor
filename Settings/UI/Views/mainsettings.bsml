@@ -198,7 +198,7 @@
         <button text='Import from game' align='Left' click-event='saber-grip-import' />
       </horizontal>
       <horizontal pref-width='90' pref-height='30'>
-        <text id='transfer-txt' text=' '></text>
+        <text id='transfer-txt' text=' ' word-wrapping='true'></text>
       </horizontal>
     </settings-container>
   </settings-submenu>

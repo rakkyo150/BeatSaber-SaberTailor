@@ -527,7 +527,10 @@ namespace SaberTailor.Settings.UI
             bool importSuccessful = GameSettingsTransfer.ImportFromGame();
             if (importSuccessful)
             {
-                TransferText.text = "Import successul. Please remember to enable saber grip adjustments in SaberTailor for enabling SaberTailor.";
+                TransferText.text = "Import successful. Please remember to enable saber grip adjustments in SaberTailor for enabling SaberTailor.";
+                RefreshModSettingsUI();
+                Configuration.UpdateSaberPosition();
+                Configuration.UpdateSaberRotation();
             }
             else
             {

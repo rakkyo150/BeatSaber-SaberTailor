@@ -47,10 +47,8 @@ namespace SaberTailor.Settings.Utilities
             Vector3SO gameCtrlPosSO = mainSettings.controllerPosition;
             Vector3SO gameCtrlRotSO = mainSettings.controllerRotation;
 
-            Vector3 gameCtrlPos = new Vector3(gameCtrlPosSO.value.x, gameCtrlPosSO.value.y, gameCtrlPosSO.value.z);
-            Vector3 gameCtrlRot = new Vector3(gameCtrlRotSO.value.x, gameCtrlRotSO.value.y, gameCtrlRotSO.value.z);
-
-            ConvertGametoSTVector(gameCtrlPos, gameCtrlRot, out Vector3 ctrlPos, out Vector3 ctrlRot);
+            Vector3 ctrlPos = new Vector3(gameCtrlPosSO.value.x, gameCtrlPosSO.value.y, gameCtrlPosSO.value.z);
+            Vector3 ctrlRot = new Vector3(gameCtrlRotSO.value.x, gameCtrlRotSO.value.y, gameCtrlRotSO.value.z);
 
             Configuration.GripCfg.PosLeft = new Int3()
             {
@@ -80,7 +78,7 @@ namespace SaberTailor.Settings.Utilities
                 z = (int)Math.Round(ctrlRot.z, MidpointRounding.AwayFromZero)
             };
 
-            Configuration.Grip.UseBaseGameAdjustmentMode = false;
+            Configuration.Grip.UseBaseGameAdjustmentMode = true;
 
             return true;
         }
@@ -101,6 +99,12 @@ namespace SaberTailor.Settings.Utilities
                 Configuration.GripCfg.RotRight.z);
 
             ConvertSTtoGameVector(stPos, stRot, out Vector3 exportPos, out Vector3 exportRot);
+
+            if (Configuration.Grip.UseBaseGameAdjustmentMode)
+            {
+                exportPos = stPos;
+                exportRot = stRot;
+            }
 
             // FIXME: Delete this later
             Logger.log.Debug("==============================================================================");
