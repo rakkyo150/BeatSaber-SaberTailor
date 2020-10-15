@@ -106,13 +106,6 @@ namespace SaberTailor.Settings.Utilities
                 exportRot = stRot;
             }
 
-            // FIXME: Delete this later
-            Logger.log.Debug("==============================================================================");
-            Logger.log.Debug("Menu Debug: Resulting vectors for export to game settings:");
-            Logger.log.Debug("Position: x=" + exportPos.x + " y=" + exportPos.y + " z=" + exportPos.z);
-            Logger.log.Debug("Rotation: x=" + exportRot.x + " y=" + exportRot.y + " z=" + exportRot.z);
-            Logger.log.Debug("==============================================================================");
-
             exportable = CheckGripCompatibility(exportPos, exportRot, out statusMsg);
 
             if (exportable)
@@ -158,7 +151,6 @@ namespace SaberTailor.Settings.Utilities
             statusMsg = "";
 
             float baseGamePosLimit = 0.1f;            // in m
-            float baseGameRotLimit = 225f;            // in deg
 
             // Check to see if position adjustments are within base game limits (Check right only because left values needs mirrored to right anyway)
             if (posRight.x < -baseGamePosLimit)
@@ -185,34 +177,6 @@ namespace SaberTailor.Settings.Utilities
             {
                 statusMsg = AddErrorStatus(statusMsg, String.Format("Resulting right position Z is larger than {0:0} cm", baseGamePosLimit * 100), ref exportable);
             }
-
-            /*
-            // Check to see if rotation adjustments are within base game limits (Check right only because left values needs mirrored to right anyway)
-            if (rotRight.x < -baseGameRotLimit)
-            {
-                statusMsg = AddErrorStatus(statusMsg, String.Format("Right rotation X is smaller than -{0:0} deg", baseGameRotLimit), ref exportable);
-            }
-            if (rotRight.x > baseGameRotLimit)
-            {
-                statusMsg = AddErrorStatus(statusMsg, String.Format("Right rotation X is larger than {0:0} deg", baseGameRotLimit), ref exportable);
-            }
-            if (rotRight.y < -baseGameRotLimit)
-            {
-                statusMsg = AddErrorStatus(statusMsg, String.Format("Right rotation Y is smaller than -{0:0} deg", baseGameRotLimit), ref exportable);
-            }
-            if (rotRight.y > baseGameRotLimit)
-            {
-                statusMsg = AddErrorStatus(statusMsg, String.Format("Right rotation Y is larger than {0:0} deg", baseGameRotLimit), ref exportable);
-            }
-            if (rotRight.z < -baseGameRotLimit)
-            {
-                statusMsg = AddErrorStatus(statusMsg, String.Format("Right rotation Z is smaller than -{0:0} deg", baseGameRotLimit), ref exportable);
-            }
-            if (rotRight.z > baseGameRotLimit)
-            {
-                statusMsg = AddErrorStatus(statusMsg, String.Format("Right rotation Z is larger than {0:0} deg", baseGameRotLimit), ref exportable);
-            }
-            */
 
             // Check to see if position adjustments are mirrored
             if (Configuration.GripCfg.PosRight.x != -Configuration.GripCfg.PosLeft.x)
@@ -266,20 +230,6 @@ namespace SaberTailor.Settings.Utilities
 
             outPos = gameAdjustTransform.position.Clone();
             outRot = gameAdjustTransform.rotation.eulerAngles.Clone();
-            /**
-            // Round the resulting values to the nearest precision (test)
-            outPos = new Vector3(
-                (float)Math.Round(gameAdjustTransform.position.x, 3, MidpointRounding.AwayFromZero), 
-                (float)Math.Round(gameAdjustTransform.position.y, 3, MidpointRounding.AwayFromZero),
-                (float)Math.Round(gameAdjustTransform.position.z, 3, MidpointRounding.AwayFromZero)
-                );
-
-            outRot = new Vector3(
-                (float)Math.Round(gameAdjustTransform.rotation.eulerAngles.x, 3, MidpointRounding.AwayFromZero),
-                (float)Math.Round(gameAdjustTransform.rotation.eulerAngles.y, 3, MidpointRounding.AwayFromZero),
-                (float)Math.Round(gameAdjustTransform.rotation.eulerAngles.z, 3, MidpointRounding.AwayFromZero)
-                );
-            **/
 
             UnityEngine.Object.Destroy(gameAdjustObject);
         }
