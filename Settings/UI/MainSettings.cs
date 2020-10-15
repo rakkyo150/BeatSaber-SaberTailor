@@ -284,6 +284,7 @@ namespace SaberTailor.Settings.UI
         #endregion
 
         #region Saber Trail
+        /*
         [UIValue("saber-trail-tweak-enabled")]
         public bool TrailTweakEnabled
         {
@@ -304,6 +305,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.Trail.Length;
             set => Configuration.Trail.Length = value;
         }
+        */
         #endregion
 
         #region Transfer Grip

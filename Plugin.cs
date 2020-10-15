@@ -44,7 +44,7 @@ namespace SaberTailor
             {
                 if (Configuration.Trail.TweakEnabled)
                 {
-                    new GameObject(PluginName).AddComponent<SaberTrailTweak>();
+                    //new GameObject(PluginName).AddComponent<SaberTrailTweak>();
                 }
 
                 if (Configuration.Scale.TweakEnabled)
