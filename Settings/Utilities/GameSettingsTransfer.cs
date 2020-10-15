@@ -4,6 +4,7 @@ using SaberTailor.Utilities;
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.XR;
 
 namespace SaberTailor.Settings.Utilities
 {
@@ -78,6 +79,8 @@ namespace SaberTailor.Settings.Utilities
                 y = (int)Math.Round(ctrlRot.y, MidpointRounding.AwayFromZero),
                 z = (int)Math.Round(ctrlRot.z, MidpointRounding.AwayFromZero)
             };
+
+            Configuration.Grip.UseBaseGameAdjustmentMode = false;
 
             return true;
         }
@@ -429,35 +432,36 @@ namespace SaberTailor.Settings.Utilities
             position = Vector3.zero;
             rotation = Vector3.zero;
 
-            VRPlatformHelper vrPlatformHelper = Resources.FindObjectsOfTypeAll<VRPlatformHelper>().FirstOrDefault();
-            if (vrPlatformHelper == null)
+            if (XRSettings.loadedDeviceName == "Oculus")
             {
-                Logger.log.Warn("Unable to get a reference to VRPlatformHelper for determining currently used VR platform.");
-                return false;
+                position = addPosOculus.Clone();
+                rotation = addRotOculus.Clone();
+                return true;
             }
-            else
+
+            if (XRSettings.loadedDeviceName == "OpenVR")
             {
-                if (vrPlatformHelper.vrPlatformSDK == VRPlatformHelper.VRPlatformSDK.Oculus)
+                OpenVRHelper[] vrHelpers = Resources.FindObjectsOfTypeAll<OpenVRHelper>();
+                foreach (OpenVRHelper vrHelper in vrHelpers)
                 {
-                    position = addPosOculus.Clone();
-                    rotation = addRotOculus.Clone();
-                }
-                else if (vrPlatformHelper.vrPlatformSDK == VRPlatformHelper.VRPlatformSDK.OpenVR)
-                {
-                    if (vrPlatformHelper.GetField<OpenVRHelper, VRPlatformHelper>("_openVRHeper").vrControllerManufacturerName == OpenVRHelper.VRControllerManufacturerName.Valve)
+                    if (vrHelper.gameObject.activeInHierarchy)
                     {
-                        position = addPosViveIndex.Clone();
-                        rotation = addRotViveIndex.Clone();
-                    }
-                    else
-                    {
-                        position = addPosOpenVR.Clone();
-                        rotation = addRotOpenVR.Clone();
+                        if (vrHelper.GetField<OpenVRHelper.VRControllerManufacturerName, OpenVRHelper>("_vrControllerManufacturerName") == OpenVRHelper.VRControllerManufacturerName.Valve)
+                        {
+                            position = addPosViveIndex.Clone();
+                            rotation = addRotViveIndex.Clone();
+                        }
+                        else
+                        {
+                            position = addPosOpenVR.Clone();
+                            rotation = addRotOpenVR.Clone();
+                        }
+                        return true;
                     }
                 }
             }
 
-            return true;
+            return false;
         }
     }
 }
