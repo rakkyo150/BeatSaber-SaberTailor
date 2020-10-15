@@ -60,13 +60,6 @@ namespace SaberTailor
             //Debugging/Testing
             if (nextScene.name == "GameCore")
             {
-                Saber[] sabers = Resources.FindObjectsOfTypeAll<Saber>();
-                Logger.log.Debug("Printing saber information...");
-                foreach (Saber saber in sabers)
-                {
-                    Logger.log.Debug("GameObject.name: " + saber.gameObject.name + " | Saber.name: " + saber.name + " | Saber.saberType: " + saber.saberType.ToString());
-                }
-
                 Logger.log.Debug("Printing scene information...");
                 for (int i = 0; i < SceneManager.sceneCount; i++)
                 {
