@@ -8,7 +8,7 @@
     <settings-container>
 
       <bool-setting text='Enable saber grip modification' value='saber-grip-tweak-enabled' formatter='bool-formatter'
-                    get-event="refresh-sabertailor-values"
+                    apply-on-change='true' get-event="refresh-sabertailor-values"
                     hover-hint='Enable/Disable any grip modifications.' />
 
       <text text='Enabling grip adjustments will disable the base game adjustments.'
@@ -16,7 +16,7 @@
 
       <!--Saber Grip Menu-->
       <bool-setting text='Grip Adjustment Mode' value='basegameadjustmentmode-enabled' formatter='adjustmentmode-formatter'
-                    get-event='refresh-sabertailor-values'
+                    apply-on-change='true' get-event='refresh-sabertailor-values'
                     hover-hint='Switch between SaberTailor or base game adjustment mode.' />
 
       <!--Saber Grip Left-->
@@ -119,7 +119,7 @@
                                  options='saber-pos-display-unit-options' apply-on-change='true'/>
 
           <bool-setting text='Menu hilt adjustments' value='menuhiltadjust-enabled' formatter='bool-formatter'
-                    get-event='refresh-sabertailor-values'
+                    apply-on-change='true' get-event='refresh-sabertailor-values'
                     hover-hint='Enable to reposition the menu hilts the same way as the sabers.' />
 
           <clickable-text text='&#60; Back' align='Left' click-event='back' />
@@ -173,7 +173,7 @@
                     hover-hint='Currently only works with sabers using default trail.' />
 
       <increment-setting text='Trail length' value='saber-trail-length'
-                          get-event="refresh-sabertailor-values"
+                         get-event="refresh-sabertailor-values"
                          integer-only='true' min='5' max='100' increment='5'
                          hover-hint='Adjusts trail length. Currently only works with sabers using default trail.' />
 

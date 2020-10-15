@@ -1,5 +1,6 @@
 ﻿using IPA.Config;
 using IPA.Config.Stores;
+using SaberTailor.HarmonyPatches;
 using SaberTailor.Settings.Classes;
 using SaberTailor.Settings.Utilities;
 using System;
@@ -271,6 +272,15 @@ namespace SaberTailor.Settings
                 Grip.IsGripModEnabled = PluginConfig.Instance.IsGripModEnabled;
                 Grip.ModifyMenuHiltGrip = PluginConfig.Instance.ModifyMenuHiltGrip;
                 Grip.UseBaseGameAdjustmentMode = PluginConfig.Instance.UseBaseGameAdjustmentMode;
+
+                if (Grip.IsGripModEnabled)
+                {
+                    SaberTailorPatches.ApplyHarmonyPatches();
+                }
+                else
+                {
+                    SaberTailorPatches.RemoveHarmonyPatches();
+                }
             }
             #endregion
 
