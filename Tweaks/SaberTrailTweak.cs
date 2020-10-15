@@ -22,27 +22,23 @@ namespace SaberTailor.Tweaks
 
         private IEnumerator ApplyGameCoreModifications()
         {
-            IEnumerable<BasicSaberModelController> basicSaberModelControllers = Resources.FindObjectsOfTypeAll<BasicSaberModelController>();
-            foreach (BasicSaberModelController basicSaberModelController in basicSaberModelControllers)
+            IEnumerable<SaberTrailRenderer> saberTrailRenderers = Resources.FindObjectsOfTypeAll<SaberTrailRenderer>();
+            foreach (SaberTrailRenderer saberTrailRenderer in saberTrailRenderers)
             {
-                XWeaponTrail saberTrail = basicSaberModelController.GetField<XWeaponTrail, BasicSaberModelController>("_saberWeaponTrail");
-                if (saberTrail.name == "BasicSaberModel")
-                {
-                    ModifyTrail(saberTrail, Configuration.Trail.Length);
-                    Logger.log.Info("Successfully modified trails!");
-                }
+                ModifyTrail(saberTrailRenderer, Configuration.Trail.Length);
+                Logger.log.Info("Successfully modified trails!");
             }
 
             yield return null;
         }
 
-        private void ModifyTrail(XWeaponTrail trail, int length)
+        private void ModifyTrail(SaberTrailRenderer trail, int length)
         {
             if (Configuration.Trail.TrailEnabled)
             {
                 trail.enabled = true;
-                trail.SetField("_maxFrame", length);
-                trail.SetField("_granularity", length * 3);
+                trail.SetField("_trailDuration", length/90f);
+                trail.SetField("_granularity", length);
             }
             else
             {
