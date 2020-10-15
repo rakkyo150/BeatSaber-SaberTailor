@@ -5,6 +5,7 @@ using SaberTailor.Utilities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SaberTailor.Tweaks
 {
@@ -20,26 +21,25 @@ namespace SaberTailor.Tweaks
 
         private void Load()
         {
-            // Disable scaling in multiplayer completly for now
-            if (BS_Utils.Plugin.LevelData.IsSet)
+            for (int i = 0; i < SceneManager.sceneCount; i++)
             {
-                if (BS_Utils.Plugin.LevelData.Mode == Mode.Multiplayer)
+                // Disable hitbox scaling and cosmetic length scaling in multiplayer
+                if (SceneManager.GetSceneAt(i).name == "MultiplayerGameplay")
                 {
-                    Logger.log.Info("Multiplayer mode detected, skipping saber scaling.");
-                    return;
+                    LengthMultiplier = 1;
+                    EnableHitboxScaling = false;
+                    Logger.log.Info("Multiplayer environment detected, disabling hitbox scaling and cosmetic length scaling.");
                 }
-            }
-
-            // Force disable hitbox scaling if in multiplayer and mission mode
-            if (BS_Utils.Plugin.LevelData.IsSet)
-            {
-                if (BS_Utils.Plugin.LevelData.Mode == Mode.Multiplayer || BS_Utils.Plugin.LevelData.Mode == Mode.Mission)
+                
+                // Disable hitbox scaling in mission gameplay
+                if (SceneManager.GetSceneAt(i).name == "MissionGameplay")
                 {
                     EnableHitboxScaling = false;
+                    Logger.log.Info("Campaign environment detected, disabling hitbox scaling.");
                 }
             }
 
-            // Allow the user to run in other mode, but don't allow ScoreSubmission
+            // Allow the user to run in any other mode, but don't allow ScoreSubmission if hitbox scaling is enabled
             if (EnableHitboxScaling)
             {
                 ScoreSubmission.DisableSubmission(Plugin.PluginName);
@@ -51,28 +51,48 @@ namespace SaberTailor.Tweaks
 
         private IEnumerator ApplyGameCoreModifications()
         {
-            bool usingCustomModels = false;
-            Saber defaultLeftSaber = null;
-            Saber defaultRightSaber = null;
-            GameObject LeftSaber = null;
-            GameObject RightSaber = null;
-
-            // Find and set the default sabers first
-            IEnumerable<Saber> sabers = Resources.FindObjectsOfTypeAll<Saber>();
+            Saber[] sabers = Resources.FindObjectsOfTypeAll<Saber>();
             foreach (Saber saber in sabers)
             {
-                if (saber.saberType == SaberType.SaberB)
+                // Scaling sabers will affect its hitbox, so save the default hitbox positions first before scaling
+                HitboxRevertWorkaround hitboxVariables = null;
+                if (!EnableHitboxScaling)
                 {
-                    defaultLeftSaber = saber;
-                    LeftSaber = saber.gameObject;
+                    hitboxVariables = new HitboxRevertWorkaround(saber);
                 }
-                else if (saber.saberType == SaberType.SaberA)
+
+                // Rescale visible saber (FIXME: Need to account for custom sabers once that mod is available again)
+                RescaleSaber(saber.gameObject, LengthMultiplier, Configuration.Scale.Girth);
+
+                // Revert hitbox changes to sabers, if hitbox scaling is disabled
+                if (hitboxVariables != null)
                 {
-                    defaultRightSaber = saber;
-                    RightSaber = saber.gameObject;
+                    hitboxVariables.RestoreHitbox();
                 }
             }
 
+            bool usingCustomModels = false;
+
+            #region TrailScaling
+            // The new SaberTrail in 1.12.1 is kinda hardcoded to current blade top/bottom positions. So disabling trail scaling for now.
+            /*
+            IEnumerable<SaberModelController> saberModelControllers = Resources.FindObjectsOfTypeAll<SaberModelController>();
+            foreach (SaberModelController saberModelController in saberModelControllers)
+            {
+                SaberTrail saberTrail = saberModelController.GetField<SaberTrail, SaberModelController>("_saberTrail");
+                Logger.log.Debug("SaberTrailName is '" + saberTrail.name + "'.");
+
+                if (!usingCustomModels || saberTrail.name != "BasicSaberModel")
+                {
+                    //RescaleWeaponTrail(saberTrail, Configuration.Scale.Length, usingCustomModels);
+                }
+            }
+            */
+            #endregion
+
+            #region CustomSabers
+            // Deal with CustomSabers once it got updated.
+            /*
             if (Utilities.Utils.IsPluginEnabled("Custom Sabers"))
             {
                 // Wait a moment for CustomSaber to catch up
@@ -91,39 +111,8 @@ namespace SaberTailor.Tweaks
                     Logger.log.Debug("Either the Default Sabers are selected or CustomSaber were too slow!");
                 }
             }
-
-            // Scaling sabers will affect its hitbox, so save the default hitbox positions first before scaling
-            HitboxRevertWorkaround hitboxVariables = null;
-            if (!EnableHitboxScaling)
-            {
-                hitboxVariables = new HitboxRevertWorkaround(defaultLeftSaber, defaultRightSaber);
-            }
-
-            // Rescale visible sabers (either default or custom)
-            RescaleSaber(LeftSaber, LengthMultiplier, Configuration.Scale.Girth);
-            RescaleSaber(RightSaber, LengthMultiplier, Configuration.Scale.Girth);
-
-            // Revert hitbox changes to sabers, if hitbox scaling is disabled
-            if (hitboxVariables != null)
-            {
-                hitboxVariables.RestoreHitbox();
-            }
-
-
-            // The new SaberTrail in 1.12.1 is kinda hardcoded to current blade top/bottom positions. So disabling trail scaling for now.
-            /*
-            IEnumerable<SaberModelController> saberModelControllers = Resources.FindObjectsOfTypeAll<SaberModelController>();
-            foreach (SaberModelController saberModelController in saberModelControllers)
-            {
-                SaberTrail saberTrail = saberModelController.GetField<SaberTrail, SaberModelController>("_saberTrail");
-                Logger.log.Debug("SaberTrailName is '" + saberTrail.name + "'.");
-
-                if (!usingCustomModels || saberTrail.name != "BasicSaberModel")
-                {
-                    //RescaleWeaponTrail(saberTrail, Configuration.Scale.Length, usingCustomModels);
-                }
-            }
             */
+            #endregion
 
             yield return null;
         }
@@ -168,26 +157,19 @@ namespace SaberTailor.Tweaks
         /// </summary>
         private class HitboxRevertWorkaround
         {
-            private readonly Transform leftSaberTop;
-            private readonly Transform leftSaberBot;
-            private readonly Transform rightSaberTop;
-            private readonly Transform rightSaberBot;
+            private readonly Transform saberTop;
+            private readonly Transform saberBot;
 
-            private Vector3 leftDefaultHitboxTopPos;
-            private Vector3 leftDefaultHitboxBotPos;
-            private Vector3 rightDefaultHitboxTopPos;
-            private Vector3 rightDefaultHitboxBotPos;
+            private Vector3 defaultHitboxTopPos;
+            private Vector3 defaultHitboxBotPos;
 
-            public HitboxRevertWorkaround(Saber defaultLeftSaber, Saber defaultRightSaber)
+            public HitboxRevertWorkaround(Saber saber)
             {
                 // Scaling sabers will affect their hitboxes, so save the default hitbox positions first before scaling
-                GetHitboxDefaultTransforms(defaultLeftSaber, out leftSaberTop, out leftSaberBot);
-                leftDefaultHitboxTopPos = leftSaberTop.position.Clone();
-                leftDefaultHitboxBotPos = leftSaberBot.position.Clone();
+                GetHitboxDefaultTransforms(saber, out saberTop, out saberBot);
+                defaultHitboxTopPos = saberTop.position.Clone();
+                defaultHitboxBotPos = saberBot.position.Clone();
 
-                GetHitboxDefaultTransforms(defaultRightSaber, out rightSaberTop, out rightSaberBot);
-                rightDefaultHitboxTopPos = rightSaberTop.position.Clone();
-                rightDefaultHitboxBotPos = rightSaberBot.position.Clone();
             }
 
             /// <summary>
@@ -195,10 +177,8 @@ namespace SaberTailor.Tweaks
             /// </summary>
             public void RestoreHitbox()
             {
-                leftSaberTop.position = leftDefaultHitboxTopPos;
-                leftSaberBot.position = leftDefaultHitboxBotPos;
-                rightSaberTop.position = rightDefaultHitboxTopPos;
-                rightSaberBot.position = rightDefaultHitboxBotPos;
+                saberTop.position = defaultHitboxTopPos;
+                saberBot.position = defaultHitboxBotPos;
             }
 
             private void GetHitboxDefaultTransforms(Saber saber, out Transform saberTop, out Transform saberBot)

@@ -58,37 +58,20 @@ namespace SaberTailor
             }
             
             //Debugging/Testing
-            if (nextScene.name == "MenuViewControllers")
+            if (nextScene.name == "GameCore")
             {
-                OculusVRHelper[] oculusVRHelpers = Resources.FindObjectsOfTypeAll<OculusVRHelper>();
-                bool activeHelper = false;
-                if (oculusVRHelpers != null)
+                Saber[] sabers = Resources.FindObjectsOfTypeAll<Saber>();
+                Logger.log.Debug("Printing saber information...");
+                foreach (Saber saber in sabers)
                 {
-                    Logger.log.Info("Found VRHelper of Type OculusVRHelper - there are " + oculusVRHelpers.Length + " instances.");
-                    foreach (OculusVRHelper vrHelper in oculusVRHelpers) {
-                        if (vrHelper.gameObject.activeInHierarchy)
-                            activeHelper = true;
-                    }
-                    if (activeHelper)
-                        Logger.log.Info("At least one OculusVRHelper is active!");
-                }
-                OpenVRHelper[] openVRHelpers = Resources.FindObjectsOfTypeAll<OpenVRHelper>();
-                if (openVRHelpers != null)
-                {
-                    Logger.log.Info("Found VRHelper of Type OpenVRHelper - there are " + openVRHelpers.Length + " instances.");
-                    foreach (OpenVRHelper vrHelper in openVRHelpers)
-                    {
-                        if (vrHelper.gameObject.activeInHierarchy)
-                        {
-                            activeHelper = true;
-                            Logger.log.Info(vrHelper.GetField<OpenVRHelper.VRControllerManufacturerName, OpenVRHelper>("_vrControllerManufacturerName").ToString());
-                        }
-                    }
-                    if (activeHelper)
-                        Logger.log.Info("At least one OpenVRHelper is active!");
+                    Logger.log.Debug("GameObject.name: " + saber.gameObject.name + " | Saber.name: " + saber.name + " | Saber.saberType: " + saber.saberType.ToString());
                 }
 
-                Logger.log.Info("Printing XRSettings.loadedDeviceName: " + XRSettings.loadedDeviceName);
+                Logger.log.Debug("Printing scene information...");
+                for (int i = 0; i < SceneManager.sceneCount; i++)
+                {
+                    Logger.log.Debug("Scene Index: " + i.ToString() + " : Scene.name: " + SceneManager.GetSceneAt(i).name);
+                }
             }
         }
 
