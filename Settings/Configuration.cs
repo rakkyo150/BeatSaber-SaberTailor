@@ -28,7 +28,8 @@ namespace SaberTailor.Settings
 
         internal static void Init()
         {
-            PluginConfig.Instance = FileHandler.LoadConfig();
+            FileHandler.LoadConfig(out PluginConfig config);
+            PluginConfig.Instance = config;
         }
 
         /// <summary>
