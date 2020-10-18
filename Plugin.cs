@@ -72,7 +72,6 @@ namespace SaberTailor
         {
             Configuration.Load();
             Settings.Utilities.ProfileManager.LoadProfiles();
-            Settings.Utilities.ProfileManager.PrintProfileNames();
 
             AddEvents();
 
