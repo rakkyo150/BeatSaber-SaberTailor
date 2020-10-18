@@ -291,7 +291,6 @@ namespace SaberTailor.Settings.UI
         #endregion
 
         #region Saber Trail
-        /*
         [UIValue("saber-trail-tweak-enabled")]
         public bool TrailTweakEnabled
         {
@@ -306,13 +305,26 @@ namespace SaberTailor.Settings.UI
             set => Configuration.Trail.TrailEnabled = value;
         }
 
-        [UIValue("saber-trail-length")]
+        [UIValue("saber-trail-duration")]
+        public int TrailDuration
+        {
+            get => Configuration.Trail.Duration;
+            set => Configuration.Trail.Duration = value;
+        }
+
+        [UIValue("saber-trail-granularity")]
         public int TrailLength
         {
-            get => Configuration.Trail.Length;
-            set => Configuration.Trail.Length = value;
+            get => Configuration.Trail.Granularity;
+            set => Configuration.Trail.Granularity = value;
         }
-        */
+
+        [UIValue("saber-trail-whiteduration")]
+        public int TrailWhiteSectionDuration
+        {
+            get => Configuration.Trail.WhiteSectionDuration;
+            set => Configuration.Trail.WhiteSectionDuration = value;
+        }
         #endregion
 
         #region Transfer Grip

@@ -22,23 +22,29 @@ namespace SaberTailor.Tweaks
 
         private IEnumerator ApplyGameCoreModifications()
         {
+            yield return new WaitForSeconds(0.1f);
+
             IEnumerable<SaberTrailRenderer> saberTrailRenderers = Resources.FindObjectsOfTypeAll<SaberTrailRenderer>();
             foreach (SaberTrailRenderer saberTrailRenderer in saberTrailRenderers)
             {
-                ModifyTrail(saberTrailRenderer, Configuration.Trail.Length);
+                ModifyTrail(saberTrailRenderer, Configuration.Trail.Duration, Configuration.Trail.Granularity, Configuration.Trail.WhiteSectionDuration);
                 Logger.log.Info("Successfully modified trails!");
             }
 
             yield return null;
         }
 
-        private void ModifyTrail(SaberTrailRenderer trail, int length)
+        private void ModifyTrail(SaberTrailRenderer trail, int duration, int granularity, int whiteSectionDuration)
         {
             if (Configuration.Trail.TrailEnabled)
             {
+                // This needs Harmony patching on the init() method of the SaberTrail class, because too many things are dependent on the init-state
+                /*
                 trail.enabled = true;
-                trail.SetField("_trailDuration", length/90f);
-                trail.SetField("_granularity", length);
+                trail.SetField("_trailDuration", duration/1000f);
+                trail.SetField("_granularity", granularity);
+                trail.SetField("_whiteSectionMaxDuration", whiteSectionDuration / 1000f);
+                */
             }
             else
             {

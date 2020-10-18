@@ -196,6 +196,9 @@ namespace SaberTailor.Settings
                 Trail.TweakEnabled = PluginConfig.Instance.IsTrailModEnabled;
                 Trail.TrailEnabled = PluginConfig.Instance.IsTrailEnabled;
                 Trail.Length = Mathf.Clamp(PluginConfig.Instance.TrailLength, 5, 100);
+                Trail.Duration = Mathf.Clamp(PluginConfig.Instance.TrailDuration, 100, 5000);
+                Trail.Granularity = Mathf.Clamp(PluginConfig.Instance.TrailGranularity, 5, 100);
+                Trail.WhiteSectionDuration = Mathf.Clamp(PluginConfig.Instance.TrailWhiteSectionDuration, 10, 1000);
             }
             #endregion
 
@@ -282,6 +285,9 @@ namespace SaberTailor.Settings
             config.IsTrailModEnabled = Trail.TweakEnabled;
             config.IsTrailEnabled = Trail.TrailEnabled;
             config.TrailLength = Trail.Length;
+            config.TrailDuration = Trail.Duration;
+            config.TrailGranularity = Trail.Granularity;
+            config.TrailWhiteSectionDuration = Trail.WhiteSectionDuration;
             #endregion
 
             #region Saber grip

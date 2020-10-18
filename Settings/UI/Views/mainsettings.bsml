@@ -162,7 +162,6 @@
   </settings-submenu>
 
   <!--Saber Trail-->
-  <!--
   <settings-submenu text='&#62; Saber Trail...' hover-hint='Adjust trail settings for default trails.'>
     <settings-container>
       <bool-setting text='Enable saber trail modification' value='saber-trail-tweak-enabled' formatter='bool-formatter'
@@ -173,10 +172,20 @@
                     get-event="refresh-sabertailor-values"
                     hover-hint='Currently only works with sabers using default trail.' />
 
-      <increment-setting text='Trail length' value='saber-trail-length'
+      <increment-setting text='Trail duration' value='saber-trail-duration'
+                         get-event="refresh-sabertailor-values"
+                         integer-only='true' min='100' max='5000' increment='100'
+                         hover-hint='Adjusts trail duration. Only works with sabers using default trail.' />
+      
+      <increment-setting text='Trail granularity' value='saber-trail-granularity'
                          get-event="refresh-sabertailor-values"
                          integer-only='true' min='5' max='100' increment='5'
-                         hover-hint='Adjusts trail length. Currently only works with sabers using default trail.' />
+                         hover-hint='Adjusts trail granularity. Only works with sabers using default trail.' />
+
+      <increment-setting text='Trail white section duration' value='saber-trail-whiteduration'
+                         get-event="refresh-sabertailor-values"
+                         integer-only='true' min='10' max='200' increment='10'
+                         hover-hint='Adjusts trail white section duration. Only works with sabers using default trail.' />
 
       <horizontal>
         <clickable-text text='&#60; Back' align='Left' click-event='back' />
@@ -184,7 +193,6 @@
       </horizontal>
     </settings-container>
   </settings-submenu>
-  -->
 
   <!--Grip Export/Import-->
   <settings-submenu text='&#62; Transfer grip to/from game settings...' hover-hint='Export/Import grip adjustments to/from base game options.'>

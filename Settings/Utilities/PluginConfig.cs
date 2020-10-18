@@ -16,6 +16,9 @@ namespace SaberTailor.Settings.Utilities
         public bool IsTrailModEnabled = false;
         public bool IsTrailEnabled = true;
         public int TrailLength = 20;                    // Length in frames
+        public int TrailDuration = 400;                 // Age of trail - in ms?
+        public int TrailGranularity = 60;               // Segments count in trail
+        public int TrailWhiteSectionDuration = 100;     // Duration of gradient from white
 
         public bool IsGripModEnabled = false;
 
