@@ -212,15 +212,15 @@
         <clickable-text text='&#60; Back' align='Left' click-event='back' />
       </horizontal>
       <horizontal>
-        <dropdown-list-setting text='Existing Profiles' value='profile-list-value' get-event='refresh-profile-list'
+        <dropdown-list-setting text='Existing profiles:' value='profile-list-value' get-event='refresh-profile-list'
                                options='profile-list-options' apply-on-change='true' id='ddl_profiles' />
       </horizontal>
-      <horizontal>
-        <button text='Load profile' align='Left' click-event='profile-load' />
-        <button text='Delete profile' align='Left' click-event='profile-delete' />
+      <horizontal pref-width='90' pad-right='30'>
+        <button text='Load profile' click-event='profile-load' />
+        <button text='Delete profile' click-event='profile-delete-confirm' />
       </horizontal>
       <horizontal>
-        <string-setting text='New profile name' value='profile-save-name' apply-on-change='true' />
+        <string-setting text='New profile name:' value='profile-save-name' apply-on-change='true' />
       </horizontal>
       <horizontal>
         <button text='Save new profile' align='Midline' click-event='profile-save' />
@@ -230,4 +230,16 @@
       </horizontal>
     </settings-container>
   </settings-submenu>
+
+  <modal id='profile-delete-modal' show-event='profile-delete-modal-open' hide-event='profile-delete-modal-close' >
+    <vertical pref-width='60' pref-height='60'>
+      <horizontal pref-height='20'>
+        <text id='profile-delete-modal-txt' text='Delete profile $FIXME' word-wrapping='true' align='Top' />
+      </horizontal>
+      <horizontal pref-height='40'>
+        <button text='Delete' click-event='profile-delete-confirm' active='true' />
+        <button text='Cancel' click-event='profile-delete-cancel' active='true' />
+      </horizontal>
+    </vertical>
+  </modal>
 </settings-container>

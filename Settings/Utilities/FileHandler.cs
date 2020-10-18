@@ -12,7 +12,7 @@ namespace SaberTailor.Settings.Utilities
         // Load current config file, return true with loaded config if succesful, return false with default config if failed
         internal static bool LoadConfig(out PluginConfig config, string fileName = "SaberTailor.json")
         {
-            string configPath = Path.Combine(filePath, "SaberTailor.json");
+            string configPath = Path.Combine(filePath, fileName);
             if (File.Exists(configPath))
             {   
                 try
