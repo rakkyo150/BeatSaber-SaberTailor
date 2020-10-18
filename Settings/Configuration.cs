@@ -37,45 +37,7 @@ namespace SaberTailor.Settings
         /// </summary>
         internal static void Save()
         {
-            #region Internal settings
-            PluginConfig.Instance.ConfigVersion = ConfigVersion;
-            #endregion
-
-            #region Saber scale
-            PluginConfig.Instance.IsSaberScaleModEnabled = Scale.TweakEnabled;
-            PluginConfig.Instance.SaberScaleHitbox = Scale.ScaleHitBox;
-            PluginConfig.Instance.SaberLength = ScaleCfg.Length;
-            PluginConfig.Instance.SaberGirth = ScaleCfg.Girth;
-            #endregion
-
-            #region Saber trail
-            PluginConfig.Instance.IsTrailModEnabled = Trail.TweakEnabled;
-            PluginConfig.Instance.IsTrailEnabled = Trail.TrailEnabled;
-            PluginConfig.Instance.TrailLength = Trail.Length;
-            #endregion
-
-            #region Saber grip
-            // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Cfg values that are stored!
-            PluginConfig.Instance.GripLeftPosition = new Int3(GripCfg.PosLeft);
-            PluginConfig.Instance.GripRightPosition = new Int3(GripCfg.PosRight);
-
-            // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are stored!
-            PluginConfig.Instance.GripLeftRotation = new Int3(GripCfg.RotLeft);
-            PluginConfig.Instance.GripRightRotation = new Int3(GripCfg.RotRight);
-
-            PluginConfig.Instance.IsGripModEnabled = Grip.IsGripModEnabled;
-            PluginConfig.Instance.ModifyMenuHiltGrip = Grip.ModifyMenuHiltGrip;
-            PluginConfig.Instance.UseBaseGameAdjustmentMode = Grip.UseBaseGameAdjustmentMode;
-            #endregion
-
-            #region Menu settings
-            PluginConfig.Instance.SaberPosDisplayUnit = Menu.SaberPosDisplayUnit.ToString();
-            PluginConfig.Instance.SaberPosIncrement = Menu.SaberPosIncrement;
-            PluginConfig.Instance.SaberPosIncUnit = Menu.SaberPosIncUnit.ToString();
-            PluginConfig.Instance.SaberPosIncValue = Menu.SaberPosIncValue;
-            PluginConfig.Instance.SaberRotIncrement = Menu.SaberRotIncrement;
-            #endregion
-
+            SaveConfig(ref PluginConfig.Instance);
             FileHandler.SaveConfig(PluginConfig.Instance);
         }
 
@@ -300,6 +262,48 @@ namespace SaberTailor.Settings
                     ? positionUnit
                     : PositionUnit.cm;
             }
+            #endregion
+        }
+
+        internal static void SaveConfig(ref PluginConfig config)
+        {
+            #region Internal settings
+            config.ConfigVersion = ConfigVersion;
+            #endregion
+
+            #region Saber scale
+            config.IsSaberScaleModEnabled = Scale.TweakEnabled;
+            config.SaberScaleHitbox = Scale.ScaleHitBox;
+            config.SaberLength = ScaleCfg.Length;
+            config.SaberGirth = ScaleCfg.Girth;
+            #endregion
+
+            #region Saber trail
+            config.IsTrailModEnabled = Trail.TweakEnabled;
+            config.IsTrailEnabled = Trail.TrailEnabled;
+            config.TrailLength = Trail.Length;
+            #endregion
+
+            #region Saber grip
+            // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Cfg values that are stored!
+            config.GripLeftPosition = new Int3(GripCfg.PosLeft);
+            config.GripRightPosition = new Int3(GripCfg.PosRight);
+
+            // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are stored!
+            config.GripLeftRotation = new Int3(GripCfg.RotLeft);
+            config.GripRightRotation = new Int3(GripCfg.RotRight);
+
+            config.IsGripModEnabled = Grip.IsGripModEnabled;
+            config.ModifyMenuHiltGrip = Grip.ModifyMenuHiltGrip;
+            config.UseBaseGameAdjustmentMode = Grip.UseBaseGameAdjustmentMode;
+            #endregion
+
+            #region Menu settings
+            config.SaberPosDisplayUnit = Menu.SaberPosDisplayUnit.ToString();
+            config.SaberPosIncrement = Menu.SaberPosIncrement;
+            config.SaberPosIncUnit = Menu.SaberPosIncUnit.ToString();
+            config.SaberPosIncValue = Menu.SaberPosIncValue;
+            config.SaberRotIncrement = Menu.SaberRotIncrement;
             #endregion
         }
 

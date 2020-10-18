@@ -1,4 +1,5 @@
 ﻿using IPA.Utilities;
+using SaberTailor.Settings.Classes;
 using SaberTailor.Settings.Utilities;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,11 @@ namespace SaberTailor.Settings.Utilities
     {
         internal static bool profilesLoaded = false;
         internal static bool profilesPresent = false;
-        internal static List<string> profileNames;
+        internal static List<object> profileNames;
 
         internal static void LoadProfiles()
         {
-            profileNames = new List<string>();
+            profileNames = new List<object>();
 
             string[] fileNames = Directory.GetFiles(UnityGame.UserDataPath, @"SaberTailor.*.json");
             foreach (string fileName in fileNames)
@@ -35,8 +36,41 @@ namespace SaberTailor.Settings.Utilities
             {
                 profilesPresent = true;
             }
+            else
+            {
+                profilesPresent = false;
+                profileNames.Add("NONE AVAILABLE");
+            }
 
             profilesLoaded = true;
+        }
+
+        internal static bool DeleteProfile(string profileName, out string statusMsg)
+        {
+            string fileName = @"SaberTailor." + profileName + @".json";
+            string filePath = Path.Combine(UnityGame.UserDataPath, fileName);
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    File.Delete(filePath);
+                    statusMsg = "Profile '" + profileName + "' deleted successfully.";
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Logger.log.Warn(ex);
+                    Logger.log.Warn("Unable to delete profile '" + profileName + "'.");
+                    statusMsg = "Unable to delete '" + profileName + "'. Please check the logs.";
+                    return false;
+                }
+            }
+            else
+            {
+                Logger.log.Debug("File not found. Unable to delete profile '" + profileName + "'.");
+                statusMsg = "Profile '" + profileName + "' not found. Delete failed.";
+                return false;
+            }
         }
 
         internal static bool LoadProfile(string profileName, out string statusMsg)
@@ -47,12 +81,34 @@ namespace SaberTailor.Settings.Utilities
             {
                 PluginConfig.Instance = config;
                 Configuration.Load();
-                statusMsg = "Profile successfully loaded.";
+                statusMsg = "Profile '" + profileName + "' loaded successfully.";
                 return true;
             }
             else
             {
                 statusMsg = "Profile loading failed. Please check logs files.";
+                return false;
+            }
+        }
+
+        internal static bool SaveProfile(string profileName, out string statusMsg)
+        {
+            string fileName = @"SaberTailor." + profileName + @".json";
+
+            //Save the active configuration to a new object
+            PluginConfig config = new PluginConfig();
+            Configuration.SaveConfig(ref config);
+
+            bool saveSuccessful = FileHandler.SaveConfig(config, fileName);
+
+            if (saveSuccessful)
+            {
+                statusMsg = "Profile '" + profileName + "' saved successfully.";
+                return true;
+            }
+            else
+            {
+                statusMsg = "Error saving profile. Please check the log files.";
                 return false;
             }
         }

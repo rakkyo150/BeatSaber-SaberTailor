@@ -1,4 +1,5 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
+using BeatSaberMarkupLanguage.Components.Settings;
 using BeatSaberMarkupLanguage.Parser;
 using SaberTailor.HarmonyPatches;
 using SaberTailor.Settings.Classes;
@@ -6,6 +7,7 @@ using SaberTailor.Settings.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -14,8 +16,13 @@ namespace SaberTailor.Settings.UI
 {
     public class MainSettings : PersistentSingleton<MainSettings>
     {
+        public string profileListSelected = "None selected";
+
         [UIParams]
         private BSMLParserParams parserParams;
+
+        [UIComponent("ddl_profiles")]
+        DropDownListSetting ddlsProfiles;
 
         #region Precision
         [UIValue("saber-pos-unit-options")]
@@ -314,8 +321,21 @@ namespace SaberTailor.Settings.UI
         #endregion
 
         #region Profile Manager
+        [UIValue("profile-list-options")]
+        public List<object> ProfileListValues = ProfileManager.profileNames;
+
+        [UIValue("profile-list-value")]
+        public string _profileListSelected
+        {
+            get => profileListSelected;
+            set => profileListSelected = value;
+        }
+
         [UIValue("profile-save-name")]
         public string ProfileSaveName = "Default";
+
+        [UIComponent("profile-txt")]
+        private TextMeshProUGUI ProfileStatusText;
         #endregion
 
         #region Limits
@@ -473,6 +493,23 @@ namespace SaberTailor.Settings.UI
         [UIAction("#saber-grip-import")]
         public void OnGripImport() => ImportGripFromGameSettings();
 
+        [UIAction("#profile-delete")]
+        public void OnProfileDelete() => DeleteProfile();
+
+        [UIAction("#profile-load")]
+        public void OnProfileLoad() => LoadProfile();
+
+        [UIAction("#profile-save")]
+        public void OnProfileSave() => SaveProfile();
+
+        public void Awake()
+        {
+            if (ProfileManager.profilesPresent)
+            {
+                profileListSelected = ProfileManager.profileNames[0].ToString();
+            }
+        }
+
         /// <summary>
         /// Save and update configuration
         /// </summary>
@@ -549,6 +586,79 @@ namespace SaberTailor.Settings.UI
         {
             GameSettingsTransfer.ExportToGame(out string statusMsg);
             TransferText.text = statusMsg;
+        }
+
+        private void DeleteProfile()
+        {
+            // This probably needs an additional confirmation dialog
+            if (!ProfileManager.profilesPresent)
+            {
+                ProfileStatusText.text = "<color=#fb484e>Unable to delete profile: None found.</color>";
+                return;
+            }
+            string profileName = profileListSelected;
+
+            bool deleteSuccessful = ProfileManager.DeleteProfile(profileName, out string statusMsg);
+
+            // Refresh UI
+            ProfileManager.LoadProfiles();
+            ddlsProfiles.values = ProfileManager.profileNames;
+            profileListSelected = ddlsProfiles.values[0].ToString();
+            ddlsProfiles.UpdateChoices();
+            parserParams.EmitEvent("refresh-profile-list");
+
+            if (!deleteSuccessful)
+            {
+                statusMsg = "<color=#fb484e>" + statusMsg + "</color>";
+            }
+            ProfileStatusText.text = statusMsg;
+        }
+
+        private void LoadProfile()
+        {
+            if (!ProfileManager.profilesPresent)
+            {
+                ProfileStatusText.text = "<color=#fb484e>Unable to load profile: None found.</color>";
+                return;
+            }
+            string profileName = profileListSelected;
+
+            bool loadSuccessful = ProfileManager.LoadProfile(profileName, out string statusMsg);
+            RefreshModSettingsUI();
+
+            if (!loadSuccessful)
+            {
+                statusMsg = "<color=#fb484e>" + statusMsg + "</color>";
+            }
+            ProfileStatusText.text = statusMsg;
+        }
+
+        private void SaveProfile()
+        {
+            string profileName = ProfileSaveName;
+
+            Regex r = new Regex(@"^([a-zA-Z0-9_-]+)$");
+            Match m = r.Match(profileName);
+            if (!m.Success)
+            {
+                ProfileStatusText.text = "<color=#fb484e>Invalid profile name. Profile names may only contain letters A-Z, numbers, dashes and underscores.</color>";
+                return;
+            }
+
+            bool saveSuccessful = ProfileManager.SaveProfile(profileName, out string statusMsg);
+
+            // Refresh UI
+            ProfileManager.LoadProfiles();
+            ddlsProfiles.values = ProfileManager.profileNames;
+            ddlsProfiles.UpdateChoices();
+            parserParams.EmitEvent("refresh-profile-list");
+
+            if (!saveSuccessful)
+            {
+                statusMsg = "<color=#fb484e>" + statusMsg + "</color>";
+            }
+
+            ProfileStatusText.text = statusMsg;
         }
 
         private void UpdateSaberPosIncrement(PositionUnit unit)

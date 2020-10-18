@@ -212,7 +212,21 @@
         <clickable-text text='&#60; Back' align='Left' click-event='back' />
       </horizontal>
       <horizontal>
-        <string-setting text='Test' value='profile-save-name' />
+        <dropdown-list-setting text='Existing Profiles' value='profile-list-value' get-event='refresh-profile-list'
+                               options='profile-list-options' apply-on-change='true' id='ddl_profiles' />
+      </horizontal>
+      <horizontal>
+        <button text='Load profile' align='Left' click-event='profile-load' />
+        <button text='Delete profile' align='Left' click-event='profile-delete' />
+      </horizontal>
+      <horizontal>
+        <string-setting text='New profile name' value='profile-save-name' apply-on-change='true' />
+      </horizontal>
+      <horizontal>
+        <button text='Save new profile' align='Midline' click-event='profile-save' />
+      </horizontal>
+      <horizontal pref-width='90' pref-height='30'>
+        <text id='profile-txt' text=' ' word-wrapping='true' />
       </horizontal>
     </settings-container>
   </settings-submenu>
