@@ -204,4 +204,16 @@
       </horizontal>
     </settings-container>
   </settings-submenu>
+
+  <!--Profile Management-->
+  <settings-submenu text='&#62; Manage config profiles...' hover-hint='Load/Save/Delete config profiles.'>
+    <settings-container>
+      <horizontal>
+        <clickable-text text='&#60; Back' align='Left' click-event='back' />
+      </horizontal>
+      <horizontal>
+        <string-setting text='Test' value='profile-save-name' />
+      </horizontal>
+    </settings-container>
+  </settings-submenu>
 </settings-container>

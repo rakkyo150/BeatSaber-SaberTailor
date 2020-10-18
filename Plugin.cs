@@ -71,6 +71,9 @@ namespace SaberTailor
         private void Load()
         {
             Configuration.Load();
+            Settings.Utilities.ProfileManager.LoadProfiles();
+            Settings.Utilities.ProfileManager.PrintProfileNames();
+
             AddEvents();
 
             Logger.log.Info($"{PluginName} v.{PluginVersion} has started.");

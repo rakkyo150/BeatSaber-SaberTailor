@@ -313,6 +313,11 @@ namespace SaberTailor.Settings.UI
         private TextMeshProUGUI TransferText;
         #endregion
 
+        #region Profile Manager
+        [UIValue("profile-save-name")]
+        public string ProfileSaveName = "Default";
+        #endregion
+
         #region Limits
         [UIValue("saber-pos-inc-max")]
         public int SaberPosIncMax => 200;

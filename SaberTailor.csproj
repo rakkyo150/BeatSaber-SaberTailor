@@ -52,6 +52,7 @@
     <Compile Include="Settings\Utilities\FileHandler.cs" />
     <Compile Include="Settings\Utilities\GameSettingsTransfer.cs" />
     <Compile Include="Settings\Utilities\PluginConfig.cs" />
+    <Compile Include="Settings\Utilities\ProfileManager.cs" />
     <Compile Include="Tweaks\SaberLength.cs" />
     <Compile Include="Tweaks\SaberTrailTweak.cs" />
     <Compile Include="Utilities\Utils.cs" />
