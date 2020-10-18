@@ -336,9 +336,6 @@ namespace SaberTailor.Settings.UI
 
         [UIComponent("profile-txt")]
         private TextMeshProUGUI ProfileStatusText;
-
-        [UIComponent("profile-delete-modal-txt")]
-        private TextMeshProUGUI ProfileDeleteModalTxt;
         #endregion
 
         #region Limits
@@ -499,12 +496,6 @@ namespace SaberTailor.Settings.UI
         [UIAction("#profile-delete")]
         public void OnProfileDelete() => DeleteProfile();
 
-        [UIAction("#profile-delete-confirm")]
-        public void OnProfileDeleteConfirm() => DeleteProfileConfirm();
-
-        [UIAction("#profile-delete-cancel")]
-        public void OnProfileDeleteCancel() => DeleteProfileCancel();
-
         [UIAction("#profile-load")]
         public void OnProfileLoad() => LoadProfile();
 
@@ -599,21 +590,7 @@ namespace SaberTailor.Settings.UI
 
         private void DeleteProfile()
         {
-            if (!ProfileManager.profilesPresent)
-            {
-                ProfileStatusText.text = "<color=#fb484e>Unable to delete profile: None found.</color>";
-                return;
-            }
-
-            string profileName = profileListSelected;
-            ProfileDeleteModalTxt.text = "Delete profile '" + profileName + "'?";
-            parserParams.EmitEvent("profile-delete-modal-open");
-        }
-
-        private void DeleteProfileConfirm()
-        {
-            parserParams.EmitEvent("profile-delete-modal-close");
-            // This probably needs an additional confirmation dialog
+            // Maybe add an additional confirmation dialog
             if (!ProfileManager.profilesPresent)
             {
                 ProfileStatusText.text = "<color=#fb484e>Unable to delete profile: None found.</color>";
@@ -635,11 +612,6 @@ namespace SaberTailor.Settings.UI
                 statusMsg = "<color=#fb484e>" + statusMsg + "</color>";
             }
             ProfileStatusText.text = statusMsg;
-        }
-
-        private void DeleteProfileCancel()
-        {
-            parserParams.EmitEvent("profile-delete-modal-close");
         }
 
         private void LoadProfile()

@@ -217,7 +217,7 @@
       </horizontal>
       <horizontal pref-width='90' pad-right='30'>
         <button text='Load profile' click-event='profile-load' />
-        <button text='Delete profile' click-event='profile-delete-confirm' />
+        <button text='Delete profile' click-event='profile-delete' />
       </horizontal>
       <horizontal>
         <string-setting text='New profile name:' value='profile-save-name' apply-on-change='true' />
@@ -230,16 +230,4 @@
       </horizontal>
     </settings-container>
   </settings-submenu>
-
-  <modal id='profile-delete-modal' show-event='profile-delete-modal-open' hide-event='profile-delete-modal-close' >
-    <vertical pref-width='60' pref-height='60'>
-      <horizontal pref-height='20'>
-        <text id='profile-delete-modal-txt' text='Delete profile $FIXME' word-wrapping='true' align='Top' />
-      </horizontal>
-      <horizontal pref-height='40'>
-        <button text='Delete' click-event='profile-delete-confirm' active='true' />
-        <button text='Cancel' click-event='profile-delete-cancel' active='true' />
-      </horizontal>
-    </vertical>
-  </modal>
 </settings-container>
