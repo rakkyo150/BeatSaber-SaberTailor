@@ -81,15 +81,8 @@ namespace SaberTailor.Settings.UI
             get => Configuration.Grip.IsGripModEnabled;
             set
             {
-                if (value)
-                {
-                    SaberTailorPatches.ApplyHarmonyPatches();
-                }
-                else
-                {
-                    SaberTailorPatches.RemoveHarmonyPatches();
-                }
                 Configuration.Grip.IsGripModEnabled = value;
+                SaberTailorPatches.CheckHarmonyPatchStatus();
             }
         }
         #endregion
@@ -295,14 +288,22 @@ namespace SaberTailor.Settings.UI
         public bool TrailTweakEnabled
         {
             get => Configuration.Trail.TweakEnabled;
-            set => Configuration.Trail.TweakEnabled = value;
+            set
+            {
+                Configuration.Trail.TweakEnabled = value;
+                SaberTailorPatches.CheckHarmonyPatchStatus();
+            }
         }
 
         [UIValue("saber-trail-enabled")]
         public bool TrailEnabled
         {
             get => Configuration.Trail.TrailEnabled;
-            set => Configuration.Trail.TrailEnabled = value;
+            set
+            {
+                Configuration.Trail.TrailEnabled = value;
+                SaberTailorPatches.CheckHarmonyPatchStatus();
+            }
         }
 
         [UIValue("saber-trail-duration")]
@@ -450,6 +451,18 @@ namespace SaberTailor.Settings.UI
             {
                 return "SaberTailor";
             }
+        }
+
+        [UIAction("trail-time-formatter")]
+        public string TrailTimeString(int value)
+        {
+            return string.Format("{0:0.0} s", value / 1000f);
+        }
+
+        [UIAction("trail-white-time-formatter")]
+        public string TrailWhiteTimeString(int value)
+        {
+            return string.Format("{0:0.00} s", value / 1000f);
         }
         #endregion
 

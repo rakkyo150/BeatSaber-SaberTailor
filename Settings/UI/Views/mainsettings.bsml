@@ -173,19 +173,19 @@
                     hover-hint='Currently only works with sabers using default trail.' />
 
       <increment-setting text='Trail duration' value='saber-trail-duration'
-                         get-event="refresh-sabertailor-values"
+                         get-event="refresh-sabertailor-values" formatter='trail-time-formatter'
                          integer-only='true' min='100' max='5000' increment='100'
-                         hover-hint='Adjusts trail duration. Only works with sabers using default trail.' />
+                         hover-hint='Adjusts trail duration in seconds. Only works with sabers using default trail. Default: 0.4s' />
       
       <increment-setting text='Trail granularity' value='saber-trail-granularity'
                          get-event="refresh-sabertailor-values"
-                         integer-only='true' min='5' max='100' increment='5'
-                         hover-hint='Adjusts trail granularity. Only works with sabers using default trail.' />
+                         integer-only='true' min='10' max='200' increment='10'
+                         hover-hint='Adjusts trail granularity in steps. Only works with sabers using default trail. Default: 60' />
 
       <increment-setting text='Trail white section duration' value='saber-trail-whiteduration'
-                         get-event="refresh-sabertailor-values"
-                         integer-only='true' min='10' max='200' increment='10'
-                         hover-hint='Adjusts trail white section duration. Only works with sabers using default trail.' />
+                         get-event="refresh-sabertailor-values" formatter='trail-white-time-formatter'
+                         integer-only='true' min='0' max='2000' increment='50'
+                         hover-hint='Adjusts trail white section duration in seconds. Only works with sabers using default trail. Default: 0.1s' />
 
       <horizontal>
         <clickable-text text='&#60; Back' align='Left' click-event='back' />

@@ -6,8 +6,6 @@
 
         public bool TrailEnabled;
 
-        public int Length;
-
         public int Duration;
 
         public int Granularity;

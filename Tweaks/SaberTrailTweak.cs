@@ -36,17 +36,7 @@ namespace SaberTailor.Tweaks
 
         private void ModifyTrail(SaberTrailRenderer trail, int duration, int granularity, int whiteSectionDuration)
         {
-            if (Configuration.Trail.TrailEnabled)
-            {
-                // This needs Harmony patching on the init() method of the SaberTrail class, because too many things are dependent on the init-state
-                /*
-                trail.enabled = true;
-                trail.SetField("_trailDuration", duration/1000f);
-                trail.SetField("_granularity", granularity);
-                trail.SetField("_whiteSectionMaxDuration", whiteSectionDuration / 1000f);
-                */
-            }
-            else
+            if (!Configuration.Trail.TrailEnabled)
             {
                 trail.enabled = false;
             }

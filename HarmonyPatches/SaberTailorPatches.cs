@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using SaberTailor.Settings;
 using System.Reflection;
 
 namespace SaberTailor.HarmonyPatches
@@ -15,13 +16,13 @@ namespace SaberTailor.HarmonyPatches
 
         internal static void ApplyHarmonyPatches()
         {
+            if (instance == null)
+            {
+                instance = new Harmony(InstanceId);
+            }
+
             if (!IsPatched)
             {
-                if (instance == null)
-                {
-                    instance = new Harmony(InstanceId);
-                }
-
                 instance.PatchAll(Assembly.GetExecutingAssembly());
                 IsPatched = true;
             }
@@ -33,6 +34,18 @@ namespace SaberTailor.HarmonyPatches
             {
                 instance.UnpatchAll(InstanceId);
                 IsPatched = false;
+            }
+        }
+
+        internal static void CheckHarmonyPatchStatus()
+        {
+            if (Configuration.Grip.IsGripModEnabled || (Configuration.Trail.TweakEnabled && Configuration.Trail.TrailEnabled))
+            {
+                ApplyHarmonyPatches();
+            }
+            else
+            {
+                RemoveHarmonyPatches();
             }
         }
     }

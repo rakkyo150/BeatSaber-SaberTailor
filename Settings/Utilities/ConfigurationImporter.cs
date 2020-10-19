@@ -12,7 +12,6 @@ namespace SaberTailor.Settings.Utilities
     internal class ConfigurationImporter
     {
         private static bool IsTrailEnabled;
-        private static int TrailLength;
 
         private static Vector3 GripLeftPosition;
         private static Vector3 GripRightPosition;
@@ -34,9 +33,6 @@ namespace SaberTailor.Settings.Utilities
                 // Import trail configuration
                 IsTrailEnabled = oldConfig.GetBool(Plugin.PluginName, nameof(IsTrailEnabled), true, true);
                 importedSettings.IsTrailEnabled = IsTrailEnabled;
-
-                TrailLength = oldConfig.GetInt(Plugin.PluginName, nameof(TrailLength), 20, true);
-                importedSettings.TrailLength = Math.Max(5, Math.Min(100, TrailLength));
 
                 // Import grip position settings, convert old centimeter values to millimeter
                 GripLeftPosition = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripLeftPosition), "0,0,0", true));

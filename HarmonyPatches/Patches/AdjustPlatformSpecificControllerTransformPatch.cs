@@ -11,6 +11,10 @@ namespace SaberTailor.HarmonyPatches
     {
         private static void Prefix(XRNode node, Transform transform, ref Vector3 position, ref Vector3 rotation)
         {
+            if (!Configuration.Grip.IsGripModEnabled)
+            {
+                return;
+            }
             Utilities.AdjustControllerTransform(node, transform, ref position, ref rotation);
         }
     }
@@ -21,6 +25,10 @@ namespace SaberTailor.HarmonyPatches
     {
         private static void Prefix(XRNode node, Transform transform, ref Vector3 position, ref Vector3 rotation)
         {
+            if (!Configuration.Grip.IsGripModEnabled)
+            {
+                return;
+            }
             Utilities.AdjustControllerTransform(node, transform, ref position, ref rotation);
         }
     }
@@ -31,6 +39,10 @@ namespace SaberTailor.HarmonyPatches
     {
         private static void Prefix(XRNode node, Transform transform, ref Vector3 position, ref Vector3 rotation)
         {
+            if (!Configuration.Grip.IsGripModEnabled)
+            {
+                return;
+            }
             Utilities.AdjustControllerTransform(node, transform, ref position, ref rotation);
         }
     }

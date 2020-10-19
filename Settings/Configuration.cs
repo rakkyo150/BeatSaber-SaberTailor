@@ -195,15 +195,13 @@ namespace SaberTailor.Settings
             {
                 Trail.TweakEnabled = PluginConfig.Instance.IsTrailModEnabled;
                 Trail.TrailEnabled = PluginConfig.Instance.IsTrailEnabled;
-                Trail.Length = Mathf.Clamp(PluginConfig.Instance.TrailLength, 5, 100);
                 Trail.Duration = Mathf.Clamp(PluginConfig.Instance.TrailDuration, 100, 5000);
-                Trail.Granularity = Mathf.Clamp(PluginConfig.Instance.TrailGranularity, 5, 100);
-                Trail.WhiteSectionDuration = Mathf.Clamp(PluginConfig.Instance.TrailWhiteSectionDuration, 10, 1000);
+                Trail.Granularity = Mathf.Clamp(PluginConfig.Instance.TrailGranularity, 10, 200);
+                Trail.WhiteSectionDuration = Mathf.Clamp(PluginConfig.Instance.TrailWhiteSectionDuration, 0, 2000);
             }
             #endregion
 
             #region Saber grip
-            // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Cfg values that are loaded!
             // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are loaded!
             if (cfgSection == ConfigSection.All || cfgSection == ConfigSection.Grip || cfgSection == ConfigSection.GripLeft)
             {
@@ -238,15 +236,6 @@ namespace SaberTailor.Settings
                 Grip.IsGripModEnabled = PluginConfig.Instance.IsGripModEnabled;
                 Grip.ModifyMenuHiltGrip = PluginConfig.Instance.ModifyMenuHiltGrip;
                 Grip.UseBaseGameAdjustmentMode = PluginConfig.Instance.UseBaseGameAdjustmentMode;
-
-                if (Grip.IsGripModEnabled)
-                {
-                    SaberTailorPatches.ApplyHarmonyPatches();
-                }
-                else
-                {
-                    SaberTailorPatches.RemoveHarmonyPatches();
-                }
             }
             #endregion
 
@@ -266,6 +255,8 @@ namespace SaberTailor.Settings
                     : PositionUnit.cm;
             }
             #endregion
+
+            SaberTailorPatches.CheckHarmonyPatchStatus();
         }
 
         internal static void SaveConfig(ref PluginConfig config)
@@ -284,7 +275,6 @@ namespace SaberTailor.Settings
             #region Saber trail
             config.IsTrailModEnabled = Trail.TweakEnabled;
             config.IsTrailEnabled = Trail.TrailEnabled;
-            config.TrailLength = Trail.Length;
             config.TrailDuration = Trail.Duration;
             config.TrailGranularity = Trail.Granularity;
             config.TrailWhiteSectionDuration = Trail.WhiteSectionDuration;
@@ -332,15 +322,8 @@ namespace SaberTailor.Settings
             // Updating v2 as well because of a beta build that is floating around with v2 already being used
             if (ConfigVersion == 1 || ConfigVersion == 2)
             {
-                // Check trail modifications and disable tweak if settings are default
-                if (Trail.TrailEnabled && Trail.Length == 20)
-                {
-                    Trail.TweakEnabled = false;
-                }
-                else
-                {
-                    Trail.TweakEnabled = true;
-                }
+                // Due to changes in Beat Saber 1.12.2, just reset trail settings to default for these old config files
+                Trail.TweakEnabled = false;
 
                 // Check scale modifications and disable tweak if settings are default
                 if (ScaleCfg.Length == 100 && ScaleCfg.Girth == 100)
