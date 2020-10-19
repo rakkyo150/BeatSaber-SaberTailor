@@ -15,9 +15,9 @@
             font-size='4' color='#fb484e' size-delta-y='8' />
 
       <!--Saber Grip Menu-->
-      <bool-setting text='Grip Adjustment Mode' value='basegameadjustmentmode-enabled' formatter='adjustmentmode-formatter'
+      <bool-setting text='Enable Base Game Adjustment Mode' value='basegameadjustmentmode-enabled' formatter='adjustmentmode-formatter'
                     apply-on-change='true' get-event='refresh-sabertailor-values'
-                    hover-hint='Switch between SaberTailor or base game adjustment mode.' />
+                    hover-hint='Switch between SaberTailor or base game adjustment mode. This changes how your grip settings are applied to the controller position.' />
 
       <!--Saber Grip Left-->
       <settings-submenu text='&#62; Left Saber Settings...' hover-hint='Adjust position and rotation of the left saber.'>
