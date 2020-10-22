@@ -7,7 +7,7 @@
   <settings-submenu text='&#62; Saber Grip Position/Rotation...' hover-hint='Adjust position and rotation of the sabers.'>
     <settings-container>
 
-      <bool-setting text='Enable saber grip modification' value='saber-grip-tweak-enabled' formatter='bool-formatter'
+      <bool-setting text='Enable saber grip modification' value='saber-grip-tweak-enabled'
                     apply-on-change='true' get-event="refresh-sabertailor-values"
                     hover-hint='Enable/Disable any grip modifications.' />
 
@@ -15,7 +15,7 @@
             font-size='4' color='#fb484e' size-delta-y='8' />
 
       <!--Saber Grip Menu-->
-      <bool-setting text='Enable Base Game Adjustment Mode' value='basegameadjustmentmode-enabled' formatter='adjustmentmode-formatter'
+      <bool-setting text='Enable Base Game Adjustment Mode' value='basegameadjustmentmode-enabled'
                     apply-on-change='true' get-event='refresh-sabertailor-values'
                     hover-hint='Switch between SaberTailor or base game adjustment mode. This changes how your grip settings are applied to the controller position.' />
 
@@ -133,7 +133,7 @@
   <!--Saber Scale-->
   <settings-submenu text='&#62; Saber Scaling...' hover-hint='Adjust length and width of the sabers.'>
     <settings-container>
-      <bool-setting text='Enable saber scale modification' value='saber-scale-tweak-enabled' formatter='bool-formatter'
+      <bool-setting text='Enable saber scale modification' value='saber-scale-tweak-enabled'
                     get-event="refresh-sabertailor-values"
                     hover-hint='Enable/Disable any scale modifications.' />
 
@@ -148,7 +148,7 @@
                          formatter='multiplier-formatter' hover-hint='Scales the saber width.' />
 
       <text text='' font-size='2' size-delta-y='4' />
-      <bool-setting text='Scale hitbox' value='saber-scale-hitbox-enabled' formatter='bool-offcolor-formatter'
+      <bool-setting text='Scale hitbox' value='saber-scale-hitbox-enabled'
                     get-event="refresh-sabertailor-values"
                     hover-hint='Enable/Disable saber hit-box scaling.' />
       <text text='Having this option enabled will disable score submission.'
@@ -164,11 +164,11 @@
   <!--Saber Trail-->
   <settings-submenu text='&#62; Saber Trail...' hover-hint='Adjust trail settings for default trails.'>
     <settings-container>
-      <bool-setting text='Enable saber trail modification' value='saber-trail-tweak-enabled' formatter='bool-formatter'
+      <bool-setting text='Enable saber trail modification' value='saber-trail-tweak-enabled'
                     get-event="refresh-sabertailor-values"
                     hover-hint='Enable/Disable any trail modifications.' />
 
-      <bool-setting text='Enable saber trails' value='saber-trail-enabled' formatter='bool-formatter'
+      <bool-setting text='Enable saber trails' value='saber-trail-enabled'
                     get-event="refresh-sabertailor-values"
                     hover-hint='Currently only works with sabers using default trail.' />
 
