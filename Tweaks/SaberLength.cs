@@ -21,6 +21,11 @@ namespace SaberTailor.Tweaks
 
         private void Load()
         {
+            // Load current config
+            EnableHitboxScaling = Configuration.Scale.ScaleHitBox;
+            LengthMultiplier = Configuration.Scale.Length;
+
+            // Check for modes that would force changes to the config for the current map
             for (int i = 0; i < SceneManager.sceneCount; i++)
             {
                 // Disable hitbox scaling and cosmetic length scaling in multiplayer
@@ -51,6 +56,8 @@ namespace SaberTailor.Tweaks
 
         private IEnumerator ApplyGameCoreModifications()
         {
+            yield return new WaitForSeconds(0.1f);
+
             Saber[] sabers = Resources.FindObjectsOfTypeAll<Saber>();
             foreach (Saber saber in sabers)
             {
