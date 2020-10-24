@@ -12,8 +12,9 @@ namespace SaberTailor.Tweaks
     public class SaberLength : MonoBehaviour
     {
         public static string Name => "SaberLength";
-        private static bool EnableHitboxScaling = Configuration.Scale.ScaleHitBox;
-        private static float LengthMultiplier = Configuration.Scale.Length;
+        private bool EnableHitboxScaling = Configuration.Scale.ScaleHitBox;
+        private float LengthMultiplier = Configuration.Scale.Length;
+        private bool IsMultiplayerEnv = false;
 
 #pragma warning disable IDE0051 // Used by MonoBehaviour
         private void Start() => Load();
@@ -21,10 +22,6 @@ namespace SaberTailor.Tweaks
 
         private void Load()
         {
-            // Load current config
-            EnableHitboxScaling = Configuration.Scale.ScaleHitBox;
-            LengthMultiplier = Configuration.Scale.Length;
-
             // Check for modes that would force changes to the config for the current map
             for (int i = 0; i < SceneManager.sceneCount; i++)
             {
@@ -33,6 +30,7 @@ namespace SaberTailor.Tweaks
                 {
                     LengthMultiplier = 1;
                     EnableHitboxScaling = false;
+                    IsMultiplayerEnv = true;
                     Logger.log.Info("Multiplayer environment detected, disabling hitbox scaling and cosmetic length scaling.");
                 }
                 
@@ -58,27 +56,48 @@ namespace SaberTailor.Tweaks
         {
             yield return new WaitForSeconds(0.1f);
 
+            // FIXME: This is for debug!
+            Logger.log.Debug("Starting to scale sabers...");
+            // Debug End
+
             Saber[] sabers = Resources.FindObjectsOfTypeAll<Saber>();
             foreach (Saber saber in sabers)
             {
-                // Scaling sabers will affect its hitbox, so save the default hitbox positions first before scaling
-                HitboxRevertWorkaround hitboxVariables = null;
-                if (!EnableHitboxScaling)
+                // FIXME: This is for debug!
+                GameObject obj = saber.gameObject;
+                string hierarchy = "/" + saber.gameObject.name;
+                while (obj.transform.parent != null)
                 {
-                    hitboxVariables = new HitboxRevertWorkaround(saber);
+                    obj = obj.transform.parent.gameObject;
+                    hierarchy = "/" + obj.name + hierarchy;
                 }
+                Logger.log.Debug("Hierarchy is: " + hierarchy);
+                // Debug End
 
-                // Rescale visible saber (FIXME: Need to account for custom sabers once that mod is available again)
-                RescaleSaber(saber.gameObject, LengthMultiplier, Configuration.Scale.Girth);
-
-                // Revert hitbox changes to sabers, if hitbox scaling is disabled
-                if (hitboxVariables != null)
+                // Only scale solo sabers in solo mode
+                if (IsMultiplayerEnv || IsSoloGameplaySaber(saber.gameObject))
                 {
-                    hitboxVariables.RestoreHitbox();
+                    // DEBUG START
+                    Logger.log.Debug("Scaling Saber " + saber.gameObject.name);
+                    // DEBUG END
+
+                    // Scaling sabers will affect its hitbox, so save the default hitbox positions first before scaling
+                    HitboxRevertWorkaround hitboxVariables = null;
+                    if (!EnableHitboxScaling)
+                    {
+                        hitboxVariables = new HitboxRevertWorkaround(saber);
+                    }
+
+                    // Rescale visible saber (FIXME: Need to account for custom sabers once that mod is available again)
+                    RescaleSaber(saber.gameObject, LengthMultiplier, Configuration.Scale.Girth);
+
+                    // Revert hitbox changes to sabers, if hitbox scaling is disabled
+                    if (hitboxVariables != null)
+                    {
+                        hitboxVariables.RestoreHitbox();
+                    }
                 }
             }
-
-            bool usingCustomModels = false;
 
             #region TrailScaling
             // The new SaberTrail in 1.12.1 is kinda hardcoded to current blade top/bottom positions. So disabling trail scaling for now.
@@ -124,10 +143,46 @@ namespace SaberTailor.Tweaks
             yield return null;
         }
 
+        private void OnDestroy()
+        {
+
+            Logger.log.Debug("OnDestroy Called");
+
+            // GameCore ended - for whatever reason - check if we were in an multiplayer environment
+            if (!IsMultiplayerEnv)
+            {
+                // No cleanup needed
+                return;
+            }
+
+            // We were in a multiplayer environment - reset saber to original size
+            Saber[] sabers = Resources.FindObjectsOfTypeAll<Saber>();
+            foreach (Saber saber in sabers)
+            {
+                Logger.log.Debug("Unscaling saber " + saber.name);
+                RescaleSaber(saber.gameObject, 1 / LengthMultiplier, 1 / Configuration.Scale.Girth);
+            }
+        }
+
+        private bool IsSoloGameplaySaber(GameObject saber)
+        {
+            bool saberIsSolo = true;
+            while (saber.transform.parent != null)
+            {
+                saber = saber.transform.parent.gameObject;
+                if (saber.name.Contains("Multiplayer"))
+                {
+                    saberIsSolo = false;
+                }
+            }
+            return saberIsSolo;
+        }
+
         private void RescaleSaber(GameObject saber, float lengthMultiplier, float widthMultiplier)
         {
             if (saber != null)
             {
+                Logger.log.Debug("Local original scale was: " + saber.transform.localScale.ToString());
                 saber.transform.localScale = Vector3Extensions.Rescale(saber.transform.localScale, widthMultiplier, widthMultiplier, lengthMultiplier);
             }
         }

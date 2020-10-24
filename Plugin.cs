@@ -56,6 +56,18 @@ namespace SaberTailor
             {
                 BSMLSettings.instance.AddSettingsMenu("SaberTailor", "SaberTailor.Settings.UI.Views.mainsettings.bsml", MainSettings.instance);
             }
+
+            //FIXME: Debug, remove later!
+            if ((prevScene != null) && (nextScene != null))
+            {
+                Logger.log.Info("Scene Changed - previous Scene: " + prevScene.name + " / Next Scene: " + nextScene.name);
+                Logger.log.Debug("Printing scene information...");
+                for (int i = 0; i < SceneManager.sceneCount; i++)
+                {
+                    Logger.log.Debug("Scene Index: " + i.ToString() + " : Scene.name: " + SceneManager.GetSceneAt(i).name);
+                }
+            }
+            // Debug End
         }
 
         private void Load()
