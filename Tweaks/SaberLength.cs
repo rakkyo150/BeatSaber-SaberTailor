@@ -56,31 +56,12 @@ namespace SaberTailor.Tweaks
         {
             yield return new WaitForSeconds(0.1f);
 
-            // FIXME: This is for debug!
-            Logger.log.Debug("Starting to scale sabers...");
-            // Debug End
-
             Saber[] sabers = Resources.FindObjectsOfTypeAll<Saber>();
             foreach (Saber saber in sabers)
             {
-                // FIXME: This is for debug!
-                GameObject obj = saber.gameObject;
-                string hierarchy = "/" + saber.gameObject.name;
-                while (obj.transform.parent != null)
-                {
-                    obj = obj.transform.parent.gameObject;
-                    hierarchy = "/" + obj.name + hierarchy;
-                }
-                Logger.log.Debug("Hierarchy is: " + hierarchy);
-                // Debug End
-
                 // Only scale solo sabers in solo mode
                 if (IsMultiplayerEnv || IsSoloGameplaySaber(saber.gameObject))
                 {
-                    // DEBUG START
-                    Logger.log.Debug("Scaling Saber " + saber.gameObject.name);
-                    // DEBUG END
-
                     // Scaling sabers will affect its hitbox, so save the default hitbox positions first before scaling
                     HitboxRevertWorkaround hitboxVariables = null;
                     if (!EnableHitboxScaling)
@@ -145,9 +126,6 @@ namespace SaberTailor.Tweaks
 
         private void OnDestroy()
         {
-
-            Logger.log.Debug("OnDestroy Called");
-
             // GameCore ended - for whatever reason - check if we were in an multiplayer environment
             if (!IsMultiplayerEnv)
             {
@@ -159,7 +137,6 @@ namespace SaberTailor.Tweaks
             Saber[] sabers = Resources.FindObjectsOfTypeAll<Saber>();
             foreach (Saber saber in sabers)
             {
-                Logger.log.Debug("Unscaling saber " + saber.name);
                 RescaleSaber(saber.gameObject, 1 / LengthMultiplier, 1 / Configuration.Scale.Girth);
             }
         }
@@ -182,7 +159,6 @@ namespace SaberTailor.Tweaks
         {
             if (saber != null)
             {
-                Logger.log.Debug("Local original scale was: " + saber.transform.localScale.ToString());
                 saber.transform.localScale = Vector3Extensions.Rescale(saber.transform.localScale, widthMultiplier, widthMultiplier, lengthMultiplier);
             }
         }
