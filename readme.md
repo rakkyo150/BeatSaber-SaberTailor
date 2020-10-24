@@ -22,14 +22,17 @@ The default values are below:
 
 ```json
 {
-  "ConfigVersion": 4,
+  "ConfigVersion": 5,
   "IsSaberScaleModEnabled": false,
   "SaberScaleHitbox": false,
   "SaberLength": 100,
   "SaberGirth": 100,
   "IsTrailModEnabled": false,
   "IsTrailEnabled": true,
-  "TrailLength": 20,
+  "TrailDuration": 400,
+  "TrailGranularity": 60,
+  "TrailWhiteSectionDuration": 100,
+  "IsGripModEnabled": true,  
   "GripLeftPosition": {
     "x": 0,
     "y": 0,
@@ -51,6 +54,7 @@ The default values are below:
     "z": 0
   },
   "ModifyMenuHiltGrip": true,
+  "UseBaseGameAdjustmentMode": false,
   "SaberPosIncrement": 10,
   "SaberPosIncValue": 1,
   "SaberRotIncrement": 5,
@@ -75,7 +79,7 @@ Enables or disables saber scale modifications by SaberTailor.
 - **Values**: `true` | `false`
 - **Default**: `false`
 
-**Enables scaling of the saber hit-box. Having this option set to true *will* disable score submission**
+Enables scaling of the saber hit-box. **Having this option set to true *will* disable score submission**
 
 ### Saber Length
 
@@ -113,15 +117,43 @@ Enables or disables trail modifications by SaberTailor.
 
 Allows you to disable the saber trail entirely, when set to `false`.
 
-### Trail Length
+### Trail Duration
 
-- **Setting**: `TrailLength`
+- **Setting**: `TrailDuration`
+- **Unit**: Milliseconds
+- **Default**: `400` (0.4s)
+- **Minimum**: `100` (0.1s)
+- **Maximum**: `5000` (5s)
+
+Adjusts the duration of the colored part of the trail on the saber in Milliseconds.
+
+### Trail Granularity
+
+- **Setting**: `TrailGranularity`
 - **Unit**: Integer (Whole Number)
-- **Default**: `20`
-- **Minimum**: `5`
-- **Maximum**: `100`
+- **Default**: `60`
+- **Minimum**: `10`
+- **Maximum**: `200`
 
-Adjusts the length of the trail on the saber.
+Adjusts the amount of segments of the trail.
+
+### Trail White Section Duration
+
+- **Setting**: `TrailWhiteSectionDuration`
+- **Unit**: Milliseconds
+- **Default**: `100` (0.1s)
+- **Minimum**: `0` (0.0s)
+- **Maximum**: `2000` (2s)
+
+Adjusts the duration of the bright white part of the trail on the saber in Milliseconds.
+
+### Grip Modification
+
+- **Setting**: `IsGripModEnabled`
+- **Values**: `true` | `false`
+- **Default**: `false`
+
+Controls if the base game grip adjustments or SaberTailor grip adjustments are active. Setting this to `true` enables SablerTailor, which overrides base game settings.
 
 ### Grip Position (Left + Right)
 
@@ -155,6 +187,14 @@ Alters the rotation of the sabers. The center of rotation is where the saber's h
 - **Default**: `true`
 
 Alters the position and angle of the menu hilts the same way as the sabers, when set to `true`.
+
+### Grip Adjustment Mode
+
+- **Setting**: `UseBaseGameAdjustmentMode`
+- **Values**: `true` | `false`
+- **Default**: `true`
+
+Controls how the saber position/rotation is being altered. When this is set to `true`, SaberTailor will mimic the adjustment mode of the base game. Setting this to `false` will use the old 'classic' SaberTailor adjustment mode, which differs a bit. 
 
 ## Developers
 
