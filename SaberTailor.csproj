@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="HarmonyPatches\Patches\SaberTrailInit.cs" />
+    <Compile Include="HarmonyPatches\Patches\SaberTrailRendererOnEnable.cs" />
     <Compile Include="HarmonyPatches\SaberTailorPatches.cs" />
     <Compile Include="HarmonyPatches\Patches\AdjustPlatformSpecificControllerTransformPatch.cs" />
     <Compile Include="Logger.cs" />
@@ -55,7 +56,6 @@
     <Compile Include="Settings\Utilities\PluginConfig.cs" />
     <Compile Include="Settings\Utilities\ProfileManager.cs" />
     <Compile Include="Tweaks\SaberLength.cs" />
-    <Compile Include="Tweaks\SaberTrailTweak.cs" />
     <Compile Include="Utilities\Utils.cs" />
     <Compile Include="Utilities\Vector3Extensions.cs" />
   </ItemGroup>

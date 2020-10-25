@@ -9,13 +9,13 @@ namespace SaberTailor.HarmonyPatches
     {
         private static void Prefix(SaberTrail __instance, ref float ____trailDuration, ref int ____granularity, ref float ____whiteSectionMaxDuration)
         {
-            if (!Configuration.Trail.TweakEnabled)
+            if (Configuration.Trail.TweakEnabled && Configuration.Trail.TrailEnabled)
             {
-                return;
+                ____trailDuration = Configuration.Trail.Duration / 1000f;
+                ____granularity = Configuration.Trail.Granularity;
+                ____whiteSectionMaxDuration = Configuration.Trail.WhiteSectionDuration / 1000f;
+                Logger.log.Info("Successfully modified trails!");
             }
-            ____trailDuration = Configuration.Trail.Duration / 1000f;
-            ____granularity = Configuration.Trail.Granularity;
-            ____whiteSectionMaxDuration = Configuration.Trail.WhiteSectionDuration / 1000f;
         }
     }
 }

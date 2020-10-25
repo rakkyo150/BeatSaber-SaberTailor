@@ -42,11 +42,6 @@ namespace SaberTailor
         {
             if (nextScene.name == "GameCore")
             {
-                if (Configuration.Trail.TweakEnabled)
-                {
-                    new GameObject(PluginName).AddComponent<SaberTrailTweak>();
-                }
-
                 if (Configuration.Scale.TweakEnabled)
                 {
                     new GameObject(PluginName).AddComponent<SaberLength>();
