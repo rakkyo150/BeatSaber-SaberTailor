@@ -267,9 +267,6 @@ namespace SaberTailor.Settings
             }
             #endregion
 
-            #region Controller offset
-            #endregion
-
             #region Menu settings
             if (cfgSection == ConfigSection.All || cfgSection == ConfigSection.Menu)
             {
