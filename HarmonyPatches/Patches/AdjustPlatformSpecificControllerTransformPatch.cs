@@ -66,6 +66,7 @@ namespace SaberTailor.HarmonyPatches
                 {
                     transform.Translate(Configuration.Grip.PosLeft);
                     transform.Rotate(Configuration.Grip.RotLeft);
+                    transform.Translate(Configuration.Grip.OffsetLeft, Space.World);
                 }
                 return;
             }
@@ -80,6 +81,7 @@ namespace SaberTailor.HarmonyPatches
                 {
                     transform.Translate(Configuration.Grip.PosRight);
                     transform.Rotate(Configuration.Grip.RotRight);
+                    transform.Translate(Configuration.Grip.OffsetRight, Space.World);
                 }
                 return;
             }
@@ -98,6 +100,7 @@ namespace SaberTailor.HarmonyPatches
                     {
                         transform.Translate(Configuration.Grip.PosLeft);
                         transform.Rotate(Configuration.Grip.RotLeft);
+                        transform.Translate(Configuration.Grip.OffsetLeft, Space.World);
                     }
                     return;
                 }
@@ -112,6 +115,7 @@ namespace SaberTailor.HarmonyPatches
                     {
                         transform.Translate(Configuration.Grip.PosRight);
                         transform.Rotate(Configuration.Grip.RotRight);
+                        transform.Translate(Configuration.Grip.OffsetRight, Space.World);
                     }
                     return;
                 }

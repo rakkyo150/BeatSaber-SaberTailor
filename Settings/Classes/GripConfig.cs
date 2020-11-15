@@ -13,5 +13,8 @@ namespace SaberTailor.Settings.Classes
 
         public Vector3 RotLeft;
         public Vector3 RotRight;
+
+        public Vector3 OffsetLeft;
+        public Vector3 OffsetRight;
     }
 }
