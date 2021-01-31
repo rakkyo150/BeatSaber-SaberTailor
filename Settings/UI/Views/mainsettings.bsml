@@ -77,7 +77,7 @@
 
       <!--Saber Grip Right-->
       <settings-submenu text='&#62; Right Saber Settings...' hover-hint='Adjust position and rotation of the right saber.'>
-          <scrollable-settings-container>
+        <scrollable-settings-container>
           <increment-setting text='Pos X (Left/Right)' value='saber-right-position-x'
                              apply-on-change='true' on-change='update-saber-position' get-event="refresh-sabertailor-position-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
