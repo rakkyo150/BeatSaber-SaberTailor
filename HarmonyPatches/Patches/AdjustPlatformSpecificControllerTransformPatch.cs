@@ -55,7 +55,7 @@ namespace SaberTailor.HarmonyPatches
             rotation = Vector3.zero;
 
             // Always check for sabers first and modify and exit out immediately if found
-            if (transform.gameObject.name == "LeftSaber" || transform.gameObject.name.Contains("Saber A"))
+            if (transform.gameObject.name == "LeftHand" || transform.gameObject.name.Contains("Saber A"))
             {
                 if (Configuration.Grip.UseBaseGameAdjustmentMode)
                 {
@@ -70,7 +70,7 @@ namespace SaberTailor.HarmonyPatches
                 }
                 return;
             }
-            else if (transform.gameObject.name == "RightSaber" || transform.gameObject.name.Contains("Saber B"))
+            else if (transform.gameObject.name == "RightHand" || transform.gameObject.name.Contains("Saber B"))
             {
                 if (Configuration.Grip.UseBaseGameAdjustmentMode)
                 {

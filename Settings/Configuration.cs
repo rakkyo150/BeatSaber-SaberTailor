@@ -66,7 +66,16 @@ namespace SaberTailor.Settings
                 }
             }
 
-            LoadConfig();
+            try
+            {
+                LoadConfig();
+            }
+            catch (Exception ex)
+            {
+                Logger.log.Warn("Failed to load config file. Generating new default configuration...");
+                PluginConfig.Instance = new PluginConfig();
+                LoadConfig();
+            }
             UpdateConfig();
             Logger.log.Debug("Configuration has been set");
 
