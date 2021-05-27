@@ -52,17 +52,17 @@
                              integer-only='true' min='~saber-rot-min' max='~saber-rot-max' increment='1'
                              formatter='rotation-formatter' hover-hint='Rotates the saber around its own axis.' />
             
-          <increment-setting text='Pos X (Left/Right)' value='saber-left-offset-x'
+          <increment-setting text='World Offset X (Left/Right)' value='saber-left-offset-x'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
                              formatter='position-formatter' hover-hint='Moves the controller left/right.' />
 
-          <increment-setting text='Pos Y (Down/Up)' value='saber-left-offset-y'
+          <increment-setting text='World Offset Y (Down/Up)' value='saber-left-offset-y'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
                              formatter='position-formatter' hover-hint='Moves the controller down/up.' />
 
-          <increment-setting text='Pos Z (Bwd./Fwd.)' value='saber-left-offset-z'
+          <increment-setting text='World Offset Z (Bwd./Fwd.)' value='saber-left-offset-z'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
                              formatter='position-formatter' hover-hint='Moves the controller backwards/forwards.' />
@@ -108,17 +108,17 @@
                              integer-only='true' min='~saber-rot-min' max='~saber-rot-max' increment='1'
                              formatter='rotation-formatter' hover-hint='Rotates the saber around its own axis.' />
           
-          <increment-setting text='Pos X (Left/Right)' value='saber-right-offset-x'
+          <increment-setting text='World Offset X (Left/Right)' value='saber-right-offset-x'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
                              formatter='position-formatter' hover-hint='Moves the controller left/right.' />
 
-          <increment-setting text='Pos Y (Down/Up)' value='saber-right-offset-y'
+          <increment-setting text='World Offset Y (Down/Up)' value='saber-right-offset-y'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
                              formatter='position-formatter' hover-hint='Moves the controller down/up.' />
 
-          <increment-setting text='Pos Z (Bwd./Fwd.)' value='saber-right-offset-z'
+          <increment-setting text='World Offset Z (Bwd./Fwd.)' value='saber-right-offset-z'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
                              formatter='position-formatter' hover-hint='Moves the controller backwards/forwards.' />
