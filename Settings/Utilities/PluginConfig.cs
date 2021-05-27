@@ -27,6 +27,9 @@ namespace SaberTailor.Settings.Utilities
         public Int3 GripLeftRotation = new Int3();      // Rotation in °
         public Int3 GripRightRotation = new Int3();
 
+        public Int3 GripLeftOffset = new Int3();        // Offset in mm
+        public Int3 GripRightOffset = new Int3();
+
         public bool ModifyMenuHiltGrip = true;
         public bool UseBaseGameAdjustmentMode = true;
 
