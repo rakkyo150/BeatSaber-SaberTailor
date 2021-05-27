@@ -11,13 +11,16 @@
                     apply-on-change='true' get-event="refresh-sabertailor-values"
                     hover-hint='Enable/Disable any grip modifications.' />
 
-      <text text='Enabling grip adjustments will disable the base game adjustments.'
-            font-size='4' color='#fb484e' size-delta-y='8' />
+      <text text='Note: Enabling grip adjustments will disable the base game adjustments.'
+            font-size='4' color='#ff7f50' size-delta-y='8' />
 
       <!--Saber Grip Menu-->
       <bool-setting text='Enable Base Game Adjustment Mode' value='basegameadjustmentmode-enabled'
                     apply-on-change='true' get-event='refresh-sabertailor-values'
                     hover-hint='Switch between SaberTailor or base game adjustment mode. This changes how your grip settings are applied to the controller position.' />
+
+      <text text='Note: Base Game Adjustment Mode does not support world offset settings.'
+            font-size='4' color='#ff7f50' size-delta-y='8' />
 
       <!--Saber Grip Left-->
       <settings-submenu text='&#62; Left Saber Settings...' hover-hint='Adjust position and rotation of the left saber.'>
@@ -51,21 +54,21 @@
                              apply-on-change='true' on-change='update-saber-rotation' get-event="refresh-sabertailor-rotation-values"
                              integer-only='true' min='~saber-rot-min' max='~saber-rot-max' increment='1'
                              formatter='rotation-formatter' hover-hint='Rotates the saber around its own axis.' />
-            
+
           <increment-setting text='World Offset X (Left/Right)' value='saber-left-offset-x'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
-                             formatter='position-formatter' hover-hint='Moves the controller left/right relative to the world.' />
+                             formatter='position-formatter' hover-hint='Moves the controller left/right relative to the world. Does nothing in base game adjustment mode.' />
 
           <increment-setting text='World Offset Y (Down/Up)' value='saber-left-offset-y'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
-                             formatter='position-formatter' hover-hint='Moves the controller down/up relative to the world.' />
+                             formatter='position-formatter' hover-hint='Moves the controller down/up relative to the world. Does nothing in base game adjustment mode.' />
 
           <increment-setting text='World Offset Z (Bwd./Fwd.)' value='saber-left-offset-z'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
-                             formatter='position-formatter' hover-hint='Moves the controller backwards/forwards relative to the world.' />
+                             formatter='position-formatter' hover-hint='Moves the controller backwards/forwards relative to the world. Does nothing in base game adjustment mode.' />
 
           <horizontal>
             <clickable-text text='&#60; Back' align='Left' click-event='back' />
@@ -111,17 +114,17 @@
           <increment-setting text='World Offset X (Left/Right)' value='saber-right-offset-x'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
-                             formatter='position-formatter' hover-hint='Moves the controller left/right relative to the world.' />
+                             formatter='position-formatter' hover-hint='Moves the controller left/right relative to the world. Does nothing in base game adjustment mode.' />
 
           <increment-setting text='World Offset Y (Down/Up)' value='saber-right-offset-y'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
-                             formatter='position-formatter' hover-hint='Moves the controller down/up relative to the world.' />
+                             formatter='position-formatter' hover-hint='Moves the controller down/up relative to the world. Does nothing in base game adjustment mode.' />
 
           <increment-setting text='World Offset Z (Bwd./Fwd.)' value='saber-right-offset-z'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
-                             formatter='position-formatter' hover-hint='Moves the controller backwards/forwards relative to the world.' />
+                             formatter='position-formatter' hover-hint='Moves the controller backwards/forwards relative to the world. Does nothing in base game adjustment mode.' />
 
           <horizontal>
             <clickable-text text='&#60; Back' align='Left' click-event='back' />
@@ -181,7 +184,7 @@
       <bool-setting text='Scale hitbox' value='saber-scale-hitbox-enabled'
                     get-event="refresh-sabertailor-values"
                     hover-hint='Enable/Disable saber hit-box scaling.' />
-      <text text='Having this option enabled will disable score submission.'
+      <text text='Enabling hitbox scaling will disable score submission.'
             font-size='5' color='#fb484e' size-delta-y='8' />
 
       <horizontal>
