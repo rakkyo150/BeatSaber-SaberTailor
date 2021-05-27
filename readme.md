@@ -53,6 +53,16 @@ The default values are below:
     "y": 0,
     "z": 0
   },
+  "GripLeftOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "GripRightOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
   "ModifyMenuHiltGrip": true,
   "UseBaseGameAdjustmentMode": false,
   "SaberPosIncrement": 10,
@@ -179,6 +189,19 @@ Alters the position of the left/right saber, relative to the default location. Y
 - `+z` rolls the saber counter-clockwise around its own axis, EG: `30` rotates the saber 30 degrees counter-clockwise. (This is only useful if you have custom sabers that are not cylindrical shaped and you want to correct for a different grip (e.g. Vive B-Grip)
 
 Alters the rotation of the sabers. The center of rotation is where the saber's hit-box starts, which is just after the glowing line on the handle.
+
+### Grip Offset (Left + Right)
+
+- **Setting**: `GripLeftOffset`, `GripRightOffset`
+- **Unit**: Millimeters
+- **Default**: `"x": 0, "y": 0, "z": 0`
+- **Maximum**: `500` on any axis
+
+- `+x` moves the controller right, EG: `200` moves the controller 20 centimeters right.
+- `+y` moves the controller up, EG: `100` moves the controller 10 centimeters up.
+- `+z` moves the controller forward, EG: `300` moves the controller 30 centimeters forward.
+
+Will simulate moving your physical controller location in case of drifts in the default position. You cannot move the controller more than 50 centimeters away on any axis!
 
 ### Menu hilt adjustments
 

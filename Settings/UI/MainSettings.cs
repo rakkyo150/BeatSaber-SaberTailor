@@ -177,6 +177,42 @@ namespace SaberTailor.Settings.UI
                 RefreshRotationSettings();
             }
         }
+
+        [UIValue("saber-left-offset-x")]
+        public int GripLeftOffsetX
+        {
+            get => Configuration.GripCfg.OffsetLeft.x;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.OffsetLeft.x, Configuration.Menu.SaberPosIncrement, value);
+                Configuration.GripCfg.OffsetLeft.x = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                RefreshOffsetSettings();
+            }
+        }
+
+        [UIValue("saber-left-offset-y")]
+        public int GripLeftOffsetY
+        {
+            get => Configuration.GripCfg.OffsetLeft.y;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.OffsetLeft.y, Configuration.Menu.SaberPosIncrement, value);
+                Configuration.GripCfg.OffsetLeft.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                RefreshOffsetSettings();
+            }
+        }
+
+        [UIValue("saber-left-offset-z")]
+        public int GripLeftOffsetZ
+        {
+            get => Configuration.GripCfg.OffsetLeft.z;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.OffsetLeft.y, Configuration.Menu.SaberPosIncrement, value);
+                Configuration.GripCfg.OffsetLeft.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                RefreshOffsetSettings();
+            }
+        }
         #endregion
 
         #region Saber Grip Right
@@ -249,6 +285,42 @@ namespace SaberTailor.Settings.UI
                 int newVal = Increment(Configuration.GripCfg.RotRight.z, SaberRotIncrement, value);
                 Configuration.GripCfg.RotRight.z = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
+            }
+        }
+
+        [UIValue("saber-right-offset-x")]
+        public int GripRightOffsetX
+        {
+            get => Configuration.GripCfg.OffsetRight.x;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.OffsetRight.x, Configuration.Menu.SaberPosIncrement, value);
+                Configuration.GripCfg.OffsetRight.x = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                RefreshOffsetSettings();
+            }
+        }
+
+        [UIValue("saber-right-offset-y")]
+        public int GripRightOffsetY
+        {
+            get => Configuration.GripCfg.OffsetRight.y;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.OffsetRight.y, Configuration.Menu.SaberPosIncrement, value);
+                Configuration.GripCfg.OffsetRight.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                RefreshOffsetSettings();
+            }
+        }
+
+        [UIValue("saber-right-offset-z")]
+        public int GripRightOffsetZ
+        {
+            get => Configuration.GripCfg.OffsetRight.z;
+            set
+            {
+                int newVal = Increment(Configuration.GripCfg.OffsetRight.y, Configuration.Menu.SaberPosIncrement, value);
+                Configuration.GripCfg.OffsetRight.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                RefreshOffsetSettings();
             }
         }
         #endregion
@@ -482,6 +554,14 @@ namespace SaberTailor.Settings.UI
             Configuration.UpdateSaberPosition();
         }
 
+        [UIAction("update-saber-offset")]
+        public async void OnUpdateSaberOffset(float _)
+        {
+            // Delay this UI event to allow UI value to be set first
+            await Task.Delay(20);
+            Configuration.UpdateSaberOffset();
+        }
+
         [UIAction("#apply")]
         public void OnApply() => StoreConfiguration();
 
@@ -554,6 +634,7 @@ namespace SaberTailor.Settings.UI
             RefreshModSettingsUI();
             Configuration.UpdateSaberPosition();
             Configuration.UpdateSaberRotation();
+            Configuration.UpdateSaberOffset();
         }
 
         /// <summary>
@@ -589,6 +670,14 @@ namespace SaberTailor.Settings.UI
         private void RefreshRotationSettings()
         {
             parserParams.EmitEvent("refresh-sabertailor-rotation-values");
+        }
+
+        /// <summary>
+        /// Refresh offset settings UI
+        /// </summary>
+        private void RefreshOffsetSettings()
+        {
+            parserParams.EmitEvent("refresh-sabertailor-offset-values");
         }
 
         private void ImportGripFromGameSettings()
