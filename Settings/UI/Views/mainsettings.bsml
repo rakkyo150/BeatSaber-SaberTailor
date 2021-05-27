@@ -55,17 +55,17 @@
           <increment-setting text='World Offset X (Left/Right)' value='saber-left-offset-x'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
-                             formatter='position-formatter' hover-hint='Moves the controller left/right.' />
+                             formatter='position-formatter' hover-hint='Moves the controller left/right relative to the world.' />
 
           <increment-setting text='World Offset Y (Down/Up)' value='saber-left-offset-y'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
-                             formatter='position-formatter' hover-hint='Moves the controller down/up.' />
+                             formatter='position-formatter' hover-hint='Moves the controller down/up relative to the world.' />
 
           <increment-setting text='World Offset Z (Bwd./Fwd.)' value='saber-left-offset-z'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
-                             formatter='position-formatter' hover-hint='Moves the controller backwards/forwards.' />
+                             formatter='position-formatter' hover-hint='Moves the controller backwards/forwards relative to the world.' />
 
           <horizontal>
             <clickable-text text='&#60; Back' align='Left' click-event='back' />
@@ -111,17 +111,17 @@
           <increment-setting text='World Offset X (Left/Right)' value='saber-right-offset-x'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
-                             formatter='position-formatter' hover-hint='Moves the controller left/right.' />
+                             formatter='position-formatter' hover-hint='Moves the controller left/right relative to the world.' />
 
           <increment-setting text='World Offset Y (Down/Up)' value='saber-right-offset-y'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
-                             formatter='position-formatter' hover-hint='Moves the controller down/up.' />
+                             formatter='position-formatter' hover-hint='Moves the controller down/up relative to the world.' />
 
           <increment-setting text='World Offset Z (Bwd./Fwd.)' value='saber-right-offset-z'
                              apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
                              integer-only='true' min='~saber-pos-min' max='~saber-pos-max' increment='1'
-                             formatter='position-formatter' hover-hint='Moves the controller backwards/forwards.' />
+                             formatter='position-formatter' hover-hint='Moves the controller backwards/forwards relative to the world.' />
 
           <horizontal>
             <clickable-text text='&#60; Back' align='Left' click-event='back' />

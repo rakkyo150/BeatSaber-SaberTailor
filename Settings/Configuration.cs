@@ -159,7 +159,12 @@ namespace SaberTailor.Settings
                     y = -GripCfg.RotRight.y,
                     z = -GripCfg.RotRight.z
                 };
-                GripCfg.OffsetLeft = new Int3(GripCfg.OffsetRight);
+                GripCfg.OffsetLeft = new Int3()
+                {
+                    x = -GripCfg.OffsetRight.x,
+                    y = GripCfg.OffsetRight.y,
+                    z = GripCfg.OffsetRight.z
+                };
             }
             else
             {
@@ -175,7 +180,12 @@ namespace SaberTailor.Settings
                     y = -GripCfg.RotLeft.y,
                     z = -GripCfg.RotLeft.z
                 };
-                GripCfg.OffsetRight = new Int3(GripCfg.OffsetLeft);
+                GripCfg.OffsetRight = new Int3()
+                {
+                    x = -GripCfg.OffsetLeft.x,
+                    y = GripCfg.OffsetLeft.y,
+                    z = GripCfg.OffsetLeft.z
+                };
             }
         }
 
