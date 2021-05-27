@@ -653,6 +653,7 @@ namespace SaberTailor.Settings.UI
         {
             RefreshRotationSettings();
             RefreshPositionSettings();
+            RefreshOffsetSettings();
             parserParams.EmitEvent("refresh-sabertailor-values");
         }
 
