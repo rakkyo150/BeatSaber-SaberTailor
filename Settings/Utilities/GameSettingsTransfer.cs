@@ -78,6 +78,20 @@ namespace SaberTailor.Settings.Utilities
                 z = (int)Math.Round(ctrlRot.z, MidpointRounding.AwayFromZero)
             };
 
+            Configuration.GripCfg.OffsetLeft = new Int3()
+            {
+                x = 0,
+                y = 0,
+                z = 0
+            };
+
+            Configuration.GripCfg.OffsetRight = new Int3()
+            {
+                x = 0,
+                y = 0,
+                z = 0
+            };
+
             Configuration.Grip.UseBaseGameAdjustmentMode = true;
 
             return true;
@@ -98,7 +112,12 @@ namespace SaberTailor.Settings.Utilities
                 Configuration.GripCfg.RotRight.y,
                 Configuration.GripCfg.RotRight.z);
 
-            ConvertSTtoGameVector(stPos, stRot, out Vector3 exportPos, out Vector3 exportRot);
+            Vector3 stOffset = new Vector3(
+                Configuration.GripCfg.OffsetRight.x / 1000f,
+                Configuration.GripCfg.OffsetRight.y / 1000f,
+                Configuration.GripCfg.OffsetRight.z / 1000f);
+
+            ConvertSTtoGameVector(stPos, stRot, stOffset, out Vector3 exportPos, out Vector3 exportRot);
 
             if (Configuration.Grip.UseBaseGameAdjustmentMode)
             {
@@ -234,7 +253,7 @@ namespace SaberTailor.Settings.Utilities
             UnityEngine.Object.Destroy(gameAdjustObject);
         }
 
-        internal static void ConvertSTtoGameVector(Vector3 inPos, Vector3 inRot, out Vector3 outPos, out Vector3 outRot)
+        internal static void ConvertSTtoGameVector(Vector3 inPos, Vector3 inRot, Vector3 inOffset, out Vector3 outPos, out Vector3 outRot)
         {
             GetVRPlatformHelperVector(out Vector3 vrPlatformPos, out Vector3 vrPlatformRot);
 
@@ -243,6 +262,7 @@ namespace SaberTailor.Settings.Utilities
             Transform stAdjustTransform = stAdjustObject.transform;
             stAdjustTransform.Translate(inPos);
             stAdjustTransform.Rotate(inRot);
+            stAdjustTransform.Translate(inOffset, Space.World);
             stAdjustTransform.Rotate(vrPlatformRot);
             stAdjustTransform.Translate(vrPlatformPos);
 
@@ -293,7 +313,7 @@ namespace SaberTailor.Settings.Utilities
             stToGameTransform.position = Vector3.zero;
             stToGameTransform.rotation = Quaternion.Euler(Vector3.zero);
 
-            ConvertSTtoGameVector(posTest, rotTest, out Vector3 toGamePos, out Vector3 toGameRot);
+            ConvertSTtoGameVector(posTest, rotTest, Vector3.zero, out Vector3 toGamePos, out Vector3 toGameRot);
             Vector3 stToGameAdjustPos = vrPlatformPos.Clone();
             Vector3 stToGameAdjustRot = vrPlatformRot.Clone();
 
