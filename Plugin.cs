@@ -19,7 +19,6 @@ namespace SaberTailor
     {
         public static string PluginName => "SaberTailor";
         public static SemVer.Version PluginVersion { get; private set; } = new SemVer.Version("0.0.0"); // Default
-        internal static bool IsBSMLMenuLoaded = false;
 
         [Init]
         public void Init(IPALogger logger, PluginMetadata metadata)
@@ -40,18 +39,12 @@ namespace SaberTailor
 
         public void OnActiveSceneChanged(Scene prevScene, Scene nextScene)
         {
-            Logger.log.Info("Switching scene. Prev scene name is '" + prevScene.name + "' and next scene name is '" + nextScene.name + "'");
             if (nextScene.name == "GameCore")
             {
                 if (Configuration.Scale.TweakEnabled)
                 {
                     new GameObject(PluginName).AddComponent<SaberLength>();
                 }
-            }
-            else if (nextScene.name == "MainMenu" && !IsBSMLMenuLoaded)
-            {
-                BSMLSettings.instance.AddSettingsMenu("SaberTailor", "SaberTailor.Settings.UI.Views.mainsettings.bsml", MainSettings.instance);
-                IsBSMLMenuLoaded = true;
             }
         }
 
@@ -62,6 +55,7 @@ namespace SaberTailor
 
             AddEvents();
 
+            BSMLSettings.instance.AddSettingsMenu("SaberTailor", "SaberTailor.Settings.UI.Views.mainsettings.bsml", MainSettings.instance);
             Logger.log.Info($"{PluginName} v.{PluginVersion} has started.");
         }
 
@@ -70,6 +64,8 @@ namespace SaberTailor
             SaberTailorPatches.RemoveHarmonyPatches();
             Configuration.Save();
             RemoveEvents();
+
+            BSMLSettings.instance.RemoveSettingsMenu(MainSettings.instance);
         }
 
         private void AddEvents()
