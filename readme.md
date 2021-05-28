@@ -1,6 +1,15 @@
 # Beat Saber - Saber Tailor
 
-Tweak things about your sabers, including grip position/angle, saber length and trail length! Original mod by Ruu.
+Tweak things about your sabers, including grip position/angle, saber length and trail length! Original mod by Ruu. Current features include:
+
+- Change the position and angle of your saber relative to your controller (independently for left/right saber)
+- Change the position of your saber relative to the world (independently for left/right saber)
+- Import/Export your current game settings into/from SaberTailor
+- Scale the length and width of your saber
+  -  optional including the hitbox (enabling this option will disable score submission)
+- Enable/Disable saber trail and trail whitestep
+- Change trail length
+- Profile support (save to/load from different profiles files)
 
 ## Note on updates from SaberTailor older than v2.0.0!
 
@@ -15,7 +24,7 @@ Please note that grip position adjustments are now saved in millimeters. These w
 
 ## Settings
 
-Adjust the different settings in-game from the "Settings" menu.
+Adjust the different settings in-game from the "Mod Settings" menu.
 
 You can also adjust your settings manually in `\Beat Saber\UserData\SaberTailor.json` (The game will have to be restarted)
 The default values are below:
