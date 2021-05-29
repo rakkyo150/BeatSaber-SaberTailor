@@ -147,7 +147,7 @@ namespace SaberTailor.Settings
                 {
                     x = GripCfg.RotRight.x,
                     y = -GripCfg.RotRight.y,
-                    z = GripCfg.RotRight.z
+                    z = -GripCfg.RotRight.z
                 };
             }
             else
@@ -162,7 +162,7 @@ namespace SaberTailor.Settings
                 {
                     x = GripCfg.RotLeft.x,
                     y = -GripCfg.RotLeft.y,
-                    z = GripCfg.RotLeft.z
+                    z = -GripCfg.RotLeft.z
                 };
             }
         }
