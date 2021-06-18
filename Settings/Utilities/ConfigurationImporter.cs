@@ -36,7 +36,7 @@ namespace SaberTailor.Settings.Utilities
 
                 // Import grip position settings, convert old centimeter values to millimeter
                 GripLeftPosition = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripLeftPosition), "0,0,0", true));
-                importedSettings.GripLeftPosition = new Int3()
+                importedSettings.GripLeftPosition = new Float3()
                 {
                     x = (int)Math.Round(Mathf.Clamp(GripLeftPosition.x, -50f, 50f) * 10),
                     y = (int)Math.Round(Mathf.Clamp(GripLeftPosition.y, -50f, 50f) * 10),
@@ -44,7 +44,7 @@ namespace SaberTailor.Settings.Utilities
                 };
 
                 GripLeftRotation = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripLeftRotation), "0,0,0", true));
-                importedSettings.GripLeftRotation = new Int3()
+                importedSettings.GripLeftRotation = new Float3()
                 {
                     x = (int)Math.Round(GripLeftRotation.x),
                     y = (int)Math.Round(GripLeftRotation.y),
@@ -52,7 +52,7 @@ namespace SaberTailor.Settings.Utilities
                 };
 
                 GripRightPosition = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripRightPosition), "0,0,0", true));
-                importedSettings.GripRightPosition = new Int3()
+                importedSettings.GripRightPosition = new Float3()
                 {
                     x = (int)Math.Round(Mathf.Clamp(GripRightPosition.x, -50f, 50f) * 10),
                     y = (int)Math.Round(Mathf.Clamp(GripRightPosition.y, -50f, 50f) * 10),
@@ -60,7 +60,7 @@ namespace SaberTailor.Settings.Utilities
                 };
 
                 GripRightRotation = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripRightRotation), "0,0,0", true));
-                importedSettings.GripRightRotation = new Int3()
+                importedSettings.GripRightRotation = new Float3()
                 {
                     x = (int)Math.Round(GripRightRotation.x),
                     y = (int)Math.Round(GripRightRotation.y),

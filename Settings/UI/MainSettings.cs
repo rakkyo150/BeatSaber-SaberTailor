@@ -44,7 +44,7 @@ namespace SaberTailor.Settings.UI
         }
 
         [UIValue("saber-pos-increment-value")]
-        public int SaberPosIncValue
+        public float SaberPosIncValue
         {
             get => Configuration.Menu.SaberPosIncValue;
             set
@@ -56,7 +56,7 @@ namespace SaberTailor.Settings.UI
         }
 
         [UIValue("saber-rot-increment-value")]
-        public int SaberRotIncrement
+        public float SaberRotIncrement
         {
             get => Configuration.Menu.SaberRotIncrement;
             set => Configuration.Menu.SaberRotIncrement = value;
@@ -107,108 +107,108 @@ namespace SaberTailor.Settings.UI
 
         #region Saber Grip Left
         [UIValue("saber-left-position-x")]
-        public int GripLeftPositionX
+        public float GripLeftPositionX
         {
             get => Configuration.GripCfg.PosLeft.x;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.PosLeft.x, Configuration.Menu.SaberPosIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.PosLeft.x, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.PosLeft.x = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
         }
 
         [UIValue("saber-left-position-y")]
-        public int GripLeftPositionY
+        public float GripLeftPositionY
         {
             get => Configuration.GripCfg.PosLeft.y;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.PosLeft.y, Configuration.Menu.SaberPosIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.PosLeft.y, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.PosLeft.y = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
         }
 
         [UIValue("saber-left-position-z")]
-        public int GripLeftPositionZ
+        public float GripLeftPositionZ
         {
             get => Configuration.GripCfg.PosLeft.z;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.PosLeft.z, Configuration.Menu.SaberPosIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.PosLeft.z, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.PosLeft.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
         }
 
         [UIValue("saber-left-rotation-x")]
-        public int GripLeftRotationX
+        public float GripLeftRotationX
         {
             get => Configuration.GripCfg.RotLeft.x;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.RotLeft.x, SaberRotIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.RotLeft.x, SaberRotIncrement, value);
                 Configuration.GripCfg.RotLeft.x = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
             }
         }
 
         [UIValue("saber-left-rotation-y")]
-        public int GripLeftRotationY
+        public float GripLeftRotationY
         {
             get => Configuration.GripCfg.RotLeft.y;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.RotLeft.y, SaberRotIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.RotLeft.y, SaberRotIncrement, value);
                 Configuration.GripCfg.RotLeft.y = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
             }
         }
 
         [UIValue("saber-left-rotation-z")]
-        public int GripLeftRotationZ
+        public float GripLeftRotationZ
         {
             get => Configuration.GripCfg.RotLeft.z;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.RotLeft.z, SaberRotIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.RotLeft.z, SaberRotIncrement, value);
                 Configuration.GripCfg.RotLeft.z = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
             }
         }
 
         [UIValue("saber-left-offset-x")]
-        public int GripLeftOffsetX
+        public float GripLeftOffsetX
         {
             get => Configuration.GripCfg.OffsetLeft.x;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.OffsetLeft.x, Configuration.Menu.SaberPosIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.OffsetLeft.x, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.OffsetLeft.x = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
         }
 
         [UIValue("saber-left-offset-y")]
-        public int GripLeftOffsetY
+        public float GripLeftOffsetY
         {
             get => Configuration.GripCfg.OffsetLeft.y;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.OffsetLeft.y, Configuration.Menu.SaberPosIncrement, value);
-                Configuration.GripCfg.OffsetLeft.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                float newVal = Increment(Configuration.GripCfg.OffsetLeft.y, Configuration.Menu.SaberPosIncrement, value);
+                Configuration.GripCfg.OffsetLeft.y = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
         }
 
         [UIValue("saber-left-offset-z")]
-        public int GripLeftOffsetZ
+        public float GripLeftOffsetZ
         {
             get => Configuration.GripCfg.OffsetLeft.z;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.OffsetLeft.y, Configuration.Menu.SaberPosIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.OffsetLeft.z, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.OffsetLeft.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
@@ -217,108 +217,108 @@ namespace SaberTailor.Settings.UI
 
         #region Saber Grip Right
         [UIValue("saber-right-position-x")]
-        public int GripRightPositionX
+        public float GripRightPositionX
         {
             get => Configuration.GripCfg.PosRight.x;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.PosRight.x, Configuration.Menu.SaberPosIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.PosRight.x, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.PosRight.x = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
         }
 
         [UIValue("saber-right-position-y")]
-        public int GripRightPositionY
+        public float GripRightPositionY
         {
             get => Configuration.GripCfg.PosRight.y;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.PosRight.y, Configuration.Menu.SaberPosIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.PosRight.y, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.PosRight.y = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
         }
 
         [UIValue("saber-right-position-z")]
-        public int GripRightPositionZ
+        public float GripRightPositionZ
         {
             get => Configuration.GripCfg.PosRight.z;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.PosRight.z, Configuration.Menu.SaberPosIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.PosRight.z, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.PosRight.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
         }
 
         [UIValue("saber-right-rotation-x")]
-        public int GripRightRotationX
+        public float GripRightRotationX
         {
             get => Configuration.GripCfg.RotRight.x;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.RotRight.x, SaberRotIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.RotRight.x, SaberRotIncrement, value);
                 Configuration.GripCfg.RotRight.x = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
             }
         }
 
         [UIValue("saber-right-rotation-y")]
-        public int GripRightRotationY
+        public float GripRightRotationY
         {
             get => Configuration.GripCfg.RotRight.y;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.RotRight.y, SaberRotIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.RotRight.y, SaberRotIncrement, value);
                 Configuration.GripCfg.RotRight.y = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
             }
         }
 
         [UIValue("saber-right-rotation-z")]
-        public int GripRightRotationZ
+        public float GripRightRotationZ
         {
             get => Configuration.GripCfg.RotRight.z;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.RotRight.z, SaberRotIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.RotRight.z, SaberRotIncrement, value);
                 Configuration.GripCfg.RotRight.z = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
             }
         }
 
         [UIValue("saber-right-offset-x")]
-        public int GripRightOffsetX
+        public float GripRightOffsetX
         {
             get => Configuration.GripCfg.OffsetRight.x;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.OffsetRight.x, Configuration.Menu.SaberPosIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.OffsetRight.x, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.OffsetRight.x = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
         }
 
         [UIValue("saber-right-offset-y")]
-        public int GripRightOffsetY
+        public float GripRightOffsetY
         {
             get => Configuration.GripCfg.OffsetRight.y;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.OffsetRight.y, Configuration.Menu.SaberPosIncrement, value);
-                Configuration.GripCfg.OffsetRight.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                float newVal = Increment(Configuration.GripCfg.OffsetRight.y, Configuration.Menu.SaberPosIncrement, value);
+                Configuration.GripCfg.OffsetRight.y = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
         }
 
         [UIValue("saber-right-offset-z")]
-        public int GripRightOffsetZ
+        public float GripRightOffsetZ
         {
             get => Configuration.GripCfg.OffsetRight.z;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.OffsetRight.y, Configuration.Menu.SaberPosIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.OffsetRight.z, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.OffsetRight.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
@@ -445,7 +445,7 @@ namespace SaberTailor.Settings.UI
 
         #region Formatters
         [UIAction("position-inc-formatter")]
-        public string PositionIncString(int value)
+        public string PositionIncString(float value)
         {
             switch (Configuration.Menu.SaberPosIncUnit)
             {
@@ -459,7 +459,7 @@ namespace SaberTailor.Settings.UI
         }
 
         [UIAction("position-formatter")]
-        public string PositionString(int value)
+        public string PositionString(float value)
         {
             switch (Configuration.Menu.SaberPosDisplayUnit)
             {
@@ -470,18 +470,18 @@ namespace SaberTailor.Settings.UI
                 case PositionDisplayUnit.miles:
                     return string.Format("{0:0.000000} miles", value / 1609344f);
                 default:
-                    return string.Format("{0:0.0} cm", value / 10f);
+                    return $"{value/10f} cm";
             }
         }
 
         [UIAction("rotation-formatter")]
-        public string RotationString(int value)
+        public string RotationString(float value)
         {
             return $"{value} deg";
         }
 
         [UIAction("multiplier-formatter")]
-        public string MultiplierString(int value)
+        public string MultiplierString(float value)
         {
             return $"{value}%";
         }
@@ -799,9 +799,9 @@ namespace SaberTailor.Settings.UI
         /// <param name="incrementBy">Magic increment number</param>
         /// <param name="value">Real increment number</param>
         /// <returns></returns>
-        private int Increment(int currentValue, int incrementBy, int value)
+        private float Increment(float currentValue, float incrementBy, float value)
         {
-            int result = currentValue;
+            float result = currentValue;
 
             if (currentValue < value)
             {

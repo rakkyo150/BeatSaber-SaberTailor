@@ -117,8 +117,8 @@ namespace SaberTailor.Settings
         /// </summary>
         internal static void UpdateSaberPosition()
         {
-            Grip.PosLeft = Int3.ToVector3(GripCfg.PosLeft) / 1000f;
-            Grip.PosRight = Int3.ToVector3(GripCfg.PosRight) / 1000f;
+            Grip.PosLeft = Float3.ToVector3(GripCfg.PosLeft) / 1000f;
+            Grip.PosRight = Float3.ToVector3(GripCfg.PosRight) / 1000f;
         }
 
         /// <summary>
@@ -126,8 +126,8 @@ namespace SaberTailor.Settings
         /// </summary>
         internal static void UpdateSaberOffset()
         {
-            Grip.OffsetLeft = Int3.ToVector3(GripCfg.OffsetLeft) / 1000f;
-            Grip.OffsetRight = Int3.ToVector3(GripCfg.OffsetRight) / 1000f;
+            Grip.OffsetLeft = Float3.ToVector3(GripCfg.OffsetLeft) / 1000f;
+            Grip.OffsetRight = Float3.ToVector3(GripCfg.OffsetRight) / 1000f;
         }
 
         /// <summary>
@@ -135,8 +135,8 @@ namespace SaberTailor.Settings
         /// </summary>
         internal static void UpdateSaberRotation()
         {
-            Grip.RotLeft = Quaternion.Euler(Int3.ToVector3(GripCfg.RotLeft)).eulerAngles;
-            Grip.RotRight = Quaternion.Euler(Int3.ToVector3(GripCfg.RotRight)).eulerAngles;
+            Grip.RotLeft = Quaternion.Euler(Float3.ToVector3(GripCfg.RotLeft)).eulerAngles;
+            Grip.RotRight = Quaternion.Euler(Float3.ToVector3(GripCfg.RotRight)).eulerAngles;
         }
 
         /// <summary>
@@ -147,19 +147,19 @@ namespace SaberTailor.Settings
         {
             if (targetSide == GripConfigSide.Left)
             {
-                GripCfg.PosLeft = new Int3()
+                GripCfg.PosLeft = new Float3()
                 {
                     x = -GripCfg.PosRight.x,
                     y = GripCfg.PosRight.y,
                     z = GripCfg.PosRight.z
                 };
-                GripCfg.RotLeft = new Int3()
+                GripCfg.RotLeft = new Float3()
                 {
                     x = GripCfg.RotRight.x,
                     y = -GripCfg.RotRight.y,
                     z = -GripCfg.RotRight.z
                 };
-                GripCfg.OffsetLeft = new Int3()
+                GripCfg.OffsetLeft = new Float3()
                 {
                     x = -GripCfg.OffsetRight.x,
                     y = GripCfg.OffsetRight.y,
@@ -168,19 +168,19 @@ namespace SaberTailor.Settings
             }
             else
             {
-                GripCfg.PosRight = new Int3()
+                GripCfg.PosRight = new Float3()
                 {
                     x = -GripCfg.PosLeft.x,
                     y = GripCfg.PosLeft.y,
                     z = GripCfg.PosLeft.z
                 };
-                GripCfg.RotRight = new Int3()
+                GripCfg.RotRight = new Float3()
                 {
                     x = GripCfg.RotLeft.x,
                     y = -GripCfg.RotLeft.y,
                     z = -GripCfg.RotLeft.z
                 };
-                GripCfg.OffsetRight = new Int3()
+                GripCfg.OffsetRight = new Float3()
                 {
                     x = -GripCfg.OffsetLeft.x,
                     y = GripCfg.OffsetLeft.y,
@@ -236,19 +236,19 @@ namespace SaberTailor.Settings
             // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are loaded!
             if (cfgSection == ConfigSection.All || cfgSection == ConfigSection.Grip || cfgSection == ConfigSection.GripLeft)
             {
-                Int3 gripLeftPosition = PluginConfig.Instance.GripLeftPosition ?? Int3.zero;
-                GripCfg.PosLeft = new Int3()
+                Float3 gripLeftPosition = PluginConfig.Instance.GripLeftPosition ?? Float3.zero;
+                GripCfg.PosLeft = new Float3()
                 {
                     x = Mathf.Clamp(gripLeftPosition.x, -500, 500),
                     y = Mathf.Clamp(gripLeftPosition.y, -500, 500),
                     z = Mathf.Clamp(gripLeftPosition.z, -500, 500)
                 };
 
-                Int3 gripLeftRotation = PluginConfig.Instance.GripLeftRotation ?? Int3.zero;
-                GripCfg.RotLeft = new Int3(gripLeftRotation);
+                Float3 gripLeftRotation = PluginConfig.Instance.GripLeftRotation ?? Float3.zero;
+                GripCfg.RotLeft = new Float3(gripLeftRotation);
 
-                Int3 gripLeftOffset = PluginConfig.Instance.GripLeftOffset ?? Int3.zero;
-                GripCfg.OffsetLeft = new Int3()
+                Float3 gripLeftOffset = PluginConfig.Instance.GripLeftOffset ?? Float3.zero;
+                GripCfg.OffsetLeft = new Float3()
                 {
                     x = Mathf.Clamp(gripLeftOffset.x, -500, 500),
                     y = Mathf.Clamp(gripLeftOffset.y, -500, 500),
@@ -258,19 +258,19 @@ namespace SaberTailor.Settings
 
             if (cfgSection == ConfigSection.All || cfgSection == ConfigSection.Grip || cfgSection == ConfigSection.GripRight)
             {
-                Int3 gripRightPosition = PluginConfig.Instance.GripRightPosition ?? Int3.zero;
-                GripCfg.PosRight = new Int3()
+                Float3 gripRightPosition = PluginConfig.Instance.GripRightPosition ?? Float3.zero;
+                GripCfg.PosRight = new Float3()
                 {
                     x = Mathf.Clamp(gripRightPosition.x, -500, 500),
                     y = Mathf.Clamp(gripRightPosition.y, -500, 500),
                     z = Mathf.Clamp(gripRightPosition.z, -500, 500)
                 };
 
-                Int3 gripRightRotation = PluginConfig.Instance.GripRightRotation ?? Int3.zero;
-                GripCfg.RotRight = new Int3(gripRightRotation);
+                Float3 gripRightRotation = PluginConfig.Instance.GripRightRotation ?? Float3.zero;
+                GripCfg.RotRight = new Float3(gripRightRotation);
 
-                Int3 gripRightOffset = PluginConfig.Instance.GripRightOffset ?? Int3.zero;
-                GripCfg.OffsetRight = new Int3()
+                Float3 gripRightOffset = PluginConfig.Instance.GripRightOffset ?? Float3.zero;
+                GripCfg.OffsetRight = new Float3()
                 {
                     x = Mathf.Clamp(gripRightOffset.x, -500, 500),
                     y = Mathf.Clamp(gripRightOffset.y, -500, 500),
@@ -289,9 +289,9 @@ namespace SaberTailor.Settings
             #region Menu settings
             if (cfgSection == ConfigSection.All || cfgSection == ConfigSection.Menu)
             {
-                Menu.SaberPosIncrement = Mathf.Clamp(PluginConfig.Instance.SaberPosIncrement, 1, 200);
-                Menu.SaberPosIncValue = Mathf.Clamp(PluginConfig.Instance.SaberPosIncValue, 1, 20);
-                Menu.SaberRotIncrement = Mathf.Clamp(PluginConfig.Instance.SaberRotIncrement, 1, 20);
+                Menu.SaberPosIncrement = Mathf.Clamp(PluginConfig.Instance.SaberPosIncrement, 0, 200);
+                Menu.SaberPosIncValue = Mathf.Clamp(PluginConfig.Instance.SaberPosIncValue, 0, 20);
+                Menu.SaberRotIncrement = Mathf.Clamp(PluginConfig.Instance.SaberRotIncrement, 0, 20);
 
                 Menu.SaberPosDisplayUnit = Enum.TryParse(PluginConfig.Instance.SaberPosDisplayUnit, out PositionDisplayUnit displayUnit)
                     ? displayUnit
@@ -329,15 +329,15 @@ namespace SaberTailor.Settings
 
             #region Saber grip
             // Even though the field says GripLeftPosition/GripRightPosition, it is actually the Cfg values that are stored!
-            config.GripLeftPosition = new Int3(GripCfg.PosLeft);
-            config.GripRightPosition = new Int3(GripCfg.PosRight);
+            config.GripLeftPosition = new Float3(GripCfg.PosLeft);
+            config.GripRightPosition = new Float3(GripCfg.PosRight);
 
             // Even though the field says GripLeftRotation/GripRightRotation, it is actually the Cfg values that are stored!
-            config.GripLeftRotation = new Int3(GripCfg.RotLeft);
-            config.GripRightRotation = new Int3(GripCfg.RotRight);
+            config.GripLeftRotation = new Float3(GripCfg.RotLeft);
+            config.GripRightRotation = new Float3(GripCfg.RotRight);
 
-            PluginConfig.Instance.GripLeftOffset = new Int3(GripCfg.OffsetLeft);
-            PluginConfig.Instance.GripRightOffset = new Int3(GripCfg.OffsetRight);
+            PluginConfig.Instance.GripLeftOffset = new Float3(GripCfg.OffsetLeft);
+            PluginConfig.Instance.GripRightOffset = new Float3(GripCfg.OffsetRight);
 
             config.IsGripModEnabled = Grip.IsGripModEnabled;
             config.ModifyMenuHiltGrip = Grip.ModifyMenuHiltGrip;
@@ -394,8 +394,8 @@ namespace SaberTailor.Settings
                 // v3 -> v4: Added enable/disable option for saber grip, disabled by default, will override base game option
                 // For existing configurations: Enable, if non-default settings are present
                 bool gripAdjPresent = false;
-                if (GripCfg.PosLeft != Int3.zero || GripCfg.RotLeft != Int3.zero
-                    || GripCfg.PosRight != Int3.zero || GripCfg.RotRight != Int3.zero)
+                if (GripCfg.PosLeft != Float3.zero || GripCfg.RotLeft != Float3.zero
+                    || GripCfg.PosRight != Float3.zero || GripCfg.RotRight != Float3.zero)
                 {
                     gripAdjPresent = true;
                 }
@@ -409,8 +409,8 @@ namespace SaberTailor.Settings
                 // v4 -> v5: Added toggle to change adjustment mode (switch between SaberTailor or base game adjustment mode)
                 // For existing configuration: Enable, if non-default settings are present
                 bool gripAdjPresent = false;
-                if (GripCfg.PosLeft != Int3.zero || GripCfg.RotLeft != Int3.zero
-                    || GripCfg.PosRight != Int3.zero || GripCfg.RotRight != Int3.zero)
+                if (GripCfg.PosLeft != Float3.zero || GripCfg.RotLeft != Float3.zero
+                    || GripCfg.PosRight != Float3.zero || GripCfg.RotRight != Float3.zero)
                 {
                     gripAdjPresent = true;
                 }

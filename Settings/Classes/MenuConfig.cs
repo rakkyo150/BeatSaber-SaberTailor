@@ -5,9 +5,9 @@
 
     public class MenuConfig
     {
-        public int SaberPosIncrement;
-        public int SaberPosIncValue;
-        public int SaberRotIncrement;
+        public float SaberPosIncrement;
+        public float SaberPosIncValue;
+        public float SaberRotIncrement;
 
         public PositionUnit SaberPosIncUnit;
         public PositionDisplayUnit SaberPosDisplayUnit;

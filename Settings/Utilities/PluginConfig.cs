@@ -21,21 +21,21 @@ namespace SaberTailor.Settings.Utilities
 
         public bool IsGripModEnabled = false;
 
-        public Int3 GripLeftPosition = new Int3();      // Position in mm
-        public Int3 GripRightPosition = new Int3();
+        public Float3 GripLeftPosition = new Float3();      // Position in mm
+        public Float3 GripRightPosition = new Float3();
 
-        public Int3 GripLeftRotation = new Int3();      // Rotation in °
-        public Int3 GripRightRotation = new Int3();
+        public Float3 GripLeftRotation = new Float3();      // Rotation in °
+        public Float3 GripRightRotation = new Float3();
 
-        public Int3 GripLeftOffset = new Int3();        // Offset in mm
-        public Int3 GripRightOffset = new Int3();
+        public Float3 GripLeftOffset = new Float3();        // Offset in mm
+        public Float3 GripRightOffset = new Float3();
 
         public bool ModifyMenuHiltGrip = true;
         public bool UseBaseGameAdjustmentMode = true;
 
-        public int SaberPosIncrement = 10;
-        public int SaberPosIncValue = 1;
-        public int SaberRotIncrement = 5;
+        public float SaberPosIncrement = 10;
+        public float SaberPosIncValue = 1;
+        public float SaberRotIncrement = 1;
         public string SaberPosIncUnit = "cm";
         public string SaberPosDisplayUnit = "cm";
 
