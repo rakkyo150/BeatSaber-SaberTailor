@@ -25,8 +25,11 @@
 			<!--Saber Grip Left-->
 			<settings-submenu text='&#62; Left Saber Settings...' hover-hint='Adjust position and rotation of the left saber.'>
 				<scrollable-settings-container>
-					<text text='Note: If you want to change the below third decimal place,' font-size='4' color='#ff7f50' size-delta-y='6'/>
-					<text text='overwrite json and dont use UI to change that value.' font-size='4' color='#ff7f50' size-delta-y='8'/>
+					<horizontal>
+						<clickable-text text='&#60; Back' font-size='5' align='Left' click-event='back' />
+						<text text='Left Saber Settings' font-size='6' size-delta-y='8' align='Center'/>
+						<text text='&#60; Back' font-size='5' font-color='#00000000' align='Right'/>
+					</horizontal>						
 					
 					<increment-setting text='Pos X (Left/Right)' value='saber-left-position-x'
 									   apply-on-change='true' on-change='update-saber-position' get-event="refresh-sabertailor-position-values"
@@ -84,8 +87,11 @@
 			<!--Saber Grip Right-->
 			<settings-submenu text='&#62; Right Saber Settings...' hover-hint='Adjust position and rotation of the right saber.'>
 				<scrollable-settings-container>
-					<text text='Note: If you want to change the below third decimal place,' font-size='4' color='#ff7f50' size-delta-y='6'/>
-					<text text='overwrite json and dont use UI to change that value.' font-size='4' color='#ff7f50' size-delta-y='8'/>
+					<horizontal>
+						<clickable-text text='&#60; Back' align='Left' font-size='5' click-event='back' />
+						<text text='Right Saber Settings' size-delta-y='8' font-size='6' align='Center'/>
+						<text text='&#60; Back' font-size='5' font-color='#00000000' align='Right'/>
+					</horizontal>
 					
 					<increment-setting text='Pos X (Left/Right)' value='saber-right-position-x'
 									   apply-on-change='true' on-change='update-saber-position' get-event="refresh-sabertailor-position-values"
@@ -146,13 +152,16 @@
 					<dropdown-list-setting text='Saber Position Inc. Unit' value='saber-pos-unit-value'
 										   options='saber-pos-unit-options' apply-on-change='true'/>
 
+					<dropdown-list-setting text='Saber Rotation Inc. Unit' value='saber-rot-unit-value'
+										   options='saber-rot-unit-options' apply-on-change='true'/>
+
 					<increment-setting text='Saber Position Increment' value='saber-pos-increment-value' get-event='refresh-sabertailor-position-values'
 									   apply-on-change='true' formatter='position-inc-formatter'
-									   integer-only='false' min='0' max='1000' increment='0.1'/>
+									   integer-only='false' min='0' max='10' increment='0.1'/>
 					
 					<increment-setting text='Saber Rotation Increment' value='saber-rot-increment-value' get-event='refresh-sabertailor-rotation-values'
-									   apply-on-change='true' formatter='rotation-formatter'
-									   integer-only='false' min='0' max='720' increment='0.1'/>
+									   apply-on-change='true' formatter='rotation-inc-formatter'
+									   integer-only='false' min='0' max='10' increment='1'/>
 
 					<dropdown-list-setting text='Saber Pos. Display Unit' value='saber-pos-display-unit-value' get-event='refresh-sabertailor-position-values'
 										   options='saber-pos-display-unit-options' apply-on-change='true'/>

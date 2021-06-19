@@ -28,6 +28,9 @@ namespace SaberTailor.Settings.UI
         [UIValue("saber-pos-unit-options")]
         public List<object> SaberPosUnitValues = Enum.GetNames(typeof(PositionUnit)).ToList<object>();
 
+        [UIValue("saber-rot-unit-options")]
+        public List<object> SaberRotUnitValues = Enum.GetNames(typeof(RotationUnit)).ToList<object>();
+
         [UIValue("saber-pos-display-unit-options")]
         public List<object> SaberPosDisplayUnitValues = Enum.GetNames(typeof(PositionDisplayUnit)).ToList<object>();
 
@@ -40,6 +43,18 @@ namespace SaberTailor.Settings.UI
                 Configuration.Menu.SaberPosIncUnit = Enum.TryParse(value, out PositionUnit positionUnit) ? positionUnit : PositionUnit.cm;
                 UpdateSaberPosIncrement(Configuration.Menu.SaberPosIncUnit);
                 RefreshPositionSettings();
+            }
+        }
+
+        [UIValue("saber-rot-unit-value")]
+        public string SaberRotIncUnit
+        {
+            get => Configuration.Menu.SaberRotIncUnit.ToString();
+            set
+            {
+                Configuration.Menu.SaberRotIncUnit = Enum.TryParse(value, out RotationUnit rotationUnit) ? rotationUnit:RotationUnit.one;
+                UpdateSaberRotIncrement(Configuration.Menu.SaberRotIncUnit);
+                RefreshRotationSettings();
             }
         }
 
@@ -58,13 +73,14 @@ namespace SaberTailor.Settings.UI
         }
 
         [UIValue("saber-rot-increment-value")]
-        public float SaberRotIncrement
+        public float SaberRotIncValue
         {
-            get => Configuration.Menu.SaberRotIncrement;
+            get => Configuration.Menu.SaberRotIncValue;
             set
             {
                 float valueRound = Mathf.Round(value*100)/100;
-                Configuration.Menu.SaberRotIncrement = valueRound;
+                Configuration.Menu.SaberRotIncValue = valueRound;
+                UpdateSaberRotIncrement(Configuration.Menu.SaberRotIncUnit);
                 RefreshRotationSettings();
             }
         }
@@ -158,7 +174,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.RotLeft.x;
             set
             {
-                float newVal = Increment(Configuration.GripCfg.RotLeft.x, SaberRotIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.RotLeft.x, Configuration.Menu.SaberRotIncrement, value);
                 newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.RotLeft.x = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
@@ -171,7 +187,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.RotLeft.y;
             set
             {
-                float newVal = Increment(Configuration.GripCfg.RotLeft.y, SaberRotIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.RotLeft.y, Configuration.Menu.SaberRotIncrement, value);
                 newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.RotLeft.y = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
@@ -184,7 +200,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.RotLeft.z;
             set
             {
-                float newVal = Increment(Configuration.GripCfg.RotLeft.z, SaberRotIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.RotLeft.z, Configuration.Menu.SaberRotIncrement, value);
                 newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.RotLeft.z = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
@@ -277,7 +293,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.RotRight.x;
             set
             {
-                float newVal = Increment(Configuration.GripCfg.RotRight.x, SaberRotIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.RotRight.x, Configuration.Menu.SaberRotIncrement, value);
                 newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.RotRight.x = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
@@ -290,7 +306,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.RotRight.y;
             set
             {
-                float newVal = Increment(Configuration.GripCfg.RotRight.y, SaberRotIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.RotRight.y, Configuration.Menu.SaberRotIncrement, value);
                 newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.RotRight.y = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
@@ -303,7 +319,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.RotRight.z;
             set
             {
-                float newVal = Increment(Configuration.GripCfg.RotRight.z, SaberRotIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.RotRight.z, Configuration.Menu.SaberRotIncrement, value);
                 newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.RotRight.z = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
@@ -469,12 +485,16 @@ namespace SaberTailor.Settings.UI
         {
             switch (Configuration.Menu.SaberPosIncUnit)
             {
+                case PositionUnit.m:
+                    return $"{value*100} cm";
+                case PositionUnit.dm:
+                    return $"{value*10} cm";
                 case PositionUnit.cm:
                     return $"{value} cm";
-                //case PositionUnit.inches:
-                //    return string.Format("{0}/8 inches", value);
                 default:
-                    return $"{value} mm";
+                    return $"{value*0.1}cm";
+             //case PositionUnit.inches:
+             //    return string.Format("{0}/8 inches", value);
             }
         }
 
@@ -491,6 +511,24 @@ namespace SaberTailor.Settings.UI
                     return string.Format("{0:0.000000} miles", value / 1609344f);
                 default:
                     return $"{value/10f} cm";
+            }
+        }
+
+        [UIAction("rotation-inc-formatter")]
+        public string RotationIncString(float value)
+        {
+            switch(Configuration.Menu.SaberRotIncUnit)
+            {
+                case RotationUnit.hundred:
+                    return $"{value*100} deg";
+                case RotationUnit.ten:
+                    return $"{value*10} deg";
+                case RotationUnit.one:
+                    return $"{value} deg";
+                case RotationUnit.tenth:
+                    return $"{value*0.1} deg";
+                default:
+                    return $"{value} ×0.01 deg";
             }
         }
 
@@ -800,14 +838,50 @@ namespace SaberTailor.Settings.UI
         {
             switch (unit)
             {
+                case PositionUnit.m:
+                    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 1000;
+                    break;
+
+                case PositionUnit.dm:
+                    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 100;
+                    break;
+                
                 case PositionUnit.cm:
                     Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 10;
                     break;
                 //case PositionUnit.inches:
                 //    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue / 25.4f;
                 //    break;
-                default:
+                case PositionUnit.mm:
                     Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue;
+                    break;
+            }
+        }
+
+        private void UpdateSaberRotIncrement(RotationUnit unit)
+        {
+            switch (unit)
+            {
+                case RotationUnit.hundred:
+                    Configuration.Menu.SaberRotIncrement = Configuration.Menu.SaberRotIncValue * 100;
+                    break;
+
+                case RotationUnit.ten:
+                    Configuration.Menu.SaberRotIncrement = Configuration.Menu.SaberRotIncValue * 10;
+                    break;
+
+                case RotationUnit.one:
+                    Configuration.Menu.SaberRotIncrement = Configuration.Menu.SaberRotIncValue;
+                    break;
+                //case PositionUnit.inches:
+                //    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue / 25.4f;
+                //    break;
+                case RotationUnit.tenth:
+                    Configuration.Menu.SaberRotIncrement = Mathf.Round(Configuration.Menu.SaberRotIncValue)/10;
+                    break;
+
+                case RotationUnit.hundredth:
+                    Configuration.Menu.SaberRotIncrement = Mathf.Round(Configuration.Menu.SaberRotIncValue)/100;
                     break;
             }
         }
