@@ -26,66 +26,48 @@
 			<settings-submenu text='&#62; Left Saber Settings...' hover-hint='Adjust position and rotation of the left saber.'>
 				<scrollable-settings-container>
 					<text text='Note: If you want to change the below third decimal place,' font-size='4' color='#ff7f50' size-delta-y='6'/>
-					<text text='             overwrite json' font-size='4' color='#ff7f50' size-delta-y='8'/>
-
-					<button text='Round to the nearest hundredth' on-click='saberLPX'/>
+					<text text='overwrite json and dont use UI to change that value.' font-size='4' color='#ff7f50' size-delta-y='8'/>
 					
 					<increment-setting text='Pos X (Left/Right)' value='saber-left-position-x'
 									   apply-on-change='true' on-change='update-saber-position' get-event="refresh-sabertailor-position-values"
 									   integer-only='false' min='~saber-pos-min' max='~saber-pos-max' increment='1'
 									   formatter='position-formatter' hover-hint='Moves the saber left/right relative to the controller.' />
-					
-					<button text='Round to the nearest hundredth' on-click='saberLPY'/>
 
 					<increment-setting text='Pos Y (Down/Up)' value='saber-left-position-y'
 									   apply-on-change='true' on-change='update-saber-position' get-event="refresh-sabertailor-position-values"
 									   integer-only='false' min='~saber-pos-min' max='~saber-pos-max' increment='1'
 									   formatter='position-formatter' hover-hint='Moves the saber down/up relative to the controller.' />
-
-					<button text='Round to the nearest hundredth' on-click='saberLPZ'/>
 					
 					<increment-setting text='Pos Z (Bwd./Fwd.)' value='saber-left-position-z'
 									   apply-on-change='true' on-change='update-saber-position' get-event="refresh-sabertailor-position-values"
 									   integer-only='false' min='~saber-pos-min' max='~saber-pos-max' increment='1'
 									   formatter='position-formatter' hover-hint='Moves the saber backwards/forwards relative to the controller.' />
-
-					<button text='Round to the nearest hundredth' on-click='saberLRX'/>
 					
 					<increment-setting text='Rot X (Up/Down)' value='saber-left-rotation-x'
 									   apply-on-change='true' on-change='update-saber-rotation' get-event="refresh-sabertailor-rotation-values"
 									   integer-only='false' min='~saber-rot-min' max='~saber-rot-max' increment='1'
 									   formatter='rotation-formatter' hover-hint='Tilts the saber up/down relative to the controller.' />
-
-					<button text='Round to the nearest hundredth' on-click='saberLRY'/>
 					
 					<increment-setting text='Rot Y (Left/Right)' value='saber-left-rotation-y'
 									   apply-on-change='true' on-change='update-saber-rotation' get-event="refresh-sabertailor-rotation-values"
 									   integer-only='false' min='~saber-rot-min' max='~saber-rot-max' increment='1'
 									   formatter='rotation-formatter' hover-hint='Rotates the saber left/right relative to the controller.' />
-
-					<button text='Round to the nearest hundredth' on-click='saberLRZ'/>
 					
 					<increment-setting text='Rot Z (Saber axis)' value='saber-left-rotation-z'
 									   apply-on-change='true' on-change='update-saber-rotation' get-event="refresh-sabertailor-rotation-values"
 									   integer-only='false' min='~saber-rot-min' max='~saber-rot-max' increment='1'
 									   formatter='rotation-formatter' hover-hint='Rotates the saber around its own axis.' />
-
-					<button text='Round to the nearest hundredth' on-click='saberLOX'/>
 					
 					<increment-setting text='World Offset X (Left/Right)' value='saber-left-offset-x'
 									   apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
 									   integer-only='false' min='~saber-pos-min' max='~saber-pos-max' increment='1'
 									   formatter='position-formatter' hover-hint='Moves the controller left/right relative to the world. Does nothing in base game adjustment mode.' />
-
-					<button text='Round to the nearest hundredth' on-click='saberLOY'/>
 					
 					<increment-setting text='World Offset Y (Down/Up)' value='saber-left-offset-y'
 									   apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
 									   integer-only='false' min='~saber-pos-min' max='~saber-pos-max' increment='1'
 									   formatter='position-formatter' hover-hint='Moves the controller down/up relative to the world. Does nothing in base game adjustment mode.' />
 
-					<button text='Round to the nearest hundredth' on-click='saberLOZ'/>
-					
 					<increment-setting text='World Offset Z (Bwd./Fwd.)' value='saber-left-offset-z'
 									   apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
 									   integer-only='false' min='~saber-pos-min' max='~saber-pos-max' increment='1'
@@ -103,65 +85,47 @@
 			<settings-submenu text='&#62; Right Saber Settings...' hover-hint='Adjust position and rotation of the right saber.'>
 				<scrollable-settings-container>
 					<text text='Note: If you want to change the below third decimal place,' font-size='4' color='#ff7f50' size-delta-y='6'/>
-					<text text='             overwrite json' font-size='4' color='#ff7f50' size-delta-y='8'/>
-
-					<button text='Round to the nearest hundredth' on-click='saberRPX'/>
+					<text text='overwrite json and dont use UI to change that value.' font-size='4' color='#ff7f50' size-delta-y='8'/>
 					
 					<increment-setting text='Pos X (Left/Right)' value='saber-right-position-x'
 									   apply-on-change='true' on-change='update-saber-position' get-event="refresh-sabertailor-position-values"
 									   integer-only='false' min='~saber-pos-min' max='~saber-pos-max' increment='1'
 									   formatter='position-formatter' hover-hint='Moves the saber left/right relative to the controller.' />
-
-					<button text='Round to the nearest hundredth' on-click='saberRPY'/>
 					
 					<increment-setting text='Pos Y (Down/Up)' value='saber-right-position-y'
 									   apply-on-change='true' on-change='update-saber-position' get-event="refresh-sabertailor-position-values"
 									   integer-only='false' min='~saber-pos-min' max='~saber-pos-max' increment='1'
 									   formatter='position-formatter' hover-hint='Moves the saber down/up relative to the controller.' />
 
-					<button text='Round to the nearest hundredth' on-click='saberRPZ'/>
-
 					<increment-setting text='Pos Z (Bwd./Fwd.)' value='saber-right-position-z'
 									   apply-on-change='true' on-change='update-saber-position' get-event="refresh-sabertailor-position-values"
 									   integer-only='false' min='~saber-pos-min' max='~saber-pos-max' increment='1'
 									   formatter='position-formatter' hover-hint='Moves the saber backwards/forwards relative to the controller.' />
-
-					<button text='Round to the nearest hundredth' on-click='saberRRX'/>
 					
 					<increment-setting text='Rot X (Up/Down)' value='saber-right-rotation-x'
 									   apply-on-change='true' on-change='update-saber-rotation' get-event="refresh-sabertailor-rotation-values"
 									   integer-only='false' min='~saber-rot-min' max='~saber-rot-max' increment='1'
 									   formatter='rotation-formatter' hover-hint='Tilts the saber up/down relative to the controller.' />
-
-					<button text='Round to the nearest hundredth' on-click='saberRRY'/>
 					
 					<increment-setting text='Rot Y (Left/Right)' value='saber-right-rotation-y'
 									   apply-on-change='true' on-change='update-saber-rotation' get-event="refresh-sabertailor-rotation-values"
 									   integer-only='false' min='~saber-rot-min' max='~saber-rot-max' increment='1'
 									   formatter='rotation-formatter' hover-hint='Rotates the saber left/right relative to the controller.' />
-
-					<button text='Round to the nearest hundredth' on-click='saberRRZ'/>
 					
 					<increment-setting text='Rot Z (Saber axis)' value='saber-right-rotation-z'
 									   apply-on-change='true' on-change='update-saber-rotation' get-event="refresh-sabertailor-rotation-values"
 									   integer-only='false' min='~saber-rot-min' max='~saber-rot-max' increment='1'
 									   formatter='rotation-formatter' hover-hint='Rotates the saber around its own axis.' />
-
-					<button text='Round to the nearest hundredth' on-click='saberROX'/>
 					
 					<increment-setting text='World Offset X (Left/Right)' value='saber-right-offset-x'
 									   apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
 									   integer-only='false' min='~saber-pos-min' max='~saber-pos-max' increment='1'
 									   formatter='position-formatter' hover-hint='Moves the controller left/right relative to the world. Does nothing in base game adjustment mode.' />
-
-					<button text='Round to the nearest hundredth' on-click='saberROY'/>
 					
 					<increment-setting text='World Offset Y (Down/Up)' value='saber-right-offset-y'
 									   apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
 									   integer-only='false' min='~saber-pos-min' max='~saber-pos-max' increment='1'
 									   formatter='position-formatter' hover-hint='Moves the controller down/up relative to the world. Does nothing in base game adjustment mode.' />
-
-					<button text='Round to the nearest hundredth' on-click='saberROZ'/>
 
 					<increment-setting text='World Offset Z (Bwd./Fwd.)' value='saber-right-offset-z'
 									   apply-on-change='true' on-change='update-saber-offset' get-event="refresh-sabertailor-offset-values"
@@ -182,13 +146,9 @@
 					<dropdown-list-setting text='Saber Position Inc. Unit' value='saber-pos-unit-value'
 										   options='saber-pos-unit-options' apply-on-change='true'/>
 
-					<button text='Round to the nearest hundredth' on-click='saber-pos-inc-value-error-correction'/>
-
 					<increment-setting text='Saber Position Increment' value='saber-pos-increment-value' get-event='refresh-sabertailor-position-values'
 									   apply-on-change='true' formatter='position-inc-formatter'
 									   integer-only='false' min='0' max='1000' increment='0.1'/>
-
-					<button text='Round to the nearest hundredth' on-click='saber-rot-inc-value-error-correction'/>
 					
 					<increment-setting text='Saber Rotation Increment' value='saber-rot-increment-value' get-event='refresh-sabertailor-rotation-values'
 									   apply-on-change='true' formatter='rotation-formatter'

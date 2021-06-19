@@ -50,7 +50,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 Debug.Log($"{value}");
-                float valueRound = value;
+                float valueRound = Mathf.Round(value*100)/100;
                 Configuration.Menu.SaberPosIncValue = valueRound;
                 UpdateSaberPosIncrement(Configuration.Menu.SaberPosIncUnit);
                 RefreshPositionSettings();
@@ -63,8 +63,9 @@ namespace SaberTailor.Settings.UI
             get => Configuration.Menu.SaberRotIncrement;
             set
             {
-                float valueRound = value;
+                float valueRound = Mathf.Round(value*100)/100;
                 Configuration.Menu.SaberRotIncrement = valueRound;
+                RefreshRotationSettings();
             }
         }
 
@@ -118,7 +119,8 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.PosLeft.x;
             set
             {
-                float newVal = Increment(Configuration.GripCfg.PosLeft.x, Configuration.Menu.SaberPosIncrement, value);
+                float newVal = Increment(Configuration.GripCfg.PosLeft.x, Configuration.Menu.SaberPosIncrement,value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.PosLeft.x = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
@@ -131,6 +133,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.PosLeft.y, Configuration.Menu.SaberPosIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.PosLeft.y = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
@@ -143,6 +146,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.PosLeft.z, Configuration.Menu.SaberPosIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.PosLeft.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
@@ -155,6 +159,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.RotLeft.x, SaberRotIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.RotLeft.x = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
             }
@@ -167,6 +172,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.RotLeft.y, SaberRotIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.RotLeft.y = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
             }
@@ -179,6 +185,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.RotLeft.z, SaberRotIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.RotLeft.z = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
             }
@@ -191,6 +198,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.OffsetLeft.x, Configuration.Menu.SaberPosIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.OffsetLeft.x = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
@@ -203,6 +211,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.OffsetLeft.y, Configuration.Menu.SaberPosIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.OffsetLeft.y = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
@@ -215,6 +224,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.OffsetLeft.z, Configuration.Menu.SaberPosIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.OffsetLeft.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
@@ -229,6 +239,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.PosRight.x, Configuration.Menu.SaberPosIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.PosRight.x = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
@@ -241,6 +252,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.PosRight.y, Configuration.Menu.SaberPosIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.PosRight.y = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
@@ -253,6 +265,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.PosRight.z, Configuration.Menu.SaberPosIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.PosRight.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
             }
@@ -265,6 +278,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.RotRight.x, SaberRotIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.RotRight.x = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
             }
@@ -277,6 +291,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.RotRight.y, SaberRotIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.RotRight.y = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
             }
@@ -289,6 +304,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.RotRight.z, SaberRotIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.RotRight.z = Mathf.Clamp(newVal, SaberRotMin, SaberRotMax);
                 RefreshRotationSettings();
             }
@@ -301,6 +317,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.OffsetRight.x, Configuration.Menu.SaberPosIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.OffsetRight.x = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
@@ -313,6 +330,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.OffsetRight.y, Configuration.Menu.SaberPosIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.OffsetRight.y = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
@@ -325,6 +343,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 float newVal = Increment(Configuration.GripCfg.OffsetRight.z, Configuration.Menu.SaberPosIncrement, value);
+                newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.OffsetRight.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
@@ -443,150 +462,6 @@ namespace SaberTailor.Settings.UI
         [UIValue("saber-rot-min")]
         public int SaberRotMin => -360;
         #endregion
-
-        #region Error-Correction
-        [UIAction("saber-pos-inc-value-error-correction")]
-        public void PositionIncValueErrorCorrection()
-        {
-            Configuration.Menu.SaberPosIncValue = Mathf.Round(Configuration.Menu.SaberPosIncValue * 100) / 100;
-            RefreshPositionSettings();
-        }
-
-        [UIAction("saber-rot-inc-value-error-correction")]
-        public void RotationIncValueErrorCorrection()
-        {
-            Configuration.Menu.SaberRotIncrement = Mathf.Round(Configuration.Menu.SaberRotIncrement * 100) / 100;
-            RefreshRotationSettings();
-        }
-
-        [UIAction("saberLPX")]
-        public void SaberLPX()
-        {
-            Configuration.GripCfg.PosLeft.x = Mathf.Round(Configuration.GripCfg.PosLeft.x * 100) / 100;
-            RefreshPositionSettings();
-        }
-
-        [UIAction("saberLPY")]
-        public void SaberLPY()
-        {
-            Configuration.GripCfg.PosLeft.y = Mathf.Round(Configuration.GripCfg.PosLeft.y * 100) / 100;
-            RefreshPositionSettings();
-        }
-
-        [UIAction("saberLPZ")]
-        public void SaberLPZ()
-        {
-            Configuration.GripCfg.PosLeft.z = Mathf.Round(Configuration.GripCfg.PosLeft.z * 100) / 100;
-            RefreshPositionSettings();
-        }
-
-        [UIAction("saberLRX")]
-        public void SaberLRX()
-        {
-            Configuration.GripCfg.RotLeft.x = Mathf.Round(Configuration.GripCfg.RotLeft.x * 100) / 100;
-            RefreshRotationSettings();
-        }
-
-        [UIAction("saberLRY")]
-        public void SaberLRY()
-        {
-            Configuration.GripCfg.RotLeft.y = Mathf.Round(Configuration.GripCfg.RotLeft.y * 100) / 100;
-            RefreshRotationSettings();
-        }
-
-        [UIAction("saberLRZ")]
-        public void SaberLRZ()
-        {
-            Configuration.GripCfg.RotLeft.z = Mathf.Round(Configuration.GripCfg.RotLeft.z * 100) / 100;
-            RefreshRotationSettings();
-        }
-
-        [UIAction("saberLOX")]
-        public void SaberLOX()
-        {
-            Configuration.GripCfg.OffsetLeft.x = Mathf.Round(Configuration.GripCfg.OffsetLeft.x * 100) / 100;
-            RefreshOffsetSettings();
-        }
-
-        [UIAction("saberLOY")]
-        public void SaberLOY()
-        {
-            Configuration.GripCfg.OffsetLeft.y = Mathf.Round(Configuration.GripCfg.OffsetLeft.y * 100) / 100;
-            RefreshOffsetSettings();
-        }
-
-        [UIAction("saberLOZ")]
-        public void SaberLOZ()
-        {
-            Configuration.GripCfg.OffsetLeft.z = Mathf.Round(Configuration.GripCfg.OffsetLeft.z * 100) / 100;
-            RefreshOffsetSettings();
-        }
-
-        [UIAction("saberRPX")]
-        public void SaberRPX()
-        {
-            Configuration.GripCfg.PosRight.x = Mathf.Round(Configuration.GripCfg.PosRight.x * 100) / 100;
-            RefreshPositionSettings();
-        }
-
-        [UIAction("saberRPY")]
-        public void SaberRPY()
-        {
-            Configuration.GripCfg.PosRight.y = Mathf.Round(Configuration.GripCfg.PosRight.y * 100) / 100;
-            RefreshPositionSettings();
-        }
-
-        [UIAction("saberRPZ")]
-        public void SaberRPZ()
-        {
-            Configuration.GripCfg.PosRight.z = Mathf.Round(Configuration.GripCfg.PosRight.z * 100) / 100;
-            RefreshPositionSettings();
-        }
-
-        [UIAction("saberRRX")]
-        public void SaberRRX()
-        {
-            Configuration.GripCfg.RotRight.x = Mathf.Round(Configuration.GripCfg.RotRight.x * 100) / 100;
-            RefreshRotationSettings();
-        }
-
-        [UIAction("saberRRY")]
-        public void SaberRRY()
-        {
-            Configuration.GripCfg.RotRight.y = Mathf.Round(Configuration.GripCfg.RotRight.y * 100) / 100;
-            RefreshRotationSettings();
-        }
-
-        [UIAction("saberRRZ")]
-        public void SaberRRZ()
-        {
-            Configuration.GripCfg.RotRight.z = Mathf.Round(Configuration.GripCfg.RotRight.z * 100) / 100;
-            RefreshRotationSettings();
-        }
-
-        [UIAction("saberROX")]
-        public void SaberROX()
-        {
-            Configuration.GripCfg.OffsetRight.x = Mathf.Round(Configuration.GripCfg.OffsetRight.x * 100) / 100;
-            RefreshOffsetSettings();
-        }
-
-        [UIAction("saberROY")]
-        public void SaberROY()
-        {
-            Configuration.GripCfg.OffsetRight.y = Mathf.Round(Configuration.GripCfg.OffsetRight.y * 100) / 100;
-            RefreshOffsetSettings();
-        }
-
-        [UIAction("saberROZ")]
-        public void SaberROZ()
-        {
-            Configuration.GripCfg.OffsetRight.z = Mathf.Round(Configuration.GripCfg.OffsetRight.z * 100) / 100;
-            RefreshOffsetSettings();
-        }
-
-        #endregion
-
 
         #region Formatters  
         [UIAction("position-inc-formatter")]
