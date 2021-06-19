@@ -49,7 +49,8 @@ namespace SaberTailor.Settings.UI
             get => Configuration.Menu.SaberPosIncValue;
             set
             {
-                Configuration.Menu.SaberPosIncValue = value;
+                float valueRound = value - ((value * 100 - Mathf.Round(value) * 100) / 100);
+                Configuration.Menu.SaberPosIncValue = valueRound;
                 UpdateSaberPosIncrement(Configuration.Menu.SaberPosIncUnit);
                 RefreshPositionSettings();
             }
@@ -59,7 +60,11 @@ namespace SaberTailor.Settings.UI
         public float SaberRotIncrement
         {
             get => Configuration.Menu.SaberRotIncrement;
-            set => Configuration.Menu.SaberRotIncrement = value;
+            set
+            {
+                float valueRound = value - ((value * 100 - Mathf.Round(value) * 100) / 100);
+                Configuration.Menu.SaberRotIncrement = valueRound;
+            }
         }
 
         [UIValue("saber-pos-display-unit-value")]
@@ -424,11 +429,6 @@ namespace SaberTailor.Settings.UI
         #endregion
 
         #region Limits
-        [UIValue("saber-pos-inc-max")]
-        public int SaberPosIncMax => 200;
-
-        [UIValue("saber-pos-inc-min")]
-        public int SaberPosIncMin => 1;
 
         [UIValue("saber-pos-max")]
         public int SaberPosMax => 500;
