@@ -25,7 +25,7 @@
 			<!--Saber Grip Left-->
 			<settings-submenu text='&#62; Left Saber Settings...' hover-hint='Adjust position and rotation of the left saber.'>
 				<scrollable-settings-container>
-					<text text='Note: If you want to change the below third decimal place,' font-size='4' color='#ff7f50' size-delta-y='8'/>
+					<text text='Note: If you want to change the below third decimal place,' font-size='4' color='#ff7f50' size-delta-y='6'/>
 					<text text='      overwrite json' font-size='4' color='#ff7f50' size-delta-y='8'/>
 					
 					<increment-setting text='Pos X (Left/Right)' value='saber-left-position-x'
@@ -84,7 +84,7 @@
 			<!--Saber Grip Right-->
 			<settings-submenu text='&#62; Right Saber Settings...' hover-hint='Adjust position and rotation of the right saber.'>
 				<scrollable-settings-container>
-					<text text='Note: If you want to change the below third decimal place,' font-size='4' color='#ff7f50' size-delta-y='8'/>
+					<text text='Note: If you want to change the below third decimal place,' font-size='4' color='#ff7f50' size-delta-y='6'/>
 					<text text='      overwrite json' font-size='4' color='#ff7f50' size-delta-y='8'/>
 					
 					<increment-setting text='Pos X (Left/Right)' value='saber-right-position-x'
@@ -146,19 +146,19 @@
 					<dropdown-list-setting text='Saber Position Inc. Unit' value='saber-pos-unit-value'
 										   options='saber-pos-unit-options' apply-on-change='true'/>
 
-					<text text='Note: The below third decimal place of Saber Position' font-size='4' color='#ff7f50' size-delta-y='8'/>
+					<text text='Note: The below third decimal place of Saber Position' font-size='4' color='#ff7f50' size-delta-y='6'/>
 					<text text='      Increment is rounded down in the actual caluculation' font-size='4' color='#ff7f50' size-delta-y='8'/>
 
 					<increment-setting text='Saber Position Increment' value='saber-pos-increment-value' get-event='refresh-sabertailor-position-values'
 									   apply-on-change='true' formatter='position-inc-formatter'
-									   integer-only='false' min='0' max='20' increment='0.1'/>
+									   integer-only='false' min='0' max='1000' increment='0.1'/>
 
-					<text text='Note: The below third decimal place of Saber Rotation' font-size='4' color='#ff7f50' size-delta-y='8'/>
+					<text text='Note: The below third decimal place of Saber Rotation' font-size='4' color='#ff7f50' size-delta-y='6'/>
 					<text text='      Increment is rounded down in the actual caluculation' font-size='4' color='#ff7f50' size-delta-y='8'/>
 					
 					<increment-setting text='Saber Rotation Increment' value='saber-rot-increment-value'
 									   apply-on-change='true' formatter='rotation-formatter'
-									   integer-only='false' min='0' max='10' increment='0.1'/>
+									   integer-only='false' min='0' max='720' increment='0.1'/>
 
 					<dropdown-list-setting text='Saber Pos. Display Unit' value='saber-pos-display-unit-value' get-event='refresh-sabertailor-position-values'
 										   options='saber-pos-display-unit-options' apply-on-change='true'/>
