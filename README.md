@@ -48,7 +48,7 @@ Scroll down and select Precision and other settings...
 (5)<br>
 The Saber Position Inc. Digit and Saber Rotation Inc. Digit are the parts where you can select the digit to increase or decrease. <br>
 You can choose from 0.01/0.1/1/10/100. <br>
-The units are cm and ‹. <BR>
+The units are cm and degree. <BR>
 The Saber Position Increment and Saber Rotation Increment are the parts that determine how much to increase or decrease each time. <br> 
 Basically you not need to tweak them. (In the image, Saber Position Increment is tweaked.)<br>
 For example, if the Saber Position Inc. Digit is set to 100 cm in the image, the Saber Position Increment will automatically be set to 200 cm.
@@ -62,7 +62,7 @@ To configure the right saber settings, select Right Saber Settings.
 (7)<br>
 The images have been increased or decreased once for each. <br>
 The settings in (5) are reflected. <br> 
-The formula is also shown here. <br
+The formula is also shown here. <br>
 Pos or World Offset=(Saber Position Inc. Digit x Number of clicks of Saber Position Increment) x Number of clicks of Saber Setting<br>
 Rot=(Saber Rotation Inc. Digit x Saber Rotation Increment clicks) x Saber Setting clicks
 ![process7](Images/process7.png)
