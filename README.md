@@ -3,7 +3,7 @@
 # (Improved) Saber Tailor
 
 ## How to install
-1. Download SaberTailor.dll from [Releases]()
+1. Download SaberTailor.dll from [Releases](https://github.com/rakkyo150/BeatSaber-SaberTailor/releases)
 2. Add SaberTailor.dll to the Plugins folder under the Beat Saber installation folder
 
 For the Steam version of Beat Saber, the location of the Plugin folder is<br>
