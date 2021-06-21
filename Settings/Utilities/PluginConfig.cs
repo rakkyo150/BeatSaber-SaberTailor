@@ -36,7 +36,9 @@ namespace SaberTailor.Settings.Utilities
         public float SaberPosIncrement = 10;
         public float SaberPosIncValue = 1;
         public float SaberRotIncrement = 1;
-        public string SaberPosIncUnit = "cm";
+        public float SaberRotIncValue = 1;
+        public string SaberPosIncDigit = "1 cm";
+        public string SaberRotIncDigit = "1 deg";
         public string SaberPosDisplayUnit = "cm";
 
         /// <summary>

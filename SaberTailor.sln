@@ -7,7 +7,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaberTailor", "SaberTailor.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6FAB4FD8-72D3-41B6-99DB-51CED5D07451}"
 	ProjectSection(SolutionItems) = preProject
-		readme.md = readme.md
+		README-JP.md = README-JP.md
+		README.md = README.md
+		readme_original.md = readme_original.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{DA3ED74C-8C15-4AEA-B491-E5508A6B01EA}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\デスクトップ\process1.png = ..\..\..\デスクトップ\process1.png
+		..\..\..\デスクトップ\process2.png = ..\..\..\デスクトップ\process2.png
+		..\..\..\デスクトップ\process3.png = ..\..\..\デスクトップ\process3.png
+		..\..\..\デスクトップ\process4.png = ..\..\..\デスクトップ\process4.png
+		..\..\..\デスクトップ\process5.png = ..\..\..\デスクトップ\process5.png
+		..\..\..\デスクトップ\process6.png = ..\..\..\デスクトップ\process6.png
+		..\..\..\デスクトップ\process7.png = ..\..\..\デスクトップ\process7.png
+		..\..\..\デスクトップ\process8.png = ..\..\..\デスクトップ\process8.png
 	EndProjectSection
 EndProject
 Global
@@ -29,6 +43,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DA3ED74C-8C15-4AEA-B491-E5508A6B01EA} = {6FAB4FD8-72D3-41B6-99DB-51CED5D07451}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B72BB3B5-C3D5-467A-B873-88D3D7C002AF}

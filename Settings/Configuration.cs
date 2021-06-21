@@ -289,17 +289,16 @@ namespace SaberTailor.Settings
             #region Menu settings
             if (cfgSection == ConfigSection.All || cfgSection == ConfigSection.Menu)
             {
-                Menu.SaberPosIncrement = Mathf.Clamp(PluginConfig.Instance.SaberPosIncrement, 0, 200);
-                Menu.SaberPosIncValue = Mathf.Clamp(PluginConfig.Instance.SaberPosIncValue, 0, 20);
-                Menu.SaberRotIncrement = Mathf.Clamp(PluginConfig.Instance.SaberRotIncrement, 0, 20);
+                Menu.SaberPosIncrement = Mathf.Clamp(PluginConfig.Instance.SaberPosIncrement, 0, 5000);
+                Menu.SaberPosIncValue = Mathf.Clamp(PluginConfig.Instance.SaberPosIncValue, 0, 10);
+                Menu.SaberRotIncrement = Mathf.Clamp(PluginConfig.Instance.SaberRotIncrement, 0, 360);
+                Menu.SaberRotIncValue = Mathf.Clamp(PluginConfig.Instance.SaberRotIncValue, 0, 10);
+                Menu.SaberPosIncDigit = PluginConfig.Instance.SaberPosIncDigit;
+                Menu.SaberRotIncDigit = PluginConfig.Instance.SaberRotIncDigit;
 
                 Menu.SaberPosDisplayUnit = Enum.TryParse(PluginConfig.Instance.SaberPosDisplayUnit, out PositionDisplayUnit displayUnit)
                     ? displayUnit
                     : PositionDisplayUnit.cm;
-
-                Menu.SaberPosIncUnit = Enum.TryParse(PluginConfig.Instance.SaberPosIncUnit, out PositionUnit positionUnit)
-                    ? positionUnit
-                    : PositionUnit.cm;
             }
             #endregion
 
@@ -347,9 +346,11 @@ namespace SaberTailor.Settings
             #region Menu settings
             config.SaberPosDisplayUnit = Menu.SaberPosDisplayUnit.ToString();
             config.SaberPosIncrement = Menu.SaberPosIncrement;
-            config.SaberPosIncUnit = Menu.SaberPosIncUnit.ToString();
+            config.SaberPosIncDigit = Menu.SaberPosIncDigit;
             config.SaberPosIncValue = Menu.SaberPosIncValue;
             config.SaberRotIncrement = Menu.SaberRotIncrement;
+            config.SaberRotIncDigit = Menu.SaberRotIncDigit;
+            config.SaberRotIncValue = Menu.SaberRotIncValue;
             #endregion
         }
 

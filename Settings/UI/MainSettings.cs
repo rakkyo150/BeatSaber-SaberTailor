@@ -25,35 +25,35 @@ namespace SaberTailor.Settings.UI
         DropDownListSetting ddlsProfiles;
 
         #region Precision
-        [UIValue("saber-pos-unit-options")]
-        public List<object> SaberPosUnitValues = Enum.GetNames(typeof(PositionUnit)).ToList<object>();
+        [UIValue("saber-pos-digit-options")]
+        public List<object> SaberPosDigitValues=PositionDigit.PositionDigitArray.ToList<object>();
 
-        [UIValue("saber-rot-unit-options")]
-        public List<object> SaberRotUnitValues = Enum.GetNames(typeof(RotationUnit)).ToList<object>();
+        [UIValue("saber-rot-digit-options")]
+        public List<object> SaberRotDigitValues = RotationDigit.RotationDigitArray.ToList<object>();
 
         [UIValue("saber-pos-display-unit-options")]
         public List<object> SaberPosDisplayUnitValues = Enum.GetNames(typeof(PositionDisplayUnit)).ToList<object>();
 
-        [UIValue("saber-pos-unit-value")]
-        public string SaberPosIncUnit
+        [UIValue("saber-pos-digit-value")]
+        public string SaberPosIncDigit
         {
-            get => Configuration.Menu.SaberPosIncUnit.ToString();
+            get => Configuration.Menu.SaberPosIncDigit;
             set
             {
-                Configuration.Menu.SaberPosIncUnit = Enum.TryParse(value, out PositionUnit positionUnit) ? positionUnit : PositionUnit.cm;
-                UpdateSaberPosIncrement(Configuration.Menu.SaberPosIncUnit);
+                Configuration.Menu.SaberPosIncDigit = value;
+                UpdateSaberPosIncrement(Configuration.Menu.SaberPosIncDigit);
                 RefreshPositionSettings();
             }
         }
 
-        [UIValue("saber-rot-unit-value")]
-        public string SaberRotIncUnit
+        [UIValue("saber-rot-digit-value")]
+        public string SaberRotIncDigit
         {
-            get => Configuration.Menu.SaberRotIncUnit.ToString();
+            get => Configuration.Menu.SaberRotIncDigit;
             set
             {
-                Configuration.Menu.SaberRotIncUnit = Enum.TryParse(value, out RotationUnit rotationUnit) ? rotationUnit:RotationUnit.one;
-                UpdateSaberRotIncrement(Configuration.Menu.SaberRotIncUnit);
+                Configuration.Menu.SaberRotIncDigit = value;
+                UpdateSaberRotIncrement(Configuration.Menu.SaberRotIncDigit);
                 RefreshRotationSettings();
             }
         }
@@ -64,10 +64,9 @@ namespace SaberTailor.Settings.UI
             get => Configuration.Menu.SaberPosIncValue;
             set
             {
-                Debug.Log($"{value}");
                 float valueRound = Mathf.Round(value*100)/100;
                 Configuration.Menu.SaberPosIncValue = valueRound;
-                UpdateSaberPosIncrement(Configuration.Menu.SaberPosIncUnit);
+                UpdateSaberPosIncrement(Configuration.Menu.SaberPosIncDigit);
                 RefreshPositionSettings();
             }
         }
@@ -80,7 +79,7 @@ namespace SaberTailor.Settings.UI
             {
                 float valueRound = Mathf.Round(value*100)/100;
                 Configuration.Menu.SaberRotIncValue = valueRound;
-                UpdateSaberRotIncrement(Configuration.Menu.SaberRotIncUnit);
+                UpdateSaberRotIncrement(Configuration.Menu.SaberRotIncDigit);
                 RefreshRotationSettings();
             }
         }
@@ -483,16 +482,20 @@ namespace SaberTailor.Settings.UI
         [UIAction("position-inc-formatter")]
         public string PositionIncString(float value)
         {
-            switch (Configuration.Menu.SaberPosIncUnit)
+            switch (Configuration.Menu.SaberPosIncDigit)
             {
-                case PositionUnit.m:
+                //Because of the limitation of switch sentence, PositionDigit.PositionDigitArray[n] can't use.//
+
+                case "100 cm":
                     return $"{value*100} cm";
-                case PositionUnit.dm:
+                case "10 cm":
                     return $"{value*10} cm";
-                case PositionUnit.cm:
+                case "1 cm":
                     return $"{value} cm";
+                case "0.1 cm":
+                    return $"{value*0.1} cm";
                 default:
-                    return $"{value*0.1}cm";
+                    return $"{value*0.01} cm"; 
              //case PositionUnit.inches:
              //    return string.Format("{0}/8 inches", value);
             }
@@ -517,18 +520,20 @@ namespace SaberTailor.Settings.UI
         [UIAction("rotation-inc-formatter")]
         public string RotationIncString(float value)
         {
-            switch(Configuration.Menu.SaberRotIncUnit)
+            switch(Configuration.Menu.SaberRotIncDigit)
             {
-                case RotationUnit.hundred:
+                //Because of the limitation of switch sentence, RotationDigit.RotationDigitArray[n] can't use.//
+                
+                case "100 deg":
                     return $"{value*100} deg";
-                case RotationUnit.ten:
+                case "10 deg":
                     return $"{value*10} deg";
-                case RotationUnit.one:
+                case "1 deg":
                     return $"{value} deg";
-                case RotationUnit.tenth:
+                case "0.1 deg":
                     return $"{value*0.1} deg";
                 default:
-                    return $"{value} ×0.01 deg";
+                    return $"{value*0.01} deg";
             }
         }
 
@@ -834,53 +839,60 @@ namespace SaberTailor.Settings.UI
             ProfileStatusText.text = statusMsg;
         }
 
-        private void UpdateSaberPosIncrement(PositionUnit unit)
+        private void UpdateSaberPosIncrement(string digit)
         {
-            switch (unit)
+            switch (digit)
             {
-                case PositionUnit.m:
-                    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 1000;
-                    break;
+                //Because of the limitation of switch sentence, PositionDigit.PositionDigitArray[n] can't use.//
 
-                case PositionUnit.dm:
+                case "100 cm":
                     Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 100;
                     break;
-                
-                case PositionUnit.cm:
+
+                case "10 cm":
                     Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 10;
+                    break;
+                
+                case "1 cm":
+                    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue;
                     break;
                 //case PositionUnit.inches:
                 //    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue / 25.4f;
                 //    break;
-                case PositionUnit.mm:
-                    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue;
+                case "0.1 cm":
+                    Configuration.Menu.SaberPosIncrement = Mathf.Round(Configuration.Menu.SaberPosIncValue)/10;
+                    break;
+                default:
+                    Configuration.Menu.SaberPosIncrement= Mathf.Round(Configuration.Menu.SaberPosIncValue)/100;
                     break;
             }
         }
 
-        private void UpdateSaberRotIncrement(RotationUnit unit)
+        private void UpdateSaberRotIncrement(string digit)
         {
-            switch (unit)
+            switch (digit)
             {
-                case RotationUnit.hundred:
+                //Because of the limitation of switch sentence, RotationDigit.RotationDigitArray[n] can't use.//
+
+                case "100 deg":
                     Configuration.Menu.SaberRotIncrement = Configuration.Menu.SaberRotIncValue * 100;
                     break;
 
-                case RotationUnit.ten:
+                case "10 deg":
                     Configuration.Menu.SaberRotIncrement = Configuration.Menu.SaberRotIncValue * 10;
                     break;
 
-                case RotationUnit.one:
+                case "1 deg":
                     Configuration.Menu.SaberRotIncrement = Configuration.Menu.SaberRotIncValue;
                     break;
                 //case PositionUnit.inches:
                 //    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue / 25.4f;
                 //    break;
-                case RotationUnit.tenth:
+                case "0.1 deg":
                     Configuration.Menu.SaberRotIncrement = Mathf.Round(Configuration.Menu.SaberRotIncValue)/10;
                     break;
 
-                case RotationUnit.hundredth:
+                default:
                     Configuration.Menu.SaberRotIncrement = Mathf.Round(Configuration.Menu.SaberRotIncValue)/100;
                     break;
             }
