@@ -1,244 +1,92 @@
-# Beat Saber - Saber Tailor
+## ì˙ñ{åÍî≈READMEÇÕ[Ç±ÇøÇÁ](README_jp.md)
 
-Tweak things about your sabers, including grip position/angle, saber length and trail length! Original mod by Ruu. Current features include:
+# (Improved) Saber Tailor
 
-- Change the position and angle of your saber relative to your controller (independently for left/right saber)
-- Change the position of your saber relative to the world (independently for left/right saber)
-- Import/Export your current game settings into/from SaberTailor
-- Scale the length and width of your saber
-  -  optional including the hitbox (enabling this option will disable score submission)
-- Enable/Disable saber trail and trail whitestep
-- Change trail length
-- Profile support (save to/load from different profiles files)
+## How to install
+1. Download SaberTailor.dll from [Releases]()
+2. Add SaberTailor.dll to the Plugins folder under the Beat Saber installation folder
 
-## Note on updates from SaberTailor older than v2.0.0!
+For the Steam version of Beat Saber, the location of the Plugin folder is<br>
+C:\Program Files (x86)\Steam\steamapps\common\Beat Saber\Plugins
+is the default. <BR>
+Just in case.
 
-**The way the configuration is stored has changed.**</br>
-The new configuration file is now `\Beat Saber\UserData\SaberTailor.json`
+## Differences from the [original version](https://github.com/Shadnix-was-taken/BeatSaber-SaberTailor)
 
-The first time you run the game after version 2.0.0, SaberTailor will attempt to import the old settings.</br>
-If for whatever reason something should go wrong, you can still find the old settings in `\Beat Saber\UserData\modprefs.ini`.</br>
-If you want to import old settings again, remove the line `IsExportedToNewConfig=1` from the `[SaberTailor]` section in `\Beat Saber\UserData\modprefs.ini` file.
+1. More fine-tuned settings for saber position, angle and world offset
+2. Extended limits for saber position and world offset. 3.
+3. Improved UI.
+4. Fixed UI bug in world offset Y and Z.
 
-Please note that grip position adjustments are now saved in millimeters. These were saved in centimeters in the old configuration file. As such, the saved values in `SaberTailor.json` are an order of magnitude higher than before.
 
-## Settings
+## About 1
+Saber position and angle and world offset can now be adjusted to the decimal point.
 
-Adjust the different settings in-game from the "Mod Settings" menu.
+## Adjustment methods
+The following methods support adjustment to the second decimal place. <br>
+**For adjustments to the third decimal place and below, please go to Beat Saber/UserData/SaberTailor.json. ** <br>
+In addition to the changes made in this article, other parts are omitted from the explanation. <br> 
+Please understand.
 
-You can also adjust your settings manually in `\Beat Saber\UserData\SaberTailor.json` (The game will have to be restarted)
-The default values are below:
 
-```json
-{
-  "ConfigVersion": 5,
-  "IsSaberScaleModEnabled": false,
-  "SaberScaleHitbox": false,
-  "SaberLength": 100,
-  "SaberGirth": 100,
-  "IsTrailModEnabled": false,
-  "IsTrailEnabled": true,
-  "TrailDuration": 400,
-  "TrailGranularity": 60,
-  "TrailWhiteSectionDuration": 100,
-  "IsGripModEnabled": true,  
-  "GripLeftPosition": {
-    "x": 0,
-    "y": 0,
-    "z": 0
-  },
-  "GripRightPosition": {
-    "x": 0,
-    "y": 0,
-    "z": 0
-  },
-  "GripLeftRotation": {
-    "x": 0,
-    "y": 0,
-    "z": 0
-  },
-  "GripRightRotation": {
-    "x": 0,
-    "y": 0,
-    "z": 0
-  },
-  "GripLeftOffset": {
-    "x": 0,
-    "y": 0,
-    "z": 0
-  },
-  "GripRightOffset": {
-    "x": 0,
-    "y": 0,
-    "z": 0
-  },
-  "ModifyMenuHiltGrip": true,
-  "UseBaseGameAdjustmentMode": false,
-  "SaberPosIncrement": 10,
-  "SaberPosIncValue": 1,
-  "SaberRotIncrement": 5,
-  "SaberPosIncUnit": "cm",
-  "SaberPosDisplayUnit": "cm"
-}
-```
+(1)<br>
+Select Settings from the main menu.
+![proccess1](Images/process1.png)
 
-*If the file / settings don't exist, run your game once after installing!*
+(2)<br>
+Select MOD SETTINGS.
+![process2](Images/process2.png)
 
-### Saber Scale Mod Toggle
+(3) <br>
+Scroll down and select Saber Grip Positions/Rotation...
+![process3](Images/process3.png)
 
-- **Setting**: `IsSaberScaleModEnabled`
-- **Values**: `true` | `false`
-- **Default**: `false`
+(4)<br>
+Scroll down and select Precision and other settings...
+![process4](Images/process4.png)
 
-Enables or disables saber scale modifications by SaberTailor.
+(5)<br>
+The Saber Position Inc. Digit and Saber Rotation Inc. Digit are the parts where you can select the digit to increase or decrease. <br>
+You can choose from 0.01/0.1/1/10/100. <br>
+The units are cm and Åã. <BR>
+The Saber Position Increment and Saber Rotation Increment are the parts that determine how much to increase or decrease each time. <br> 
+Basically you not need to tweak them. (In the image, Saber Position Increment is tweaked.)<br>
+For example, if the Saber Position Inc. Digit is set to 100 cm in the image, the Saber Position Increment will automatically be set to 200 cm.
+![process5](Images/process5.png)
 
-### SaberScaleHitbox
+(6)<br>
+To set up the left saber, select <back and then select Left Saber Settings. <br>
+To configure the right saber settings, select Right Saber Settings.
+![process6](Images/process6.png)
 
-- **Setting**: `Scale hit-box`
-- **Values**: `true` | `false`
-- **Default**: `false`
+(7)<br>
+The images have been increased or decreased once for each. <br>
+The settings in (5) are reflected. <br> 
+The formula is also shown here. <br
+Pos or World Offset=(Saber Position Inc. Digit x Number of clicks of Saber Position Increment) x Number of clicks of Saber Setting<br>
+Rot=(Saber Rotation Inc. Digit x Saber Rotation Increment clicks) x Saber Setting clicks
+![process7](Images/process7.png)
 
-Enables scaling of the saber hit-box. **Having this option set to true *will* disable score submission**
+(8)<br>
+For World Offset, Saber Position increment is used. <br>
+The image shows the X, Y, and Z of the World Offset being incremented or decremented once each. <BR>
+MIRROR TO RIGHT allows the right saber to reflect the settings of the left saber. <BR>
+Pressing REVERT will reset all settings of the left saber to zero. <br>
+Press OK to complete the setting.
+![process8](Images/process8.png)
 
-### Saber Length
 
-- **Setting**: `SaberLength`
-- **Unit**: Percentage
-- **Default**: `100` (100%)
-- **Minimum**: `5` (5%)
-- **Maximum**: `500` (500%)
+By the way, if you want to display and adjust the actual saber, install [Custom Saber](https://twitter.com/nalulululuna/status/1406288209093435398), which is currently developed by naluluna, and click Show Saber in Menu Always should be enabled.
 
-Adjust the length of the sabers.
+## About 2
+Saber position and world offset limits have been extended from 50cm to 500cm (5m).
 
-### Saber Width
+## About 3
+Added a heading to the submenu. <br>
+The back button to the main menu has been placed at the top left of the submenu. <br>
+The back button is also placed in the lower left corner of the submenus that have scrolling. <br>
+Revert button and Mirror to Left/Right button are now easier to see.
 
-- **Setting**: `SaberGirth`
-- **Unit**: Percentage
-- **Default**: `100` (100%)
-- **Minimum**: `5` (5%)
-- **Maximum**: `500` (500%)
-
-Adjust the width of the sabers.
-
-### Trail Mod Toggle
-
-- **Setting**: `IsTrailModEnabled`
-- **Values**: `true` | `false`
-- **Default**: `false`
-
-Enables or disables trail modifications by SaberTailor.
-
-### Trail Toggle
-
-- **Setting**: `IsTrailEnabled`
-- **Values**: `true` | `false`
-- **Default**: `true`
-
-Allows you to disable the saber trail entirely, when set to `false`.
-
-### Trail Duration
-
-- **Setting**: `TrailDuration`
-- **Unit**: Milliseconds
-- **Default**: `400` (0.4s)
-- **Minimum**: `100` (0.1s)
-- **Maximum**: `5000` (5s)
-
-Adjusts the duration of the colored part of the trail on the saber in Milliseconds.
-
-### Trail Granularity
-
-- **Setting**: `TrailGranularity`
-- **Unit**: Integer (Whole Number)
-- **Default**: `60`
-- **Minimum**: `10`
-- **Maximum**: `200`
-
-Adjusts the amount of segments of the trail.
-
-### Trail White Section Duration
-
-- **Setting**: `TrailWhiteSectionDuration`
-- **Unit**: Milliseconds
-- **Default**: `100` (0.1s)
-- **Minimum**: `0` (0.0s)
-- **Maximum**: `2000` (2s)
-
-Adjusts the duration of the bright white part of the trail on the saber in Milliseconds.
-
-### Grip Modification
-
-- **Setting**: `IsGripModEnabled`
-- **Values**: `true` | `false`
-- **Default**: `false`
-
-Controls if the base game grip adjustments or SaberTailor grip adjustments are active. Setting this to `true` enables SablerTailor, which overrides base game settings.
-
-### Grip Position (Left + Right)
-
-- **Setting**: `GripLeftPosition`, `GripRightPosition`
-- **Unit**: Millimeters
-- **Default**: `"x": 0, "y": 0, "z": 0`
-- **Maximum**: `500` on any axis
-
-- `+x` moves the saber right, EG: `200` moves the saber 20 centimeters right.
-- `+y` moves the saber up, EG: `100` moves the saber 10 centimeters up.
-- `+z` moves the saber forward, EG: `300` moves the saber 30 centimeters forward.
-
-Alters the position of the left/right saber, relative to the default location. You cannot move the saber more than 50 centimeters away on any axis!
-
-### Grip Rotation (Left + Right)
-
-- **Setting**: `GripLeftRotation`, `GripRightRotation`
-- **Unit**: Degrees (-360 - 360)
-- **Default**: `"x": 0, "y": 0, "z": 0`
-
-- `+x` tilts the saber down, EG: `20` tilts the saber 20 degrees down.
-- `+y` rotates the saber right, EG: `10` rotates the saber 10 degrees right.
-- `+z` rolls the saber counter-clockwise around its own axis, EG: `30` rotates the saber 30 degrees counter-clockwise. (This is only useful if you have custom sabers that are not cylindrical shaped and you want to correct for a different grip (e.g. Vive B-Grip)
-
-Alters the rotation of the sabers. The center of rotation is where the saber's hit-box starts, which is just after the glowing line on the handle.
-
-### Grip Offset (Left + Right)
-
-- **Setting**: `GripLeftOffset`, `GripRightOffset`
-- **Unit**: Millimeters
-- **Default**: `"x": 0, "y": 0, "z": 0`
-- **Maximum**: `500` on any axis
-
-- `+x` moves the controller right, EG: `200` moves the controller 20 centimeters right.
-- `+y` moves the controller up, EG: `100` moves the controller 10 centimeters up.
-- `+z` moves the controller forward, EG: `300` moves the controller 30 centimeters forward.
-
-Will simulate moving your physical controller location in case of drifts in the default position. You cannot move the controller more than 50 centimeters away on any axis!
-
-### Menu hilt adjustments
-
-- **Setting**: `ModifyMenuHiltGrip`
-- **Values**: `true` | `false`
-- **Default**: `true`
-
-Alters the position and angle of the menu hilts the same way as the sabers, when set to `true`.
-
-### Grip Adjustment Mode
-
-- **Setting**: `UseBaseGameAdjustmentMode`
-- **Values**: `true` | `false`
-- **Default**: `true`
-
-Controls how the saber position/rotation is being altered. When this is set to `true`, SaberTailor will mimic the adjustment mode of the base game. Setting this to `false` will use the old 'classic' SaberTailor adjustment mode, which differs a bit. 
-
-## Developers
-
-### Contributing to SaberTailor
-In order to build this project, please add a `SaberTailor.csproj.user` file in the project directory and specify where your game is located on your disk:
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <!-- Change this path if necessary. Make sure it ends with a backslash. -->
-    <GameDirPath>C:\Program Files\Steam\steamapps\common\Beat Saber\</GameDirPath>
-  </PropertyGroup>
-</Project>
-```
+## About 4
+There was a bug in the original that prevented the world offset Y and Z from being changed in the UI (as of 6/21/2021). <br>
+This has been fixed.

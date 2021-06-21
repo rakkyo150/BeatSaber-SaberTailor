@@ -2,13 +2,13 @@
 {
     public class GripRawConfig
     {
-        public Int3 PosLeft;
-        public Int3 PosRight;
+        public Float3 PosLeft;
+        public Float3 PosRight;
 
-        public Int3 RotLeft;
-        public Int3 RotRight;
+        public Float3 RotLeft;
+        public Float3 RotRight;
 
-        public Int3 OffsetLeft;
-        public Int3 OffsetRight;
+        public Float3 OffsetLeft;
+        public Float3 OffsetRight;
     }
 }

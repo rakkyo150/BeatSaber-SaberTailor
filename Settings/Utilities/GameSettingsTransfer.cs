@@ -50,42 +50,42 @@ namespace SaberTailor.Settings.Utilities
             Vector3 ctrlPos = new Vector3(gameCtrlPosSO.value.x, gameCtrlPosSO.value.y, gameCtrlPosSO.value.z);
             Vector3 ctrlRot = new Vector3(gameCtrlRotSO.value.x, gameCtrlRotSO.value.y, gameCtrlRotSO.value.z);
 
-            Configuration.GripCfg.PosLeft = new Int3()
+            Configuration.GripCfg.PosLeft = new Float3()
             {
                 x = -(int)Math.Round(ctrlPos.x * 1000, MidpointRounding.AwayFromZero),
                 y = (int)Math.Round(ctrlPos.y * 1000, MidpointRounding.AwayFromZero),
                 z = (int)Math.Round(ctrlPos.z * 1000, MidpointRounding.AwayFromZero)
             };
 
-            Configuration.GripCfg.RotLeft = new Int3()
+            Configuration.GripCfg.RotLeft = new Float3()
             {
                 x = (int)Math.Round(ctrlRot.x, MidpointRounding.AwayFromZero),
                 y = -(int)Math.Round(ctrlRot.y, MidpointRounding.AwayFromZero),
                 z = (int)Math.Round(ctrlRot.z, MidpointRounding.AwayFromZero)
             };
 
-            Configuration.GripCfg.PosRight = new Int3()
+            Configuration.GripCfg.PosRight = new Float3()
             {
                 x = (int)Math.Round(ctrlPos.x * 1000, MidpointRounding.AwayFromZero),
                 y = (int)Math.Round(ctrlPos.y * 1000, MidpointRounding.AwayFromZero),
                 z = (int)Math.Round(ctrlPos.z * 1000, MidpointRounding.AwayFromZero)
             };
 
-            Configuration.GripCfg.RotRight = new Int3()
+            Configuration.GripCfg.RotRight = new Float3()
             {
                 x = (int)Math.Round(ctrlRot.x, MidpointRounding.AwayFromZero),
                 y = (int)Math.Round(ctrlRot.y, MidpointRounding.AwayFromZero),
                 z = (int)Math.Round(ctrlRot.z, MidpointRounding.AwayFromZero)
             };
 
-            Configuration.GripCfg.OffsetLeft = new Int3()
+            Configuration.GripCfg.OffsetLeft = new Float3()
             {
                 x = 0,
                 y = 0,
                 z = 0
             };
 
-            Configuration.GripCfg.OffsetRight = new Int3()
+            Configuration.GripCfg.OffsetRight = new Float3()
             {
                 x = 0,
                 y = 0,
