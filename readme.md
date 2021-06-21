@@ -85,7 +85,7 @@ Saber position and world offset limits have been extended from 50cm to 500cm (5m
 Added a heading to the submenu. <br>
 The back button to the main menu has been placed at the top left of the submenu. <br>
 The back button is also placed in the lower left corner of the submenus that have scrolling. <br>
-Revert button and Mirror to Left/Right button are now easier to see.
+Revert button and Mirror to Left/Right button are now easier to understand.
 
 ## About 4
 There was a bug in the original that prevented the world offset Y and Z from being changed in the UI (as of 6/21/2021). <br>
