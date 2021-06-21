@@ -3,7 +3,7 @@
 # Saber Tailor 改良版
 
 ## 導入方法
-1. [Releases]()からSaberTailor.dllをダウンロード
+1. [Releases](https://github.com/rakkyo150/BeatSaber-SaberTailor/releases)からSaberTailor.dllをダウンロード
 2. SaberTailor.dllをBeat Saberのインストールフォルダ下のPluginsフォルダに追加
 
 Steam版Beat Saberの場合、Pluginフォルダの場所は<br>
