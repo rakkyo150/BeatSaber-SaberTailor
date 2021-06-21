@@ -1,4 +1,4 @@
-## 日本語版READMEは[こちら](README_jp.md)
+## 日本語版READMEは[こちら](README_JP.md)
 
 # (Improved) Saber Tailor
 
