@@ -24,7 +24,7 @@ Saber position and angle and world offset can now be adjusted to the decimal poi
 
 ## Adjustment methods
 The following methods support adjustment to the second decimal place. <br>
-**For adjustments to the third decimal place and below, please go to Beat Saber/UserData/SaberTailor.json. ** <br>
+**For adjustments to the third decimal place and below, please go to Beat Saber/UserData/SaberTailor.json.** <br>
 In addition to the changes made in this article, other parts are omitted from the explanation. <br> 
 Please understand.
 
