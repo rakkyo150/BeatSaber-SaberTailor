@@ -846,24 +846,24 @@ namespace SaberTailor.Settings.UI
                 //Because of the limitation of switch sentence, PositionDigit.PositionDigitArray[n] can't use.//
 
                 case "100 cm":
-                    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 100;
+                    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 1000;
                     break;
 
                 case "10 cm":
-                    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 10;
+                    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 100;
                     break;
 
                 case "1 cm":
-                    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue;
+                    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue*10;
                     break;
                 //case PositionUnit.inches:
                 //    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue / 25.4f;
                 //    break;
                 case "0.1 cm":
-                    Configuration.Menu.SaberPosIncrement = Mathf.Round(Configuration.Menu.SaberPosIncValue) / 10;
+                    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue;
                     break;
                 default:
-                    Configuration.Menu.SaberPosIncrement = Mathf.Round(Configuration.Menu.SaberPosIncValue) / 100;
+                    Configuration.Menu.SaberPosIncrement = Mathf.Round(Configuration.Menu.SaberPosIncValue) / 10;
                     break;
             }
         }
