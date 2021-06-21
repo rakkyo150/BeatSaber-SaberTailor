@@ -1,9 +1,9 @@
-## “ú–{Œê”ÅREADME‚Í[‚±‚¿‚ç](README_jp.md)
+## æ—¥æœ¬èªç‰ˆREADMEã¯[ã“ã¡ã‚‰](README_JP.md)
 
 # (Improved) Saber Tailor
 
 ## How to install
-1. Download SaberTailor.dll from [Releases]()
+1. Download SaberTailor.dll from [Releases](https://github.com/rakkyo150/BeatSaber-SaberTailor/releases)
 2. Add SaberTailor.dll to the Plugins folder under the Beat Saber installation folder
 
 For the Steam version of Beat Saber, the location of the Plugin folder is<br>
@@ -48,7 +48,7 @@ Scroll down and select Precision and other settings...
 (5)<br>
 The Saber Position Inc. Digit and Saber Rotation Inc. Digit are the parts where you can select the digit to increase or decrease. <br>
 You can choose from 0.01/0.1/1/10/100. <br>
-The units are cm and ‹. <BR>
+The units are cm and Ââ€¹. <BR>
 The Saber Position Increment and Saber Rotation Increment are the parts that determine how much to increase or decrease each time. <br> 
 Basically you not need to tweak them. (In the image, Saber Position Increment is tweaked.)<br>
 For example, if the Saber Position Inc. Digit is set to 100 cm in the image, the Saber Position Increment will automatically be set to 200 cm.
