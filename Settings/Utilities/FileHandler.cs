@@ -1,7 +1,7 @@
-﻿using IPA.Utilities;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.IO;
+using IPA.Utilities;
+using Newtonsoft.Json;
 
 namespace SaberTailor.Settings.Utilities
 {
@@ -14,7 +14,7 @@ namespace SaberTailor.Settings.Utilities
         {
             string configPath = Path.Combine(filePath, fileName);
             if (File.Exists(configPath))
-            {   
+            {
                 try
                 {
                     config = JsonConvert.DeserializeObject<PluginConfig>(File.ReadAllText(configPath));

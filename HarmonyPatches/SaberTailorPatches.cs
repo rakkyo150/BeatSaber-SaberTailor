@@ -1,6 +1,6 @@
-﻿using HarmonyLib;
+﻿using System.Reflection;
+using HarmonyLib;
 using SaberTailor.Settings;
-using System.Reflection;
 
 namespace SaberTailor.HarmonyPatches
 {

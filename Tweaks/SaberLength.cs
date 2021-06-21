@@ -1,9 +1,8 @@
-﻿using BS_Utils.Gameplay;
+﻿using System.Collections;
+using BS_Utils.Gameplay;
 using IPA.Utilities;
 using SaberTailor.Settings;
 using SaberTailor.Utilities;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,7 +32,7 @@ namespace SaberTailor.Tweaks
                     IsMultiplayerEnv = true;
                     Logger.log.Info("Multiplayer environment detected, disabling hitbox scaling and cosmetic length scaling.");
                 }
-                
+
                 // Disable hitbox scaling in mission gameplay
                 if (SceneManager.GetSceneAt(i).name == "MissionGameplay")
                 {

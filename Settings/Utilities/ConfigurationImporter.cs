@@ -1,7 +1,7 @@
-﻿using BS_Utils.Utilities;
-using SaberTailor.Settings.Classes;
-using System;
+﻿using System;
 using System.Globalization;
+using BS_Utils.Utilities;
+using SaberTailor.Settings.Classes;
 using UnityEngine;
 
 namespace SaberTailor.Settings.Utilities

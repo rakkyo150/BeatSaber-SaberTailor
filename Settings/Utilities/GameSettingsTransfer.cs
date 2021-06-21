@@ -1,8 +1,8 @@
-﻿using IPA.Utilities;
+﻿using System;
+using System.Linq;
+using IPA.Utilities;
 using SaberTailor.Settings.Classes;
 using SaberTailor.Utilities;
-using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -343,7 +343,7 @@ namespace SaberTailor.Settings.Utilities
 
             gameAdjustTransform.Rotate(gameAdjustRot);
             gameAdjustTransform.Translate(gameAdjustPos);
-            
+
             Logger.log.Debug("==============================================================================");
             Logger.log.Debug("Game Adjustments Result:");
             Logger.log.Debug("Position: x=" + gameAdjustTransform.position.x + " y=" + gameAdjustTransform.position.y + " z=" + gameAdjustTransform.position.z);

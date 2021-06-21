@@ -1,13 +1,10 @@
 ﻿using BeatSaberMarkupLanguage.Settings;
 using IPA;
-using IPA.Config;
 using IPA.Loader;
-using IPA.Utilities;
 using SaberTailor.HarmonyPatches;
 using SaberTailor.Settings;
 using SaberTailor.Settings.UI;
 using SaberTailor.Tweaks;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using IPALogger = IPA.Logging.Logger;

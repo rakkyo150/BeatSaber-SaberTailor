@@ -1,13 +1,8 @@
-﻿using IPA.Utilities;
-using SaberTailor.Settings.Classes;
-using SaberTailor.Settings.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using IPA.Utilities;
 
 namespace SaberTailor.Settings.Utilities
 {

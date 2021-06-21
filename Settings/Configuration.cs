@@ -1,9 +1,7 @@
-﻿using IPA.Config;
-using IPA.Config.Stores;
+﻿using System;
 using SaberTailor.HarmonyPatches;
 using SaberTailor.Settings.Classes;
 using SaberTailor.Settings.Utilities;
-using System;
 using UnityEngine;
 
 namespace SaberTailor.Settings

@@ -1,14 +1,14 @@
-﻿using BeatSaberMarkupLanguage.Attributes;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components.Settings;
 using BeatSaberMarkupLanguage.Parser;
 using SaberTailor.HarmonyPatches;
 using SaberTailor.Settings.Classes;
 using SaberTailor.Settings.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -26,7 +26,7 @@ namespace SaberTailor.Settings.UI
 
         #region Precision
         [UIValue("saber-pos-digit-options")]
-        public List<object> SaberPosDigitValues=PositionDigit.PositionDigitArray.ToList<object>();
+        public List<object> SaberPosDigitValues = PositionDigit.PositionDigitArray.ToList<object>();
 
         [UIValue("saber-rot-digit-options")]
         public List<object> SaberRotDigitValues = RotationDigit.RotationDigitArray.ToList<object>();
@@ -64,7 +64,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.Menu.SaberPosIncValue;
             set
             {
-                float valueRound = Mathf.Round(value*100)/100;
+                float valueRound = Mathf.Round(value * 100) / 100;
                 Configuration.Menu.SaberPosIncValue = valueRound;
                 UpdateSaberPosIncrement(Configuration.Menu.SaberPosIncDigit);
                 RefreshPositionSettings();
@@ -77,7 +77,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.Menu.SaberRotIncValue;
             set
             {
-                float valueRound = Mathf.Round(value*100)/100;
+                float valueRound = Mathf.Round(value * 100) / 100;
                 Configuration.Menu.SaberRotIncValue = valueRound;
                 UpdateSaberRotIncrement(Configuration.Menu.SaberRotIncDigit);
                 RefreshRotationSettings();
@@ -134,7 +134,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.PosLeft.x;
             set
             {
-                float newVal = Increment(Configuration.GripCfg.PosLeft.x, Configuration.Menu.SaberPosIncrement,value);
+                float newVal = Increment(Configuration.GripCfg.PosLeft.x, Configuration.Menu.SaberPosIncrement, value);
                 newVal = Mathf.Round(newVal * 100) / 100;
                 Configuration.GripCfg.PosLeft.x = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshPositionSettings();
@@ -487,17 +487,17 @@ namespace SaberTailor.Settings.UI
                 //Because of the limitation of switch sentence, PositionDigit.PositionDigitArray[n] can't use.//
 
                 case "100 cm":
-                    return $"{value*100} cm";
+                    return $"{value * 100} cm";
                 case "10 cm":
-                    return $"{value*10} cm";
+                    return $"{value * 10} cm";
                 case "1 cm":
                     return $"{value} cm";
                 case "0.1 cm":
-                    return $"{value*0.1} cm";
+                    return $"{value * 0.1} cm";
                 default:
-                    return $"{value*0.01} cm"; 
-             //case PositionUnit.inches:
-             //    return string.Format("{0}/8 inches", value);
+                    return $"{value * 0.01} cm";
+                    //case PositionUnit.inches:
+                    //    return string.Format("{0}/8 inches", value);
             }
         }
 
@@ -513,27 +513,27 @@ namespace SaberTailor.Settings.UI
                 case PositionDisplayUnit.miles:
                     return string.Format("{0:0.000000} miles", value / 1609344f);
                 default:
-                    return $"{value/10f} cm";
+                    return $"{value / 10f} cm";
             }
         }
 
         [UIAction("rotation-inc-formatter")]
         public string RotationIncString(float value)
         {
-            switch(Configuration.Menu.SaberRotIncDigit)
+            switch (Configuration.Menu.SaberRotIncDigit)
             {
                 //Because of the limitation of switch sentence, RotationDigit.RotationDigitArray[n] can't use.//
-                
+
                 case "100 deg":
-                    return $"{value*100} deg";
+                    return $"{value * 100} deg";
                 case "10 deg":
-                    return $"{value*10} deg";
+                    return $"{value * 10} deg";
                 case "1 deg":
                     return $"{value} deg";
                 case "0.1 deg":
-                    return $"{value*0.1} deg";
+                    return $"{value * 0.1} deg";
                 default:
-                    return $"{value*0.01} deg";
+                    return $"{value * 0.01} deg";
             }
         }
 
@@ -852,7 +852,7 @@ namespace SaberTailor.Settings.UI
                 case "10 cm":
                     Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue * 10;
                     break;
-                
+
                 case "1 cm":
                     Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue;
                     break;
@@ -860,10 +860,10 @@ namespace SaberTailor.Settings.UI
                 //    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue / 25.4f;
                 //    break;
                 case "0.1 cm":
-                    Configuration.Menu.SaberPosIncrement = Mathf.Round(Configuration.Menu.SaberPosIncValue)/10;
+                    Configuration.Menu.SaberPosIncrement = Mathf.Round(Configuration.Menu.SaberPosIncValue) / 10;
                     break;
                 default:
-                    Configuration.Menu.SaberPosIncrement= Mathf.Round(Configuration.Menu.SaberPosIncValue)/100;
+                    Configuration.Menu.SaberPosIncrement = Mathf.Round(Configuration.Menu.SaberPosIncValue) / 100;
                     break;
             }
         }
@@ -889,11 +889,11 @@ namespace SaberTailor.Settings.UI
                 //    Configuration.Menu.SaberPosIncrement = Configuration.Menu.SaberPosIncValue / 25.4f;
                 //    break;
                 case "0.1 deg":
-                    Configuration.Menu.SaberRotIncrement = Mathf.Round(Configuration.Menu.SaberRotIncValue)/10;
+                    Configuration.Menu.SaberRotIncrement = Mathf.Round(Configuration.Menu.SaberRotIncValue) / 10;
                     break;
 
                 default:
-                    Configuration.Menu.SaberRotIncrement = Mathf.Round(Configuration.Menu.SaberRotIncValue)/100;
+                    Configuration.Menu.SaberRotIncrement = Mathf.Round(Configuration.Menu.SaberRotIncValue) / 100;
                     break;
             }
         }

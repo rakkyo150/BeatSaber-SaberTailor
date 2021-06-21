@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace SaberTailor.Settings.Classes
+﻿namespace SaberTailor.Settings.Classes
 {
-   
+
 
     public class PositionDigit
     {
-         public static string[] PositionDigitArray = new string[5] { "100 cm", "10 cm", "1 cm", "0.1 cm", "0.01 cm" };
+        public static string[] PositionDigitArray = new string[5] { "100 cm", "10 cm", "1 cm", "0.1 cm", "0.01 cm" };
     }
 
     public class RotationDigit
