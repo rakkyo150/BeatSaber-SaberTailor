@@ -237,9 +237,9 @@ namespace SaberTailor.Settings
                 Float3 gripLeftPosition = PluginConfig.Instance.GripLeftPosition ?? Float3.zero;
                 GripCfg.PosLeft = new Float3()
                 {
-                    x = Mathf.Clamp(gripLeftPosition.x, -500, 500),
-                    y = Mathf.Clamp(gripLeftPosition.y, -500, 500),
-                    z = Mathf.Clamp(gripLeftPosition.z, -500, 500)
+                    x = Mathf.Clamp(gripLeftPosition.x, -5000, 5000),
+                    y = Mathf.Clamp(gripLeftPosition.y, -5000, 5000),
+                    z = Mathf.Clamp(gripLeftPosition.z, -5000, 5000)
                 };
 
                 Float3 gripLeftRotation = PluginConfig.Instance.GripLeftRotation ?? Float3.zero;
@@ -248,9 +248,9 @@ namespace SaberTailor.Settings
                 Float3 gripLeftOffset = PluginConfig.Instance.GripLeftOffset ?? Float3.zero;
                 GripCfg.OffsetLeft = new Float3()
                 {
-                    x = Mathf.Clamp(gripLeftOffset.x, -500, 500),
-                    y = Mathf.Clamp(gripLeftOffset.y, -500, 500),
-                    z = Mathf.Clamp(gripLeftOffset.z, -500, 500)
+                    x = Mathf.Clamp(gripLeftOffset.x, -5000, 5000),
+                    y = Mathf.Clamp(gripLeftOffset.y, -5000, 5000),
+                    z = Mathf.Clamp(gripLeftOffset.z, -5000, 5000)
                 };
             }
 
@@ -259,9 +259,9 @@ namespace SaberTailor.Settings
                 Float3 gripRightPosition = PluginConfig.Instance.GripRightPosition ?? Float3.zero;
                 GripCfg.PosRight = new Float3()
                 {
-                    x = Mathf.Clamp(gripRightPosition.x, -500, 500),
-                    y = Mathf.Clamp(gripRightPosition.y, -500, 500),
-                    z = Mathf.Clamp(gripRightPosition.z, -500, 500)
+                    x = Mathf.Clamp(gripRightPosition.x, -5000, 5000),
+                    y = Mathf.Clamp(gripRightPosition.y, -5000, 5000),
+                    z = Mathf.Clamp(gripRightPosition.z, -5000, 5000)
                 };
 
                 Float3 gripRightRotation = PluginConfig.Instance.GripRightRotation ?? Float3.zero;
@@ -270,9 +270,9 @@ namespace SaberTailor.Settings
                 Float3 gripRightOffset = PluginConfig.Instance.GripRightOffset ?? Float3.zero;
                 GripCfg.OffsetRight = new Float3()
                 {
-                    x = Mathf.Clamp(gripRightOffset.x, -500, 500),
-                    y = Mathf.Clamp(gripRightOffset.y, -500, 500),
-                    z = Mathf.Clamp(gripRightOffset.z, -500, 500)
+                    x = Mathf.Clamp(gripRightOffset.x, -5000, 5000),
+                    y = Mathf.Clamp(gripRightOffset.y, -5000, 5000),
+                    z = Mathf.Clamp(gripRightOffset.z, -5000, 5000)
                 };
             }
 
@@ -287,10 +287,10 @@ namespace SaberTailor.Settings
             #region Menu settings
             if (cfgSection == ConfigSection.All || cfgSection == ConfigSection.Menu)
             {
-                Menu.SaberPosIncrement = Mathf.Clamp(PluginConfig.Instance.SaberPosIncrement, 0, 5000);
-                Menu.SaberPosIncValue = Mathf.Clamp(PluginConfig.Instance.SaberPosIncValue, 0, 10);
-                Menu.SaberRotIncrement = Mathf.Clamp(PluginConfig.Instance.SaberRotIncrement, 0, 360);
-                Menu.SaberRotIncValue = Mathf.Clamp(PluginConfig.Instance.SaberRotIncValue, 0, 10);
+                Menu.SaberPosIncrement = Mathf.Clamp(PluginConfig.Instance.SaberPosIncrement, 0, 9000);
+                Menu.SaberPosIncValue = Mathf.Clamp(PluginConfig.Instance.SaberPosIncValue, 1, 9);
+                Menu.SaberRotIncrement = Mathf.Clamp(PluginConfig.Instance.SaberRotIncrement, 0, 900);
+                Menu.SaberRotIncValue = Mathf.Clamp(PluginConfig.Instance.SaberRotIncValue, 1, 9);
                 Menu.SaberPosIncDigit = PluginConfig.Instance.SaberPosIncDigit;
                 Menu.SaberRotIncDigit = PluginConfig.Instance.SaberRotIncDigit;
 

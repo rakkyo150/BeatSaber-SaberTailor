@@ -160,10 +160,10 @@
 						<text text='&#60; Back' font-size='5' font-color='#00000000' align='Right'/>					
 					</horizontal>
 					
-					<dropdown-list-setting text='Saber Position Inc. Digit' value='saber-pos-digit-value'
+					<dropdown-list-setting text='Saber Position Inc. Digit' value='saber-pos-digit-value' get-event='refresh-sabertailor-position-values'
 										   options='saber-pos-digit-options' apply-on-change='true'/>
 
-					<dropdown-list-setting text='Saber Rotation Inc. Digit' value='saber-rot-digit-value'
+					<dropdown-list-setting text='Saber Rotation Inc. Digit' value='saber-rot-digit-value' get-event ='refresh-sabertailor-rotation-values'
 										   options='saber-rot-digit-options' apply-on-change='true'/>
 
 					<increment-setting text='Saber Position Increment' value='saber-pos-increment-value' get-event='refresh-sabertailor-position-values'
