@@ -71,8 +71,9 @@ Rot=(Saber Rotation Inc. Digit×Saber Rotation Incrementのクリック数)×Sab
 World OffsetについてはSaber Position incrementが使用されます。<br>
 画像はWorld OffsetのX,Y,Zにそれぞれ１回ずつ増減を加えたものです。<br>
 MIRROR TO RIGHTで右のセイバーに左のセイバーの設定を反映させることができます。<br>
-REVERTを押すと左のセイバーの設定がすべて０に戻ります。<br>
-OKを押せば設定が完了します。
+REVERTを押すと左のセイバーの設定の変更がなかったことになります。<br>
+OKを押せば設定が完了します。<br>
+逆にCANCELを押すと、SaberTailor全体の設定の変更がなかったことになるので注意してください。<br>
 ![process8](Images/process8.png)
 
 

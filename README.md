@@ -71,8 +71,9 @@ Rot=(Saber Rotation Inc. Digit x Saber Rotation Increment clicks) x Saber Settin
 For World Offset, Saber Position increment is used. <br>
 The image shows the X, Y, and Z of the World Offset being incremented or decremented once each. <BR>
 MIRROR TO RIGHT allows the right saber to reflect the settings of the left saber. <BR>
-Pressing REVERT will reset all settings of the left saber to zero. <br>
+If you press REVERT, it will mean that there was no change in the settings of the left saber.  <br>
 Press OK to complete the setting.
+Note that pressing CANCEL, on the other hand, will mean that no changes were made to the settings of the entire SaberTailor.
 ![process8](Images/process8.png)
 
 
