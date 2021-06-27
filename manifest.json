@@ -9,14 +9,14 @@
   "icon": "SaberTailor.Resources.icon.png",
   "id": "SaberTailor",
   "name": "SaberTailor",
-  "version": "3.4.0",
+  "version": "3.4.2",
   "dependsOn": {
     "BSIPA": "^4.0.0",
     "BeatSaberMarkupLanguage": "^1.4.0",
     "BS Utils": "^1.9.0"
   },
-  "links": {
-    "project-home": "https://github.com/Shadnix-was-taken/BeatSaber-SaberTailor/blob/master/readme.md",
-    "project-source": "https://github.com/Shadnix-was-taken/BeatSaber-SaberTailor"
-  }
+    "links": {
+        "project-home": "https://github.com/rakkyo150/BeatSaber-SaberTailor/blob/master/README.md",
+        "project-source": "https://github.com/rakkyo150/BeatSaber-SaberTailor"
+    }
 }
