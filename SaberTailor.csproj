@@ -76,6 +76,10 @@
       <HintPath>$(GameDirPath)Beat Saber_Data\Managed\GameplayCore.dll</HintPath>
       <Private>False</Private>
     </Reference>
+        <Reference Include="Hive.Versioning">
+      <HintPath>$(GameDirPath)Libs\Hive.Versioning.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="HMLib">
       <HintPath>$(GameDirPath)Beat Saber_Data\Managed\HMLib.dll</HintPath>
       <Private>False</Private>

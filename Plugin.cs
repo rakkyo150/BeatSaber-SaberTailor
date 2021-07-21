@@ -18,7 +18,7 @@ namespace SaberTailor
     public class Plugin
     {
         public static string PluginName => "SaberTailor";
-        public static SemVer.Version PluginVersion { get; private set; } = new SemVer.Version("0.0.0"); // Default
+        public static Hive.Versioning.Version PluginVersion { get; private set; } = new Hive.Versioning.Version("0.0.0"); // Default
 
         [Init]
         public void Init(IPALogger logger, PluginMetadata metadata)
@@ -26,9 +26,9 @@ namespace SaberTailor
             Logger.log = logger;
             Configuration.Init();
 
-            if (metadata?.Version != null)
+            if (metadata?.HVersion != null)
             {
-                PluginVersion = metadata.Version;
+                PluginVersion = metadata.HVersion;
             }
         }
 
