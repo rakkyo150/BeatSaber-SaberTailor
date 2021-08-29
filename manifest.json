@@ -5,7 +5,7 @@
     "#![SaberTailor.Resources.description.md]",
     "Customize stuff about your sabers"
   ],
-  "gameVersion": "1.16.2",
+  "gameVersion": "1.16.4",
   "icon": "SaberTailor.Resources.icon.png",
   "id": "SaberTailor",
   "name": "SaberTailor",
