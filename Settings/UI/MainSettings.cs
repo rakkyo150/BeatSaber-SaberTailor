@@ -197,7 +197,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 int newVal = Increment(Configuration.GripCfg.OffsetLeft.y, Configuration.Menu.SaberPosIncrement, value);
-                Configuration.GripCfg.OffsetLeft.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                Configuration.GripCfg.OffsetLeft.y = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
         }
@@ -208,7 +208,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.OffsetLeft.z;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.OffsetLeft.y, Configuration.Menu.SaberPosIncrement, value);
+                int newVal = Increment(Configuration.GripCfg.OffsetLeft.z, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.OffsetLeft.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
@@ -307,7 +307,7 @@ namespace SaberTailor.Settings.UI
             set
             {
                 int newVal = Increment(Configuration.GripCfg.OffsetRight.y, Configuration.Menu.SaberPosIncrement, value);
-                Configuration.GripCfg.OffsetRight.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
+                Configuration.GripCfg.OffsetRight.y = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
         }
@@ -318,7 +318,7 @@ namespace SaberTailor.Settings.UI
             get => Configuration.GripCfg.OffsetRight.z;
             set
             {
-                int newVal = Increment(Configuration.GripCfg.OffsetRight.y, Configuration.Menu.SaberPosIncrement, value);
+                int newVal = Increment(Configuration.GripCfg.OffsetRight.z, Configuration.Menu.SaberPosIncrement, value);
                 Configuration.GripCfg.OffsetRight.z = Mathf.Clamp(newVal, SaberPosMin, SaberPosMax);
                 RefreshOffsetSettings();
             }
