@@ -336,8 +336,8 @@ namespace SaberTailor.Settings
             config.GripLeftRotation = new Int3(GripCfg.RotLeft);
             config.GripRightRotation = new Int3(GripCfg.RotRight);
 
-            PluginConfig.Instance.GripLeftOffset = new Int3(GripCfg.OffsetLeft);
-            PluginConfig.Instance.GripRightOffset = new Int3(GripCfg.OffsetRight);
+            config.GripLeftOffset = new Int3(GripCfg.OffsetLeft);
+            config.GripRightOffset = new Int3(GripCfg.OffsetRight);
 
             config.IsGripModEnabled = Grip.IsGripModEnabled;
             config.ModifyMenuHiltGrip = Grip.ModifyMenuHiltGrip;
