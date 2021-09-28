@@ -207,6 +207,7 @@ namespace SaberTailor.Tweaks
                 defaultHitboxTopPos = saberTop.position.Clone();
                 defaultHitboxBotPos = saberBot.position.Clone();
 
+                //Logger.log.Info("Distance is: " + Vector3.Distance(defaultHitboxTopPos, defaultHitboxBotPos).ToString());
             }
 
             /// <summary>
