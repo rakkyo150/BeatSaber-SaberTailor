@@ -1,6 +1,4 @@
-﻿using IPA.Config;
-using IPA.Config.Stores;
-using SaberTailor.HarmonyPatches;
+﻿using SaberTailor.HarmonyPatches;
 using SaberTailor.Settings.Classes;
 using SaberTailor.Settings.Utilities;
 using System;

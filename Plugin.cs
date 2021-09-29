@@ -2,7 +2,6 @@
 using IPA;
 using IPA.Config;
 using IPA.Loader;
-using IPA.Utilities;
 using SaberTailor.HarmonyPatches;
 using SaberTailor.Settings;
 using SaberTailor.Settings.UI;
@@ -14,10 +13,16 @@ using IPALogger = IPA.Logging.Logger;
 
 namespace SaberTailor
 {
+    public static class BuildInfo
+    {
+        public const string Name = "SaberTailor";
+        public const string Version = "3.4.1";
+    }
+
     [Plugin(RuntimeOptions.DynamicInit)]
     public class Plugin
     {
-        public static string PluginName => "SaberTailor";
+        public static string PluginName => BuildInfo.Name;
         public static Hive.Versioning.Version PluginVersion { get; private set; } = new Hive.Versioning.Version("0.0.0"); // Default
 
         [Init]
