@@ -1,4 +1,5 @@
 ﻿using BS_Utils.Utilities;
+using IPA.Config;
 using SaberTailor.Settings.Classes;
 using System;
 using System.Globalization;
@@ -24,18 +25,19 @@ namespace SaberTailor.Settings.Utilities
         /// <summary>
         /// ONLY USED FOR A SPECIFIC PURPOSE IN "Configuration.cs". DO NOT USE ELSEWHERE!
         /// </summary>
-        internal static PluginConfig ImportSettingsFromModPrefs(Config oldConfig)
+        internal static PluginConfig ImportSettingsFromModPrefs()
         {
             PluginConfig importedSettings = new PluginConfig(); // Initialize a new default configuration
 
             try
             {
+#pragma warning disable CS0618 // ModPrefs is obsolete
                 // Import trail configuration
-                IsTrailEnabled = oldConfig.GetBool(Plugin.PluginName, nameof(IsTrailEnabled), true, true);
+                IsTrailEnabled = ModPrefs.GetBool(Plugin.PluginName, nameof(IsTrailEnabled), true, true);
                 importedSettings.IsTrailEnabled = IsTrailEnabled;
 
                 // Import grip position settings, convert old centimeter values to millimeter
-                GripLeftPosition = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripLeftPosition), "0,0,0", true));
+                GripLeftPosition = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripLeftPosition), "0,0,0", true));
                 importedSettings.GripLeftPosition = new Int3()
                 {
                     x = (int)Math.Round(Mathf.Clamp(GripLeftPosition.x, -50f, 50f) * 10),
@@ -43,7 +45,7 @@ namespace SaberTailor.Settings.Utilities
                     z = (int)Math.Round(Mathf.Clamp(GripLeftPosition.z, -50f, 50f) * 10)
                 };
 
-                GripLeftRotation = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripLeftRotation), "0,0,0", true));
+                GripLeftRotation = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripLeftRotation), "0,0,0", true));
                 importedSettings.GripLeftRotation = new Int3()
                 {
                     x = (int)Math.Round(GripLeftRotation.x),
@@ -51,7 +53,7 @@ namespace SaberTailor.Settings.Utilities
                     z = (int)Math.Round(GripLeftRotation.z)
                 };
 
-                GripRightPosition = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripRightPosition), "0,0,0", true));
+                GripRightPosition = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripRightPosition), "0,0,0", true));
                 importedSettings.GripRightPosition = new Int3()
                 {
                     x = (int)Math.Round(Mathf.Clamp(GripRightPosition.x, -50f, 50f) * 10),
@@ -59,7 +61,7 @@ namespace SaberTailor.Settings.Utilities
                     z = (int)Math.Round(Mathf.Clamp(GripRightPosition.z, -50f, 50f) * 10)
                 };
 
-                GripRightRotation = ParseVector3(oldConfig.GetString(Plugin.PluginName, nameof(GripRightRotation), "0,0,0", true));
+                GripRightRotation = ParseVector3(ModPrefs.GetString(Plugin.PluginName, nameof(GripRightRotation), "0,0,0", true));
                 importedSettings.GripRightRotation = new Int3()
                 {
                     x = (int)Math.Round(GripRightRotation.x),
@@ -67,13 +69,14 @@ namespace SaberTailor.Settings.Utilities
                     z = (int)Math.Round(GripRightRotation.z)
                 };
 
-                ModifyMenuHiltGrip = oldConfig.GetBool(Plugin.PluginName, nameof(ModifyMenuHiltGrip), true, true);
+                ModifyMenuHiltGrip = ModPrefs.GetBool(Plugin.PluginName, nameof(ModifyMenuHiltGrip), true, true);
                 importedSettings.ModifyMenuHiltGrip = ModifyMenuHiltGrip;
+#pragma warning restore CS0618 // ModPrefs is obsolete
 
                 // Mark imported config as config version 1 so it will run through all steps of the config updater
                 importedSettings.ConfigVersion = 1;
 
-                MarkAsExported(oldConfig);
+                MarkAsExported();
             }
             catch (Exception ex)
             {
@@ -83,9 +86,11 @@ namespace SaberTailor.Settings.Utilities
             return importedSettings;
         }
 
-        private static void MarkAsExported(Config oldConfig)
+        private static void MarkAsExported()
         {
-            oldConfig.SetBool(Plugin.PluginName, "IsExportedToNewConfig", true);
+#pragma warning disable CS0618 // ModPrefs is obsolete
+            ModPrefs.SetBool(Plugin.PluginName, "IsExportedToNewConfig", true);
+#pragma warning restore CS0618 // ModPrefs is obsolete
         }
 
         private static Vector3 ParseVector3(string originalString)
