@@ -42,6 +42,12 @@ namespace SaberTailor.Tweaks
                 }
             }
 
+            // If BS Utils is not available, disable hitbox scaling in any case
+            if (!Plugin.IsBSUtilsAvailable)
+            {
+                EnableHitboxScaling = false;
+            }
+
             // Allow the user to run in any other mode, but don't allow ScoreSubmission if hitbox scaling is enabled
             if (EnableHitboxScaling)
             {
