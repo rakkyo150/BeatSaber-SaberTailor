@@ -14,8 +14,8 @@
     "BSIPA": "^4.2.0"
   },
   "loadAfter": [
-        "BeatSaberMarkupLanguage",
-		"BS Utils"
+    "BeatSaberMarkupLanguage",
+    "BS Utils"
   ],
   "links": {
     "project-home": "https://github.com/Shadnix-was-taken/BeatSaber-SaberTailor/blob/master/readme.md",
