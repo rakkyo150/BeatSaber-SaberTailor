@@ -18,11 +18,13 @@ namespace SaberTailor.Settings.UI
     {
         public string profileListSelected = "None selected";
 
+#pragma warning disable CS0649
         [UIParams]
         private BSMLParserParams parserParams;
 
         [UIComponent("ddl_profiles")]
         DropDownListSetting ddlsProfiles;
+#pragma warning restore CS0649
 
         #region Precision
         [UIValue("saber-pos-unit-options")]
@@ -401,8 +403,10 @@ namespace SaberTailor.Settings.UI
         #endregion
 
         #region Transfer Grip
+#pragma warning disable CS0649
         [UIComponent("transfer-txt")]
         private TextMeshProUGUI TransferText;
+#pragma warning restore CS0649
         #endregion
 
         #region Profile Manager
@@ -419,8 +423,10 @@ namespace SaberTailor.Settings.UI
         [UIValue("profile-save-name")]
         public string ProfileSaveName = "Default";
 
+#pragma warning disable CS0649
         [UIComponent("profile-txt")]
         private TextMeshProUGUI ProfileStatusText;
+#pragma warning restore CS0649
         #endregion
 
         #region Limits
