@@ -613,6 +613,9 @@ namespace SaberTailor.Settings.UI
         [UIAction("#profile-save")]
         public void OnProfileSave() => SaveProfile();
 
+        [UIAction("#profile-list-reload")]
+        public void OnProfileListReload() => RefreshProfileList();
+
         public void Awake()
         {
             if (ProfileManager.profilesPresent)
@@ -722,11 +725,7 @@ namespace SaberTailor.Settings.UI
             bool deleteSuccessful = ProfileManager.DeleteProfile(profileName, out string statusMsg);
 
             // Refresh UI
-            ProfileManager.LoadProfiles();
-            ddlsProfiles.values = ProfileManager.profileNames;
-            profileListSelected = ddlsProfiles.values[0].ToString();
-            ddlsProfiles.UpdateChoices();
-            parserParams.EmitEvent("refresh-profile-list");
+            RefreshProfileList();
 
             if (!deleteSuccessful)
             {
@@ -780,6 +779,15 @@ namespace SaberTailor.Settings.UI
             }
 
             ProfileStatusText.text = statusMsg;
+        }
+
+        private void RefreshProfileList()
+        {
+            ProfileManager.LoadProfiles();
+            ddlsProfiles.values = ProfileManager.profileNames;
+            profileListSelected = ddlsProfiles.values[0].ToString();
+            ddlsProfiles.UpdateChoices();
+            parserParams.EmitEvent("refresh-profile-list");
         }
 
         private void UpdateSaberPosIncrement(PositionUnit unit)
