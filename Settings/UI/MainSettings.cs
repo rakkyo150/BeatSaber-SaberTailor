@@ -18,11 +18,13 @@ namespace SaberTailor.Settings.UI
     {
         public string profileListSelected = "None selected";
 
+#pragma warning disable CS0649
         [UIParams]
         private BSMLParserParams parserParams;
 
         [UIComponent("ddl_profiles")]
         DropDownListSetting ddlsProfiles;
+#pragma warning restore CS0649
 
         #region Precision
         [UIValue("saber-pos-digit-options")]
@@ -441,8 +443,10 @@ namespace SaberTailor.Settings.UI
         #endregion
 
         #region Transfer Grip
+#pragma warning disable CS0649
         [UIComponent("transfer-txt")]
         private TextMeshProUGUI TransferText;
+#pragma warning restore CS0649
         #endregion
 
         #region Profile Manager
@@ -459,8 +463,10 @@ namespace SaberTailor.Settings.UI
         [UIValue("profile-save-name")]
         public string ProfileSaveName = "Default";
 
+#pragma warning disable CS0649
         [UIComponent("profile-txt")]
         private TextMeshProUGUI ProfileStatusText;
+#pragma warning restore CS0649
         #endregion
 
         #region Limits
@@ -670,6 +676,9 @@ namespace SaberTailor.Settings.UI
         [UIAction("#profile-save")]
         public void OnProfileSave() => SaveProfile();
 
+        [UIAction("#profile-list-reload")]
+        public void OnProfileListReload() => RefreshProfileList();
+
         public void Awake()
         {
             if (ProfileManager.profilesPresent)
@@ -779,11 +788,7 @@ namespace SaberTailor.Settings.UI
             bool deleteSuccessful = ProfileManager.DeleteProfile(profileName, out string statusMsg);
 
             // Refresh UI
-            ProfileManager.LoadProfiles();
-            ddlsProfiles.values = ProfileManager.profileNames;
-            profileListSelected = ddlsProfiles.values[0].ToString();
-            ddlsProfiles.UpdateChoices();
-            parserParams.EmitEvent("refresh-profile-list");
+            RefreshProfileList();
 
             if (!deleteSuccessful)
             {
@@ -866,6 +871,15 @@ namespace SaberTailor.Settings.UI
                     Configuration.Menu.SaberPosIncrement = Mathf.Round(Configuration.Menu.SaberPosIncValue) / 10;
                     break;
             }
+        }
+
+        private void RefreshProfileList()
+        {
+            ProfileManager.LoadProfiles();
+            ddlsProfiles.values = ProfileManager.profileNames;
+            profileListSelected = ddlsProfiles.values[0].ToString();
+            ddlsProfiles.UpdateChoices();
+            parserParams.EmitEvent("refresh-profile-list");
         }
 
         private void UpdateSaberRotIncrement(string digit)

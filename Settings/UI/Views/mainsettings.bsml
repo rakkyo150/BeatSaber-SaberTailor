@@ -278,32 +278,30 @@
 		</settings-container>
 	</settings-submenu>
 
-	<!--Profile Management-->
-	<settings-submenu text='&#62; Manage config profiles...' hover-hint='Load/Save/Delete config profiles.'>
-		<settings-container>
-			<horizontal>
-				<clickable-text text='&#60; Back' font-size='5' align='Left' click-event='back' />
-				<text text='Manage config profiles' font-size='6' size-delta-y='8' align='Center'/>
-				<text text='&#60; Back' font-size='5' font-color='#00000000' align='Right'/>
-			</horizontal>
-			
-			<horizontal>
-				<dropdown-list-setting text='Existing profiles:' value='profile-list-value' get-event='refresh-profile-list'
-									   options='profile-list-options' apply-on-change='true' id='ddl_profiles' />
-			</horizontal>
-			<horizontal pref-width='90' pad-right='30'>
-				<button text='Load profile' click-event='profile-load' />
-				<button text='Delete profile' click-event='profile-delete' />
-			</horizontal>
-			<horizontal>
-				<string-setting text='New profile name:' value='profile-save-name' apply-on-change='true' />
-			</horizontal>
-			<horizontal>
-				<button text='Save new profile' align='Midline' click-event='profile-save' />
-			</horizontal>
-			<horizontal pref-width='90' pref-height='30'>
-				<text id='profile-txt' text=' ' word-wrapping='true' />
-			</horizontal>
-		</settings-container>
-	</settings-submenu>
+  <!--Profile Management-->
+  <settings-submenu text='→ Manage config profiles...' hover-hint='Load/Save/Delete config profiles.'>
+    <settings-container>
+      <horizontal pref-width='90' spacing='35'>
+        <button text='⮌ Back' align='Left' click-event='back' />
+        <button text='Reload profile list' align='Right' click-event='profile-list-reload' />
+      </horizontal>
+      <horizontal>
+        <dropdown-list-setting text='Existing profiles:' value='profile-list-value' get-event='refresh-profile-list'
+                               options='profile-list-options' apply-on-change='true' id='ddl_profiles' />
+      </horizontal>
+      <horizontal pref-width='90' pad-right='30'>
+        <button text='Load profile' click-event='profile-load' />
+        <button text='Delete profile' click-event='profile-delete' />
+      </horizontal>
+      <horizontal>
+        <string-setting text='New profile name:' value='profile-save-name' apply-on-change='true' />
+      </horizontal>
+      <horizontal>
+        <button text='Save new profile' align='Midline' click-event='profile-save' />
+      </horizontal>
+      <horizontal pref-width='90' pref-height='30'>
+        <text id='profile-txt' text=' ' word-wrapping='true' />
+      </horizontal>
+    </settings-container>
+  </settings-submenu>
 </settings-container>

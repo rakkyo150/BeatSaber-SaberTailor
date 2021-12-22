@@ -11,6 +11,8 @@ Tweak things about your sabers, including grip position/angle, saber length and 
 - Change trail length
 - Profile support (save to/load from different profiles files)
 
+This mod doesn't require any other mods in order to work. However, if you want the ingame UI available, you'll need to install "BeatSaberMarkupLanguage". The hitbox scaling feature requires "BS Utils".
+
 ## Note on updates from SaberTailor older than v2.0.0!
 
 **The way the configuration is stored has changed.**</br>

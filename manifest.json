@@ -1,20 +1,22 @@
 {
-  "$schema": "https://raw.githubusercontent.com/beat-saber-modding-group/BSIPA-MetadataFileSchema/master/Schema.json",
-  "author": "Shadnix",
-  "description": [
-    "#![SaberTailor.Resources.description.md]",
-    "Customize stuff about your sabers"
-  ],
-  "gameVersion": "1.18.0",
-  "icon": "SaberTailor.Resources.icon.png",
-  "id": "SaberTailor",
-  "name": "SaberTailor",
-  "version": "3.4.4",
-  "dependsOn": {
-    "BSIPA": "^4.2.0",
-    "BeatSaberMarkupLanguage": "^1.5.0",
-    "BS Utils": "^1.10.0"
-  },
+    "$schema": "https://raw.githubusercontent.com/beat-saber-modding-group/BSIPA-MetadataFileSchema/master/Schema.json",
+    "author": "Shadnix",
+    "description": [
+        "#![SaberTailor.Resources.description.md]",
+        "Customize stuff about your sabers"
+    ],
+    "gameVersion": "1.18.0",
+    "icon": "SaberTailor.Resources.icon.png",
+    "id": "SaberTailor",
+    "name": "SaberTailor",
+  "version": "3.5.0",
+    "dependsOn": {
+        "BSIPA": "^4.2.0"
+    },
+    "loadAfter": [
+        "BeatSaberMarkupLanguage",
+        "BS Utils"
+    ],
     "links": {
         "project-home": "https://github.com/rakkyo150/BeatSaber-SaberTailor/blob/master/README.md",
         "project-source": "https://github.com/rakkyo150/BeatSaber-SaberTailor"
