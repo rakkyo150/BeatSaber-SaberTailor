@@ -4,6 +4,7 @@ using SaberTailor.HarmonyPatches;
 using SaberTailor.Settings;
 using SaberTailor.Settings.UI;
 using SaberTailor.Tweaks;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using IPALogger = IPA.Logging.Logger;
@@ -13,7 +14,7 @@ namespace SaberTailor
     public static class BuildInfo
     {
         public const string Name = "SaberTailor";
-        public const string Version = "3.5.0";
+        public const string Version = "3.6.0.0";
     }
 
     [Plugin(RuntimeOptions.DynamicInit)]
