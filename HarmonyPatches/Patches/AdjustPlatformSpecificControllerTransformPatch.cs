@@ -8,7 +8,25 @@ using UnityEngine.XR;
 
 namespace SaberTailor.HarmonyPatches
 {
-    // https://github.com/Reezonate/EasyOffset/blob/master/Source/0_Harmony/VRControllerPatches/VRControllerUpdatePatch.cs
+    [HarmonyPatch(typeof(VRController), nameof(VRController.GetControllerOffset))]
+    internal static class VRControllerGetControllerOffsetPatch
+    {
+        [UsedImplicitly]
+        private static bool Prefix(ref Pose __result, XRNode ____node, IVRPlatformHelper ____vrPlatformHelper)
+        {
+            if (!PluginConfig.Instance.IsGripModEnabled) return true;
+            Pose pose = ____vrPlatformHelper.GetPoseOffsetForNode(____node);
+
+            if (____node == XRNode.LeftHand)
+            {
+                pose = VRController.InvertControllerPose(pose);
+            }
+            __result = pose;
+            return false;
+        }
+    }
+
+    // Reference:https://github.com/Reezonate/EasyOffset/blob/master/Source/0_Harmony/VRControllerPatches/VRControllerUpdatePatch.cs
     [HarmonyPatch(typeof(VRController), "Update")]
     internal class VRControllerUpdatePatch
     {
