@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using IPA.Utilities;
 using SaberTailor.Settings.Classes;
 using SaberTailor.Utilities;
@@ -148,8 +149,10 @@ namespace SaberTailor.Settings.Utilities
                         NormalizeAngle(exportRot.y),
                         NormalizeAngle(exportRot.z));
 
-                    mainSettings.Save();
-                    mainSettings.Load(true);
+                    // ISaveDataのオブジェクトを取得する
+                    var saveData = FieldAccessor<MainSettingsModelSO, ISaveData>.Get(ref mainSettings, "_saveData");
+                    mainSettings.Save(saveData);
+                    mainSettings.Load(saveData, true);
 
                     statusMsg = "Export successful.";
                 }
@@ -406,6 +409,8 @@ namespace SaberTailor.Settings.Utilities
             position = Vector3.zero;
             rotation = Vector3.zero;
 
+            Logger.log.Info(XRSettings.loadedDeviceName);
+
             if (XRSettings.loadedDeviceName == "Oculus")
             {
                 position = addPosOculus.Clone();
@@ -413,14 +418,14 @@ namespace SaberTailor.Settings.Utilities
                 return true;
             }
 
-            if (XRSettings.loadedDeviceName == "OpenVR")
+            if (XRSettings.loadedDeviceName == "UnityXR?")
             {
-                OpenVRHelper[] vrHelpers = Resources.FindObjectsOfTypeAll<OpenVRHelper>();
-                foreach (OpenVRHelper vrHelper in vrHelpers)
+                UnityXRHelper[] vrHelpers = Resources.FindObjectsOfTypeAll<UnityXRHelper>();
+                foreach (UnityXRHelper vrHelper in vrHelpers)
                 {
                     if (vrHelper.gameObject.activeInHierarchy)
                     {
-                        if (vrHelper.GetField<OpenVRHelper.VRControllerManufacturerName, OpenVRHelper>("_vrControllerManufacturerName") == OpenVRHelper.VRControllerManufacturerName.Valve)
+                        if (vrHelper.GetField<UnityXRHelper.VRControllerManufacturerName, UnityXRHelper>("_vrControllerManufacturerName") == UnityXRHelper.VRControllerManufacturerName.Valve)
                         {
                             position = addPosViveIndex.Clone();
                             rotation = addRotViveIndex.Clone();

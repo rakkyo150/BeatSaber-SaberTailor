@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components.Settings;
 using BeatSaberMarkupLanguage.Parser;
+using BeatSaberMarkupLanguage.Util;
 using SaberTailor.HarmonyPatches;
 using SaberTailor.Settings.Classes;
 using SaberTailor.Settings.Utilities;
