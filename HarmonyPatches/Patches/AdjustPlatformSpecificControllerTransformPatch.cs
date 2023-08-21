@@ -36,22 +36,28 @@ namespace SaberTailor.HarmonyPatches
 
             var transform = __instance.transform;
             transform.SetLocalPositionAndRotation(pos, rot);
-            AdjustControllerTransform(__instance.node, transform);
+            AdjustControllerTransform(__instance.node, transform, ref pos, ref rot);
+            if (Configuration.Grip.UseBaseGameAdjustmentMode)
+            {
+                transform.SetLocalPositionAndRotation(pos, rot);
+            }
             return false;
         }
 
         internal static void AdjustControllerTransform(
         XRNode node,
-        Transform transform
+        Transform transform,
+        ref Vector3 position,
+        ref Quaternion rotation
     )
         {
             switch (node)
             {
                 case XRNode.LeftHand:
-                    AdjustLeftControllerTransform(transform);
+                    Utilities.AdjustControllerTransform(node, transform, ref position, ref rotation);
                     break;
                 case XRNode.RightHand:
-                    AdjustRightControllerTransform(transform);
+                    Utilities.AdjustControllerTransform(node, transform, ref position, ref rotation);
                     break;
                 case XRNode.LeftEye: return;
                 case XRNode.RightEye: return;
@@ -63,25 +69,6 @@ namespace SaberTailor.HarmonyPatches
                 default: throw new ArgumentOutOfRangeException(nameof(node), node, null);
             }
         }
-
-        private static void AdjustLeftControllerTransform(
-        Transform transform
-    )
-        {
-            transform.Translate(Configuration.Grip.PosLeft);
-            transform.Rotate(Configuration.Grip.RotLeft);
-            transform.Translate(Configuration.Grip.OffsetLeft, Space.World);
-        }
-
-        private static void AdjustRightControllerTransform(
-            Transform transform
-        )
-        {
-            transform.Translate(Configuration.Grip.PosRight);
-            transform.Rotate(Configuration.Grip.RotRight);
-            transform.Translate(Configuration.Grip.OffsetRight, Space.World);
-        }
-
     }
 
 
@@ -95,7 +82,8 @@ namespace SaberTailor.HarmonyPatches
                 if (Configuration.Grip.UseBaseGameAdjustmentMode)
                 {
                     lastTrackedPosition = lastTrackedPosition + Configuration.Grip.PosLeft;
-                    lastTrackedRotation.Set(Configuration.Grip.RotLeft.x, Configuration.Grip.RotLeft.y, Configuration.Grip.RotLeft.z, lastTrackedRotation.w);
+                    var rot = Quaternion.Euler(Configuration.Grip.RotLeft.x, Configuration.Grip.RotLeft.y, Configuration.Grip.RotLeft.z);
+                    lastTrackedRotation = lastTrackedRotation * rot;
                 }
                 else
                 {
@@ -110,8 +98,8 @@ namespace SaberTailor.HarmonyPatches
                 if (Configuration.Grip.UseBaseGameAdjustmentMode)
                 {
                     lastTrackedPosition = lastTrackedPosition + Configuration.Grip.PosRight;
-                    lastTrackedRotation.Set(lastTrackedRotation.x + Configuration.Grip.RotRight.x, lastTrackedRotation.y + Configuration.Grip.RotRight.y, 
-                        lastTrackedRotation.z + Configuration.Grip.RotRight.z, lastTrackedRotation.w);
+                    var rot = Quaternion.Euler(Configuration.Grip.RotRight.x, Configuration.Grip.RotRight.y, Configuration.Grip.RotRight.z);
+                    lastTrackedRotation = lastTrackedRotation * rot;
                 }
                 else
                 {
@@ -130,8 +118,8 @@ namespace SaberTailor.HarmonyPatches
                     if (Configuration.Grip.UseBaseGameAdjustmentMode)
                     {
                         lastTrackedPosition = lastTrackedPosition + Configuration.Grip.PosLeft;
-                        lastTrackedRotation.Set(lastTrackedRotation.x + Configuration.Grip.RotLeft.x, lastTrackedRotation.y + Configuration.Grip.RotLeft.y,
-                            lastTrackedRotation.z + Configuration.Grip.RotLeft.z, lastTrackedRotation.w);
+                        var rot = Quaternion.Euler(Configuration.Grip.RotLeft.x, Configuration.Grip.RotLeft.y, Configuration.Grip.RotLeft.z);
+                        lastTrackedRotation = lastTrackedRotation * rot;
                     }
                     else
                     {
@@ -146,7 +134,8 @@ namespace SaberTailor.HarmonyPatches
                     if (Configuration.Grip.UseBaseGameAdjustmentMode)
                     {
                         lastTrackedPosition = lastTrackedPosition + Configuration.Grip.PosRight;
-                        lastTrackedRotation.Set(Configuration.Grip.RotRight.x, Configuration.Grip.RotRight.y, Configuration.Grip.RotRight.z, lastTrackedRotation.w);
+                        var rot = Quaternion.Euler(Configuration.Grip.RotRight.x, Configuration.Grip.RotRight.y, Configuration.Grip.RotRight.z);
+                        lastTrackedRotation = lastTrackedRotation * rot;
                     }
                     else
                     {
